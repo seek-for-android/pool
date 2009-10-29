@@ -1,0 +1,2 @@
+This package compiles the library to be used by applications using the seek library.
+The native libraries are not linked so they need to be copied manually.
