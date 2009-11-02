@@ -42,7 +42,10 @@ make
 }}}
 
 === Download and apply the Mc-EX patches ===
-Apply the Mc-EX patches and rebuilt first the kernel and then the Android system as described above.
+Apply the Mc-EX patches and rebuilt first the kernel and then the Android system as described above. A short description on how to apply the patches can be found inside each archive.
+
+http://seek-for-android.googlecode.com/files/20090928_mcexdevnode.tar.bz2<br>
+http://seek-for-android.googlecode.com/files/20091023_mcexdrv.tar.bz2
 
 === Flash your own kernel ===
 *Backup the Android system of your device before you do this last step.*
