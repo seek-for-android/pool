@@ -86,7 +86,7 @@ TrustZone requires additional modules beyond the basic Android OS:
  # root keys for managing the TZ applet installation <br/>
 The security OS for the TrustZone requires changes in the system software, which needs cooperation with the silicon providers and handset manufacturers. <br/>
 Ideally all other parts become available as open source components and Android starts requiring TrustZone as a standard feature. <br/>
-Some early TrustZone solutions do exist, but deployment is minimal. So there is an opportunity to have a TrustZone implementation that fits well into Android. 
+Some early TrustZone solutions do exist, but deployment is minimal. So there is an opportunity to have a TrustZone implementation that fits well into Android.
 
 === SoftSP ===
 Although we discussed before the limitations of the security of large software stacks and the need for hardware-based highly tamper-resistant SE’s, a pure software-based solution might still be an option for some of the use cases that can accept a low trust level. <br/>
