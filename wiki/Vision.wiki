@@ -3,9 +3,18 @@
 
 = Introduction =
 
-Add your content here.
-
-
+Android is Google’s new Operating System targeting Mobile Devices. Android is a very open system: almost all of the application and system software is provided as open source. It is relatively easy to modify the sources, compile these and download the result on readily available hardware. This is true for both application software and system software.<br/>
+There can be restrictions on using phones with modified system code on some networks. But for applications it is Google’s intent that they can be created, distributed (via the market or from user to user) and installed by anyone, without the need for approval from Mobile Handset Manufacturers or Mobile Network Operators (MNOs). There is a safety-belt facility in place that allows Google to block and remove applications that have proven to be malicious.<br/>
+Android is based on Linux and offers an Android Development Kit (ADK), which uses the Java programming language and a class system that differs substantially from J2SE and J2ME. Also the security related functionality in Android is quite different. There is an implementation of Bouncy Castle offering OpenSSL-focused crypto functionality in the handset, but other typical software components used to communicate with Secure Elements, like JSR 177 (SATSA, for J2ME) and JSR 268 (Smart Card I/O, for J2SE) are currently not implemented.<br/>
+Recently a C/C++ based Native Development Kit (NDK) has been added to make it easier to port existing C/C++ software to Android and allow for optimization of compute intense algorithms. However, the ADK is still considered the prime development environment.
+The ADK and NDK can be used for all application development for all Android-based phones, supporting backwards compatibility to continue support for older versions.<br/>
+Software at the system level can be different for each phone to accommodate the differences in chipsets, hardware modules, operator requirements, device maker preferences and product features. Of course, there are abstraction layers in the system hiding differences to higher layers of the software stack. The Linux system call interface is an example.<br/>
+Android has the potential to be an excellent platform to support a new class of applications that can gain the trust of providers and consumers alike to manipulate objects of value - secrets, money or otherwise - using mobile phones. However, Android is a new system and is still evolving. At this moment there are some pieces of the puzzle missing.<br/>
+In this paper we will 
+ *	describe the current state of affairs
+ *	identify the missing pieces of the puzzle
+ *	propose an action plan to fill in the gaps
+Hereby we hope to create awareness and consensus so that we can move forward quickly to make Android the best mobile phone platform for secure and trustworthy applications.
 = Details =
 
 Add your content here.  Format your content with:
