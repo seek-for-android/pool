@@ -1,7 +1,7 @@
 #summary Make Android the best platform for security-based applications.
 #labels Android,Security,SmartCard
 
-= Introduction =
+= # Introduction =
 
 Android is Google’s new Operating System targeting Mobile Devices. Android is a very open system: almost all of the application and system software is provided as open source. It is relatively easy to modify the sources, compile these and download the result on readily available hardware. This is true for both application software and system software.<br/>
 There can be restrictions on using phones with modified system code on some networks. But for applications it is Google’s intent that they can be created, distributed (via the market or from user to user) and installed by anyone, without the need for approval from _Mobile Handset Manufacturers_ or _Mobile Network Operators (MNOs)_. There is a safety-belt facility in place that allows Google to block and remove applications that have proven to be malicious.<br/>
