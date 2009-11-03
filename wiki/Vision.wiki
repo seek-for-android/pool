@@ -4,12 +4,18 @@
 = Introduction =
 
 Android is Google’s new Operating System targeting Mobile Devices. Android is a very open system: almost all of the application and system software is provided as open source. It is relatively easy to modify the sources, compile these and download the result on readily available hardware. This is true for both application software and system software.<br/>
+
 There can be restrictions on using phones with modified system code on some networks. But for applications it is Google’s intent that they can be created, distributed (via the market or from user to user) and installed by anyone, without the need for approval from _Mobile Handset Manufacturers_ or _Mobile Network Operators (MNOs)_. There is a safety-belt facility in place that allows Google to block and remove applications that have proven to be malicious.<br/>
+
 Android is based on Linux and offers an _Android Development Kit (ADK)_, which uses the Java programming language and a class system that differs substantially from J2SE and J2ME. Also the security related functionality in Android is quite different. There is an implementation of Bouncy Castle offering OpenSSL-focused crypto functionality in the handset, but other typical software components used to communicate with Secure Elements, like JSR 177 (SATSA, for J2ME) and JSR 268 (Smart Card I/O, for J2SE) are currently not implemented.<br/>
+
 Recently a C/C++ based _Native Development Kit (NDK)_ has been added to make it easier to port existing C/C++ software to Android and allow for optimization of compute intense algorithms. However, the ADK is still considered the prime development environment.
 The ADK and NDK can be used for all application development for all Android-based phones, supporting backwards compatibility to continue support for older versions.<br/>
+
 Software at the system level can be different for each phone to accommodate the differences in chipsets, hardware modules, operator requirements, device maker preferences and product features. Of course, there are abstraction layers in the system hiding differences to higher layers of the software stack. The Linux system call interface is an example.<br/>
+
 Android has the potential to be an excellent platform to support a new class of applications that can gain the trust of providers and consumers alike to manipulate objects of value - secrets, money or otherwise - using mobile phones. However, Android is a new system and is still evolving. At this moment there are some pieces of the puzzle missing.<br/>
+
 In this paper we will 
  *	describe the current state of affairs
  *	identify the missing pieces of the puzzle
@@ -27,8 +33,90 @@ Therefore, we should take a closer look at the traditional solution for manipula
 
 == What is a Secure Element? ==
 
-The term Secure Element is used for a small device with a little microprocessor and a relatively small memory. This device must be highly tamper resistant, so that unauthorized access to its memory and functionality is not possible without destroying the memory’s content.
-Secure Elements are found, for instance, in modern credit cards (the ones with the gold-plated contacts, or the contact-less cards) and in the Subscriber Identity Module (SIM) in mobile phones. The SIM is officially called a Universal Integrated Circuit Card or UICC for short.
+The term Secure Element is used for a small device with a little microprocessor and a relatively small memory. This device must be highly tamper resistant, so that unauthorized access to its memory and functionality is not possible without destroying the memory’s content.<br/>
+Secure Elements are found, for instance, in modern credit cards (the ones with the gold-plated contacts, or the contact-less cards) and in the _Subscriber Identity Module (SIM)_ in mobile phones. The SIM is officially called a Universal Integrated Circuit Card or UICC for short.<br/>
 A Secure Element is used to store and manipulate information in a secure and trustworthy way. Secure Elements are typically idle, but go to work if instructed to do so by electronic pulses from another device, like an Automated Teller Machine (ATM) or a mobile phone.
-So there are always 2 devices involved and a communication channel in between.
-The handset acts as 
+So there are always 2 devices involved - the handset and the Secure Element - and a communication channel in between.<br/>
+The following hardware modules can be identified in the SE:
+ *	Microprocessor
+ *	Communication wires
+ *	ROM for code and read-only data
+ *	RAM for short-term working memory
+ *	EEPROM (or similar) to store data that should not be lost, like keys
+ *	Flash memory (replaces ROM and EEPROM in some card
+<br/>
+
+The following software modules can be identified in the Handset and SE:
+ *	Both the handset and the SE have an OS. The SE OS typically includes a Java VM so that the functionality can be programmed in Java.
+ *	Both the handset and the SIM have communication software. Communication can happen on multiple logical channels in parallel, typically up to 4 or 16.
+ *	The SE’s OS and communication software are sometimes in Flash, but typically in ROM, so they cannot be changed after leaving the factory.
+ *	The SE’s Java applets are stored in EEPROM and can be changed in the field if configured so by the SE issuer.
+ *	The handset must have SE Client software that communicates with the SE. Typically this uses a simple protocol based on exchanging Application Protocol Data Units (APDU’s).
+ *	There are no more layers on the SE side, but in the handset one can identify different applications and supporting libraries.<br/>
+
+This architectural solution has been heavily influenced by the work that Sun Microsystems did on the development of JavaCard. <br/>
+
+The work on _Java Specification Request_ (JSR) 177 introduced the _Security and Trust Services API_ (SATSA) extensions to the _Mobile Information Device Profile_ (MIDP) for the APDU-based communication between handsets and SE’s.
+A similar solution for J2SE has been implemented for JSR 268.<br/>
+
+In this paper we will introduce the concept of a Security Provider as a generalization of a Secure Element that allows implementations with different (lower) Trust Levels on the main processor in the handset.<br/>
+
+We will also propose a session layer between the apps and the APDU-based transport layer that can help with dynamic binding of applications to Security Provider applets and functions and with channel resource allocation.
+
+== What is a Security Provider? ==
+The functionality of a SE could be implemented without the highly tamper-resistant physical package.
+One possibility is to implement all these functions purely in software running on the main processor of the phone.
+Another option is to use the security capabilities of the phone processor itself. We will discuss these options in more detail below. <br/>
+We will use the term Security Provider (SP) for any implementation of SE-like functionality, with or without the physical highly tamper-resistant packaging.
+Obviously, these different SP implementations will offer different levels of security and trust.
+Therefore we propose to introduce the notion of Trust Level, which allows applications to specify the class of Security Providers that are acceptable for their purpose.
+
+== Security Providers in Android Handsets ==
+A typical mobile phone always has at least one Security Provider, the SIM, but a typical Android phone, like the G1, could have up to 4 Security Providers. <br/>
+Of course, handset manufacturers are free to offer different configurations with different numbers or types of SP’s, like embedded SE’s or USB device slots. But the G1 offers a baseline. <br/>
+Let’s have a look at all these SP’s.
+
+=== SIM ===
+Most mobile phones have a SIM card (or equivalent), issued by the mobile network operator (MNO), whose main function is to authenticate and identify subscribers on the network. This SIM is highly tamper-resistant and its software can be verified and/or certified by the SIM supplier and therefore trusted by the operator and service/application providers (e.g. payment organizations). <br/>
+All SIM’s should provide a certain set of basic security services that can be used by handset applications. This requires the support of the SIM-issuing network operators. Our target would be to convince network operators to deliver new SIM’s always with a default set of basic security into the field in the future. <br/>
+
+It is easily possible to add additional functionality to the SIM by downloading additional applets over the air, to provide enhanced security services for additional valuable objects.
+In contrast to the other SP’s, this infrastructure for downloading of applets and handling of keys is already available. Even Trusted Service Managers (TSM’s) are available that can manage the keys and the download of applets on behalf of the network operator and service/application providers in a secure way. <br/>
+
+This infrastructure could also be used by Android application developers. For example, if an application in the Android Market requires some specific service on the SE (e.g. an applet) the Market server could talk to the OTA server of the MNO (or TSM) to make that applet available on the SIM for that user. If that’s not possible with the SIM of that user, the shop (or the application) can ask if the user wants to upgrade the SIM and place an order at the MNO. (A similar upgrade mechanism could also be used if an app requires the basic security service and that’s not yet available on the user’s SIM)
+
+=== Secure Micro SD Card ===
+The current Android phones all have a Micro SD Card slot, which is typically populated by a 1GB or bigger Micro SD Card. These SD Cards are used by Android to store data, like photos and other media, email messages and any other data that does not need to be stored in system memory. <br/>
+Currently there exist Secure Micro SD Cards  that include, in addition to the data storage part, a complete SE, similar to the SIM. So you could replace the Micro SD Card received with your Android phone by a new Secure Micro SD Card with an embedded SE. <br/>
+
+Of course, there is a cost involved, but there are scenarios that could make that worthwhile, for instance by using a TSM introduced in the SIM section above.
+The Secure Micro SD Card is also a convenient solution to play with an actual physical SE for development purposes.
+
+=== TrustZone ===
+Most mobile phones use a microprocessor based on the ARM architecture. The high-end SoC’s (system on a chip) for smart phones do support the ARM TrustZone feature. A TrustZone enabled chipset can run in one of the two modes: normal world or secure world.  <br/>
+
+Rich operating systems, such as Android, and their applications execute in the normal world. The secure world can be used to run a much smaller, security hardened and optionally security certified operating system. Security-related functions can be implemented in secure world applications - lets call them TZ applets - on top of the secure OS. <br/>
+
+TrustZone requires additional modules beyond the basic Android OS:
+ #	security OS for the TrustZone (generic)
+ #	Android driver, which implements a communication channel between secure and normal world including a monitor responsible for switching between both worlds (generic)
+ #	TZ applets, which realize security functions (application specific)
+ #	normal world applications using the secure services offered by TZ applets in the secure world (application specific)
+ #	root keys for managing the TZ applet installation <br/>
+
+The security OS for the TrustZone requires changes in the system software, which needs cooperation with the silicon providers and handset manufacturers. <br/>
+
+Ideally all other parts become available as open source components and Android starts requiring TrustZone as a standard feature. <br/>
+
+Some early TrustZone solutions do exist, but deployment is minimal. So there is an opportunity to have a TrustZone implementation that fits well into Android. 
+
+=== SoftSP ===
+Although we discussed before the limitations of the security of large software stacks and the need for hardware-based highly tamper-resistant SE’s, a pure software-based solution might still be an option for some of the use cases that can accept a low trust level. <br/>
+
+There is lots of flexibility in our choice for a SoftSP implementation. One option is to let every app developer create a tailor-made solution. A solution on the other end of the spectrum is a generic SoftSP framework with application-specific applet-like plug-ins (lets call them softlets). <br/>
+
+There are a number of solutions that simulate or emulate a JavaCard. That would be a great choice for the SoftSP framework, because that would
+ #	create compatibility between applets in a SE and softlets in a SoftSP
+ #	re-use the existing APDU-based protocols
+ #	re-use existing code for implementing part of the SoftSP framework <br/>
+This would create an always available SP functionality baseline. 
