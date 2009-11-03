@@ -13,7 +13,6 @@ Android has the potential to be an excellent platform to support a new class of 
 In this paper we will 
  *	describe the current state of affairs
  *	identify the missing pieces of the puzzle
- *	propose an action plan to fill in the gaps
 Hereby we hope to create awareness and consensus so that we can move forward quickly to make Android the best mobile phone platform for secure and trustworthy applications.
 
 = The state of affairs =
