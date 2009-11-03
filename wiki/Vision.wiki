@@ -16,7 +16,6 @@ In this paper we will
 Hereby we hope to create awareness and consensus so that we can move forward quickly to make Android the best mobile phone platform for secure and trustworthy applications.
 
 = The state of affairs =
-
 To gain trust in a system that manipulates valuable objects you need to be convinced that these manipulations are done properly and securely. The objects should not be lost, exposed or corrupted.
 It is hard to guarantee that a complex software system, like Android, can perform these manipulations securely. Even if Android offers best of class security - which seems to be the case - there are at least four arguments that will make most people hesitant to entrust it with their secrets:
  #	Android is too new. Only over time it might have seen enough scrutiny to detect and plug the holes that must be there, statistically.
@@ -26,7 +25,6 @@ It is hard to guarantee that a complex software system, like Android, can perfor
 Therefore, we should take a closer look at the traditional solution for manipulating valuable objects in mobile phones: the Secure Element (SE).
 
 == What is a Secure Element? ==
-
 The term Secure Element is used for a small device with a little microprocessor and a relatively small memory. This device must be highly tamper resistant, so that unauthorized access to its memory and functionality is not possible without destroying the memory’s content.<br/>
 Secure Elements are found, for instance, in modern credit cards (the ones with the gold-plated contacts, or the contact-less cards) and in the _Subscriber Identity Module (SIM)_ in mobile phones. The SIM is officially called a Universal Integrated Circuit Card or UICC for short.<br/>
 A Secure Element is used to store and manipulate information in a secure and trustworthy way. Secure Elements are typically idle, but go to work if instructed to do so by electronic pulses from another device, like an Automated Teller Machine (ATM) or a mobile phone.
@@ -37,8 +35,7 @@ The following hardware modules can be identified in the SE:
  *	ROM for code and read-only data
  *	RAM for short-term working memory
  *	EEPROM (or similar) to store data that should not be lost, like keys
- *	Flash memory (replaces ROM and EEPROM in some card
-<br/>
+ *	Flash memory (replaces ROM and EEPROM in some card<br/>
 The following software modules can be identified in the Handset and SE:
  *	Both the handset and the SE have an OS. The SE OS typically includes a Java VM so that the functionality can be programmed in Java.
  *	Both the handset and the SIM have communication software. Communication can happen on multiple logical channels in parallel, typically up to 4 or 16.
