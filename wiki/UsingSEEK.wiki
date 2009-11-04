@@ -35,3 +35,20 @@ Creating a new project:
   * Copy `libmcex.so` from the subversion _seek_ project into the `libs\armeabi` folder
   * Add the JAR file to the project dependencies
   * Run the application using the new Android smartcard library (SEEK)
+
+
+== PC/SC subsystem or NativeMcEX? ==
+Currently, it is recommended to use the PC/SC subsystem for smartcard access although it will get declared as deprecated (or even removed) over the time.
+Also, the current _SmartcardSample_ already uses the NativeMcEX interface.<br/>
+In order to distinguish the different providers within the source code, use:
+{{{
+// get the default terminal factory, currently PC/SC
+TerminalFactory factory = TerminalFactory.getDefault();
+
+// alternatively, manually specify the PC/SC factory:
+TerminalFactory factory = TerminalFactory.getInstance(TerminalFactory.PCSC_TYPE, null);
+
+// or, make use of the experimental NativeMcEX factory:
+TerminalFactory factory = TerminalFactory.getInstance(TerminalFactory.NATIVE_TYPE, null);
+}}}
+When using the PC/SC provider, make sure to have the _libpcsc.so_ library in your project instead of _libmcex.so_ (or both to be safe :)
