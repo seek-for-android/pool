@@ -5,16 +5,16 @@
 
 PC/SC is a widely used industry standard for accessing smart cards in a computing environment. A fee implementation - called _PCSC-Lite_ - supports various platforms so it can easily be ported to Android.<br/>
 Having a PC/SC compliant resource manager in place makes it easier to support the API interface in Java - the main development environment.<br/><br/>
-Although PC/SC is not the best choice for a mobile phone, it is an easy and straight forward approach to support smart card functionality in the Android platform. [ link to PCSCvsNativeMcEX]<br/><br/>
+Although PC/SC is not the best choice for a mobile phone, it is an easy and straight forward approach to support smart card functionality in the Android platform. [http://code.google.com/p/seek-for-android/wiki/PCSCvsNativeMcEX PCSCvsNativeMcEX]<br/><br/>
 Requirements: [http://code.google.com/p/seek-for-android/wiki/HowToBuildKernel McEX enabled kernel]
 <br/><br/>
 
 
 == Enabling PC/SC resource manager on device ==
 
-Follow the steps in order to download, patch, compile and install the daemon on the Android device [ link to tested devices]
+Follow the steps in order to download, patch, compile and install the daemon on the Android [http://code.google.com/p/seek-for-android/wiki/Devices device]
   * Download the pcsclite sources from [http://pcsclite.alioth.debian.org/ pcsclite homepage]<br/>Currently tested with _version 1.5.5_
-  * Apply the patches from the SEEK download page [ link to pcsc patches]<br/>The download file also contains a _README_ explaining what files need to be patched.
+  * Apply the patches from the SEEK download page [http://seek-for-android.googlecode.com/files/20090929_pcscd.tar.bz2 PCSC patches]<br/>The download file also contains a _README_ explaining what files need to be patched.
   * Configure with `CC=agcc ./configure --host arm-eabi --disable-libhal --disable-libusb --enable-ipcdir=/data/pcscd` and compile with `make`<br/>Note: _agcc_ is a perl script that wraps the Android toolchain for native code compilation
   * Create required directories (_/data/pcsc_ and _/data/pcscd_) on the device and copy `pcscd` and `testpcsc` to `/data/pcsc`
   * Create a `reader.conf` configuration file and copy to _/data/pcsc_
@@ -27,7 +27,7 @@ LIBPATH          /data/pcsc/libifdmcex.so
 CHANNELID        0x0103F8
 }}}
   * Download the _PC/SC Driver Developers Kit_ from [http://www.musclecard.com/sourcedrivers.html download]
-  * Apply the patches from the SEEK download page [ link to ifddevkit patches]
+  * Apply the patches from the SEEK download page [http://seek-for-android.googlecode.com/files/20091001_ifdmcex.tar.bz2 ifddevkit patches]
   * Compile with `make`<br/>Note: _agcc_ required for cross compilation
   * Copy the shared library to _/data/pcsc_
   * Start the PC/SC daemon manually on the device to verify the result
