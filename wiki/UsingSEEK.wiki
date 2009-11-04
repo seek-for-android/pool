@@ -5,7 +5,7 @@
 
 The Android smartcard library is a proposal for an implementation of a library that will enable Android applications to connect a Secure Element, e.g. USIM card or Mobile Security Card.<br/><br/>
 The interface of the library should be considered as stable and independent of the underlying transport mechanism; either PC/SC or NativeMcEX.
-Currently, the PC/SC is the best choice as it is better supported and tested. Over the time, we plan to remove PC/SC support and aim for the native McEX handler (see [http://code.google.com/p/seek-for-android/wiki/PCSCvsNativeMcEX PCSCvsNativeMcEX]<br/><br/>
+Currently, the PC/SC is the best choice as it is better supported and tested. Over the time, we plan to remove PC/SC support and aim for the native McEX handler (see [http://code.google.com/p/seek-for-android/wiki/PCSCvsNativeMcEX PCSCvsNativeMcEX])<br/><br/>
 Requirements: [http://code.google.com/p/seek-for-android/wiki/HowToBuildKernel McEX enabled kernel]
 <br/><br/>
 
