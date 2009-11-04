@@ -57,9 +57,29 @@ rm -r /data/pcscd
 service pcscd /data/pcsc/pcscd -c /data/pcsc/reader.conf
     oneshot
 }}}
+<br/>
+
+== Compiling the PC/SC Jni Sources ==
+
+The PC/SC Jni Sources are available within the subversion source tree (_/trunk/jni/pcsc_).
+The seek project contains a precompiled version of the shared library that can be used in own projects without the need to compile the sources with the NDK.<br/>
+However, if required the sources can be build with the following steps: 
+  * Checkout the files with `svn checkout http://seek-for-android.googlecode.com/svn/trunk/jni/pcsc`
+  * Create an Android NDK project named _pcsc_ with the subversion sources
+  * run `make APP=pcsc`
+_See the Android NDK documentation for more information how to create and setup and NDK project_
 <br/><br/>
 
 
-== Creating an Android application that uses PC/SC transport layer ==
+== Creating an Android application that uses PC/SC Jni interface ==
+In subversion, a _/trunk/samples/PcscSample_ example is uploaded that makes use of the PC/SC Jni interface.<br/><br/>
+Running the sample application:
+  * Checkout the eclipse project with `svn checkout http://seek-for-android.googlecode.com/svn/trunk/samples/PcscSample`
+  * Open the eclipse project, rebuild and deploy the application on the phone with an McEX enabled kernel
 
-...
+Creating a new project:
+  * Using eclipse, create a new Android application (Min SDK Verison 3)
+  * Copy `android.smartcard.jar` from the subversion _seek_ project into the `libs` folder
+  * Copy `libpcsc.so` from the subversion _seek_ project into the `libs\armeabi` folder
+  * Add the JAR file to the project dependencies
+  * Run the application using PC/SC JNI
