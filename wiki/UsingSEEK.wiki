@@ -1,5 +1,5 @@
 #summary How to use the android.smartcard library in Android
-#labels andorid,smartcard,seek
+#labels android,smartcard,seek
 
 = Introduction =
 
