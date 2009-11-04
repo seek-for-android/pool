@@ -1,0 +1,28 @@
+#summary Discussion about using PC/SC or the native McEX interface
+#labels Android,Smartcard,PCSC
+
+= Introduction =
+
+PC/SC is a widely used industry standard for accessing smart cards in a computing environment. A fee implementation - called PCSC-Lite - supports various platforms so it can easily be ported to Android.
+However, PC/SC has disadvantages on a mobile phone that will be discussed here.<br/><br/>
+
+
+= Details =
+
+===Plain APDU access for a SE===
+The PC/SC API interface allows sending plain and unfiltered APDU commands to the underlying Secure Element.<br/>
+Providing such an interface allows the user to control everything on the Secure Element which might be no problem as long as we deal with the Mobile Security Card. As soon as a USIM connection is established, sending APDU commands on channel 0 (=basic channel) might completely disturb the GSM baseband processor and result in a USIM error until the next reboot.<br/><br/>
+A Secure Element based on [http://java.sun.com/javacard/ Java Card technology] can have multiple applications installed but only a single application (=Java Card Applet) can be active at once (=is selected).<br/>
+Having two Android applications running simultaneously, both requiring different Java Card Applets for secure operations might cause trouble as only one Applet is currently selected.<br/><br/>
+The concept of *logical channels* is supported by (most) Secure Elements where each offline application can have its own independent communication channel with one dedicated card application. APDU communication has to be filtered (CLA byte with channel information) which is not in the scope of PC/SC today. If every application has to implement its own channel management process it should be covered by the underlying smartcard library (=android.smartcard.jar)
+
+
+===PC/SC daemon background task===
+The PC/SC resource manager is a daemon that is running in the background that handles client requests (e.g. connect, transmit, ...) and synchronizes parallel access from multiple applications.<br/><br/>
+Having this daemon running all the time on a mobile phone eats up resources even if no smartcard-aware application is active. Changes within the existing PC/SC lite implementation will create an Android specific branch from the very well maintained code by the PCSC lite developer(s).<br/><br/>
+Having direct access to the McEX device node by a native library can replace the PC/SC resource manager when native ifdhandlers take care of resource synchronization, atomic APDU cmd-resp operations and transaction locking.<br/><br/>
+
+
+=Conclusion=
+The concept of using PC/SC resource manager and wrapping the interface into Java for application development is the initial approach as the PCSC lite serves as a very solid solution that can easily be ported to Android (see [http://code.google.com/p/seek-for-android/wiki/UsingPCSC Wiki:UsingPCSC].<br/>
+However, in the long run, the current PC/SC based solution should be replaced by a native interface handler that is used by the Android smartcard library directly. It also leaves out the need to install the resource manager on the phone where more changes in the system image are required instead of _just another kernel module_
