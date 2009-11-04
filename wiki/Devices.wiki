@@ -1,0 +1,24 @@
+#summary List of devices that were tested with McEX support
+#labels Android,MCEX,devices
+
+= Introduction =
+
+Devices from different manufacturers with different chipsets and kernel configurations do not always work in same way (although expected :)
+This article should dead as a database where the experience with different Android models are collected.
+
+===Android Dev Phone===
+  * McEX support works by adding the kernel module
+  * See [http://code.google.com/p/seek-for-android/wiki/HowToBuildKernel Flashing the kernel] how to enable McEX
+  * Smartcard functionality will not work when no power cable was connected upon device boot. Also, removing the power cord while the system is running results in a blocked McEX device.<br/>Current investigations seem to indicate a power issue
+
+===HTC Magic===
+  * Equal to _Android Dev Phone_
+
+===HTC Hero===
+  * Currently untested
+
+===Samsung Galaxy i7500===
+  * McEX support works by adding the kernel module
+  * See [http://code.google.com/p/seek-for-android/wiki/HowToBuildKernel Flashing the kernel] how to enable McEX
+  * Smartcard functionality works independent of power/no power cord connection
+  * *SEEK reference phone!*
