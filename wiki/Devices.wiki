@@ -3,8 +3,7 @@
 
 = Introduction =
 
-Devices from different manufacturers with different chipsets and kernel configurations do not always work in same way (although expected :)<br/>
-This article collects the experience with different Android models.
+Devices from different manufacturers with different chipsets and kernel configurations do not always work in same way (although expected :)<br/>This article collects the experience with different Android models.
 
 ===Android Dev Phone===
   * McEX support works by adding the kernel module
