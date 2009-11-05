@@ -5,7 +5,7 @@
 
 PC/SC is a widely used industry standard for accessing smart cards in a computing environment. A free implementation - called _PCSC-Lite_ - supports various platforms so it can easily be ported to Android.<br/>
 Having a PC/SC compliant resource manager in place makes it easier to support the API interface in Java - the main development environment.<br/><br/>
-Although PC/SC is not the best choice for a mobile phone, it is an easy and straight forward approach to support smart card functionality in the Android platform. [http://code.google.com/p/seek-for-android/wiki/PCSCvsNativeMcEX PCSCvsNativeMcEX]<br/><br/>
+Although PC/SC is not the best choice for a mobile phone, it is an easy and straight forward approach to support smart card functionality in the Android platform. See [http://code.google.com/p/seek-for-android/wiki/PCSCvsNativeMcEX PCSCvsNativeMcEX]<br/><br/>
 Requirements: [http://code.google.com/p/seek-for-android/wiki/HowToBuildKernel McEX enabled kernel]
 <br/><br/>
 
@@ -28,7 +28,7 @@ CHANNELID        0x0103F8
 }}}
   * Download the _PC/SC Driver Developers Kit_ from [http://www.musclecard.com/sourcedrivers.html download]
   * Apply the patches from the SEEK download page [http://seek-for-android.googlecode.com/files/20091001_ifdmcex.tar.bz2 ifddevkit patches]
-  * Compile with `make`<br/>Note: _agcc_ required for cross compilation
+  * Compile with `make`
   * Copy the shared library to _/data/pcsc_
   * Start the PC/SC daemon manually on the device to verify the result
 {{{
