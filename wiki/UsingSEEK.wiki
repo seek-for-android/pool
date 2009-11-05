@@ -38,7 +38,7 @@ Creating a new project:
 
 
 == PC/SC subsystem or NativeMcEX? ==
-Currently, it is recommended to use the PC/SC subsystem for smartcard access although it will get declared as deprecated (or even removed) over the time.
+Currently, it is recommended to use the PC/SC subsystem for smartcard access although it will get declared as deprecated (or even removed) over time.
 Also, the current _SmartcardSample_ already uses the NativeMcEX interface.<br/>
 In order to distinguish the different providers within the source code, use:
 {{{
