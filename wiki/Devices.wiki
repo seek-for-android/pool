@@ -4,7 +4,9 @@
 = Introduction =
 
 Devices from different manufacturers with different chipsets and kernel configurations do not always work in same way (although expected :)<br/>
-This article collects the experience with different Android models.
+This article collects the experience with different Android models.<br/><br/>
+SEEK reference model: *Samsung Galaxy i7500*
+<br/><br/>
 
 ===Android Dev Phone===
   * McEX support works by adding the kernel module
@@ -15,10 +17,9 @@ This article collects the experience with different Android models.
   * Equal to _Android Dev Phone_
 
 ===HTC Hero===
-  * Currently untested
+  * Currently under evaluation
 
 ===Samsung Galaxy i7500===
   * McEX support works by adding the kernel module
   * See [http://code.google.com/p/seek-for-android/wiki/HowToBuildKernel Flashing the kernel] how to enable McEX
   * Smartcard functionality works independent of power/no power cord connection
-  * *SEEK reference phone!*
