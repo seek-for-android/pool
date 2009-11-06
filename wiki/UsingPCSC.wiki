@@ -15,7 +15,7 @@ Requirements: [http://code.google.com/p/seek-for-android/wiki/HowToBuildKernel M
 Follow the steps in order to download, patch, compile and install the daemon on the Android [http://code.google.com/p/seek-for-android/wiki/Devices device]
   * Download the pcsclite sources from [http://pcsclite.alioth.debian.org/ pcsclite homepage]<br/>Currently tested with _version 1.5.5_
   * Apply the patches from the SEEK download page [http://seek-for-android.googlecode.com/files/20090929_pcscd.tar.bz2 PCSC patches]<br/>The download file also contains a _README_ explaining what files need to be patched.
-  * Configure with `CC=agcc ./configure --host arm-eabi --disable-libhal --disable-libusb --enable-ipcdir=/data/pcscd` and compile with `make`<br/>Note: _agcc_ is a perl script that wraps the Android toolchain for native code compilation
+  * Configure with `CC=agcc ./configure --host arm-eabi --disable-libhal --disable-libusb --enable-ipcdir=/data/pcscd` and compile with `make`<br/>Note: _[http://plausible.org/andy/agcc agcc]_ is a perl script that wraps the Android toolchain for native code compilation
   * Create required directories (_/data/pcsc_ and _/data/pcscd_) on the device and copy `pcscd` and `testpcsc` to `/data/pcsc`
   * Create a `reader.conf` configuration file and copy to _/data/pcsc_
 {{{
@@ -72,7 +72,7 @@ _See the Android NDK documentation for more information how to create and setup 
 
 
 == Creating an Android application that uses PC/SC Jni interface ==
-In subversion, a _/trunk/samples/PcscSample_ example is uploaded that makes use of the PC/SC Jni interface.<br/><br/>
+In subversion, _/trunk/samples/PcscSample_ is an example that makes use of the PC/SC Jni interface.<br/><br/>
 Running the sample application:
   * Checkout the eclipse project with `svn checkout http://seek-for-android.googlecode.com/svn/trunk/samples/PcscSample`
   * Open the eclipse project, rebuild and deploy the application on the phone with an McEX enabled kernel
