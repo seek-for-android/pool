@@ -28,12 +28,12 @@ make ARCH=arm CROSS_COMPILE=arm-eabi-
 }}}
 
 === Download and apply the Mc-EX patch ===
-Apply the Mc-EX patch and rebuilt the kernel as described above. A short description on how to apply the patch can be found inside the archive.
+Apply the Mc-EX patch and rebuilt the kernel as described above. A short description on how to apply the patch can be found inside the [http://seek-for-android.googlecode.com/files/20091023_mcexdrv.tar.bz2 archive].
 
-http://seek-for-android.googlecode.com/files/20091023_mcexdrv.tar.bz2
+
 
 === Build your own initrd ===
-Get the prebuilt kernel and initrd of your device using a nandroid enabled recovery image. Please search the internet on how to do this.
+Get the prebuilt kernel and initrd of your device using a nandroid enabled recovery image after creating a device backup(_/sdcard/nandroid/.../boot.img_). The Internet contains a lot of information on how to do this.
 Get [http://android-serialport-api.googlecode.com/files/getramdisk.py this] script and extract the contents of the prebuilt initrd as follows:
 {{{
 cd <mygalaxy>
@@ -41,6 +41,7 @@ cd <mygalaxy>
 mkdir <mygalaxy>/initrd
 cd <mygalaxy>/initrd
 gunzip < <mygalaxy>/ramdisk.img | cpio --extract --preserve --verbose
+
 }}}
 
 Download, patch and build the Android system as described [http://code.google.com/p/seek-for-android/wiki/HowToBuildKernel here].
