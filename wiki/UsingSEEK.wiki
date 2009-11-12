@@ -1,6 +1,13 @@
 #summary How to use the android.smartcard library in Android
 #labels android,smartcard,seek
 
+= !!! Temporarily unavailable !!! =
+
+There are problems with the kernel driver for the Secure SD card.
+We are working on potential solutions.
+Thanks for your patience.
+We will post a message on seek-for-android and android-security-discuss when we have news.
+
 = Introduction =
 
 The Android smartcard library is a proposal for an implementation of a library that will enable Android applications to connect a Secure Element, e.g. USIM card or Mobile Security Card.<br/><br/>
