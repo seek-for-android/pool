@@ -1,5 +1,6 @@
 #summary How to build and flash a Mobile Commerce Extension (Mc-EX) enabled kernel for the Samsung Galaxy
 
+= !!! Temporarily unavailable !!! =
 == How to build and flash a Mobile Commerce Extension (Mc-EX) enabled kernel for the Samsung Galaxy ==
 This description has been tested with a Samsung Galaxy I7500.
 
