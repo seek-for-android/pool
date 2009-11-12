@@ -1,5 +1,5 @@
 #summary How to build and flash a Mobile Commerce Extension (Mc-EX) enabled kernel
-
+= !!! Temporarily unavailable !!! =
 == How to build and flash a Mobile Commerce Extension (Mc-EX) enabled kernel ==
 
 The following description has been tested with Android 1.5 (cupcake) and Android 1.6 (donut). When [http://source.android.com/download downloading] and [http://source.android.com/documentation/building-for-dream building] the Android sources you get an Android system with a prebuilt kernel. To get an Android system with your own kernel you have to do some additional steps as described next.
@@ -45,7 +45,7 @@ make
 Apply the Mc-EX patches and rebuilt first the kernel and then the Android system as described above. A short description on how to apply the patches can be found inside each archive.
 
 http://seek-for-android.googlecode.com/files/20090928_mcexdevnode.tar.bz2<br>
-Temporarily unavailable: seek-for-android.googlecode.com/files/20091023_mcexdrv.tar.bz2
+http://seek-for-android.googlecode.com/files/20091023_mcexdrv.tar.bz2
 
 === Flash your own kernel ===
 *Backup the Android system of your device before you do this last step.*
