@@ -138,12 +138,13 @@ final class PcscCard extends SeekCard {
 	 * {@inheritDoc}
 	 */
 	@Override
-	void internalIsConnected() {
+	boolean internalIsConnected() {
 		try {
 			PcscJni.status(cardHandle, null, null);
 		} catch (Exception e) {
-			isConnected = false;
+			return false;
 		}
+		return true;
 	}
 
 	/**

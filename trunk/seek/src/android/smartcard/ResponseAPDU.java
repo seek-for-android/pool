@@ -25,15 +25,18 @@ public final class ResponseAPDU implements java.io.Serializable {
 	private byte[] apdu;
 
 	public ResponseAPDU(byte[] apdu) {
+		if (apdu.length < 2)
+			throw new IllegalArgumentException("response must must contain at least two status bytes");
 		this.apdu = apdu.clone();
 	}
 
 	public boolean equals(Object obj) {
-		if (obj instanceof ResponseAPDU == true) {
+		if (obj == this)
+			return true;
+		if (obj instanceof ResponseAPDU) {
 			ResponseAPDU _obj = (ResponseAPDU) obj;
 			return Arrays.equals(_obj.apdu, this.apdu);
 		}
-
 		return false;
 	}
 
@@ -56,11 +59,11 @@ public final class ResponseAPDU implements java.io.Serializable {
 	}
 
 	public int getSW1() {
-		return apdu[apdu.length - 2] & 0xff;
+		return apdu[apdu.length - 2] & 0xFF;
 	}
 
 	public int getSW2() {
-		return apdu[apdu.length - 1] & 0xff;
+		return apdu[apdu.length - 1] & 0xFF;
 	}
 
 	public int hashCode() {
