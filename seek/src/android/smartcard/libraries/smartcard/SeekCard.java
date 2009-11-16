@@ -291,8 +291,9 @@ abstract class SeekCard extends Card {
 
 	/**
 	 * Implements the SEEK card specific connection check.
+	 * @return <code>true</code> if the card is connected; <code>false</code> if the card is not connected.
 	 */
-	abstract void internalIsConnected();
+	abstract boolean internalIsConnected();
 
 	/**
 	 * Implements the SEEK card specific transmit operation.
@@ -332,7 +333,10 @@ abstract class SeekCard extends Card {
 	 */
 	boolean isConnected(boolean validate) {
 		if (validate) {
-			internalIsConnected();
+			if (!isConnected)
+				return false;
+			if (!internalIsConnected())
+				isConnected = false;
 		}
 		return isConnected;
 	}

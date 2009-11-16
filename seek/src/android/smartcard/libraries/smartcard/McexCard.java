@@ -141,13 +141,14 @@ final class McexCard extends SeekCard {
 	 * {@inheritDoc}
 	 */
 	@Override
-	void internalIsConnected() {
+	boolean internalIsConnected() {
 		try {
 			if (McexJni.stat() != 0)
-				isConnected = false;
+				return false;
 		} catch (McexException e) {
-			isConnected = false;
+			return false;
 		}
+		return true;
 	}
 
 	/**

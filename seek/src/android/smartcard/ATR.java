@@ -29,7 +29,9 @@ public final class ATR implements java.io.Serializable {
 	}
 
 	public boolean equals(Object obj) {
-		if (obj instanceof ATR == true) {
+		if (obj == this)
+			return true;
+		if (obj instanceof ATR) {
 			ATR _obj = (ATR) obj;
 			return Arrays.equals(_obj.atr, this.atr);
 		}
@@ -42,7 +44,38 @@ public final class ATR implements java.io.Serializable {
 	}
 
 	public byte[] getHistoricalBytes() {
-		throw new UnsupportedOperationException("work in progress");
+		if (atr.length < 2) {
+			return new byte[0];
+		}
+		if ((atr[0] != 0x3B) && (atr[0] != 0x3F)) {
+			return new byte[0];
+		}
+		int offset = 1;
+		int t0 = atr[offset++] & 0xFF;
+		int k = t0 & 0x0F;
+		int y = t0 & 0xF0;
+		while ((y != 0x00) && (offset < atr.length)) {
+			if ((y & 0x10) == 0x10)
+				offset++;
+			if ((y & 0x20) == 0x20)
+				offset++;
+			if ((y & 0x40) == 0x40)
+				offset++;
+			if ((y & 0x80) == 0x80) {
+				if (offset >= atr.length)
+					return new byte[0];
+				y = atr[offset++] & 0xF0;
+			} else {
+				y = 0;
+			}
+		}
+
+		if (atr.length < offset + k)
+			return new byte[0];
+
+		byte[] historicalBytes = new byte[k];
+		System.arraycopy(atr, offset, historicalBytes, 0, k);
+		return historicalBytes;
 	}
 
 	public int hashCode() {
@@ -56,5 +89,4 @@ public final class ATR implements java.io.Serializable {
 
 		return string.toString();
 	}
-
 }
