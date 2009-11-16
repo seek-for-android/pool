@@ -18,14 +18,13 @@ package android.smartcard.libraries.smartcard;
 
 import java.util.List;
 
+import junit.framework.TestCase;
 import android.smartcard.CardException;
 import android.smartcard.CardTerminal;
 import android.smartcard.CardTerminals;
 import android.smartcard.TerminalFactory;
 import android.smartcard.CardTerminals.State;
-
-
-import junit.framework.TestCase;
+import android.util.Log;
 
 /**
  * JUnit tests for the class 'android.smartcard.libraries.smartcard.PcscCardTerminals'.
@@ -88,9 +87,13 @@ public class PcscCardTerminalsTest extends TestCase {
 	 * @throws CardException 
 	 */
 	public final void testWaitForChange() throws CardException {
+		
+		Log.v("TestRunner", "EJECT CARD");
 		terminals.waitForChange();
 		List<CardTerminal> list = terminals.list(State.CARD_REMOVAL);
 		assertTrue(list.size() == 1);
+		
+		Log.v("TestRunner", "INSERT CARD");
 		terminals.waitForChange();
 		list = terminals.list(State.CARD_INSERTION);
 		assertTrue(list.size() == 1);
@@ -101,19 +104,19 @@ public class PcscCardTerminalsTest extends TestCase {
 	 * @throws CardException 
 	 */
 	public final void testWaitForChangeLong() throws CardException {
+
 		assertFalse(terminals.waitForChange(1));
+
+		Log.v("TestRunner", "EJECT CARD");
 		assertTrue(terminals.waitForChange(0));
 		List<CardTerminal> list = terminals.list(State.CARD_REMOVAL);
 		assertTrue(list.size() == 1);
 		assertFalse(terminals.waitForChange(1));
+		
+		Log.v("TestRunner", "INSERT CARD");
 		assertTrue(terminals.waitForChange(0));
 		list = terminals.list(State.CARD_INSERTION);
 		assertTrue(list.size() == 1);
-		
-		try {
-			Thread.sleep(5000);
-		} catch (InterruptedException e) {
-		}
 	}
 
 }
