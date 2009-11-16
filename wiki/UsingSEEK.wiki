@@ -1,12 +1,11 @@
 #summary How to use the android.smartcard library in Android
 #labels android,smartcard,seek
 
-= !!! Temporarily unavailable !!! =
-
-There are problems with the kernel driver for the Secure SD card.
-We are working on potential solutions.
-Thanks for your patience.
-We will post a message on seek-for-android and android-security-discuss when we have news.
+===_update 16.11.09 - ada_===
+removed all 'currently not supported...' and added the missing methods in
+  * ATR.java
+  * CommandAPDU.java
+  * ResponseAPDU.java
 
 = Introduction =
 
