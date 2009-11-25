@@ -90,7 +90,11 @@ final class SeekCardChannel extends CardChannel {
 		if (channelNumber == 0) {
 			throw new IllegalStateException("basic logical channel cannot be closed");
 		}
-		byte[] manageChannelClose = new byte[] { (byte) channelNumber, 0x70, (byte) 0x80,
+		byte cla = (byte) channelNumber;
+		if (channelNumber > 3) {
+			cla |= 0x40;
+		}
+		byte[] manageChannelClose = new byte[] { cla, 0x70, (byte) 0x80,
 				(byte) channelNumber };
 		card.transmit(manageChannelClose, 2, 0x9000, 0xFFFF, "MANAGE CHANNEL");
 		isOpen = false;
