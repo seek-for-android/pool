@@ -74,6 +74,7 @@ JNIEXPORT jint JNICALL Java_android_smartcard_libraries_smartcard_mcex_McexJni_O
     if (ioctl(fd, 0))
     {
       throwMcexException(env, obj, "ioctl", errno);
+      close(fd);
       return 0;
     }
   }
