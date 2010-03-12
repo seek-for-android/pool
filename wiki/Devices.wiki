@@ -3,23 +3,24 @@
 
 = Introduction =
 
-Devices from different manufacturers with different chipsets and kernel configurations do not always work in same way (although expected :)<br/>
+Devices from different manufacturers with different chipsets and/or kernel configurations have to be tested<br/>
 This article collects the experience with different Android models.<br/><br/>
-SEEK reference model: *Samsung Galaxy i7500*
-<br/><br/>
 
-===Android Dev Phone===
-  * McEX support works by adding the kernel module
-  * See [http://code.google.com/p/seek-for-android/wiki/HowToBuildKernel Flashing the kernel] how to enable McEX
-  * Smartcard functionality will not work when no power cable was connected upon device boot. Also, removing the power cord while the system is running results in a blocked McEX device.<br/>Current investigations seem to indicate a power issue
+|| *Model* || *Mc-EX* || *Comments* ||
+|| G1 Dev Phone || ok || see [http://code.google.com/p/seek-for-android/wiki/HowToBuildKernel Flashing the kernel] ||
+|| Google Nexus One || ok ||  ||
+|| HTC Magic || ok || ||
+|| HTC Hero || ok || difficult to flash but Mc-EX is working||
+|| HTC Tattoo || fail || How to flash a new kernel? ||
+|| Huawei U8220 || ok ||  ||
+|| Motorola Milestone || fail || How to flash a new kernel? ||
+|| Samsung Galaxy i7500 || ok || see [http://code.google.com/p/seek-for-android/wiki/HowToBuildKernelGalaxy Flashing the Galaxy kernel] ||
 
-===HTC Magic===
-  * Equal to _Android Dev Phone_
+<br/>
+===Power issue with HTC models===
+Previously we stated
+ _Smartcard functionality will not work when no power cable was connected upon device boot._<br/>
+ _Also, removing the power cord while the system is running results in a blocked McEX device._<br/>
+ _Current investigations seem to indicate a power issue._
 
-===HTC Hero===
-  * Currently under evaluation
-
-===Samsung Galaxy i7500===
-  * McEX support works by adding the kernel module
-  * See [http://code.google.com/p/seek-for-android/wiki/HowToBuildKernel Flashing the kernel] how to enable McEX
-  * Smartcard functionality works independent of power/no power cord connection
+This is resolved with a newer firmware version of the Secure SD card
