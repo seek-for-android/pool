@@ -9,7 +9,7 @@ This patch enables the Android emulator to forward any APDU traffic (AT+CRSM com
 
 == Applying the patch to the emulator sources ==
 
-  * Download the patch from
+  * Download the [http://seek-for-android.googlecode.com/files/20100304_emulator_donut.patch patch]
   * Apply the patch in the root folder of the source tree: <code>patch -p1 < 20100304_emulator_donut.patch</code>
   * Download and build pcsc-lite: <code>./configure; make</code>
   * Rebuild the emulator with PC/SC support: <code>PCSCLITE_PATH=<path/to/pcsc-lite> make -j5</code>
