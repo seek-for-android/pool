@@ -1,0 +1,20 @@
+#summary How to use the Smartcard API in Android
+
+= Introduction =
+
+The Smartcard API is a proposal for an implementation of a library that will enable Android applications to connect a Secure Element, e.g. USIM card or Mobile Security Card or others.<br/><br/>
+The interface of the library should be considered as stable and independent of the underlying transport mechanism as the developer using the library is only interested in the interface.<br/><br/>
+
+
+== smartcard-api modules ==
+
+The smartcard-api consists of several modules
+  * SmartcardService - Android remote service as the core of the smart card access<br/>Integration in `frameworks/base/packages/SmartcardService`
+  * SmartcardClient - Wrapper classes to hide the service binding specifics and deal as the main interface for the application developer<br/>Integration in `frameworks/base/core/java/android/smartcard`
+  *PcscJni - JNI interface for SmartcardService to connect to the pcsc-lite daemon<br/>Integration in `frameworks/base/libs/pcsc`
+
+== Using the smartcard-api ==
+Download and apply the `smartcard-api.patch` according to [Building building the system]<br/>
+When using Eclipse as the development environment update the SDK location to point to the correct SDK.<br/>
+Open the samples and run them on the phone. They provide a good starting point about how the smart card library can be used.<br/>
+<br/>
