@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jardesc>
-<jar path="seek/libs/android.smartcard.jar"/>
-<options buildIfNeeded="true" compress="true" descriptionLocation="/seek/export.jardesc" exportErrors="false" exportWarnings="true" includeDirectoryEntries="true" overwrite="true" saveDescription="true" storeRefactorings="false" useSourceFolders="false"/>
+<jar path="smartcard-api/libs/android.smartcard.jar"/>
+<options buildIfNeeded="true" compress="true" descriptionLocation="/smartcard-api/export.jardesc" exportErrors="false" exportWarnings="true" includeDirectoryEntries="true" overwrite="true" saveDescription="true" storeRefactorings="false" useSourceFolders="false"/>
 <storedRefactorings deprecationInfo="true" structuralOnly="false"/>
 <selectedProjects/>
 <manifest generateManifest="true" manifestLocation="" manifestVersion="1.0" reuseManifest="false" saveManifest="false" usesManifest="true">
@@ -11,8 +11,12 @@
 </sealing>
 </manifest>
 <selectedElements exportClassFiles="true" exportJavaFiles="false" exportOutputFolder="false">
-<file path="/seek/NOTICE"/>
-<javaElement handleIdentifier="=seek/gen"/>
-<javaElement handleIdentifier="=seek/src"/>
+<javaElement handleIdentifier="=smartcard-api/src&lt;android.smartcard{CardChannel.java"/>
+<javaElement handleIdentifier="=smartcard-api/src&lt;android.smartcard{ICardChannel.java"/>
+<javaElement handleIdentifier="=smartcard-api/gen"/>
+<javaElement handleIdentifier="=smartcard-api/src&lt;android.smartcard{CardException.java"/>
+<javaElement handleIdentifier="=smartcard-api/src&lt;android.smartcard{SmartcardClient.java"/>
+<file path="/smartcard-api/NOTICE"/>
+<javaElement handleIdentifier="=smartcard-api/src&lt;android.smartcard{SmartcardError.java"/>
 </selectedElements>
 </jardesc>
