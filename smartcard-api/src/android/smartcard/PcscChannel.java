@@ -17,22 +17,23 @@
 package android.smartcard;
 
 /**
- * Generic exception of the smartcard system.
+ * PC/SC daemon channel implementation.
  */
-public class CardException extends Exception {
+final class PcscChannel extends Channel {
 
-	private static final long serialVersionUID = 945149106070548293L;
-
-	public CardException(String message) {
-		super(message);
+	private final PcscTerminal terminal;
+	
+	PcscChannel(PcscTerminal terminal, int channelNumber, ISmartcardServiceCallback callback) {
+		super(channelNumber, callback);
+		this.terminal = terminal;
 	}
 
-	public CardException(String message, Throwable cause) {
-		super(message, cause);
+	public byte[] getAtr() {
+		return terminal.getAtr();
 	}
-
-	public CardException(Throwable cause) {
-		super(cause);
+	
+	@Override
+	public Terminal getTerminal() {
+		return terminal;
 	}
-
 }
