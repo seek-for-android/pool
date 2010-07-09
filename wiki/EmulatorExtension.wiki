@@ -31,3 +31,4 @@ ANDROID_SDK_ROOT=<path/to/android-sdk-linux> ./out/host/linux-x86/bin/emulator -
 }}}
   * In the emulator output a card reader will get listed, e.g. _sim_card.c: using OmniKey CardMan 3121 00 00_
   * If a SIM Toolkit application is located on the SIM card inserted to the card reader, the Android SIM Toolkit (Stk) application can be used to test/debug the card applet.
+http://seek-for-android.googlecode.com/svn/wiki/img/EmulatorExtensionScreenshot.png
