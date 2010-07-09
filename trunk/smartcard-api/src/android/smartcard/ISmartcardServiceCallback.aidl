@@ -17,22 +17,7 @@
 package android.smartcard;
 
 /**
- * Generic exception of the smartcard system.
+ * Callback interface used by ISmartcardService to check if clients are alive.
  */
-public class CardException extends Exception {
-
-	private static final long serialVersionUID = 945149106070548293L;
-
-	public CardException(String message) {
-		super(message);
-	}
-
-	public CardException(String message, Throwable cause) {
-		super(message, cause);
-	}
-
-	public CardException(Throwable cause) {
-		super(cause);
-	}
-
+oneway interface ISmartcardServiceCallback {
 }

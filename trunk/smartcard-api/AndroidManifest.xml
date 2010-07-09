@@ -2,25 +2,17 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
       package="android.smartcard"
       android:versionCode="1"
-      android:versionName="1.0">
+      android:versionName="1.1">
     
-    <permission android:label="SeekServicePermission label" android:protectionLevel="dangerous" android:name="android.smartcard.service.permission.BIND"></permission>
+    <permission android:label="SmartcardServicePermission label" android:protectionLevel="dangerous" android:name="android.permission.SMARTCARD"></permission>
     
-    <application android:label="SeekService">
-
-        <service android:name="android.smartcard.service.SeekService" android:process=":remote" android:permission="android.smartcard.service.permission.BIND">
+    <application android:label="SmartcardService">
+        <service android:name="android.smartcard.SmartcardService" android:process=":remote" android:permission="android.permission.SMARTCARD">
             <intent-filter>
-                <!-- These are the interfaces supported by the service, which you can bind to. -->
-                <action android:name="android.smartcard.service.ISeekService" />
+                <action android:name="android.smartcard.ISmartcardService" />
             </intent-filter>
         </service>
-        
-        <uses-library android:name="android.test.runner" />
     </application>
 
-    <uses-permission android:name="android.smartcard.service.permission.BIND" />
-    
-    <uses-sdk android:minSdkVersion="3" />
-
-    <instrumentation android:targetPackage="com.gide.mcexjni" android:name="android.test.InstrumentationTestRunner" />
+    <uses-sdk android:minSdkVersion="4" />
 </manifest> 
