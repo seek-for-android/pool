@@ -1,0 +1,50 @@
+#summary How to compile the Android sources with smartcard-api support
+
+= Introduction =
+
+This documents describes how to build the system from scratch, apply the smart card related patches and flash a development device with the new images.
+
+
+== Getting the Android sources ==
+
+A more detailed description how to set up the local work environment can be found  [http://source.android.com/source/download.html here].
+{{{
+$ repo init -u git://android.git.kernel.org/platform/manifest.git -b froyo
+$ repo sync
+}}}
+
+== Patching the sources ==
+Apply the necessary patches in the root directory of the Froyo source code to enable smart card support
+{{{
+$ tar xvzf <path_to_my_patches>/external_pcsc.tar.gz
+$ patch –p1 < <path_to_my_patches>/system_core.patch
+$ patch –p1 < <path_to_my_patches>/smartcard-api.patch
+$ make update-api
+}}}
+
+== Building the system ==
+Compile the sources for the target device (e.g. replace `passion` with `sapphire` or `dream`)
+{{{
+$ cd device/htc/passion
+$ ./unzip-files.sh
+$ cd -
+$ TARGET_PRODUCT=full_passion make
+}}}
+In case `unzip-files.sh` fails, please try `extract-files.sh` with the device connected and search the Internet for more information how to build the system.
+
+== Flashing the phone ==
+*Note: You'll loose all data on the phone if you proceed*<br/>
+To flash the phone, execute:
+{{{
+$ ./out/host/linux-x86/bin/adb reboot bootloader
+$ ANDROID_PRODUCT_OUT=out/target/product/passion ./out/host/linux-x86/bin/fastboot –w flashall
+}}}
+
+== Building the SDK and documentation ==
+As the new system image running on the phone now contains an extended framework API, these changes need to be included in the SDK as well.<br/>
+Run a
+{{{
+$ make sdk
+$ make docs
+}}}
+to find the new SDK under `out/host/linux-x86/sdk` and the offline documentation under `out/target/common/docs/offline-sdk/reference`
