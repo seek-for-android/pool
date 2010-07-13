@@ -1,9 +1,9 @@
-#summary How to enable the emulator talk with a SIM card connected through PC/SC
+#summary How to enable the emulator to talk to a SIM card connected through PC/SC
 
 = Introduction =
 
-The Android emulator is only supporting a primitive 'fake' SIM card it cannot be used to extend the Sim Toolkit framework. On real devices, the RIL library is very restrictive in terms of STK support.<br/>
-This patch enables the Android emulator to forward any APDU traffic (AT+CRSM commands) to a real SIM card that is connected through a PC/SC card reader and accessible with pcsc-lite.
+The Android emulator is only supporting a primitive 'fake' SIM card which cannot be used to extend the Sim Toolkit framework. On real devices, the RIL library is very restrictive in terms of STK support.<br/>
+This patch enables the Android emulator to forward any APDU traffic (AT+CRSM commands) to a real SIM card that is connected through a PC/SC card reader and accessible with pcsc-lite running on the host.
 <br/><br/>
 
 
@@ -30,5 +30,5 @@ android create avd -n Android_2.2 -t 12
 ANDROID_SDK_ROOT=<path/to/android-sdk-linux> ./out/host/linux-x86/bin/emulator -avd Android_2.2 -system out/target/product/generic/system.img -pcsc <reader>
 }}}
   * In the emulator output a card reader will get listed, e.g. _sim_card.c: using card reader Cherry XX44 00 00_
-  * If a SIM Toolkit application is located on the SIM card inserted to the card reader, the Android SIM Toolkit (Stk) application can be used to test/debug the card applet.
+  * If a SIM Toolkit application is located on the SIM card inserted to the card reader, the Android SIM Toolkit (Stk) application can be used to use/test/debug the card applet.
 http://seek-for-android.googlecode.com/svn/wiki/img/EmulatorExtensionScreenshot.png
