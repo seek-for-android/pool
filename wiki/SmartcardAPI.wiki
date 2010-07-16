@@ -9,12 +9,12 @@ The interface of the library should be considered as stable and independent of t
 == smartcard-api modules ==
 
 The smartcard-api consists of several modules
-  * SmartcardService - Android remote service as the core of the smart card access<br/>Integration in `frameworks/base/packages/SmartcardService`
-  * SmartcardClient - Wrapper classes to hide the service binding specifics and deal as the main interface for the application developer<br/>Integration in `frameworks/base/core/java/android/smartcard`
-  *PcscJni - JNI interface for SmartcardService to connect to the pcsc-lite daemon<br/>Integration in `frameworks/base/libs/pcsc`
+  * *SmartcardService* Android remote service as the core of the smart card access<br/>Integration in `frameworks/base/packages/SmartcardService`
+  * *SmartcardClient* Wrapper classes to hide the service binding specifics and deal as the main interface for the application developer<br/>Integration in `frameworks/base/core/java/android/smartcard`
+  * *PcscJni* JNI interface for the service to connect to the pcsc-lite daemon<br/>Integration in `frameworks/base/libs/pcsc`
 
 == Using the smartcard-api ==
-Download and apply the `smartcard-api.patch` according to [Building building the system]<br/>
+Download and apply the `smartcard-api.patch` according to [http://code.google.com/p/seek-for-android/wiki/BuildingTheSystem Building building the system]<br/>
 When using Eclipse as the development environment update the SDK location to point to the correct SDK.<br/>
 Open the samples and run them on the phone. They provide a good starting point about how the smart card library can be used.<br/>
 <br/>
