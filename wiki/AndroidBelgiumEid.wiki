@@ -3,15 +3,20 @@
 
 = Introduction =
 
-Add your content here.
+This page explains how to make the Belgium eID application for android work, using a android phone (version 1.6 or higher) and a G&D secure microSD card (link).
 
 
-= Details =
+= Downloads =
 
-Add your content here.  Format your content with:
-  * Text in *bold* or _italic_
-  * Headings, paragraphs, and lists
-  * Automatic links to other wiki pages
+From the download page get:
+  * The android eID application: EidForAndroid.apk
+  * The specimen Belgium eID data file: test_card.xml
+  * The eID Quick Key Toolset: eid-toolset-package-1.0-SNAPSHOT.zip
+
+= Card Personalisation =
+
+- Make your secure microSD card accessible as a smartcard to your machine through some PCSC library. 
+- 
 
 
 
