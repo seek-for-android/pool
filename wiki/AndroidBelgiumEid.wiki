@@ -1,4 +1,4 @@
-#summary One-sentence summary of this page.
+#summary How to make the eID for Android application work
 #labels eid,belgium,android
 
 = Introduction =
