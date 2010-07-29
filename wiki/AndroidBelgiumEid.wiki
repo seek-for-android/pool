@@ -35,3 +35,6 @@ The application will ask you if you want to write an empty eID first. As the app
 After personalization, you can insert the secure microSD card in the microSD slot of your android phone. You should then install the EidForAndroid.apk file on your android phone and finally when starting up the application you should get something like this:
 
 http://seek-for-android.googlecode.com/svn/wiki/img/screenshot_android.png
+
+You are now able to use the application functionalities such as viewing your card data, saving certificates or testing your PIN (the default PIN value is '1234').
+Note that as this is a alfa version of the application some functionalities do not work yet (such as storing your card data or loading someone else's), and that other functionalities like signing files or checking someone else's validity are not implemented yet.
