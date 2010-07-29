@@ -19,11 +19,16 @@ Linux users without a Java Card uploading tool should also install GPShell versi
 
 = Card Personalisation =
 
-First make your secure microSD card accessible as a smartcard to your machine through a PCSC library. Once this is done you can unpack the toolset zip file to your preferred folder. In this folder you can start the card personalization application by running either eid-quick-key-toolset.exe under Windows or ./eid-quick-key-toolset.sh under Linux. The application to personalize your card will now extract some .jar files and start.
+First make your secure microSD card accessible as a smartcard to your machine through a PCSC library. Once this is done you can unpack the toolset zip file to your preferred folder. In this folder you can start the card personalization application by running either eid-quick-key-toolset.exe under Windows or ./eid-quick-key-toolset.sh under Linux. The application to personalize your card will now extract some .jar files and start. 
+NOTE: under Linux it may be that the application complains about executable right on the 'converter' script. Go to /java_card_kit-2_2_1/bin and change the permissions of the 'converter' file to executable to fix this problem.
 
 If you have your own Java Card application loading tool and do not wish to use or install GPShell, you can find the eID .cap file to upload under /be/fedict/eidapplet/javacard/eidapplet.cap.
 
-In the application you 
+In the application go to 'File' and then 'Load' and select the test_card.xml file you just downloaded. If everything goes fine you should see the following:
+
+http://seek-for-android.googlecode.com/svn/wiki/img/eidtoolsetscreenshot.png
+
+
 
 
 http://seek-for-android.googlecode.com/svn/wiki/img/androideidscreenshot.png
