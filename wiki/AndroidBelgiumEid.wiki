@@ -10,7 +10,7 @@ To make the application work you will need to personalise your eID Java Card app
 = Downloads =
 
 From the download page get:
-  * The android eID application: EidForAndroid.apk
+  * The android eID application: [http://code.google.com/p/seek-for-android/downloads/detail?name=EidForAndroid.apk&can=2&q= EidForAndroid.apk]
   * The specimen Belgium eID data file: test_card.xml
   * The eID Quick Key Toolset: eid-toolset-package-1.0-SNAPSHOT.zip
 
