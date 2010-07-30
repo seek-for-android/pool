@@ -3,8 +3,8 @@
 
 = Introduction =
 
-This page explains how to make the Belgium eID application for android work, using a android phone (version 1.6 or higher) with the G&D smart card access libraries available, and a [http://www.gd-sfs.com/ G&D secure microSD card]).
-To make the application work you will need to personalise your eID Java Card applet. This is done using the open source eID Quick Key Toolset application found here (link). 
+This page explains how to make the Belgium eID application for android work, using a android phone (version 1.6 or higher) with the G&D smart card access libraries available, and a [http://www.gd-sfs.com/ G&D secure microSD card].
+To make the application work you will need to personalise your eID Java Card applet. This is done using the open source eID Quick Key Toolset application found [http://code.google.com/p/eid-quick-key-toolset/ here]. 
 
 
 = Downloads =
