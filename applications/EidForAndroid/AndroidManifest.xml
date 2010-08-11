@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+      package="be.cosic.android.eid.gui"
+      android:versionCode="1"
+      android:versionName="1.0">
+    <application android:icon="@drawable/icon" android:label="@string/app_name">
+        <activity android:name=".MainActivity"
+                  android:label="@string/app_name"
+                  android:screenOrientation="landscape"
+                  android:theme="@android:style/Theme.NoTitleBar">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity android:name=".Identity">
+        </activity>
+         <activity android:name=".IdentityExtra">
+        </activity>
+         <activity android:name=".Certificates">
+        </activity>
+        <activity android:name=".CardPin">
+        </activity>
+        <activity android:name=".PathQuery" 
+          		  android:label="File Location" 
+          		  android:theme="@android:style/Theme.Dialog"/>
+		<activity android:name=".PinQuery"
+				  android:screenOrientation="landscape"
+				  android:theme="@android:style/Theme.NoTitleBar">
+        </activity>
+		
+    </application>
+    <uses-sdk android:minSdkVersion="4" />
+    
+<uses-permission android:name="android.permission.SMARTCARD"/>
+<uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+</manifest> 
