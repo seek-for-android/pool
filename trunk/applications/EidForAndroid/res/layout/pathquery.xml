@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:gravity="center"
+    android:id="@+id/pathquery">
+    <TextView
+        android:id="@+id/your_path"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="#FFF"
+        android:lines="1"
+        android:text="@string/your_path"
+        android:paddingLeft="15dip"
+        android:paddingRight="15dip"/>
+    <EditText
+        android:id="@+id/path_entry"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/your_path"
+        android:layout_alignRight="@+id/your_path"
+        android:layout_alignLeft="@+id/your_path"
+        />
+    <Button
+        android:id="@+id/ok"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/path_entry"
+        android:layout_alignRight="@+id/your_path"
+        android:width="80dip"
+        android:text="@string/ok" />
+    <Button
+    	android:id="@+id/cancel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toLeftOf="@id/ok"
+        android:layout_alignTop="@id/ok"
+        android:layout_alignLeft="@+id/your_path"
+        android:text="@string/cancel" />
+</RelativeLayout>
