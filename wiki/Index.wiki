@@ -1,8 +1,6 @@
 #summary Wiki indroduction
 #sidebar TOC
 
-===Further readings===
-
 ====Introduction====
  * [SecurityConcept]<br>Read about the system security of the SmartCard API integration in the Android Platform
 
