@@ -1,6 +1,6 @@
 #summary Table of Content
 
-  * [Start Introduction]
+  * [Index Introduction]
     * [Devices]
     * [SecurityConcept]
   * How To
