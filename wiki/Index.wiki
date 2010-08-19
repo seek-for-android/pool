@@ -1,0 +1,8 @@
+#summary Wiki Index
+#sidebar TOC
+
+===Further readings===
+
+ * [BuildingTheSystem]: For details on how to compile the Android sources with Smartcard API support ([Devices List of tested devices]). 
+ * [SmartcardAPI]: A short introduction into the use of the Smartcard API (sample are available in svn)
+ * [EmulatorExtension]: Overview of how to enable the emulator to talk to a physical SIM card in a card reader
