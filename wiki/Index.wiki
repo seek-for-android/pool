@@ -1,8 +1,17 @@
-#summary Wiki Index
+#summary Wiki indroduction
 #sidebar TOC
 
 ===Further readings===
 
- * [BuildingTheSystem]: For details on how to compile the Android sources with Smartcard API support ([Devices List of tested devices]). 
- * [SmartcardAPI]: A short introduction into the use of the Smartcard API (sample are available in svn)
- * [EmulatorExtension]: Overview of how to enable the emulator to talk to a physical SIM card in a card reader
+====Introduction====
+ * [SecurityConcept]<br>Read about the system security of the SmartCard API integration in the Android Platform
+
+====How To====
+   * [BuildingTheSystem]<br>For details on how to compile the Android sources with SmartCard API support ([Devices List of tested devices]).<br><br>
+   * [SmartcardAPI]<br>A short introduction into the use of the SmartCard API (samples are available in svn)<br>
+ 
+====UICC Support====
+   * [EmulatorExtension]<br>Overview of how to enable the emulator to talk to a physical SIM card in a card reader<br>
+ 
+====Applications====
+   * [AndroidBelgiumEid]<br>The Katholieke Universiteit Leuven, Belgium, developed a reference implementation for the Belgium eID card on the Android platform with the Mobile Security Card<br>
