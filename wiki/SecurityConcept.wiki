@@ -1,0 +1,5 @@
+#summary One-sentence summary of this page.
+
+===Security Considerations===
+The Android platform provides a permission scheme (see http://developer.android.com/guide/topics/security/security.html) to control access to several extended framework functions. This scheme is transferred to the Smartcard API (android.permission.smartcard) to ensure that the user knows if an application is accessing the smart card. Additionally an APDU filtering scheme within the IFD Handlers can block malicious commands to the card. 
+Access to the lower layer components such as PC/SC lite will be protected with the standard Android mechanisms. 
