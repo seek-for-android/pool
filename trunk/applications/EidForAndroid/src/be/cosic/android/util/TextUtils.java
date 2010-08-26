@@ -14,8 +14,15 @@
  */
 package be.cosic.android.util;
 
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.math.BigInteger;
+import java.util.ArrayList;
+import java.util.List;
 
 public class TextUtils {
 	public final static String hexChars[] = { "0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "A", "B", "C", "D", "E", "F" };
@@ -49,6 +56,31 @@ public class TextUtils {
 		}
 		return data;
 	}
+	
+	public static String[] readTextFile(String filename) throws IOException {
+        List<String> wordList = new ArrayList<String>();
+        BufferedReader reader = new BufferedReader(new FileReader(filename));
+        String line;
+        while ((line = reader.readLine()) != null) {
+                wordList.add(line);
+        }
+        reader.close();
+        String[] words = new String[wordList.size()];
+        wordList.toArray(words);
+        return words;
+	}
+
+	 public static void writeTextFile(String[] text, String filename) throws IOException {
+         BufferedWriter writer = new BufferedWriter(new FileWriter(filename));
+         for (int i = 0; i < text.length; i++) {
+                 writer.write(text[i]);
+                 writer.newLine();
+         }
+         writer.close();
+	 }
+
+	
+	
 	static void print(byte[] response) {
 		System.err.println("Response  " + hexDump(response));
 	}

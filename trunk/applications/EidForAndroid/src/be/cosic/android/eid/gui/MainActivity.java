@@ -396,7 +396,7 @@ public class MainActivity extends TabActivity {
     	
             if (resultCode == RESULT_OK) {
                
-            	
+            	//Files will be stored on the SDcard under the given path
             	String[] files = data.getStringExtra("path").split(File.separator);
             	String dir = Environment.getExternalStorageDirectory().getAbsolutePath();
             	String path = dir + File.separator + data.getStringExtra("path");
@@ -422,13 +422,8 @@ public class MainActivity extends TabActivity {
 					
 					
 					//Store the eid as an xml file
-					belpic.storeEid(path);
-					//Now we store the file	TODO make it work				
-					//openFileOutput can not contain path separators in its name!!!!!!!
-					//FileOutputStream fos = openFileOutput(path, Context.MODE_WORLD_READABLE);
-//					FileOutputStream fos = new FileOutputStream(path);
-//					fos.write(belpic.storeEid());
-//	        		fos.close();
+					belpic.storeEid(path);				
+					
 	        		
 				} catch (	FileNotFoundException	 e) {
 					
@@ -489,12 +484,6 @@ public class MainActivity extends TabActivity {
 					
 					//Store the eid as an xml file
 					belpic.loadEid(path);
-					//Now we store the file	TODO make it work				
-					//openFileOutput can not contain path separators in its name!!!!!!!
-					//FileOutputStream fos = openFileOutput(path, Context.MODE_WORLD_READABLE);
-//					FileOutputStream fos = new FileOutputStream(path);
-//					fos.write(belpic.storeEid());
-//	        		fos.close();
 	        		
 					
 					
