@@ -509,6 +509,13 @@ public class MainActivity extends TabActivity {
 					//TODO
 					
 					e.printStackTrace();
+				} catch (GeneralSecurityException e) {
+
+					toast = Toast.makeText(context, "GeneralSecurityException, Invalid eID Data", duration);
+	    			toast.setGravity(Gravity.CENTER, 0, 0);
+	    			toast.show();
+					
+					//TODO
 				} 
             	
             	
