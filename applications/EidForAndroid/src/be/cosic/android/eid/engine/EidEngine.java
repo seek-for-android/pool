@@ -15,12 +15,15 @@
 package be.cosic.android.eid.engine;
 
 import java.io.BufferedReader;
+import java.io.ByteArrayInputStream;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
+import java.security.cert.CertificateFactory;
+import java.security.cert.X509Certificate;
 import java.util.Hashtable;
 
 import javax.xml.parsers.DocumentBuilder;
@@ -37,9 +40,11 @@ import android.smartcard.ICardChannel;
 import android.smartcard.SmartcardClient;
 import android.view.Gravity;
 import android.widget.Toast;
+import be.cosic.android.eid.exceptions.GeneralSecurityException;
 import be.cosic.android.eid.exceptions.InvalidPinException;
 import be.cosic.android.eid.exceptions.InvalidResponse;
 import be.cosic.android.eid.exceptions.NoSuchFileException;
+import be.cosic.android.eid.gui.MainActivity;
 import be.cosic.android.eid.interfaces.EidCommandsInterface;
 import be.cosic.android.util.MathUtils;
 import be.cosic.android.util.TextUtils;
@@ -545,7 +550,30 @@ public class EidEngine implements EidCommandsInterface{
 */		
 	}
 	
-	public void loadEid(String path) throws IOException {
+	public void loadEid(String path) throws IOException, GeneralSecurityException {
+		
+		
+		
+		//Check validity of every data field using own CA certificate!!!
+		X509Certificate caCert;
+		
+        try {
+			byte[] caCertData = readCACertificateBytes();
+			
+			//TODO make cert of data en use to check xml data
+			ByteArrayInputStream inStream = new ByteArrayInputStream(caCertData);
+			CertificateFactory cf = CertificateFactory.getInstance("X.509");
+			caCert = (X509Certificate) cf.generateCertificate(inStream);
+			inStream.close();
+			
+			
+		} catch (Exception e) {
+			//If own CA not reachable: always throw invalid eID Data/security exception
+			e.printStackTrace();
+			throw new GeneralSecurityException();
+			
+		}
+        
 		
 		//TODO as for Base64, tranform is also only available from android API 8 and up
 		//So we use hex dump to write data to the xml file: TODO check this with eid quick key toolset if possible --> yes id schem used as here, or possibly if using jaxbe and changing element type to something else then base64
@@ -563,7 +591,7 @@ public class EidEngine implements EidCommandsInterface{
         }
         
         
-        int start = 0;
+       
         // Search the file for keywords and set the data accordingly: data is found between <fileData> and </fileData> and the order of appearance is fixed
         // Use util.base64 as base64 only supported as from API v8
        
@@ -576,8 +604,11 @@ public class EidEngine implements EidCommandsInterface{
         // Base64 as for API version 8 and later:
 		//((Text) dirFileData.getFirstChild()).setData(encodeToString(readDirFile(), android.util.Base64.DEFAULT));
 		
+        
+        
+        
         //hexdump:
-        start = file.indexOf("<fileData>", start);
+        int start = file.indexOf("<fileData>", 0);
         ((Text) dirFileData.getFirstChild()).setData(file.substring(file.indexOf("<fileData>", start) + 10, file.indexOf("</", start)));
         start = file.indexOf("<fileData>", start + 1);
         
@@ -591,6 +622,10 @@ public class EidEngine implements EidCommandsInterface{
         start = file.indexOf("<fileData>", start + 1);
         ((Text) certificateDirectoryFileData.getFirstChild()).setData(file.substring(file.indexOf("<fileData>", start) + 10, file.indexOf("</", start)));
         start = file.indexOf("<fileData>", start + 1);
+        
+        //check certificates:
+        //auth en nonrep using cacert, cacert using rootca
+        
         ((Text) authenticationCertificateFileData.getFirstChild()).setData(file.substring(file.indexOf("<fileData>", start) + 10, file.indexOf("</", start)));
         start = file.indexOf("<fileData>", start + 1);
         ((Text) nonRepudiationCertificateFileData.getFirstChild()).setData(file.substring(file.indexOf("<fileData>", start) + 10, file.indexOf("</", start)));
