@@ -14,9 +14,12 @@
  */
 package be.cosic.android.eid.engine;
 
+import java.io.BufferedReader;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+import java.io.FileReader;
+import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.util.Hashtable;
 
@@ -450,10 +453,80 @@ public class EidEngine implements EidCommandsInterface{
 	}
 	
 	
-	public void storeEid(String path) throws FileNotFoundException{
+	public void storeEid(String path) throws IOException{
 		
 		//TODO as for Base64, tranform is also only available from android API 8 and up
-		//If in android API 8, make sure that base64 is used
+		//So we use hex dump to write data to the xml file: TODO check this with eid quick key toolset if possible --> yes id schem used as here, or possibly if using jaxbe and changing element type to something else then base64
+		
+		//We need to have an empty xml file as we can not use xml tranformations:
+		//or we can write a file from scratch....
+		String file = "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?>" + "\n" +
+				"<ns2:MasterFile xmlns:ns2=\"http://fedict.be/eidtoolset/eidlibrary\">" + "\n" +
+				"	 <dirFile>" + "\n" +
+				"        <fileData>"+   ((Text) dirFileData.getFirstChild()).getData()    +"</fileData>" + "\n" +
+				"	 </dirFile>" + "\n" +
+				"    <BelPicDirectory>" + "\n" +
+				"        <objectDirectoryFile>" + "\n" +
+				"            <fileData>" + ((Text) objectDirectoryFileData.getFirstChild()).getData() + "</fileData>" + "\n" +
+				"        </objectDirectoryFile>" + "\n" +
+				"        <tokenInfo>" + "\n" +
+				"            <fileData>" + ((Text) tokenInfoFileData.getFirstChild()).getData() + "</fileData>" + "\n" +
+				"        </tokenInfo>" + "\n" +
+				"        <authenticationObjectDirectoryFile>" + "\n" +
+				"            <fileData>" + ((Text) authenticationObjectDirectoryFileData.getFirstChild()).getData() + "</fileData>" + "\n" +
+				"        </authenticationObjectDirectoryFile>" + "\n" +
+				"        <privateKeyDirectoryFile>" + "\n" +
+				"            <fileData>" + ((Text) privateKeyDirectoryFileData.getFirstChild()).getData() + "</fileData>" + "\n" +
+				"        </privateKeyDirectoryFile>" + "\n" +
+				"        <certificateDirectoryFile>" + "\n" +
+				"            <fileData>" + ((Text) certificateDirectoryFileData.getFirstChild()).getData() + "</fileData>" + "\n" +
+				"        </certificateDirectoryFile>" + "\n" +
+				"        <authenticationCertificate>" + "\n" +
+				"            <fileData>" + ((Text) authenticationCertificateFileData.getFirstChild()).getData() + "</fileData>" + "\n" +
+				"        </authenticationCertificate>" + "\n" +
+				"        <nonRepudiationCertificate>" + "\n" +
+				"            <fileData>" + ((Text) nonRepudiationCertificateFileData.getFirstChild()).getData() + "</fileData>" + "\n" +
+				"        </nonRepudiationCertificate>" + "\n" +
+				"        <caCertificate>" + "\n" +
+				"            <fileData>" + ((Text) caCertificateFileData.getFirstChild()).getData() + "</fileData>" + "\n" +
+				"        </caCertificate>" + "\n" +
+				"        <rootCaCertificate>" + "\n" +
+				"            <fileData>" + ((Text) rootCaCertificateFileData.getFirstChild()).getData() + "</fileData>" + "\n" +
+				"        </rootCaCertificate>" + "\n" +
+				"        <rrnCertificate>" + "\n" +
+				"            <fileData>" + ((Text) rrnCertificateFileData.getFirstChild()).getData() + "</fileData>" + "\n" +
+				"        </rrnCertificate>" + "\n" +
+				"    </BelPicDirectory>" + "\n" +
+				"    <IDDirectory>" + "\n" +
+				"        <identityFile>" + "\n" +
+				"            <fileData>" + ((Text) identityFileData.getFirstChild()).getData() + "</fileData>" + "\n" +
+				"        </identityFile>" + "\n" +
+				"        <identityFileSignature>" + "\n" +
+				"            <fileData>" + ((Text) identityFileSignatureFileData.getFirstChild()).getData() + "</fileData>" + "\n" +
+				"        </identityFileSignature>" + "\n" +
+				"        <addressFile>" + "\n" +
+				"            <fileData>" + ((Text) addressFileData.getFirstChild()).getData() + "</fileData>" + "\n" +
+				"        </addressFile>" + "\n" +
+				"        <addressFileSignature>" + "\n" +
+				"            <fileData>" + ((Text) addressFileSignatureFileData.getFirstChild()).getData() + "</fileData>" + "\n" +
+				"        </addressFileSignature>" + "\n" +
+				"        <photoFile>" + "\n" +
+				"            <fileData>" + ((Text) photoFileData.getFirstChild()).getData() + "</fileData>" + "\n" +
+				"        </photoFile>" + "\n" +
+				"        <caRoleIDFile>" + "\n" +
+				"            <fileData>" + ((Text) caRoleIDFileData.getFirstChild()).getData() + "</fileData>" + "\n" +
+				"        </caRoleIDFile>" + "\n" +
+				"        <preferencesFile>" + "\n" +
+				"            <fileData>" + ((Text) preferencesFileData.getFirstChild()).getData() + "</fileData>" + "\n" +
+				"        </preferencesFile>" + "\n" +
+				"    </IDDirectory>" + "\n" +
+				"</ns2:MasterFile>";
+		
+		FileOutputStream fos = new FileOutputStream(path);
+		fos.write(file.getBytes());
+		fos.close();
+		
+		// As for API version 8 and later:
 		/*
 		TransformerFactory tranFactory = TransformerFactory.newInstance(); 
 	    Transformer aTransformer;
@@ -472,12 +545,87 @@ public class EidEngine implements EidCommandsInterface{
 */		
 	}
 	
-	public void loadEid(String path) throws FileNotFoundException, UnsupportedEncodingException {
+	public void loadEid(String path) throws IOException {
 		
 		//TODO as for Base64, tranform is also only available from android API 8 and up
-		//If in android API 8, make sure that base64 is used
-
-	
+		//So we use hex dump to write data to the xml file: TODO check this with eid quick key toolset if possible --> yes id schem used as here, or possibly if using jaxbe and changing element type to something else then base64
+		
+		// To counter this, and as the xml structure is rather simple, we will just read out the xml file line by line
+		// Also we will need to use hex encoding in the xml file as base64 encoding is not supported: TODO check this everywhere!
+		// Read in the xml file
+        String[] text = TextUtils.readTextFile(path);
+        String file = "";
+        // Go through every line of the file and put everything in one string
+        for (int i = 0; i < text.length; i++) {
+        	
+        	file = file + text[i] + "\n";
+        	
+        }
+        
+        
+        int start = 0;
+        // Search the file for keywords and set the data accordingly: data is found between <fileData> and </fileData> and the order of appearance is fixed
+        // Use util.base64 as base64 only supported as from API v8
+       
+        
+        // TODO: use own base64 encoder/decoder? or just use hexdump? --> hexdump definitely better
+        //base64:
+//        byte[] toDecode = file.substring(file.indexOf("<fileData>", start), file.lastIndexOf("</fileData>", start)).getBytes();
+//        ((Text) dirFileData.getFirstChild()).setData(TextUtils.hexDump(Base64.decode(toDecode,0, toDecode.length, 0)));
+//        start = file.lastIndexOf("</fileData>", start);
+        // Base64 as for API version 8 and later:
+		//((Text) dirFileData.getFirstChild()).setData(encodeToString(readDirFile(), android.util.Base64.DEFAULT));
+		
+        //hexdump:
+        start = file.indexOf("<fileData>", start);
+        ((Text) dirFileData.getFirstChild()).setData(file.substring(file.indexOf("<fileData>", start) + 10, file.indexOf("</", start)));
+        start = file.indexOf("<fileData>", start + 1);
+        
+		((Text) objectDirectoryFileData.getFirstChild()).setData(file.substring(file.indexOf("<fileData>", start) + 10, file.indexOf("</", start)));
+		start = file.indexOf("<fileData>", start + 1);
+        ((Text) tokenInfoFileData.getFirstChild()).setData(file.substring(file.indexOf("<fileData>", start) + 10, file.indexOf("</", start)));
+        start = file.indexOf("<fileData>", start + 1);
+        ((Text) authenticationObjectDirectoryFileData.getFirstChild()).setData(file.substring(file.indexOf("<fileData>", start) + 10, file.indexOf("</", start)));
+        start = file.indexOf("<fileData>", start + 1);
+        ((Text) privateKeyDirectoryFileData.getFirstChild()).setData(file.substring(file.indexOf("<fileData>", start) + 10, file.indexOf("</", start)));
+        start = file.indexOf("<fileData>", start + 1);
+        ((Text) certificateDirectoryFileData.getFirstChild()).setData(file.substring(file.indexOf("<fileData>", start) + 10, file.indexOf("</", start)));
+        start = file.indexOf("<fileData>", start + 1);
+        ((Text) authenticationCertificateFileData.getFirstChild()).setData(file.substring(file.indexOf("<fileData>", start) + 10, file.indexOf("</", start)));
+        start = file.indexOf("<fileData>", start + 1);
+        ((Text) nonRepudiationCertificateFileData.getFirstChild()).setData(file.substring(file.indexOf("<fileData>", start) + 10, file.indexOf("</", start)));
+        start = file.indexOf("<fileData>", start + 1);
+        ((Text) caCertificateFileData.getFirstChild()).setData(file.substring(file.indexOf("<fileData>", start) + 10, file.indexOf("</", start)));
+        start = file.indexOf("<fileData>", start + 1);
+        ((Text) rootCaCertificateFileData.getFirstChild()).setData(file.substring(file.indexOf("<fileData>", start) + 10, file.indexOf("</", start)));
+        start = file.indexOf("<fileData>", start + 1);
+        ((Text) rrnCertificateFileData.getFirstChild()).setData(file.substring(file.indexOf("<fileData>", start) + 10, file.indexOf("</", start)));
+        start = file.indexOf("<fileData>", start + 1);
+        
+		
+		((Text) identityFileData.getFirstChild()).setData(file.substring(file.indexOf("<fileData>", start) + 10, file.indexOf("</", start)));
+		start = file.indexOf("<fileData>", start + 1);
+        ((Text) identityFileSignatureFileData.getFirstChild()).setData(file.substring(file.indexOf("<fileData>", start) + 10, file.indexOf("</", start)));
+        start = file.indexOf("<fileData>", start + 1);
+        ((Text) addressFileData.getFirstChild()).setData(file.substring(file.indexOf("<fileData>", start) + 10, file.indexOf("</", start)));
+        start = file.indexOf("<fileData>", start + 1);
+        ((Text) addressFileSignatureFileData.getFirstChild()).setData(file.substring(file.indexOf("<fileData>", start) + 10, file.indexOf("</", start)));
+        start = file.indexOf("<fileData>", start + 1);
+        ((Text) photoFileData.getFirstChild()).setData(file.substring(file.indexOf("<fileData>", start) + 10, file.indexOf("</", start)));
+        start = file.indexOf("<fileData>", start + 1);
+        ((Text) caRoleIDFileData.getFirstChild()).setData(file.substring(file.indexOf("<fileData>", start) + 10, file.indexOf("</", start)));
+        start = file.indexOf("<fileData>", start + 1);
+        ((Text) preferencesFileData.getFirstChild()).setData(file.substring(file.indexOf("<fileData>", start) + 10, file.indexOf("</", start)));
+        start = file.indexOf("<fileData>", start + 1);
+        
+		
+		
+        
+        //TextUtils.writeTextFile(text, path);
+        
+        identityInfo.clear();
+	    addressInfo.clear();
+	    parseEidData();
 		
 		/*TransformerFactory tranFactory = TransformerFactory.newInstance(); 
 	    Transformer aTransformer;

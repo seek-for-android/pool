@@ -31,6 +31,9 @@
         <item>Choose new PIN:</item>
         <item>Repeat new PIN:</item>
     </string-array>
+    <string name="functionalities">Card functionalities:</string>
+    <string name="sign_data">Sign a File</string>
+    <string name="authenticate">Authenticate</string>
     <string name="ok">OK</string>
     <string name="cancel">Cancel</string>
 </resources>
