@@ -3,7 +3,7 @@
       package="be.cosic.android.eid.gui"
       android:versionCode="1"
       android:versionName="1.0">
-    <application android:icon="@drawable/icon" android:label="@string/app_name">
+    <application android:icon="@drawable/eid" android:label="@string/app_name">
         <activity android:name=".MainActivity"
                   android:label="@string/app_name"
                   android:screenOrientation="landscape"
