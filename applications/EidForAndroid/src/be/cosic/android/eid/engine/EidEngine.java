@@ -22,8 +22,14 @@ import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
+import java.security.InvalidKeyException;
+import java.security.NoSuchAlgorithmException;
+import java.security.NoSuchProviderException;
+import java.security.SignatureException;
+import java.security.cert.CertificateException;
 import java.security.cert.CertificateFactory;
 import java.security.cert.X509Certificate;
+import java.util.Arrays;
 import java.util.Hashtable;
 
 import javax.xml.parsers.DocumentBuilder;
@@ -555,24 +561,24 @@ public class EidEngine implements EidCommandsInterface{
 		
 		
 		//Check validity of every data field using own CA certificate!!!
-		X509Certificate caCert;
-		
-        try {
-			byte[] caCertData = readCACertificateBytes();
-			
-			//TODO make cert of data en use to check xml data
-			ByteArrayInputStream inStream = new ByteArrayInputStream(caCertData);
-			CertificateFactory cf = CertificateFactory.getInstance("X.509");
-			caCert = (X509Certificate) cf.generateCertificate(inStream);
-			inStream.close();
-			
-			
-		} catch (Exception e) {
-			//If own CA not reachable: always throw invalid eID Data/security exception
-			e.printStackTrace();
-			throw new GeneralSecurityException();
-			
-		}
+//		X509Certificate caCert;
+//		
+//        try {
+////			byte[] caCertData = readCACertificateBytes();
+////			
+////			//TODO make cert of data en use to check xml data
+////			ByteArrayInputStream inStream = new ByteArrayInputStream(caCertData);
+////			CertificateFactory cf = CertificateFactory.getInstance("X.509");
+////			caCert = (X509Certificate) cf.generateCertificate(inStream);
+////			inStream.close();
+////			
+//			
+//		} catch (Exception e) {
+//			//If own CA not reachable: always throw invalid eID Data/security exception
+//			e.printStackTrace();
+//			throw new GeneralSecurityException();
+//			
+//		}
         
 		
 		//TODO as for Base64, tranform is also only available from android API 8 and up
@@ -626,18 +632,100 @@ public class EidEngine implements EidCommandsInterface{
         //check certificates:
         //auth en nonrep using cacert, cacert using rootca
         
-        ((Text) authenticationCertificateFileData.getFirstChild()).setData(file.substring(file.indexOf("<fileData>", start) + 10, file.indexOf("</", start)));
+        byte[] authCertData = TextUtils.hexStringToByteArray(file.substring(file.indexOf("<fileData>", start) + 10, file.indexOf("</", start)));
+		((Text) authenticationCertificateFileData.getFirstChild()).setData(file.substring(file.indexOf("<fileData>", start) + 10, file.indexOf("</", start)));
         start = file.indexOf("<fileData>", start + 1);
+        byte[] nonrepCertData = TextUtils.hexStringToByteArray(file.substring(file.indexOf("<fileData>", start) + 10, file.indexOf("</", start)));
         ((Text) nonRepudiationCertificateFileData.getFirstChild()).setData(file.substring(file.indexOf("<fileData>", start) + 10, file.indexOf("</", start)));
         start = file.indexOf("<fileData>", start + 1);
-        ((Text) caCertificateFileData.getFirstChild()).setData(file.substring(file.indexOf("<fileData>", start) + 10, file.indexOf("</", start)));
+        byte[] caCertData = TextUtils.hexStringToByteArray(file.substring(file.indexOf("<fileData>", start) + 10, file.indexOf("</", start)));
+		((Text) caCertificateFileData.getFirstChild()).setData(file.substring(file.indexOf("<fileData>", start) + 10, file.indexOf("</", start)));
         start = file.indexOf("<fileData>", start + 1);
-        ((Text) rootCaCertificateFileData.getFirstChild()).setData(file.substring(file.indexOf("<fileData>", start) + 10, file.indexOf("</", start)));
+        byte[] rootCACertData = TextUtils.hexStringToByteArray(file.substring(file.indexOf("<fileData>", start) + 10, file.indexOf("</", start)));
+		((Text) rootCaCertificateFileData.getFirstChild()).setData(file.substring(file.indexOf("<fileData>", start) + 10, file.indexOf("</", start)));
         start = file.indexOf("<fileData>", start + 1);
-        ((Text) rrnCertificateFileData.getFirstChild()).setData(file.substring(file.indexOf("<fileData>", start) + 10, file.indexOf("</", start)));
+        byte[] rrnCertData = TextUtils.hexStringToByteArray(file.substring(file.indexOf("<fileData>", start) + 10, file.indexOf("</", start)));
+		((Text) rrnCertificateFileData.getFirstChild()).setData(file.substring(file.indexOf("<fileData>", start) + 10, file.indexOf("</", start)));
         start = file.indexOf("<fileData>", start + 1);
         
 		
+      //TODO make cert of data en use to check xml data
+		ByteArrayInputStream inStream;
+		CertificateFactory cf;
+		
+		try {
+			cf = CertificateFactory.getInstance("X.509");
+		
+			inStream = new ByteArrayInputStream(authCertData);
+			X509Certificate authCert = (X509Certificate) cf.generateCertificate(inStream);
+			inStream.close();
+			
+			inStream = new ByteArrayInputStream(nonrepCertData);
+			X509Certificate nonrepCert = (X509Certificate) cf.generateCertificate(inStream);
+			inStream.close();
+			
+			inStream = new ByteArrayInputStream(caCertData);
+			X509Certificate caCert = (X509Certificate) cf.generateCertificate(inStream);
+			inStream.close();
+			
+			inStream = new ByteArrayInputStream(rootCACertData);
+			X509Certificate rootCACert = (X509Certificate) cf.generateCertificate(inStream);
+			inStream.close();
+			
+			//Check root CA TODO
+			rootCACert.checkValidity();
+			
+			byte[] rootCACertData_intern = readRootCACertificateBytes();
+			inStream = new ByteArrayInputStream(rootCACertData_intern);
+			X509Certificate rootCACert_intern = (X509Certificate) cf.generateCertificate(inStream);
+			inStream.close();
+			//TODO Do this by comparing public keys???
+			//if (!Arrays.equals(rootCACert.getPublicKey().getEncoded(), rootCACert_intern.getPublicKey().getEncoded()))
+			//	throw new GeneralSecurityException();
+			
+			
+			caCert.checkValidity();
+			caCert.verify(rootCACert.getPublicKey());
+			
+			authCert.checkValidity();
+			nonrepCert.checkValidity();
+			authCert.verify(caCert.getPublicKey());
+			nonrepCert.verify(caCert.getPublicKey());
+			
+			//TODO:check also using revoked certificate list online!?
+			//TODO -:check certificate validity online using secure clock?
+			
+		} catch (CertificateException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			
+			throw new GeneralSecurityException();
+		} catch (InvalidKeyException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (NoSuchAlgorithmException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (NoSuchProviderException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (SignatureException e) {
+			// TODO 
+
+			e.printStackTrace();
+			throw new GeneralSecurityException();
+		} catch (CardException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (NoSuchFileException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (InvalidResponse e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+        
+        
 		((Text) identityFileData.getFirstChild()).setData(file.substring(file.indexOf("<fileData>", start) + 10, file.indexOf("</", start)));
 		start = file.indexOf("<fileData>", start + 1);
         ((Text) identityFileSignatureFileData.getFirstChild()).setData(file.substring(file.indexOf("<fileData>", start) + 10, file.indexOf("</", start)));
@@ -654,13 +742,15 @@ public class EidEngine implements EidCommandsInterface{
         start = file.indexOf("<fileData>", start + 1);
         
 		
-		
-        
-        //TextUtils.writeTextFile(text, path);
+        //TODO check data integrity
+       
         
         identityInfo.clear();
 	    addressInfo.clear();
 	    parseEidData();
+	    
+	    //If everything worked fine, also show message that this is valid data TODO
+	    
 		
 		/*TransformerFactory tranFactory = TransformerFactory.newInstance(); 
 	    Transformer aTransformer;
