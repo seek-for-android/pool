@@ -55,10 +55,11 @@ public class IdentityExtra extends Activity {
     	
     	if(MainActivity.belpic.identityInfo.get("Card validity start date") != null)
     		((TextView) findViewById(R.id.validity)).setText(MainActivity.belpic.identityInfo.get("Card validity start date") + " - " + MainActivity.belpic.identityInfo.get("Card validity end date"));
+    	else ((TextView) findViewById(R.id.validity)).setText("");
     	
-    	
-    	
-    	if(((String) (MainActivity.belpic.addressInfo.get("Zip code"))).length() == 4)
+    	if(MainActivity.belpic.addressInfo.get("Zip code") == null)
+    		((TextView) findViewById(R.id.country)).setText("");
+    	else if(((String) (MainActivity.belpic.addressInfo.get("Zip code"))).length() == 4)
     		((TextView) findViewById(R.id.country)).setText("Belgium");
     	else ((TextView) findViewById(R.id.country)).setText("Unknown");
     	

@@ -138,7 +138,7 @@ public class MainActivity extends TabActivity {
       
       smartCardConnected = false;
       
-      
+      belpic.clearData();
       
       super.onDestroy();
     }
@@ -485,7 +485,7 @@ public class MainActivity extends TabActivity {
 					//Store the eid as an xml file
 					belpic.loadEid(path);
 	        		
-					
+					belpic.parseEidData();
 					
 					tabHost.setCurrentTab(1);
 					tabHost.setCurrentTab(0);

@@ -65,12 +65,18 @@ public class Identity extends Activity {
 	    	((TextView) findViewById(R.id.nationality)).setText(MainActivity.belpic.identityInfo.get("Nationality"));
 	    	((TextView) findViewById(R.id.cardnumber)).setText(MainActivity.belpic.identityInfo.get("Card Number"));
 	    	
-	    	((TextView) findViewById(R.id.validity)).setText(MainActivity.belpic.identityInfo.get("Card validity start date") + " - " + MainActivity.belpic.identityInfo.get("Card validity end date"));
+	    	if(MainActivity.belpic.identityInfo.get("Card validity start date") != null)
+	    		((TextView) findViewById(R.id.validity)).setText(MainActivity.belpic.identityInfo.get("Card validity start date") + " - " + MainActivity.belpic.identityInfo.get("Card validity end date"));
+	    	else ((TextView) findViewById(R.id.validity)).setText("");
+	    	
 	    	
 	    	ImageView image = (ImageView) findViewById(R.id.photo);
 	    	//byte[] photo = TextUtils.hexStringToByteArray(((Text) MainActivity.belpic.getDocument().getElementsByTagName("photoFileData").item(0).getFirstChild()).getData());
-	    	byte[] photo = TextUtils.hexStringToByteArray(((Text) MainActivity.belpic.getPhotoFileData().getFirstChild()).getData());
 	    	
+	    	byte[] photo;
+	    	if(MainActivity.belpic.getPhotoFileData() != null)
+	    		photo = TextUtils.hexStringToByteArray(((Text) MainActivity.belpic.getPhotoFileData().getFirstChild()).getData());
+	    	else photo = null;
 	    	image.setImageBitmap(BitmapFactory.decodeByteArray(photo,0,photo.length));
 	    	
     	}
