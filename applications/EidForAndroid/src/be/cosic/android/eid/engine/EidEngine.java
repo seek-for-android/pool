@@ -23,8 +23,10 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.security.InvalidKeyException;
+import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.security.NoSuchProviderException;
+import java.security.Signature;
 import java.security.SignatureException;
 import java.security.cert.CertificateException;
 import java.security.cert.CertificateFactory;
@@ -408,9 +410,6 @@ public class EidEngine implements EidCommandsInterface{
 		
 		
 		
-		
-		
-		
 		/*//android.util.Base64 only from API version 8 and later!
 		((Text) dirFileData.getFirstChild()).setData(Base64.encode(readDirFile()));
 		//((Text) dirFileData.getFirstChild()).setData(encodeToString(readDirFile(), android.util.Base64.DEFAULT));
@@ -632,6 +631,8 @@ public class EidEngine implements EidCommandsInterface{
         //check certificates:
         //auth en nonrep using cacert, cacert using rootca
         
+        //TODO: do not store the cert data locally untill it is verified!!!!
+        
         byte[] authCertData = TextUtils.hexStringToByteArray(file.substring(file.indexOf("<fileData>", start) + 10, file.indexOf("</", start)));
 		((Text) authenticationCertificateFileData.getFirstChild()).setData(file.substring(file.indexOf("<fileData>", start) + 10, file.indexOf("</", start)));
         start = file.indexOf("<fileData>", start + 1);
@@ -652,7 +653,7 @@ public class EidEngine implements EidCommandsInterface{
       //TODO make cert of data en use to check xml data
 		ByteArrayInputStream inStream;
 		CertificateFactory cf;
-		
+		X509Certificate caCert = null;
 		try {
 			cf = CertificateFactory.getInstance("X.509");
 		
@@ -665,7 +666,7 @@ public class EidEngine implements EidCommandsInterface{
 			inStream.close();
 			
 			inStream = new ByteArrayInputStream(caCertData);
-			X509Certificate caCert = (X509Certificate) cf.generateCertificate(inStream);
+			caCert = (X509Certificate) cf.generateCertificate(inStream);
 			inStream.close();
 			
 			inStream = new ByteArrayInputStream(rootCACertData);
@@ -713,6 +714,8 @@ public class EidEngine implements EidCommandsInterface{
 			// TODO 
 
 			e.printStackTrace();
+			clearData();
+			
 			throw new GeneralSecurityException();
 		} catch (CardException e) {
 			// TODO Auto-generated catch block
@@ -726,14 +729,19 @@ public class EidEngine implements EidCommandsInterface{
 		}
         
         
+		byte[] idData = TextUtils.hexStringToByteArray(file.substring(file.indexOf("<fileData>", start) + 10, file.indexOf("</", start)));
 		((Text) identityFileData.getFirstChild()).setData(file.substring(file.indexOf("<fileData>", start) + 10, file.indexOf("</", start)));
 		start = file.indexOf("<fileData>", start + 1);
-        ((Text) identityFileSignatureFileData.getFirstChild()).setData(file.substring(file.indexOf("<fileData>", start) + 10, file.indexOf("</", start)));
+		byte[] idSignData = TextUtils.hexStringToByteArray(file.substring(file.indexOf("<fileData>", start) + 10, file.indexOf("</", start)));
+		((Text) identityFileSignatureFileData.getFirstChild()).setData(file.substring(file.indexOf("<fileData>", start) + 10, file.indexOf("</", start)));
         start = file.indexOf("<fileData>", start + 1);
+        byte[] addressData = TextUtils.hexStringToByteArray(file.substring(file.indexOf("<fileData>", start) + 10, file.indexOf("</", start)));
         ((Text) addressFileData.getFirstChild()).setData(file.substring(file.indexOf("<fileData>", start) + 10, file.indexOf("</", start)));
         start = file.indexOf("<fileData>", start + 1);
+        byte[] addressSignData = TextUtils.hexStringToByteArray(file.substring(file.indexOf("<fileData>", start) + 10, file.indexOf("</", start)));
         ((Text) addressFileSignatureFileData.getFirstChild()).setData(file.substring(file.indexOf("<fileData>", start) + 10, file.indexOf("</", start)));
         start = file.indexOf("<fileData>", start + 1);
+        byte[] photoData = TextUtils.hexStringToByteArray(file.substring(file.indexOf("<fileData>", start) + 10, file.indexOf("</", start)));
         ((Text) photoFileData.getFirstChild()).setData(file.substring(file.indexOf("<fileData>", start) + 10, file.indexOf("</", start)));
         start = file.indexOf("<fileData>", start + 1);
         ((Text) caRoleIDFileData.getFirstChild()).setData(file.substring(file.indexOf("<fileData>", start) + 10, file.indexOf("</", start)));
@@ -742,12 +750,60 @@ public class EidEngine implements EidCommandsInterface{
         start = file.indexOf("<fileData>", start + 1);
         
 		
-        //TODO check data integrity
+        //Check data integrity
+        try {
+        	//Check integrity of identityFiles
+        	
+        	//First check the hash on the photo file
+        	byte[] hashData = new byte[20];
+        	System.arraycopy(idData, idData.length-20, hashData, 0, 20);
+        	
+			MessageDigest hash = MessageDigest.getInstance("SHA-1");
+			
+			if(!MessageDigest.isEqual(hash.digest(photoData), hashData)){
+				clearData();
+				throw new GeneralSecurityException();
+			}
+					
+			
+		
+	        //Check signature on id data:
+			Signature sign = Signature.getInstance("SHA1withRSA");
+			sign.initVerify(caCert.getPublicKey());
+			sign.update(idData);
+			if(!sign.verify(idSignData)){
+				clearData();
+				throw new GeneralSecurityException();
+			}
+			
+			
+			//TODO Check integrity of addressFiles
+			
+			
+		
+        } catch (NoSuchAlgorithmException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (InvalidKeyException e) {
+			// TODO 
+
+			
+			e.printStackTrace();
+			clearData();
+			throw new GeneralSecurityException();
+		} catch (SignatureException e) {
+			// TODO 
+			
+			
+			e.printStackTrace();
+			clearData();
+			throw new GeneralSecurityException();
+		}
+        
+       
        
         
-        identityInfo.clear();
-	    addressInfo.clear();
-	    parseEidData();
+        
 	    
 	    //If everything worked fine, also show message that this is valid data TODO
 	    
@@ -770,6 +826,9 @@ public class EidEngine implements EidCommandsInterface{
 	    */
 //	    
 	}
+
+
+	
 
 
 	public void connect(SmartcardClient smartcard) throws CardException{
@@ -898,6 +957,11 @@ public class EidEngine implements EidCommandsInterface{
 	 * @throws UnsupportedEncodingException 
 	 */
 	public void parseEidData() throws UnsupportedEncodingException{
+		
+		
+		identityInfo.clear();
+	    addressInfo.clear();
+	    
 		
 		//TODO: no mor efficient way of doing this????
 		//TODO: for example just a string array with the tag number/identifier the index in this array?
@@ -1093,7 +1157,31 @@ public class EidEngine implements EidCommandsInterface{
 	}
 
 
-	
+	public void clearData() {
+		
+//		identityInfo.clear();
+//	    addressInfo.clear();
+		
+		objectDirectoryFileData = null;
+		tokenInfoFileData = null;
+		authenticationObjectDirectoryFileData = null;
+		privateKeyDirectoryFileData = null;
+		certificateDirectoryFileData = null;
+		authenticationCertificateFileData = null;
+		nonRepudiationCertificateFileData = null;
+		caCertificateFileData = null;
+		rootCaCertificateFileData = null;
+		rrnCertificateFileData = null;
+
+		
+		identityFileData = null;
+		identityFileSignatureFileData = null;
+		addressFileData = null;
+		addressFileSignatureFileData = null;
+		photoFileData = null;
+		caRoleIDFileData = null;
+		preferencesFileData = null;
+	}
 	
 
 	
