@@ -489,6 +489,12 @@ public class MainActivity extends TabActivity {
 					
 					tabHost.setCurrentTab(1);
 					tabHost.setCurrentTab(0);
+					
+					toast = Toast.makeText(context, "This eID data is cryptographically correct. \nPlease proceed to a visual check before any further action.", Toast.LENGTH_LONG);
+	    			toast.setGravity(Gravity.CENTER, 0, 0);
+	    			toast.show();
+	    			
+	    			//TODO: ?change the menu structure to give new options with just verified loaded data?
 	        		
 				} catch (	FileNotFoundException	 e) {
 					
