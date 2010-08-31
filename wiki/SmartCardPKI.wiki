@@ -53,38 +53,41 @@ To add the support for OpenSC to your Froyo sources, you need to build your syst
 After you performed the step "Patching the source" as described in "Building the system" add the patches for OpenSC.
 
 Apply the patches for OpenSC in the root directory of the Froyo source
-
+{{{
 $ tar xvzf  external_opensc.tar.gz
 $ patch -p1 < \<path_to_patch\>/opensc_android.patch
-
+}}}
 After patching the source follow the description how to build your system as described in "Building the system"
 
 After you built the system and flashed it to your phone, there will be additional components available:
-
+{{{
 directory: /system/bin
- * opensc-tool  (commandline utility for smart card operations, e.g. sending commands)
- * pkcs15-init  (commandline utility to initialise a smart card with the PKCS#15 structure)
- * pkcs15-tool (commandline utility to explore/access PKCS#15 file structure)
- * pkcs11-tool (commandline utlity to access smart cards by a PKCS#11 library, e.g. to perform a signature)
-
+ opensc-tool (commandline utility for smart card operations, e.g. sending commands)
+ pkcs15-init (commandline utility to initialise a smart card with the PKCS#15 structure)
+ pkcs15-tool (commandline utility to explore/access PKCS#15 file structure)
+ pkcs11-tool (commandline utlity to access smart cards by a PKCS#11 library, e.g. to perform a signature)
+}}}
+{{{
 directory: /system/lib
- * opensc-pkcs11.so  (PKCS#11 library)
- * pkcs11-spy.so  (dummy PKCS#11 library, when used, it logs all calls to the PKS#11 library for debugging purposes)
-
+ opensc-pkcs11.so  (PKCS#11 library)
+ pkcs11-spy.so  (dummy PKCS#11 library, when used, it logs all calls to the PKS#11 library for debugging purposes)
+}}}
+{{{
 directory: /etc
- * opensc.conf  (OpenSC config file)
- * pkcs15.profile  (.profile files contain information about the file structure to create during initialisation of the smart card)
- * jcop.profile
- * muscle.profile
- * oberthur.profile
- * cyberflex.profile
+ opensc.conf  (OpenSC config file)
+ pkcs15.profile  (.profile files contain information about the file structure to create during initialisation of the smart card)
+ jcop.profile
+ muscle.profile
+ oberthur.profile
+ cyberflex.profile
+}}}
 
 == 2.3 Load the Muscle Java Card Applet onto the smart card ==
 
 Unpack the package containing the Muscle Card Applet.
-
+{{{
 tar xvzf MCardApplet-0912.tar.gz 
-
+}}}
 The package contains the Muscle Java Card Applet 0.9.12, which consist of the sources of 0.9.11 and the ant-script from version Muscle Card 0.9.12 for to compile and convert it. 
 There is already a compiled and converted cap-File, which can be directly downloaded onto a smart card with JavaCard OS.
 It is located in the directory /MCardApplet/GD/com/musclecard/CardEdge/javacard/CardEdge.cap and was converted using the  Sun Java Card Development Kit 2.2.1.
@@ -108,11 +111,11 @@ Calling the commandline tools without a parameter, it shows the parameters avial
 To initialise the Muscle Card Applet there is required to send a proprietary command, setting the initial PIN values.
 Therefore you need to connect your Android phone to the computer and open a connection to the device with the Andorid adb tool.
 Then you can use the OpenSC opens-tool utility to perform the initialisation of the JavaCard Applet.
-
+{{{
 $ adb shell
 # cd /system/bin
 # opensc-tool -s 00:A4:04:00:06:A0:00:00:00:01:01 -s B0:2A:00:00:38:08:4D:75:73:63:6C:65:30:30:10:10:08:31:32:33:34:35:36:37:38:08:31:32:33:34:35:36:37:38:10:10:08:31:32:33:34:35:36:37:38:08:31:32:33:34:35:36:37:38:00:00:10:00:00:00:00
-
+}}}
 The initial values of all PINs/passwords are set to "12345678"
 
 A description of the initialisation command can be found here:
@@ -123,9 +126,9 @@ Bild1
 === 2.4.2 Create PKCS#15 structure ===
 
 To create the PKCS#15 structure on the smart card use the pkcs15-tool
-
+{{{
 # pkcs15-init -r 0 -C
-
+}}}
 During initalisation process you will be asked to enter the values for PINs/passwords.
 
 Bild 2
@@ -134,9 +137,9 @@ Bild 2
 
 The pkcs15-tool has a useful function to show the PKCS#15 content stored on the smart card.
 It can list the content of the smart card by using the following command:
-
+{{{
 # pkcs15-tool --dump
-
+}}}
 Bild 3
 
 === 2.4.4 Import a RSA key and certificate. ===
@@ -147,21 +150,21 @@ It contains a 1024 bit RSA key and a corresponding certificate for a dummy user 
 To import it into the smart card, you need to copy the file to the phone by using the "adb push" command.
 then you can import it with the pkcs15-init utility. The import process requires you to enter the password of the container file, 
 which is "12345678" and the password of the smartcard you set during intialisation.
-
+{{{
 $ adb push azur1024bit_password_12345678.pfx /data
 $ adb shell
 # cd /system/bin
 # pkcs15-init -S /data/azur1024bit_password_12345678.pfx -f PKCS12 -a FF -i 10
-
+}}}
 
 Bild 4
 
 === 2.4.5 Dump smart card content ===
 
 After successful import of the key and certificate you can see the new objects by dumping the content of the smart card
-
+{{{
 # pkcs15-tool --dump
-
+}}}
 Bild 5
 
 === 2.4.6 Perform a signature using the PKCS#11 library. ===
@@ -174,9 +177,9 @@ Here we compute the signature over the file "azur1024bit_password_12345678.pfx",
 The result is stored in the output file. The output file created has a length of 128 Bytes and contains the signature computed by the smart card.
 (The signature has the same length as the Private key on the smart card, which is 1024 bit).
 As signature algorithm we use the SHA1-RSA-PKCS, which performs both, hashing and signature generation in one step.
-
+{{{
 #pkcs11-tool --sign --slot 0 -m SHA1-RSA-PKCS --input-file /data/azur1024bit_password_12345678.pfx --output-file /data/signature
-
+}}}
 Bild 6
 
 
@@ -187,9 +190,9 @@ To see the PKCS#11 calls sent to the PKCS#11 library it is possible to load the 
 In this sample we call the signature operation as described before but explicitely load the pkcs11-spy.so library to log the PKCS#11 calls.
 With the environment variable PKCS11SPY we advise the pkcs11-spy.so library to forward the calls to the real PKCS#11 library (opensc-pkcs11.so)
 This will display all the PKCS#11 calls including sensitive information like PIN values entered. This is useful for debugging with applications using the PKCS#11 interface.
-
+{{{
 # PKCS11SPY=/system/lib/opensc-pkcs11.so ./pkcs11-tool --module /system/lib/pkcs11-spy.so ./pkcs11-tool --sign --slot 0 -m SHA1-RSA-PKCS --input-file /data/azur1024bit_password_12345678.pfx --output-file /data/signature
-
+}}}
 Bild 7
 
 
@@ -201,7 +204,5 @@ It requires also Standard Applications, e.g. Browsers, eMail-Clients supporting 
 Other PKI Open Source projects/developments that might be worth to be investigated:
  * Firefox Browser for Android / "Fennec" Project. Ist there PKCS#11 Support like in Firefox available ?
  * Java Interface/Wrapper for access of PKI functionality from Java Applications.
-
-
 
 
