@@ -614,46 +614,36 @@ public class EidEngine implements EidCommandsInterface{
         
         //hexdump:
         int start = file.indexOf("<fileData>", 0);
-        ((Text) dirFileData.getFirstChild()).setData(file.substring(file.indexOf("<fileData>", start) + 10, file.indexOf("</", start)));
+        String dirFile = file.substring(file.indexOf("<fileData>", start) + 10, file.indexOf("</", start));
         start = file.indexOf("<fileData>", start + 1);
-        
-		((Text) objectDirectoryFileData.getFirstChild()).setData(file.substring(file.indexOf("<fileData>", start) + 10, file.indexOf("</", start)));
+        String objectDirectoryFile = file.substring(file.indexOf("<fileData>", start) + 10, file.indexOf("</", start));
 		start = file.indexOf("<fileData>", start + 1);
-        ((Text) tokenInfoFileData.getFirstChild()).setData(file.substring(file.indexOf("<fileData>", start) + 10, file.indexOf("</", start)));
-        start = file.indexOf("<fileData>", start + 1);
-        ((Text) authenticationObjectDirectoryFileData.getFirstChild()).setData(file.substring(file.indexOf("<fileData>", start) + 10, file.indexOf("</", start)));
-        start = file.indexOf("<fileData>", start + 1);
-        ((Text) privateKeyDirectoryFileData.getFirstChild()).setData(file.substring(file.indexOf("<fileData>", start) + 10, file.indexOf("</", start)));
-        start = file.indexOf("<fileData>", start + 1);
-        ((Text) certificateDirectoryFileData.getFirstChild()).setData(file.substring(file.indexOf("<fileData>", start) + 10, file.indexOf("</", start)));
-        start = file.indexOf("<fileData>", start + 1);
+		String tokenInfoFile = file.substring(file.indexOf("<fileData>", start) + 10, file.indexOf("</", start));
+		start = file.indexOf("<fileData>", start + 1);
+        String authenticationObjectDirectoryFile = file.substring(file.indexOf("<fileData>", start) + 10, file.indexOf("</", start));
+		start = file.indexOf("<fileData>", start + 1);
+        String privateKeyDirectoryFile = file.substring(file.indexOf("<fileData>", start) + 10, file.indexOf("</", start));
+		start = file.indexOf("<fileData>", start + 1);
+        String certificateDirectoryFile = file.substring(file.indexOf("<fileData>", start) + 10, file.indexOf("</", start));
+		start = file.indexOf("<fileData>", start + 1);
         
-        //check certificates:
-        //auth en nonrep using cacert, cacert using rootca
-        
-        //TODO: do not store the cert data locally untill it is verified!!!!
         
         byte[] authCertData = TextUtils.hexStringToByteArray(file.substring(file.indexOf("<fileData>", start) + 10, file.indexOf("</", start)));
-		((Text) authenticationCertificateFileData.getFirstChild()).setData(file.substring(file.indexOf("<fileData>", start) + 10, file.indexOf("</", start)));
-        start = file.indexOf("<fileData>", start + 1);
+		start = file.indexOf("<fileData>", start + 1);
         byte[] nonrepCertData = TextUtils.hexStringToByteArray(file.substring(file.indexOf("<fileData>", start) + 10, file.indexOf("</", start)));
-        ((Text) nonRepudiationCertificateFileData.getFirstChild()).setData(file.substring(file.indexOf("<fileData>", start) + 10, file.indexOf("</", start)));
         start = file.indexOf("<fileData>", start + 1);
         byte[] caCertData = TextUtils.hexStringToByteArray(file.substring(file.indexOf("<fileData>", start) + 10, file.indexOf("</", start)));
-		((Text) caCertificateFileData.getFirstChild()).setData(file.substring(file.indexOf("<fileData>", start) + 10, file.indexOf("</", start)));
-        start = file.indexOf("<fileData>", start + 1);
+		start = file.indexOf("<fileData>", start + 1);
         byte[] rootCACertData = TextUtils.hexStringToByteArray(file.substring(file.indexOf("<fileData>", start) + 10, file.indexOf("</", start)));
-		((Text) rootCaCertificateFileData.getFirstChild()).setData(file.substring(file.indexOf("<fileData>", start) + 10, file.indexOf("</", start)));
-        start = file.indexOf("<fileData>", start + 1);
+		start = file.indexOf("<fileData>", start + 1);
         byte[] rrnCertData = TextUtils.hexStringToByteArray(file.substring(file.indexOf("<fileData>", start) + 10, file.indexOf("</", start)));
-		((Text) rrnCertificateFileData.getFirstChild()).setData(file.substring(file.indexOf("<fileData>", start) + 10, file.indexOf("</", start)));
-        start = file.indexOf("<fileData>", start + 1);
+		start = file.indexOf("<fileData>", start + 1);
         
 		
-      //TODO make cert of data en use to check xml data
+      //TODO make cert of data and use to check xml data
 		ByteArrayInputStream inStream;
 		CertificateFactory cf;
-		X509Certificate caCert = null;
+		X509Certificate rrnCert = null;
 		try {
 			cf = CertificateFactory.getInstance("X.509");
 		
@@ -666,14 +656,22 @@ public class EidEngine implements EidCommandsInterface{
 			inStream.close();
 			
 			inStream = new ByteArrayInputStream(caCertData);
-			caCert = (X509Certificate) cf.generateCertificate(inStream);
+			X509Certificate caCert = (X509Certificate) cf.generateCertificate(inStream);
 			inStream.close();
 			
 			inStream = new ByteArrayInputStream(rootCACertData);
 			X509Certificate rootCACert = (X509Certificate) cf.generateCertificate(inStream);
 			inStream.close();
 			
+			inStream = new ByteArrayInputStream(rrnCertData);
+			rrnCert = (X509Certificate) cf.generateCertificate(inStream);
+			inStream.close();
+			
 			//Check root CA TODO
+			//EIther using http connection to belgium certificate authority site or by using signed statment (see danny)
+			//Certifying that a newer root CA is the follower of the older, signed by the older one.
+			// The second case means that only one-way validity is possible
+			//Another way is to include all the root certificates in a secure domain of the phone's secure element (2 up to today).
 			rootCACert.checkValidity();
 			
 			byte[] rootCACertData_intern = readRootCACertificateBytes();
@@ -684,10 +682,15 @@ public class EidEngine implements EidCommandsInterface{
 			//if (!Arrays.equals(rootCACert.getPublicKey().getEncoded(), rootCACert_intern.getPublicKey().getEncoded()))
 			//	throw new GeneralSecurityException();
 			
+			//Check RRN certificate using root
+			rrnCert.checkValidity();
+			rrnCert.verify(rootCACert.getPublicKey());
 			
+			//Check CA certificate using root
 			caCert.checkValidity();
 			caCert.verify(rootCACert.getPublicKey());
 			
+			//Check auth en nonrep certificate using CA
 			authCert.checkValidity();
 			nonrepCert.checkValidity();
 			authCert.verify(caCert.getPublicKey());
@@ -714,7 +717,6 @@ public class EidEngine implements EidCommandsInterface{
 			// TODO 
 
 			e.printStackTrace();
-			clearData();
 			
 			throw new GeneralSecurityException();
 		} catch (CardException e) {
@@ -730,24 +732,22 @@ public class EidEngine implements EidCommandsInterface{
         
         
 		byte[] idData = TextUtils.hexStringToByteArray(file.substring(file.indexOf("<fileData>", start) + 10, file.indexOf("</", start)));
-		((Text) identityFileData.getFirstChild()).setData(file.substring(file.indexOf("<fileData>", start) + 10, file.indexOf("</", start)));
 		start = file.indexOf("<fileData>", start + 1);
 		byte[] idSignData = TextUtils.hexStringToByteArray(file.substring(file.indexOf("<fileData>", start) + 10, file.indexOf("</", start)));
-		((Text) identityFileSignatureFileData.getFirstChild()).setData(file.substring(file.indexOf("<fileData>", start) + 10, file.indexOf("</", start)));
-        start = file.indexOf("<fileData>", start + 1);
+		start = file.indexOf("<fileData>", start + 1);
         byte[] addressData = TextUtils.hexStringToByteArray(file.substring(file.indexOf("<fileData>", start) + 10, file.indexOf("</", start)));
-        ((Text) addressFileData.getFirstChild()).setData(file.substring(file.indexOf("<fileData>", start) + 10, file.indexOf("</", start)));
         start = file.indexOf("<fileData>", start + 1);
         byte[] addressSignData = TextUtils.hexStringToByteArray(file.substring(file.indexOf("<fileData>", start) + 10, file.indexOf("</", start)));
-        ((Text) addressFileSignatureFileData.getFirstChild()).setData(file.substring(file.indexOf("<fileData>", start) + 10, file.indexOf("</", start)));
         start = file.indexOf("<fileData>", start + 1);
         byte[] photoData = TextUtils.hexStringToByteArray(file.substring(file.indexOf("<fileData>", start) + 10, file.indexOf("</", start)));
-        ((Text) photoFileData.getFirstChild()).setData(file.substring(file.indexOf("<fileData>", start) + 10, file.indexOf("</", start)));
         start = file.indexOf("<fileData>", start + 1);
-        ((Text) caRoleIDFileData.getFirstChild()).setData(file.substring(file.indexOf("<fileData>", start) + 10, file.indexOf("</", start)));
+        
+        String caRoleIDFile = file.substring(file.indexOf("<fileData>", start) + 10, file.indexOf("</", start));
         start = file.indexOf("<fileData>", start + 1);
-        ((Text) preferencesFileData.getFirstChild()).setData(file.substring(file.indexOf("<fileData>", start) + 10, file.indexOf("</", start)));
+        String preferencesFile = file.substring(file.indexOf("<fileData>", start) + 10, file.indexOf("</", start));
         start = file.indexOf("<fileData>", start + 1);
+        
+        
         
 		
         //Check data integrity
@@ -761,23 +761,38 @@ public class EidEngine implements EidCommandsInterface{
 			MessageDigest hash = MessageDigest.getInstance("SHA-1");
 			
 			if(!MessageDigest.isEqual(hash.digest(photoData), hashData)){
-				clearData();
+				
 				throw new GeneralSecurityException();
 			}
 					
 			
 		
-	        //Check signature on id data:
+	        //Check signature on id data using RRN certificate
 			Signature sign = Signature.getInstance("SHA1withRSA");
-			sign.initVerify(caCert.getPublicKey());
+			sign.initVerify(rrnCert.getPublicKey());
 			sign.update(idData);
 			if(!sign.verify(idSignData)){
-				clearData();
 				throw new GeneralSecurityException();
 			}
 			
+			//TODO in quick eid toolset: make sure the addressfield is as long as the data in it!
+			//Check integrity of addressFiles by checking signature using the rrn certificate on the address data with the idSignData appended
+//			int len = addressData.length +4 ;
+//			
+//			byte[] temp = new byte[45 + idSignData.length];
+////			
+//			System.arraycopy(addressData, 0, temp, 0, 45);
+//			System.arraycopy(idSignData, 0, temp, 45, idSignData.length);
+//			
+//			Signature sign2 = Signature.getInstance("SHA1withRSA");
+//			sign2.initVerify(rrnCert.getPublicKey());
+//			sign2.update(temp);
+			sign.update(addressData);
+			sign.update(idSignData);
 			
-			//TODO Check integrity of addressFiles
+			if(!sign.verify(addressSignData)){
+				throw new GeneralSecurityException();
+			}
 			
 			
 		
@@ -789,14 +804,12 @@ public class EidEngine implements EidCommandsInterface{
 
 			
 			e.printStackTrace();
-			clearData();
 			throw new GeneralSecurityException();
 		} catch (SignatureException e) {
 			// TODO 
 			
 			
 			e.printStackTrace();
-			clearData();
 			throw new GeneralSecurityException();
 		}
         
@@ -805,7 +818,29 @@ public class EidEngine implements EidCommandsInterface{
         
         
 	    
-	    //If everything worked fine, also show message that this is valid data TODO
+	    //If everything worked fine, store new data		
+		((Text) dirFileData.getFirstChild()).setData(dirFile);
+        ((Text) objectDirectoryFileData.getFirstChild()).setData(objectDirectoryFile);
+        ((Text) tokenInfoFileData.getFirstChild()).setData(tokenInfoFile);
+        ((Text) authenticationObjectDirectoryFileData.getFirstChild()).setData(authenticationObjectDirectoryFile);
+        ((Text) privateKeyDirectoryFileData.getFirstChild()).setData(privateKeyDirectoryFile);
+        ((Text) certificateDirectoryFileData.getFirstChild()).setData(certificateDirectoryFile);
+		
+		((Text) authenticationCertificateFileData.getFirstChild()).setData(TextUtils.hexDump(authCertData));
+		((Text) nonRepudiationCertificateFileData.getFirstChild()).setData(TextUtils.hexDump(nonrepCertData));
+		((Text) caCertificateFileData.getFirstChild()).setData(TextUtils.hexDump(caCertData));
+		((Text) rootCaCertificateFileData.getFirstChild()).setData(TextUtils.hexDump(rootCACertData));
+		((Text) rrnCertificateFileData.getFirstChild()).setData(TextUtils.hexDump(rrnCertData));
+               
+		((Text) identityFileData.getFirstChild()).setData(TextUtils.hexDump(idData));
+        ((Text) identityFileSignatureFileData.getFirstChild()).setData(TextUtils.hexDump(idSignData));
+        ((Text) addressFileData.getFirstChild()).setData(TextUtils.hexDump(addressData));
+        ((Text) addressFileSignatureFileData.getFirstChild()).setData(TextUtils.hexDump(addressSignData));
+        ((Text) photoFileData.getFirstChild()).setData(TextUtils.hexDump(photoData));
+        ((Text) caRoleIDFileData.getFirstChild()).setData(caRoleIDFile);
+        ((Text) preferencesFileData.getFirstChild()).setData(preferencesFile);
+        
+		//also show message that this is valid data TODO
 	    
 		
 		/*TransformerFactory tranFactory = TransformerFactory.newInstance(); 
