@@ -22,6 +22,8 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
+import java.security.NoSuchAlgorithmException;
+import java.security.NoSuchProviderException;
 import java.security.cert.CertificateEncodingException;
 
 
@@ -522,10 +524,25 @@ public class MainActivity extends TabActivity {
 	    			toast.show();
 					
 					//TODO
+				} catch (NoSuchAlgorithmException e) {
+					// Should not occur
+					e.printStackTrace();
+				} catch (NoSuchProviderException e) {
+					// Should not occur
+					e.printStackTrace();
+				} catch (CardException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				} catch (NoSuchFileException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				} catch (InvalidResponse e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
 				} 
             	
             	
-            }else ;//TODO if cancel of zo...
+            }else ;
             
             break;
            

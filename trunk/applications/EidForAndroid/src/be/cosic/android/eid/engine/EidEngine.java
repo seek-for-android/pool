@@ -555,30 +555,8 @@ public class EidEngine implements EidCommandsInterface{
 */		
 	}
 	
-	public void loadEid(String path) throws IOException, GeneralSecurityException {
+	public void loadEid(String path) throws IOException, GeneralSecurityException, NoSuchAlgorithmException, NoSuchProviderException, CardException, NoSuchFileException, InvalidResponse {
 		
-		
-		
-		//Check validity of every data field using own CA certificate!!!
-//		X509Certificate caCert;
-//		
-//        try {
-////			byte[] caCertData = readCACertificateBytes();
-////			
-////			//TODO make cert of data en use to check xml data
-////			ByteArrayInputStream inStream = new ByteArrayInputStream(caCertData);
-////			CertificateFactory cf = CertificateFactory.getInstance("X.509");
-////			caCert = (X509Certificate) cf.generateCertificate(inStream);
-////			inStream.close();
-////			
-//			
-//		} catch (Exception e) {
-//			//If own CA not reachable: always throw invalid eID Data/security exception
-//			e.printStackTrace();
-//			throw new GeneralSecurityException();
-//			
-//		}
-        
 		
 		//TODO as for Base64, tranform is also only available from android API 8 and up
 		//So we use hex dump to write data to the xml file: TODO check this with eid quick key toolset if possible --> yes id schem used as here, or possibly if using jaxbe and changing element type to something else then base64
@@ -610,8 +588,6 @@ public class EidEngine implements EidCommandsInterface{
 		//((Text) dirFileData.getFirstChild()).setData(encodeToString(readDirFile(), android.util.Base64.DEFAULT));
 		
         
-        
-        
         //hexdump:
         int start = file.indexOf("<fileData>", 0);
         String dirFile = file.substring(file.indexOf("<fileData>", start) + 10, file.indexOf("</", start));
@@ -631,7 +607,7 @@ public class EidEngine implements EidCommandsInterface{
         byte[] authCertData = TextUtils.hexStringToByteArray(file.substring(file.indexOf("<fileData>", start) + 10, file.indexOf("</", start)));
 		start = file.indexOf("<fileData>", start + 1);
         byte[] nonrepCertData = TextUtils.hexStringToByteArray(file.substring(file.indexOf("<fileData>", start) + 10, file.indexOf("</", start)));
-        start = file.indexOf("<fileData>", start + 1);
+        start = file.indexOf("!fileData>", start + 1);
         byte[] caCertData = TextUtils.hexStringToByteArray(file.substring(file.indexOf("<fileData>", start) + 10, file.indexOf("</", start)));
 		start = file.indexOf("<fileData>", start + 1);
         byte[] rootCACertData = TextUtils.hexStringToByteArray(file.substring(file.indexOf("<fileData>", start) + 10, file.indexOf("</", start)));
@@ -640,7 +616,8 @@ public class EidEngine implements EidCommandsInterface{
 		start = file.indexOf("<fileData>", start + 1);
         
 		
-      //TODO make cert of data and use to check xml data
+      
+		//Check certificate integrity
 		ByteArrayInputStream inStream;
 		CertificateFactory cf;
 		X509Certificate rrnCert = null;
@@ -678,9 +655,7 @@ public class EidEngine implements EidCommandsInterface{
 			inStream = new ByteArrayInputStream(rootCACertData_intern);
 			X509Certificate rootCACert_intern = (X509Certificate) cf.generateCertificate(inStream);
 			inStream.close();
-			//TODO Do this by comparing public keys???
-			//if (!Arrays.equals(rootCACert.getPublicKey().getEncoded(), rootCACert_intern.getPublicKey().getEncoded()))
-			//	throw new GeneralSecurityException();
+			
 			
 			//Check RRN certificate using root
 			rrnCert.checkValidity();
@@ -707,27 +682,14 @@ public class EidEngine implements EidCommandsInterface{
 		} catch (InvalidKeyException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		} catch (NoSuchAlgorithmException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (NoSuchProviderException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			
+			throw new GeneralSecurityException();
 		} catch (SignatureException e) {
 			// TODO 
 
 			e.printStackTrace();
 			
 			throw new GeneralSecurityException();
-		} catch (CardException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (NoSuchFileException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (InvalidResponse e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
 		}
         
         
@@ -766,7 +728,6 @@ public class EidEngine implements EidCommandsInterface{
 			}
 					
 			
-		
 	        //Check signature on id data using RRN certificate
 			Signature sign = Signature.getInstance("SHA1withRSA");
 			sign.initVerify(rrnCert.getPublicKey());
@@ -775,18 +736,8 @@ public class EidEngine implements EidCommandsInterface{
 				throw new GeneralSecurityException();
 			}
 			
-			//TODO in quick eid toolset: make sure the addressfield is as long as the data in it!
-			//Check integrity of addressFiles by checking signature using the rrn certificate on the address data with the idSignData appended
-//			int len = addressData.length +4 ;
-//			
-//			byte[] temp = new byte[45 + idSignData.length];
-////			
-//			System.arraycopy(addressData, 0, temp, 0, 45);
-//			System.arraycopy(idSignData, 0, temp, 45, idSignData.length);
-//			
-//			Signature sign2 = Signature.getInstance("SHA1withRSA");
-//			sign2.initVerify(rrnCert.getPublicKey());
-//			sign2.update(temp);
+			//TODO in quick eid toolset: make sure the addressfield is as long as the data in it and not standard 113/117!
+			
 			sign.update(addressData);
 			sign.update(idSignData);
 			
@@ -796,10 +747,7 @@ public class EidEngine implements EidCommandsInterface{
 			
 			
 		
-        } catch (NoSuchAlgorithmException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (InvalidKeyException e) {
+        } catch (InvalidKeyException e) {
 			// TODO 
 
 			
@@ -840,7 +788,7 @@ public class EidEngine implements EidCommandsInterface{
         ((Text) caRoleIDFileData.getFirstChild()).setData(caRoleIDFile);
         ((Text) preferencesFileData.getFirstChild()).setData(preferencesFile);
         
-		//also show message that this is valid data TODO
+		
 	    
 		
 		/*TransformerFactory tranFactory = TransformerFactory.newInstance(); 
@@ -856,7 +804,7 @@ public class EidEngine implements EidCommandsInterface{
 	    identityInfo.clear();
 	    addressInfo.clear();
 	    
-	  //set all new values of doc!!!
+	  	//set all new values of doc!!!
 	    parseEidData();
 	    */
 //	    
