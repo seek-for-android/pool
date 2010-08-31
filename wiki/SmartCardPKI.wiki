@@ -9,8 +9,8 @@ It is based on public/private keys (typically RSA) and certificates, which bind 
 
 PKI is based on the secrecy of the private key, so the private key it is often stored on a smart card, where the smart card performs the cryptographic operations to avoid the risk that the private key can become public or copied in any way.
 
-The most common API to access cryptographic smart card functions is the PKCS#11 interface, published by RSA Labs.
-It is used in Mozilla Firefox, Thunderbird and many other applications, e.g. PGP, VPN-Applications.
+The most common API to access cryptographic smart card functions is the PKCS#11 interface, published by RSA Labs [http://www.rsa.com/rsalabs/node.asp?id=2133].
+It is used in Mozilla Firefox, Thunderbird and many other applications, e.g. PGP.
 Corresponding to the PKCS#11 interface, the PKCS#15 specification specifies a file structure and description for keys, certifcicates on the smart card.
 
 == 1.2 OpenSC ==
