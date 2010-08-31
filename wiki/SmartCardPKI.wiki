@@ -55,7 +55,7 @@ After you performed the step "Patching the source" as described in "Building the
 Apply the patches for OpenSC in the root directory of the Froyo source
 {{{
 $ tar xvzf  external_opensc.tar.gz
-$ patch -p1 < <path_to_patch>/opensc_android.patch
+$ patch -p1 < path_to_patch/opensc_android.patch
 }}}
 After patching the source follow the description how to build your system as described in "Building the system"
 
