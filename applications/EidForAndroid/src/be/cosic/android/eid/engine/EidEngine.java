@@ -625,6 +625,7 @@ public class EidEngine implements EidCommandsInterface{
 			cf = CertificateFactory.getInstance("X.509");
 		
 			inStream = new ByteArrayInputStream(authCertData);
+			//TUSSEN hier en volgende markering fout opgetreden???
 			X509Certificate authCert = (X509Certificate) cf.generateCertificate(inStream);
 			inStream.close();
 			
@@ -641,6 +642,13 @@ public class EidEngine implements EidCommandsInterface{
 			inStream.close();
 			
 			inStream = new ByteArrayInputStream(rrnCertData);
+			
+			
+			
+			///////////////////////
+			
+			
+			
 			rrnCert = (X509Certificate) cf.generateCertificate(inStream);
 			inStream.close();
 			
