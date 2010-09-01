@@ -34,6 +34,8 @@
     <string name="functionalities">Card functionalities:</string>
     <string name="sign_data">Sign a File</string>
     <string name="authenticate">Authenticate</string>
+    <string name="verify_data">Verify data signed by this person:</string>
+    <string name="verify">Verify</string>
     <string name="ok">OK</string>
     <string name="cancel">Cancel</string>
 </resources>

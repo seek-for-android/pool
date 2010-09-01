@@ -145,7 +145,7 @@ public class EidEngine implements EidCommandsInterface{
 		    doc = docBuilder.newDocument();
 	       
 		} catch (ParserConfigurationException e) {
-			// TODO Auto-generated catch block
+			// Should not occur
 			e.printStackTrace();
 		}
 
@@ -342,35 +342,7 @@ public class EidEngine implements EidCommandsInterface{
 					fileData = doc.createTextNode("value");
 					preferencesFileData.appendChild(fileData);
 				  
-	     
-		
-		//Build the local eid file structure
-		/*of = new ObjectFactory();
-		mf = of.createMasterFile();
-		mf.setDirFile(of.createMasterFileDirFile());
-		BelPicDirectory bpd = of.createMasterFileBelPicDirectory();
-		bpd.setObjectDirectoryFile(of.createMasterFileBelPicDirectoryObjectDirectoryFile());
-		bpd.setTokenInfo(of.createMasterFileBelPicDirectoryTokenInfo());
-		bpd.setAuthenticationObjectDirectoryFile(of.createMasterFileBelPicDirectoryAuthenticationObjectDirectoryFile());
-		bpd.setPrivateKeyDirectoryFile(of.createMasterFileBelPicDirectoryPrivateKeyDirectoryFile());
-		bpd.setCertificateDirectoryFile(of.createMasterFileBelPicDirectoryCertificateDirectoryFile());
-		bpd.setAuthenticationCertificate(of.createMasterFileBelPicDirectoryAuthenticationCertificate());
-		bpd.setNonRepudiationCertificate(of.createMasterFileBelPicDirectoryNonRepudiationCertificate());
-		bpd.setCaCertificate(of.createMasterFileBelPicDirectoryCaCertificate());
-		bpd.setRootCaCertificate(of.createMasterFileBelPicDirectoryRootCaCertificate());
-		bpd.setRrnCertificate(of.createMasterFileBelPicDirectoryRrnCertificate());
-		IDDirectory idd = of.createMasterFileIDDirectory();
-		idd.setIdentityFile(of.createMasterFileIDDirectoryIdentityFile());
-		idd.setIdentityFileSignature(of.createMasterFileIDDirectoryIdentityFileSignature());
-		idd.setAddressFile(of.createMasterFileIDDirectoryAddressFile());
-		idd.setAddressFileSignature(of.createMasterFileIDDirectoryAddressFileSignature());
-		idd.setPhotoFile(of.createMasterFileIDDirectoryPhotoFile());
-		idd.setCaRoleIDFile(of.createMasterFileIDDirectoryCaRoleIDFile());
-		idd.setPreferencesFile(of.createMasterFileIDDirectoryPreferencesFile());
-		mf.setBelPicDirectory(bpd);
-		mf.setIDDirectory(idd);*/
-	
-		
+	   
 		
 	}
 	
@@ -405,11 +377,6 @@ public class EidEngine implements EidCommandsInterface{
 		
 		
 		
-		
-		
-		
-		
-		
 		/*//android.util.Base64 only from API version 8 and later!
 		((Text) dirFileData.getFirstChild()).setData(Base64.encode(readDirFile()));
 		//((Text) dirFileData.getFirstChild()).setData(encodeToString(readDirFile(), android.util.Base64.DEFAULT));
@@ -436,29 +403,6 @@ public class EidEngine implements EidCommandsInterface{
 		*/
 		
 		
-		/*// Call all read methods and put all results in xml masterfile
-		// As either all data will come from an existing card or will be set
-		// using the set methods,
-		// and in these set methods dependencies over different files are
-		// checked upon, we do not need to do this anymore here.
-		mf.getDirFile().setFileData(readDirFile());
-		mf.getBelPicDirectory().getObjectDirectoryFile().setFileData(this.readObjectDirectoryFile());
-		mf.getBelPicDirectory().getTokenInfo().setFileData(this.readTokenInfo());
-		mf.getBelPicDirectory().getAuthenticationObjectDirectoryFile().setFileData(this.readAuthenticationObjectDirectoryFile());
-		mf.getBelPicDirectory().getPrivateKeyDirectoryFile().setFileData(this.readPrivateKeyDirectoryFile());
-		mf.getBelPicDirectory().getCertificateDirectoryFile().setFileData(this.readCertificateDirectoryFile());
-		mf.getBelPicDirectory().getAuthenticationCertificate().setFileData(this.readAuthCertificateBytes());
-		mf.getBelPicDirectory().getNonRepudiationCertificate().setFileData(this.readNonRepCertificateBytes());
-		mf.getBelPicDirectory().getCaCertificate().setFileData(this.readCACertificateBytes());
-		mf.getBelPicDirectory().getRootCaCertificate().setFileData(this.readRootCACertificateBytes());
-		mf.getBelPicDirectory().getRrnCertificate().setFileData(this.readRRNCertificateBytes());
-		mf.getIDDirectory().getIdentityFile().setFileData(this.readCitizenIdentityDataBytes());
-		mf.getIDDirectory().getIdentityFileSignature().setFileData(this.readIdentityFileSignatureBytes());
-		mf.getIDDirectory().getAddressFile().setFileData(this.readCitizenAddressBytes());
-		mf.getIDDirectory().getAddressFileSignature().setFileData(this.readAddressFileSignatureBytes());
-		mf.getIDDirectory().getPhotoFile().setFileData(this.readCitizenPhotoBytes());
-		mf.getIDDirectory().getCaRoleIDFile().setFileData(this.readCaRoleIDFile());
-		mf.getIDDirectory().getPreferencesFile().setFileData(this.readPreferencesFile());*/
 		
 	}
 	
@@ -607,7 +551,7 @@ public class EidEngine implements EidCommandsInterface{
         byte[] authCertData = TextUtils.hexStringToByteArray(file.substring(file.indexOf("<fileData>", start) + 10, file.indexOf("</", start)));
 		start = file.indexOf("<fileData>", start + 1);
         byte[] nonrepCertData = TextUtils.hexStringToByteArray(file.substring(file.indexOf("<fileData>", start) + 10, file.indexOf("</", start)));
-        start = file.indexOf("!fileData>", start + 1);
+        start = file.indexOf("<fileData>", start + 1);
         byte[] caCertData = TextUtils.hexStringToByteArray(file.substring(file.indexOf("<fileData>", start) + 10, file.indexOf("</", start)));
 		start = file.indexOf("<fileData>", start + 1);
         byte[] rootCACertData = TextUtils.hexStringToByteArray(file.substring(file.indexOf("<fileData>", start) + 10, file.indexOf("</", start)));
@@ -625,7 +569,6 @@ public class EidEngine implements EidCommandsInterface{
 			cf = CertificateFactory.getInstance("X.509");
 		
 			inStream = new ByteArrayInputStream(authCertData);
-			//TUSSEN hier en volgende markering fout opgetreden???
 			X509Certificate authCert = (X509Certificate) cf.generateCertificate(inStream);
 			inStream.close();
 			
@@ -642,13 +585,6 @@ public class EidEngine implements EidCommandsInterface{
 			inStream.close();
 			
 			inStream = new ByteArrayInputStream(rrnCertData);
-			
-			
-			
-			///////////////////////
-			
-			
-			
 			rrnCert = (X509Certificate) cf.generateCertificate(inStream);
 			inStream.close();
 			
@@ -807,7 +743,7 @@ public class EidEngine implements EidCommandsInterface{
 
 	    Source src = new StreamSource(new FileInputStream(path)); 
 	    Result dest = new DOMResult(doc); 
-	    aTransformer.transform(src, dest); //TODO make this work
+	    aTransformer.transform(src, dest); 
 	    
 	    identityInfo.clear();
 	    addressInfo.clear();
@@ -841,9 +777,7 @@ public class EidEngine implements EidCommandsInterface{
 
 
 
-//	public MasterFile getMF() {
-//		return mf;
-//	}
+
 	
 	
 	public Document getDocument() {

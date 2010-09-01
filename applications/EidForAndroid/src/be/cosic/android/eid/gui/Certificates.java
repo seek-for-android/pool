@@ -222,7 +222,7 @@ public class Certificates extends Activity {
     	
     	switch (requestCode){
     	
-    	//If the return value is a PIN for testing:
+    	
     	case GET_FILE_LOCATION_REQUEST:
     	
             if (resultCode == RESULT_OK) {
@@ -275,7 +275,7 @@ public class Certificates extends Activity {
             	
             	
             	
-            }else ;//TODO if cancel of zo...
+            }else ;//Do nothing
             
             break;
            
