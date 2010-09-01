@@ -121,7 +121,7 @@ The initial values of all PINs/passwords are set to "12345678"
 A description of the initialisation command can be found here:
 http://www.opensc-project.org/opensc/wiki/MuscleApplet
 
-Bild1
+http://seek-for-android.googlecode.com/svn/wiki/img/PKI_snap1_opensc_init.png
 
 === 2.4.2 Create PKCS#15 structure ===
 
@@ -131,7 +131,7 @@ To create the PKCS#15 structure on the smart card use the pkcs15-tool
 }}}
 During initalisation process you will be asked to enter the values for PINs/passwords.
 
-Bild 2
+http://seek-for-android.googlecode.com/svn/wiki/img/PKI_snap2_init_p15.png
 
 === 2.4.3  Dump PKCS#15 content on the card. ===
 
@@ -140,7 +140,7 @@ It can list the content of the smart card by using the following command:
 {{{
 # pkcs15-tool --dump
 }}}
-Bild 3
+http://seek-for-android.googlecode.com/svn/wiki/img/PKI_snap3_p15_dump.png
 
 === 2.4.4 Import a RSA key and certificate. ===
 
@@ -157,7 +157,7 @@ $ adb shell
 # pkcs15-init -S /data/azur1024bit_password_12345678.pfx -f PKCS12 -a FF -i 10
 }}}
 
-Bild 4
+http://seek-for-android.googlecode.com/svn/wiki/img/PKI_snap4_import_key_from_p12.png
 
 === 2.4.5 Dump smart card content ===
 
@@ -165,7 +165,8 @@ After successful import of the key and certificate you can see the new objects b
 {{{
 # pkcs15-tool --dump
 }}}
-Bild 5
+
+http://seek-for-android.googlecode.com/svn/wiki/img/PKI_snap5_p15_dump_key.png
 
 === 2.4.6 Perform a signature using the PKCS#11 library. ===
 
@@ -180,8 +181,8 @@ As signature algorithm we use the SHA1-RSA-PKCS, which performs both, hashing an
 {{{
 #pkcs11-tool --sign --slot 0 -m SHA1-RSA-PKCS --input-file /data/azur1024bit_password_12345678.pfx --output-file /data/signature
 }}}
-Bild 6
 
+http://seek-for-android.googlecode.com/svn/wiki/img/PKI_snap6_create_signature.png
 
 === 2.4.7 Logging the PKCS#11 calls ===
 
@@ -193,7 +194,8 @@ This will display all the PKCS#11 calls including sensitive information like PIN
 {{{
 # PKCS11SPY=/system/lib/opensc-pkcs11.so ./pkcs11-tool --module /system/lib/pkcs11-spy.so ./pkcs11-tool --sign --slot 0 -m SHA1-RSA-PKCS --input-file /data/azur1024bit_password_12345678.pfx --output-file /data/signature
 }}}
-Bild 7
+
+http://seek-for-android.googlecode.com/svn/wiki/img/PKI_snap7_p11spy.png
 
 
 = 3 Future Aspects =
