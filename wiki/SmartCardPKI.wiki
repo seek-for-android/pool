@@ -111,7 +111,7 @@ Calling the commandline tools without a parameter shows the parameters available
 === 2.4.1 Initialise Muscle Card Applet ===
 
 To initialise the Muscle Card Applet there is required to send a proprietary command, setting the initial PIN values.
-Therefore you need to connect your Android phone to the computer and open a connection to the device with the Andorid adb tool.
+Therefore you need to connect your Android phone to the computer and open a connection to the device with the Android _adb_ tool.
 Then you can use the OpenSC opens-tool utility to perform the initialisation of the JavaCard Applet.
 {{{
 $ adb shell
