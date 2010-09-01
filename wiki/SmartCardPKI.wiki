@@ -198,7 +198,7 @@ This will display all the PKCS#11 calls including sensitive information like PIN
 http://seek-for-android.googlecode.com/svn/wiki/img/PKI_snap7_p11spy.png
 
 
-= 3 Future Aspects =
+= 3 Future Perspective =
 
 Standard PKCS#11 interface with smart card access is one step to standard PKI infrastructure on Android.
 It requires also Standard Applications, e.g. Browsers, eMail-Clients supporting this interface on Android.
