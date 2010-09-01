@@ -71,6 +71,8 @@ public class MainActivity extends TabActivity {
 	
 	public static EidEngine belpic = new EidEngine();
 	
+	public static boolean own_id = true;
+	
 	
     /** Called when the activity is first created. */
     @Override
@@ -190,8 +192,8 @@ public class MainActivity extends TabActivity {
 
        
         
-        intent = new Intent().setClass(this, CardPin.class);
-        spec = tabHost.newTabSpec("cardpin").setIndicator("Card & PIN")
+        intent = new Intent().setClass(this, Functions.class);
+        spec = tabHost.newTabSpec("cardpin").setIndicator("Functions")
                       .setContent(intent);
         tabHost.addTab(spec);
         
@@ -377,6 +379,8 @@ public class MainActivity extends TabActivity {
 		
 		//tabHost.getTabWidget().setCurrentTab(0);
 		
+		own_id = true;
+		
 		//Switch tabs so to refresh the content
 		tabHost.setCurrentTab(1);
 		tabHost.setCurrentTab(0);
@@ -488,6 +492,8 @@ public class MainActivity extends TabActivity {
 					belpic.loadEid(path);
 	        		
 					belpic.parseEidData();
+					
+					own_id = false;
 					
 					tabHost.setCurrentTab(1);
 					tabHost.setCurrentTab(0);

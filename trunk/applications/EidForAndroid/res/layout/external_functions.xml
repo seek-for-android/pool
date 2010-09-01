@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent">
+    
+    
+    <TextView
+        android:id="@+id/blank"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingLeft="20dip"
+        android:paddingTop="20dip"
+    />
+    
+    <TextView
+    	android:id="@+id/verify_data"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dip"
+        android:layout_toRightOf="@id/blank"
+        android:layout_alignBottom="@id/blank"
+        android:textColor="#FF909090"
+        android:text="@string/verify_data"
+     />
+        
+        
+     <Button
+        android:id="@+id/verify"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/verify_data"
+        android:layout_marginTop="15dip"
+		android:layout_alignLeft="@+id/verify_data"
+        android:gravity="center"
+        android:width="120dip"
+        android:textColor="#000"
+        android:text="@string/verify"
+    />
+        
+</RelativeLayout>

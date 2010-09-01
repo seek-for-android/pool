@@ -19,7 +19,7 @@
         </activity>
          <activity android:name=".Certificates">
         </activity>
-        <activity android:name=".CardPin">
+        <activity android:name=".Functions">
         </activity>
         <activity android:name=".PathQuery" 
           		  android:label="File Location" 
