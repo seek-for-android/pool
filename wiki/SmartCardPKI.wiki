@@ -203,6 +203,6 @@ http://seek-for-android.googlecode.com/svn/wiki/img/PKI_snap7_p11spy.png
 Standard PKCS#11 interface with smart card access is one step to standard PKI infrastructure on Android.
 It requires also Standard Applications, e.g. Browsers, eMail-Clients supporting this interface on Android.
 
-Other PKI Open Source projects/developments that might be worth to be investigated:
+Other PKI Open Source projects/developments that should be investigated:
  * Firefox Browser for Android / "Fennec" Project. Ist there PKCS#11 Support like in Firefox available ?
- * Java Interface/Wrapper for access of PKI functionality from Java Applications.
+ * Java Interface/Wrapper for access of PKI functionality from Java Applications (e.g IAIK PKC#11 Wrapper).
