@@ -181,7 +181,7 @@ The result is stored in the output file. The output file created has a length of
 (The signature has the same length as the Private key on the smart card, which is 1024 bit).
 As signature algorithm we use the SHA1-RSA-PKCS, which performs both, hashing and signature generation in one step.
 {{{
-#pkcs11-tool --sign --slot 0 -m SHA1-RSA-PKCS --input-file /data/azur1024bit_password_12345678.pfx --output-file /data/signature
+# pkcs11-tool --sign --slot 0 -m SHA1-RSA-PKCS --input-file /data/azur1024bit_password_12345678.pfx --output-file /data/signature
 }}}
 
 http://seek-for-android.googlecode.com/svn/wiki/img/PKI_snap6_create_signature.png
