@@ -112,7 +112,7 @@ Calling the commandline tools without a parameter shows the parameters available
 
 To initialise the Muscle Card Applet there is required to send a proprietary command, setting the initial PIN values.
 Therefore you need to connect your Android phone to the computer and open a connection to the device with the Android _adb_ tool.
-Then you can use the OpenSC opens-tool utility to perform the initialisation of the JavaCard Applet.
+Then you can use the OpenSC _opensc-tool_ utility to perform the initialisation of the JavaCard Applet.
 {{{
 $ adb shell
 # cd /system/bin
@@ -146,7 +146,7 @@ http://seek-for-android.googlecode.com/svn/wiki/img/PKI_snap3_p15_dump.png
 
 === 2.4.4 Import a RSA key and certificate. ===
 
-One way to put a key and certficate onto the smart card, is to import it from an encrypted PKCS#12 container.
+One way to put a key and certificate onto the smart card, is to import it from an encrypted [http://www.rsa.com/rsalabs/node.asp?id=2138 PKCS#12] container.
 A sample PKCS#12 container file can be downloaded here:
 It contains a 1024 bit RSA key and a corresponding certificate for a dummy user called "azur".
 To import it into the smart card, you need to copy the file to the phone by using the "adb push" command.
