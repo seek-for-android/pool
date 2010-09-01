@@ -41,23 +41,23 @@ From the download page get:
  * Muscle Card Applet 0.9.12: [http://seek-for-android.googlecode.com/files/MCardApplet-0912.tar.gz MCardApplet-0912.tar.gz]
  * sample RSA key with certificate: [http://seek-for-android.googlecode.com/files/azur1024bit_password_12345678.pfx azur1024bit_password_12345678.pfx]
 
-The system environment for porting the PKI functionality to the Android 2.2 (froyo) was an Ubuntu 10.04 with gcc 4.4.3.<br />As Secure Element a G&D Mobile Security Card and for loading the Java card applet, the G&D JLoad was used, provided with the G&D Mobile Security Developers Kit [https://www.cardsolutions-shop.com/shop/gi-de/].<br />As phone, there was a HTC Magic (Sapphire) used.
+The system environment for porting the PKI functionality to the Android 2.2 (froyo) was an Ubuntu 10.04 with gcc 4.4.3.<br />As Secure Element a _G&D Mobile Security Card_ and for loading the Java card applet, the _G&D JLoad_ was used, provided within the _G&D Mobile Security Developers Kit_ [https://www.cardsolutions-shop.com/shop/gi-de/].<br />As phone, there was a HTC Magic (Sapphire) used.
 
 
 == 2.2 Add OpenSC to the froyo sources ==
 
-To add the support for OpenSC to your Froyo sources, you need to build your system with smart card support according to the description [http://code.google.com/p/seek-for-android/wiki/BuildingTheSystem Building the system] and additionally add the patches for OpenSC to your sources.
+To add the support for OpenSC to your froyo sources, you need to build your system with smart card support according to the description [http://code.google.com/p/seek-for-android/wiki/BuildingTheSystem Building the system] and additionally add the patches for OpenSC to your sources.
 
 After you performed the step "Patching the source" as described in [http://code.google.com/p/seek-for-android/wiki/BuildingTheSystem Building the system] add the patches for OpenSC.
 
-Apply the patches for OpenSC in the root directory of the Froyo source
+Apply the patches for OpenSC in the root directory of the froyo source then continue to build your system as described in [http://code.google.com/p/seek-for-android/wiki/BuildingTheSystem Building the system]
 {{{
 $ tar xvzf  external_opensc.tar.gz
 $ patch -p1 < <path_to_patch>/opensc_android.patch
 }}}
-After patching the source follow the description how to build your system as described in [http://code.google.com/p/seek-for-android/wiki/BuildingTheSystem Building the system]
 
-After you built the system and flashed it to your phone, there will be additional components available:
+
+Once the system was built successfully and flashed to the phone, there will be additional components available:
 {{{
 directory: /system/bin
  opensc-tool (commandline utility for smart card operations, e.g. sending commands)
