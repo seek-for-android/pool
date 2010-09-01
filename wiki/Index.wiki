@@ -6,7 +6,8 @@
 
 ====How To====
    * [BuildingTheSystem]<br>For details on how to compile the Android sources with SmartCard API support. ([Devices List of tested devices])<br><br>
-   * [SmartcardAPI]<br>An introduction how to use the SmartCard API in the Android platfrom. (samples are available in svn)<br>
+   * [SmartcardAPI]<br>An introduction how to use the SmartCard API in the Android platform. (samples are available in svn)<br><br>
+   * [SmartCardPKI]<br>Integration of a smart card based, standard PKI interface into  Android.<br> 
  
 ====UICC Support====
    * [EmulatorExtension]<br>Extend the Android emulator with a PC/SC interface that enables the emulation environment to access a physical connected UICC instead of the built in (SIM) simulation<br>
