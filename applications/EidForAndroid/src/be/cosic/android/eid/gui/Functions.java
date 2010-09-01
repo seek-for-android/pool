@@ -51,8 +51,9 @@ public class Functions extends Activity {
 	static final int GET_PIN_FOR_CHANGE_REQUEST_1 = 1;
 	static final int GET_PIN_FOR_CHANGE_REQUEST_2 = 2;
 	static final int GET_PIN_FOR_CHANGE_REQUEST_3 = 3;
-	static final int GET_RAW_FILE_LOCATION_REQUEST = 4;
-	static final int GET_SIGNED_FILE_LOCATION_REQUEST = 5;
+	static final int GET_PIN_FOR_SIGN_REQUEST = 4;
+	static final int GET_RAW_FILE_LOCATION_REQUEST = 5;
+	static final int GET_SIGNED_FILE_LOCATION_REQUEST = 6;
 	
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -108,8 +109,9 @@ public class Functions extends Activity {
 	            public void onClick(View v) {
 	              
 	            	//Get the PIN to enable signing
-	            	intent.putExtra("requestCode", GET_PIN_FOR_CHANGE_REQUEST_1);
-	            	Functions.this.startActivityForResult(intent, GET_RAW_FILE_LOCATION_REQUEST);
+	            	sdhhjdfgdf
+	            	intent.putExtra("requestCode", GET_PIN_FOR_SIGN_REQUEST);
+	            	Functions.this.startActivityForResult(intent, GET_PIN_FOR_SIGN_REQUEST);
 	            	
 	            	
 	            }
@@ -303,7 +305,7 @@ public class Functions extends Activity {
             
             break;
         
-    	case GET_RAW_FILE_LOCATION_REQUEST:
+    	case GET_SIGNED_FILE_LOCATION_REQUEST:
         	
             if (resultCode == RESULT_OK) {
                
@@ -355,20 +357,21 @@ public class Functions extends Activity {
             
             break;
             
-    	case GET_SIGNED_FILE_LOCATION_REQUEST:
+    	case GET_PIN_FOR_SIGN_REQUEST:
         	
             if (resultCode == RESULT_OK) {
                
             	try{   
 	            	
-	            	//Initialize card for signing
+	            	//Check pin for signing
 	    			MainActivity.belpic.pinValidationEngine(data.getStringExtra("PIN"));
 	    			
 	    			
-	    			CharSequence text = "PIN ok";
-	    			toast = Toast.makeText(context, text, duration);
-	    			toast.setGravity(Gravity.CENTER, 0, 0);
-	    			toast.show();
+	    			//Ask the path of the file to be signed
+	    			//TODO : does not work!
+	    			intent = new Intent().setClass(this, PathQuery.class);
+	    			Functions.this.startActivityForResult(intent, GET_RAW_FILE_LOCATION_REQUEST);
+	            	
 	    			
             	} catch (InvalidPinException e) {
 	    			
@@ -383,6 +386,58 @@ public class Functions extends Activity {
 					e.printStackTrace();
 				}	
             	
+            	
+            	
+            	
+            }else ;//Do nothing
+            
+            break;
+            
+    	case GET_RAW_FILE_LOCATION_REQUEST:
+        	
+            if (resultCode == RESULT_OK) {
+               
+            	
+            	String[] files = data.getStringExtra("path").split(File.separator);
+            	String dir = Environment.getExternalStorageDirectory().getAbsolutePath();
+            	String path = dir + File.separator + data.getStringExtra("path");
+            	
+            	
+            	//Get the directory path
+            	for(int i =0;i<(files.length-1);i++){
+					dir = dir + File.separator + files[i] ;
+				}
+            	
+          	
+				try {
+					
+					//TODO !!!!!!!!!!!!!!!!!
+					
+					
+					//Check if an extension was added. If not or a false one, correct.
+					//Not everything is checked but other things should be checked by OS
+					
+					
+//					
+					if(!path.endsWith(".crt"))
+	            		path=path + ".crt";
+	            	else if(!path.endsWith(".crt"))
+	            			throw new UnsupportedEncodingException();
+					
+//					//We make new directories where necessary
+//					new File(dir).mkdirs();
+//					
+//					//Now we store the file					
+//					//openFileOutput can not contain path separators in its name!!!!!!!
+//					//FileOutputStream fos = openFileOutput(path, Context.MODE_WORLD_READABLE);
+//					FileOutputStream fos = new FileOutputStream(path);
+//					fos.write(currentCert.getEncoded());
+//	        		fos.close();
+				} catch (IOException e) {
+					//TODO
+					
+					e.printStackTrace();
+				}
             	
             	
             	
