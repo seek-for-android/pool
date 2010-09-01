@@ -9,19 +9,19 @@ It is based on public/private keys (typically RSA) and certificates, which bind 
 
 PKI is based on the secrecy of the private key, so the private key it is often stored on a smart card, where the smart card performs the cryptographic operations to avoid the risk that the private key can become public or copied in any way.
 
-The most common API to access cryptographic smart card functions is the [http://www.rsa.com/rsalabs/node.asp?id=2133 PKCS#11] interface, published by RSA Labs.
+The most common API to access cryptographic smart card functions is the [http://www.rsa.com/rsalabs/node.asp?id=2133 PKCS#11] interface, published by [http://www.rsa.com/rsalabs/node.asp?id=2124 RSA Labs].
 It is used in Mozilla Firefox, Thunderbird and many other applications, e.g. PGP.
-Corresponding to the PKCS#11 interface, the [http://www.rsa.com/rsalabs/node.asp?id=2141 PKCS#15] specification defines a file structure and description for keys, certifcicates on the smart card.
+Corresponding to the PKCS#11 interface, the [http://www.rsa.com/rsalabs/node.asp?id=2141 PKCS#15] specification defines a file structure and description syntax for keys and certificates on the smart card.
 
 == 1.2 OpenSC ==
 [http://www.opensc-project.org/opensc OpenSC] is a widely-used Open Source development, which provides a set of libraries and tools for accessing smart cards for management and cryptographic operations. 
 It provides a PKCS#11 interface and already supports smart cards from different vendors. 
-OpenSC accesses the smart card according to the PKCS#15 standard.
+OpenSC provides smart card access according to the PKCS#15 standard.
 A good overview about OpenSC can be found [http://www.opensc-project.org/opensc/wiki/OverView here]
 
 == 1.3 Muscle Card Applet ==
-The Muscle Card Applet is an Open Source Java Card Applet, originally developed by the [http://www.musclecard.com/musclecard/ M.U.S.C.L.E] project 
-The Muscle Card applet can be loaded on smart cards with Java Card OS and allow to securely store keys and other objects, (e.g. certificates) on the smartcard and use them for cryptographic functionality, like signature generation or decryption with RSA keys. 
+The Muscle Card Applet is an Open Source Java Card applet, originally developed by the [http://www.musclecard.com/musclecard/ M.U.S.C.L.E] project 
+The Muscle Card applet can be loaded on smart cards with Java Card OS and allow to securely store keys and other objects, (e.g. certificates) on the smart card and use them for cryptographic functionality, like signature generation or decryption with RSA keys. 
 The Muscle Card Applet is supported by OpenSC (http://www.opensc-project.org/opensc/wiki/MuscleApplet)<br/>
 
 
@@ -31,9 +31,9 @@ To provide PKI functionality on the Android OS, we use OpenSC with modifications
 
 == 2.1 Prerequisites ==
 
- * Android 2.2 (Froyo) sources with smart card related patches (see [http://code.google.com/p/seek-for-android/wiki/BuildingTheSystem Building the system])
- * Secure Element with Java Card OS in microSD format (e.g. G&D Mobile Security Card), for using it on a real hardware device.
- * Tool to load a Java Card applet onto the Secure Element (e.g. G&D JLoad for G&D Mobile Security Card)
+ * Android 2.2 (froyo) sources with smart card related patches (see [http://code.google.com/p/seek-for-android/wiki/BuildingTheSystem Building the system])
+ * Secure Element with Java Card OS in microSD format (_e.g. G&D Mobile Security Card_), for using it on a real hardware device.
+ * Tool to load a Java Card applet onto the Secure Element (_e.g. G&D JLoad_ for _G&D Mobile Security Card_)
 
 From the download page get:
  * OpenSC 0.11.13 package: [http://seek-for-android.googlecode.com/files/external_opensc.tar.gz external_opensc.tar.gz]
