@@ -84,7 +84,7 @@ directory: /etc
 
 Unpack the package containing the Muscle Card Applet.
 {{{
-tar xvzf MCardApplet-0912.tar.gz 
+tar xvzf MCardApplet-0912.tar.gz
 }}}
 The package contains the Muscle Java Card Applet 0.9.12, which consist of the sources of 0.9.11 and the Ant-script from version Muscle Card 0.9.12 for to compile and convert it.
 There is already a compiled and converted cap-File, which can be directly downloaded onto a smart card with JavaCard OS.
