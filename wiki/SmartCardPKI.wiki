@@ -88,7 +88,8 @@ tar xvzf MCardApplet-0912.tar.gz
 }}}
 The package contains the Muscle Java Card Applet 0.9.12, which consist of the sources of 0.9.11 and the ant-script from version Muscle Card 0.9.12 for to compile and convert it. 
 There is already a compiled and converted cap-File, which can be directly downloaded onto a smart card with JavaCard OS.
-It is located in the directory /MCardApplet/GD/com/musclecard/CardEdge/javacard/CardEdge.cap and was converted using the  Sun Java Card Development Kit 2.2.1.
+It is located in the following directory: <code>/MCardApplet/GD/com/musclecard/CardEdge/javacard/CardEdge.cap</code> 
+The Java card applet was converted using the  Sun Java Card Development Kit 2.2.1.
 There is no need to compile and convert the Muscle Java Card Applet, as there is a cap-File already included in the package, it is nevertheless possible to perform this steps. Therefore a Sun JDK and the Sun Java Card Development Kit is required. 
 If you compile and convert the Muscle Java Card Applet for the G&D Mobile Security Card, you need to download the Sun Java Card Development Kit 2.2.1 from the internet (due to licensing conditions it is not included) and copy it to the directory /MCardApplet/depends/jc221).
 Then you can perform the compile/convert process for the applet by running Ant:
