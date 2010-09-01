@@ -192,7 +192,7 @@ http://seek-for-android.googlecode.com/svn/wiki/img/PKI_snap6_create_signature.p
 
 To see the PKCS#11 calls sent to the PKCS#11 library it is possible to load the _pkcs11-spy.so_ libary and log the calls before forwarding it to the real PKCS#11 library _opensc-pkcs11.so_.
 
-In this sample we call the digital signature operation as described before, but we explicitely load the _pkcs11-spy.so_ library to log the PKCS#11 calls.
+In this example we call the digital signature operation as described before, but we explicitely load the _pkcs11-spy.so_ library to log the PKCS#11 calls.
 With the environment variable `PKCS11SPY` we advise the _pkcs11-spy.so_ library to forward the calls to the real PKCS#11 library _opensc-pkcs11.so_.
 This will display all the PKCS#11 calls including sensitive information like PIN values entered. This is useful for debugging with applications using the PKCS#11 interface.
 {{{
