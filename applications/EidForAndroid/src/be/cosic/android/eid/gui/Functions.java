@@ -109,7 +109,7 @@ public class Functions extends Activity {
 	            public void onClick(View v) {
 	              
 	            	//Get the PIN to enable signing
-	            	sdhhjdfgdf
+	            	
 	            	intent.putExtra("requestCode", GET_PIN_FOR_SIGN_REQUEST);
 	            	Functions.this.startActivityForResult(intent, GET_PIN_FOR_SIGN_REQUEST);
 	            	
@@ -365,7 +365,7 @@ public class Functions extends Activity {
 	            	
 	            	//Check pin for signing
 	    			MainActivity.belpic.pinValidationEngine(data.getStringExtra("PIN"));
-	    			
+            		
 	    			
 	    			//Ask the path of the file to be signed
 	    			//TODO : does not work!
@@ -412,7 +412,7 @@ public class Functions extends Activity {
 				try {
 					
 					//TODO !!!!!!!!!!!!!!!!!
-					
+					//Get the file and 
 					
 					//Check if an extension was added. If not or a false one, correct.
 					//Not everything is checked but other things should be checked by OS
