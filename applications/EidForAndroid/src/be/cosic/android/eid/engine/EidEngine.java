@@ -56,6 +56,12 @@ import be.cosic.android.eid.gui.MainActivity;
 import be.cosic.android.eid.interfaces.EidCommandsInterface;
 import be.cosic.android.util.MathUtils;
 import be.cosic.android.util.TextUtils;
+import be.fedict.eidtoolset.engine.SmartCardResponse;
+import be.fedict.eidtoolset.exceptions.AIDNotFound;
+import be.fedict.eidtoolset.exceptions.NoCardConnected;
+import be.fedict.eidtoolset.exceptions.NoReadersAvailable;
+import be.fedict.eidtoolset.exceptions.NoSuchFeature;
+import be.fedict.eidtoolset.exceptions.SignatureGenerationException;
 
 
 public class EidEngine implements EidCommandsInterface{
@@ -873,7 +879,49 @@ public class EidEngine implements EidCommandsInterface{
 	
 	
 	
+	public byte[] generateAuthenticationSignature(byte[] datahash) throws InvalidResponse, NoSuchAlgorithmException, CardException {
+		return generateSignature(prepareForAuthenticationSignatureCommand, generateSignatureCommand, datahash);
+	}
+	public byte[] generateNonRepudiationSignature(byte[] datahash) throws InvalidResponse, NoSuchAlgorithmException, CardException {
+		return generateSignature(prepareForNonRepudiationSignatureCommand, generateSignatureCommand, datahash);
+	}
 	
+	public byte[] generateSignature(byte[] preparationCommand, byte[] signatureGenerationCommand, byte[] datahash) throws InvalidResponse, NoSuchAlgorithmException, CardException,
+		{
+		
+		
+		
+		try {
+			cardChannel.transmit(preparationCommand);
+			pinValidationEngine();
+			byte[] apdu = new byte[signatureGenerationCommand.length];
+			for (int i = 0; i < signatureGenerationCommand.length; i++)
+				apdu[i] = signatureGenerationCommand[i];
+			for (int i = 0; i < MathUtils.min(20, datahash.length); i++)
+				apdu[i + 5] = datahash[i];
+			byte[] result = cardChannel.transmit(apdu);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		//TODO: result is ook nog met SW code achteraan: eerst weghalen na verificatie en voor return!
+		if (TextUtils.hexDump(result).equals("9000")) {
+			// pinPad.setStatusText("OK...");
+			return result; 
+		
+		if (scr.getCommandStatus().equals("6180")) {
+			scr = new SmartCardResponse(retrieveSignatureBytes());
+			if (scr.getCommandStatus().equals("9000"))
+				return scr.getData();
+		}
+		throw new SignatureGenerationException();
+	}
+
+	public byte[] retrieveSignatureBytes() throws InvalidResponse, CardException, NoSuchAlgorithmException {
+
+		
+		return cardChannel.transmit(retrieveSignatureCommand);
+	}
 	
 	
 	

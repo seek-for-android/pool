@@ -22,6 +22,8 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.security.cert.CertificateEncodingException;
 
 import android.app.Activity;
@@ -37,6 +39,7 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 import be.cosic.android.eid.exceptions.InvalidPinException;
+import be.cosic.android.eid.exceptions.InvalidResponse;
 import be.cosic.android.util.TextUtils;
 
 public class Functions extends Activity {
@@ -122,6 +125,11 @@ public class Functions extends Activity {
 	        authenticate.setOnClickListener(new View.OnClickListener() {
 	            public void onClick(View v) {
 	                
+	            	//TODO: need to use SSL for client authentication 
+	            	//also: does eID card implement the PKCS11 standard? used for client authentication
+	            	//and do we use PKCS11 on both application side (this side) and token side (smart card)?
+	            	
+	            	
 	            	Context context = getApplicationContext();
 	            	int duration = Toast.LENGTH_LONG;
 	            	Toast toast;
@@ -216,7 +224,7 @@ public class Functions extends Activity {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}	
-            }else ;//TODO if cancel of zo...
+            }else ;
             
             break;
             
@@ -236,7 +244,7 @@ public class Functions extends Activity {
                 	
 	    			
             	
-            }else ;//TODO if cancel of zo...
+            }else ;
             
             
             break;
@@ -259,7 +267,7 @@ public class Functions extends Activity {
                 	
 	    			
             	
-            }else ;//TODO if cancel of zo...
+            }else ;
         
             break;
             
@@ -301,7 +309,7 @@ public class Functions extends Activity {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}	
-            }else ;//TODO if cancel of zo...
+            }else ;
             
             break;
         
@@ -368,7 +376,6 @@ public class Functions extends Activity {
             		
 	    			
 	    			//Ask the path of the file to be signed
-	    			//TODO : does not work!
 	    			intent = new Intent().setClass(this, PathQuery.class);
 	    			Functions.this.startActivityForResult(intent, GET_RAW_FILE_LOCATION_REQUEST);
 	            	
@@ -411,18 +418,19 @@ public class Functions extends Activity {
           	
 				try {
 					
-					//TODO !!!!!!!!!!!!!!!!!
-					//Get the file and 
+					//TODO Make an xml signature??? and imbed reference to document/in document/...
+					//For now, just a signature is created and stored under 'filename_signature.sign'
 					
-					//Check if an extension was added. If not or a false one, correct.
-					//Not everything is checked but other things should be checked by OS
+					//Encode the file into a byte array
+					byte[] encodedData = TextUtils.getBytesFromFile(path);
 					
+					//Calculate hash 
+					MessageDigest hash = MessageDigest.getInstance("SHA-1");
+					byte[] hashValue = hash.digest(encodedData);
 					
-//					
-					if(!path.endsWith(".crt"))
-	            		path=path + ".crt";
-	            	else if(!path.endsWith(".crt"))
-	            			throw new UnsupportedEncodingException();
+					//Calculate the signature inside the eID card
+					MainActivity.belpic.generateNonRepudiationSignature(hashValue);
+					
 					
 //					//We make new directories where necessary
 //					new File(dir).mkdirs();
@@ -433,9 +441,22 @@ public class Functions extends Activity {
 //					FileOutputStream fos = new FileOutputStream(path);
 //					fos.write(currentCert.getEncoded());
 //	        		fos.close();
+					
+					
+					//If everything went fine, let the user know the signature was stored under 'filename_signature.sign'
+					
 				} catch (IOException e) {
 					//TODO
 					
+					e.printStackTrace();
+				} catch (NoSuchAlgorithmException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				} catch (InvalidResponse e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				} catch (CardException e) {
+					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
             	
