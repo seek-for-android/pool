@@ -30,6 +30,7 @@
         <item>Your old PIN:</item>
         <item>Choose new PIN:</item>
         <item>Repeat new PIN:</item>
+        <item>Your PIN code:</item>
     </string-array>
     <string name="functionalities">Card functionalities:</string>
     <string name="sign_data">Sign a File</string>
