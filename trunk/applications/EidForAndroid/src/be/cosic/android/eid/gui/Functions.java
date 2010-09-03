@@ -40,6 +40,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 import be.cosic.android.eid.exceptions.InvalidPinException;
 import be.cosic.android.eid.exceptions.InvalidResponse;
+import be.cosic.android.eid.exceptions.SignatureGenerationException;
 import be.cosic.android.util.TextUtils;
 
 public class Functions extends Activity {
@@ -371,8 +372,9 @@ public class Functions extends Activity {
                
             	try{   
 	            	
-	            	//Check pin for signing
-	    			MainActivity.belpic.pinValidationEngine(data.getStringExtra("PIN"));
+	            	//Prepare for signature
+            		MainActivity.belpic.prepareForNonRepudiationSignature(data.getStringExtra("PIN"));
+	    			//MainActivity.belpic.pinValidationEngine(data.getStringExtra("PIN"));
             		
 	    			
 	    			//Ask the path of the file to be signed
@@ -389,8 +391,13 @@ public class Functions extends Activity {
             		
 	    			Log.e(MainActivity.LOG_TAG, "Exception in PIN validation: " + e.getMessage());
 	            } catch (CardException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
+	            	CharSequence text = "Card Exception";
+	    			toast = Toast.makeText(context, text, duration);
+	    			toast.setGravity(Gravity.CENTER, 0, 0);
+	    			toast.show();
+            		
+	    			Log.e(MainActivity.LOG_TAG, "CardException: " + e.getMessage());
+	            
 				}	
             	
             	
@@ -429,7 +436,7 @@ public class Functions extends Activity {
 					byte[] hashValue = hash.digest(encodedData);
 					
 					//Calculate the signature inside the eID card
-					MainActivity.belpic.generateNonRepudiationSignature(hashValue);
+					byte[] signature = MainActivity.belpic.generateNonRepudiationSignature(hashValue);
 					
 					
 //					//We make new directories where necessary
@@ -446,18 +453,45 @@ public class Functions extends Activity {
 					//If everything went fine, let the user know the signature was stored under 'filename_signature.sign'
 					
 				} catch (IOException e) {
-					//TODO
-					
-					e.printStackTrace();
+					CharSequence text = "IO Exception";
+	    			toast = Toast.makeText(context, text, duration);
+	    			toast.setGravity(Gravity.CENTER, 0, 0);
+	    			toast.show();
+            		
+	    			Log.e(MainActivity.LOG_TAG, "IOException: " + e.getMessage());
+	            
 				} catch (NoSuchAlgorithmException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
+					CharSequence text = "NoSuchAlgorithmException";
+	    			toast = Toast.makeText(context, text, duration);
+	    			toast.setGravity(Gravity.CENTER, 0, 0);
+	    			toast.show();
+            		
+	    			Log.e(MainActivity.LOG_TAG, "NoSuchAlgorithmException: " + e.getMessage());
+	            
 				} catch (InvalidResponse e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
+					CharSequence text = "InvalidResponse";
+	    			toast = Toast.makeText(context, text, duration);
+	    			toast.setGravity(Gravity.CENTER, 0, 0);
+	    			toast.show();
+            		
+	    			Log.e(MainActivity.LOG_TAG, "InvalidResponse: " + e.getMessage());
+	            
 				} catch (CardException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
+					CharSequence text = "CardException";
+	    			toast = Toast.makeText(context, text, duration);
+	    			toast.setGravity(Gravity.CENTER, 0, 0);
+	    			toast.show();
+            		
+	    			Log.e(MainActivity.LOG_TAG, "CardException: " + e.getMessage());
+	            
+				} catch (SignatureGenerationException e) {
+					CharSequence text = "SignatureGenerationException";
+	    			toast = Toast.makeText(context, text, duration);
+	    			toast.setGravity(Gravity.CENTER, 0, 0);
+	    			toast.show();
+            		
+	    			Log.e(MainActivity.LOG_TAG, "SignatureGenerationException: " + e.getMessage());
+	            
 				}
             	
             	
