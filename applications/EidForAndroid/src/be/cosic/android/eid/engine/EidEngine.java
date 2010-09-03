@@ -52,16 +52,11 @@ import be.cosic.android.eid.exceptions.GeneralSecurityException;
 import be.cosic.android.eid.exceptions.InvalidPinException;
 import be.cosic.android.eid.exceptions.InvalidResponse;
 import be.cosic.android.eid.exceptions.NoSuchFileException;
+import be.cosic.android.eid.exceptions.SignatureGenerationException;
 import be.cosic.android.eid.gui.MainActivity;
 import be.cosic.android.eid.interfaces.EidCommandsInterface;
 import be.cosic.android.util.MathUtils;
 import be.cosic.android.util.TextUtils;
-import be.fedict.eidtoolset.engine.SmartCardResponse;
-import be.fedict.eidtoolset.exceptions.AIDNotFound;
-import be.fedict.eidtoolset.exceptions.NoCardConnected;
-import be.fedict.eidtoolset.exceptions.NoReadersAvailable;
-import be.fedict.eidtoolset.exceptions.NoSuchFeature;
-import be.fedict.eidtoolset.exceptions.SignatureGenerationException;
 
 
 public class EidEngine implements EidCommandsInterface{
@@ -878,43 +873,55 @@ public class EidEngine implements EidCommandsInterface{
 	
 	
 	
+	public void prepareForAuthenticationSignature(String pin) throws CardException, InvalidPinException {
+		prepareForSignature(prepareForAuthenticationSignatureCommand, pin);
+	}
+	public void prepareForNonRepudiationSignature(String pin) throws CardException, InvalidPinException {
+		prepareForSignature(prepareForNonRepudiationSignatureCommand, pin);
+	}
 	
-	public byte[] generateAuthenticationSignature(byte[] datahash) throws InvalidResponse, NoSuchAlgorithmException, CardException {
+	
+	
+	public void prepareForSignature(byte[] preparationCommand, String pin) throws CardException, InvalidPinException {
+		cardChannel.transmit(preparationCommand);
+		pinValidationEngine(pin);
+	}
+
+
+	public byte[] generateAuthenticationSignature(byte[] datahash) throws InvalidResponse, NoSuchAlgorithmException, CardException, SignatureGenerationException {
 		return generateSignature(prepareForAuthenticationSignatureCommand, generateSignatureCommand, datahash);
 	}
-	public byte[] generateNonRepudiationSignature(byte[] datahash) throws InvalidResponse, NoSuchAlgorithmException, CardException {
+	public byte[] generateNonRepudiationSignature(byte[] datahash) throws InvalidResponse, NoSuchAlgorithmException, CardException, SignatureGenerationException {
 		return generateSignature(prepareForNonRepudiationSignatureCommand, generateSignatureCommand, datahash);
 	}
 	
-	public byte[] generateSignature(byte[] preparationCommand, byte[] signatureGenerationCommand, byte[] datahash) throws InvalidResponse, NoSuchAlgorithmException, CardException,
+	public byte[] generateSignature(byte[] preparationCommand, byte[] signatureGenerationCommand, byte[] datahash) throws InvalidResponse, NoSuchAlgorithmException, CardException, SignatureGenerationException
 		{
 		
 		
-		
-		try {
-			cardChannel.transmit(preparationCommand);
-			pinValidationEngine();
-			byte[] apdu = new byte[signatureGenerationCommand.length];
-			for (int i = 0; i < signatureGenerationCommand.length; i++)
-				apdu[i] = signatureGenerationCommand[i];
-			for (int i = 0; i < MathUtils.min(20, datahash.length); i++)
-				apdu[i + 5] = datahash[i];
-			byte[] result = cardChannel.transmit(apdu);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		
-		//TODO: result is ook nog met SW code achteraan: eerst weghalen na verificatie en voor return!
-		if (TextUtils.hexDump(result).equals("9000")) {
+		byte[] apdu = new byte[signatureGenerationCommand.length];
+		for (int i = 0; i < signatureGenerationCommand.length; i++)
+			apdu[i] = signatureGenerationCommand[i];
+		for (int i = 0; i < MathUtils.min(20, datahash.length); i++)
+			apdu[i + 5] = datahash[i];
+		byte[] result = cardChannel.transmit(apdu);
+	
+		if (TextUtils.hexDump(result, result.length - 2, 2).equals("9000")) {
+			HIER DUS
 			// pinPad.setStatusText("OK...");
-			return result; 
+			//return result; 
 		
-		if (scr.getCommandStatus().equals("6180")) {
-			scr = new SmartCardResponse(retrieveSignatureBytes());
-			if (scr.getCommandStatus().equals("9000"))
-				return scr.getData();
+		if (TextUtils.hexDump(result, result.length - 2, 2).equals("6180")) {
+			result = retrieveSignatureBytes();
+			if (TextUtils.hexDump(result, result.length - 2, 2).equals("9000")){
+				byte[] signature = new byte[result.length - 2];
+				System.arraycopy(result, 0, signature, 0, signature.length);
+				return signature;
+			}
+				
 		}
-		throw new SignatureGenerationException();
+		}
+		throw new be.cosic.android.eid.exceptions.SignatureGenerationException();
 	}
 
 	public byte[] retrieveSignatureBytes() throws InvalidResponse, CardException, NoSuchAlgorithmException {
