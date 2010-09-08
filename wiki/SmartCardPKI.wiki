@@ -4,7 +4,7 @@
 
 == 1.1 Smart Card based PKI (Public Key Infrastructure) ==
 
-PKI is the common way to authenticate a message sender or to encrypt/decrypt messages in a secure way. It ist typically used by eMails (S/MIME), data encryption and secure authentication (VPN, SSL/TLS).
+PKI is the common way to authenticate a message sender or to encrypt/decrypt messages in a secure way. It is typically used by eMails (S/MIME), data encryption and secure authentication (VPN, SSL/TLS).
 It is based on public/private keys (typically RSA) and certificates, which bind a user identity to a public key.
 
 PKI is based on the secrecy of the private key, so the private key is often stored on a smart card, where the smart card performs the cryptographic operations to avoid the risk that the private key can become public or copied in any way.
