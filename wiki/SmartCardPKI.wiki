@@ -4,10 +4,10 @@
 
 == 1.1 Smart Card based PKI (Public Key Infrastructure) ==
 
-PKI is the common way to authenticate a message sender or to encrypt/decrypt messages in a secure way. It ist typically used for eMails (S/MIME), data encryption and secure authentication (VPN, SSL/TLS).
+PKI is the common way to authenticate a message sender or to encrypt/decrypt messages in a secure way. It ist typically used by eMails (S/MIME), data encryption and secure authentication (VPN, SSL/TLS).
 It is based on public/private keys (typically RSA) and certificates, which bind a user identity to a public key.
 
-PKI is based on the secrecy of the private key, so the private key it is often stored on a smart card, where the smart card performs the cryptographic operations to avoid the risk that the private key can become public or copied in any way.
+PKI is based on the secrecy of the private key, so the private key is often stored on a smart card, where the smart card performs the cryptographic operations to avoid the risk that the private key can become public or copied in any way.
 
 The most common API to access cryptographic smart card functions is the [http://www.rsa.com/rsalabs/node.asp?id=2133 PKCS#11] interface, published by [http://www.rsa.com/rsalabs/node.asp?id=2124 RSA Labs].
 It is used in Mozilla Firefox, Thunderbird and many other applications, e.g. PGP.
@@ -105,7 +105,7 @@ For loading the cap-File _CardEdge.cap_ onto the smart card you need to use an a
 
 Once you have flashed your phone with the modified sources and inserted the secure element (e.g. G&D Mobile Security Card) in the device, the first step is to intialise the applet and the PKCS#15 structure on the applet, which sets the initial PIN values and creates all the data structures required.
 
-Additionally there are further examples shown, how to use some of the fucntionality of the OpenSC Tools (e.g, import keys/certificates, create signature, logging of PKCS#11 calls).
+Additionally there are further examples shown, how to use some of the functionality of the OpenSC Tools (e.g, import keys/certificates, create signature, logging of PKCS#11 calls).
 For a description of OpenSC Tools and its parameters refer to the OpenSC project [http://www.opensc-project.org/opensc]
 Calling the commandline tools without a parameter shows the parameters available.
 
@@ -179,7 +179,7 @@ The PKCS#11 library is the standard interface typically used by applications (e.
 Here we use the _pkcs11-tool_ to generate a digital signature for a file. The signature is created by the smart card with the private key stored onto it.
 
 Here we compute the digital signature for the file _azur1024bit_password_12345678.pfx_, but we can use any other file also.
-The result is stored in the output file. The output file created has a length of 128 Bytes and contains the digigal signature computed by the smart card.
+The result is stored in the output file. The output file created has a length of 128 Bytes and contains the digital signature computed by the smart card.
 (The signature has the same length as the Private key on the smart card, which is 1024 bit).
 As signature algorithm we use the SHA1-RSA-PKCS, which performs both, a SHA-1 hash and signature according to the RSA algorithm in one step.
 {{{
@@ -208,5 +208,5 @@ Standard PKCS#11 interface with smart card access is one step to standard PKI in
 It requires also standard applications, e.g. Browsers, eMail-Clients supporting this interface on Android.
 
 Other PKI Open Source projects/developments that should be investigated:
- * Firefox Browser for Android / "fennec" Project. Ist there PKCS#11 Support like in Firefox available ?
+ * Firefox Browser for Android / "fennec" Project. Is there PKCS#11 Support like in Firefox available ?
  * Java Interface/Wrapper for access of PKI functionality from Java Applications (e.g IAIK PKC#11 Wrapper).
