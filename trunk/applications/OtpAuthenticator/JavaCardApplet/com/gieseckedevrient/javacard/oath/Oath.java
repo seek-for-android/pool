@@ -85,7 +85,7 @@ public class Oath extends Applet {
 			apdu.setOutgoingAndSend((short) 0, (short) VERSION.length);
 		}
 
-		// this applet's proprietary class byte must be 0x90, otherwise an exception is thrown
+		// this applet's proprietary class byte must be 0x00, otherwise an exception is thrown
 		if ( (CLA & 0xFC) != 0x00 )
 		{
 			ISOException.throwIt(ISO7816.SW_CLA_NOT_SUPPORTED);
