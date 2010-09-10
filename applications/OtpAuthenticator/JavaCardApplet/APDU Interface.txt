@@ -1,0 +1,5 @@
+oath_put_counter:         00 10 00 00 08 00 00 00 00 00 00 00 00
+oath_get_counter:         00 11 00 00 00
+oath_put_shared_secret:   00 12 06 00 14 31 32 33 34 35 36 37 38 39 30 31 32 33 34 35 36 37 38 39 30
+oath_get_otp:             00 13 00 00 00
+
