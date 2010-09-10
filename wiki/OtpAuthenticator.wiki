@@ -6,11 +6,11 @@ OATH is a common standard for OTP password generation defined in [http://www.iet
 An OATH calculation in software is possible but discouraged as the seed could get lost or tampered after flashing or rooting the phone. For this purpose the OATH calculation takes place in the Mobile Security Card where the private seed is kept secure in the OtpAuthenticator applet. 
 
 = Walk through =
-  * Download the installation files from [http://seek-for-android.googlecode.com/files/OtpAuthenticator.tgz seek]
+  * Download the installation files from the [http://seek-for-android.googlecode.com/files/OtpAuthenticator.tgz Download page]
  * Install the `oath.cap` file on the Mobile Security Card with JLoad or other Java Card compliant Global Platform loader tools.<br>
 *Note*: JLoad is included in the [https://www.cardsolutions-shop.com/shop/gi-de/ Mobile Security Developer's Kit]
- * Install with `OtpAuthenticator.apk` on your Android device equipped with a Mobile Security Card and MSC_SmartcardService installed.<br>
-*Note*: Without MSC_SmartcardService, please check out the [http://code.google.com/p/seek-for-android/source/browse/#svn/trunk/applications/OtpAuthenticator/OtpAuthenticator OtpAuthenticator source code] and recompile the APK according to [http://code.google.com/p/seek-for-android/wiki/BuildingTheSystem BuildingTheSystem]
+ * Install with `OtpAuthenticator.apk` on your Android device equipped with a Mobile Security Card and {{{MSC_SmartcardService}}} installed.<br>
+*Note*: Without {{{MSC_SmartcardService}}}, please check out the [http://code.google.com/p/seek-for-android/source/browse/#svn/trunk/applications/OtpAuthenticator/OtpAuthenticator OtpAuthenticator source code] and recompile the APK according to [http://code.google.com/p/seek-for-android/wiki/BuildingTheSystem BuildingTheSystem]
  * Run the application on the Android phone, open the menu and personalize (=define OATH seed) the applet
 
 http://seek-for-android.googlecode.com/svn/wiki/img/OtpAuthenticator.png
