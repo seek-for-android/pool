@@ -10,3 +10,4 @@
     * [SmartCardPKI]
   * Applications
     * [AndroidBelgiumEid]
+    * [OtpAuthenticator]
