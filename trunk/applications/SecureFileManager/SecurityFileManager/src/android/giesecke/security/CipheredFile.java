@@ -190,6 +190,8 @@ public class CipheredFile
 				decryptFile(allEncryptedFiles.get(filelocation));
 			} catch (CardException e)
 			{
+				progressValue = 101;
+				progressHandler.sendEmptyMessage(progressValue);
 				// throw only Exception if you decrypt a single file
 				if (!file.isDirectory())
 					throw new CardException(e.getMessage());
@@ -266,6 +268,18 @@ public class CipheredFile
 			// header must be extracted in the first round
 			if (i == 0)
 			{
+				int idLen = ENCRYPTION_RANDOM_ID_LENGTH;
+				int magicNrLen = ENCRYPTION_MAGIC_NUMBER.length;
+				int dataLen = encData.length - idLen - magicNrLen;
+				
+				// sorting the data
+				id = new byte[idLen];
+				dataToDecr = new byte[dataLen];
+				System.arraycopy(encData, magicNrLen, id, 0, idLen);
+				System.arraycopy(encData, idLen + magicNrLen, dataToDecr, 0, dataLen);
+				
+				decryptionKey = getCipherKey(id, password, DECRYPT);
+				
 				if (!file.getAbsolutePath().endsWith(".enc"))
 				{
 					int i1 = 0;
@@ -283,17 +297,6 @@ public class CipheredFile
 				{
 					fileName = file.getAbsolutePath().substring(0, file.getAbsolutePath().length() - ".enc".length());
 				}
-				int idLen = ENCRYPTION_RANDOM_ID_LENGTH;
-				int magicNrLen = ENCRYPTION_MAGIC_NUMBER.length;
-				int dataLen = encData.length - idLen - magicNrLen;
-
-				// sorting the data
-				id = new byte[idLen];
-				dataToDecr = new byte[dataLen];
-				System.arraycopy(encData, magicNrLen, id, 0, idLen);
-				System.arraycopy(encData, idLen + magicNrLen, dataToDecr, 0, dataLen);
-
-				decryptionKey = getCipherKey(id, password, DECRYPT);
 
 			} else
 			{
