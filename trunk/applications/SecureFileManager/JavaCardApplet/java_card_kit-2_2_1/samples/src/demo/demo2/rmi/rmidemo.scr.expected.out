@@ -1,0 +1,13 @@
+This demo requires a cref or jcwde with com.sun.javacard.RMIDemo applet
+installed and file opencard.properties in the current directory
+Start cref or jcwde before running this demo
+Receiving initial reference... OK
+Getting the balance... Balance = 0
+Crediting 20...
+Debiting 15...
+Getting the new balance... Balance = 5
+Setting account number equal to 54321...
+Getting the account number...  5 4 3 2 1
+Trying to set incorrect (too long) account number. Expecting to get UserException with code=0x6002 
+Received UserException javacard.framework.UserException
+Reason code = 0x6002

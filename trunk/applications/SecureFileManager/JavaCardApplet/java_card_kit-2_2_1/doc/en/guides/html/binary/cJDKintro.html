@@ -1,0 +1,112 @@
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
+    <meta http-equiv="Content-Style-Type" content="text/css" />
+    <meta name="GENERATOR" content="Quadralay WebWorks Publisher Professional Edition 7.0.5.1025" />
+    <meta name="TEMPLATEBASE" content="JCUser_b_glo" />
+    <meta name="LASTUPDATED" content="10/10/03 17:24:53" />
+    <title>Introduction to the Development Kit for the Java Card Platform</title>
+    <link rel="StyleSheet" href="document.css" type="text/css" />
+    <link rel="StyleSheet" href="catalog.css" type="text/css" />
+    <link rel="Table of Contents" href="index.html" />
+    <link rel="Previous" href="cJDKPreface.html" />
+    <link rel="Next" href="cJDKinstall.html" />
+    <link rel="Index" href="cJDK_b_domIX.html" />
+  </head>
+
+  <body>
+
+    <table class="full-width" id="SummaryNotReq1">
+      <tr><td class="sun-darkblue">&#160;</td></tr>
+      <tr><td class="sun-lightblue">&#160;</td></tr>
+      <tr><td class="go-right">
+        <a accesskey="c" href="index.html">
+          <img id="LongDescNotReq1" src="images/toc.gif" border="0"
+            alt="Contents" /></a>
+	<a accesskey="p" href="cJDKPreface.html">
+	  <img id="LongDescNotReq2" src="images/prev.gif" border="0"
+            alt="Previous" /></a>
+        <a accesskey="n" href="cJDKinstall.html">
+	  <img id="LongDescNotReq3" src="images/next.gif" border="0"
+            alt="Next" /></a>
+        <a accesskey="i" href="cJDK_b_domIX.html">
+	  <img id="LongDescNotReq4" src="images/index.gif" border="0"
+            alt="Index" /></a>
+        </td>
+      </tr>
+    </table>
+
+<a name="wp10307"> </a><h2 class="pChapNum">
+Chapter &#160; 1
+</h2>
+<a name="wp10309"> </a><h2 class="pTitle">
+Introduction to the Development Kit for the Java Card Platform
+</h2>
+<hr />
+<a name="wp14579"> </a><p class="pBody">
+The Development Kit for the Java Card platform (&#8220;Java Card Development Kit&#8221;) is a suite of tools for designing Java Card technology-based implementations and for developing applets based on the <em class="cEmphasis">Application Programming Interface for the Java Card&#8482; Platform, Version 2.2.1 </em>. 
+</p>
+<a name="wp21502"> </a><h2 class="pHeading1">
+CAP File Flow
+</h2>
+<a name="wp13108"> </a><p class="pBody">
+As illustrated in <a  href="cJDKintro.html#wp16456"><span style="color: #3366CC">FIGURE&#160;1</span></a>, the data flow starts with Java source being compiled and input to the Converter. The Converter tool can convert classes that comprise a Java package to a converted applet (CAP) or a Java Card technology-based Assembly (&#8220;Java Card Assembly&#8221;) file. A CAP file is a binary representation of converted Java package. 
+</p>
+<a name="wp13109"> </a><p class="pBody">
+A Java Card Assembly file is a human-readable text representation of a converted package which you can use to aid testing and debugging. A Java Card Assembly file can also be used as input to the <code class="cCode">capgen</code> tool to create a CAP file. 
+</p>
+<a name="wp16456"> </a><div class="pFigureCaption">
+FIGURE&#160;1&#160;&#160;&#8211;&#160;&#160;Java Card Platform Version 2.2.1 CAP Tool Architecture
+<br /><br />
+</div><a name="wp16304"> </a><p class="pBody">
+<img src="images/cJDKintroa.gif" height="379" width="693" alt="This figure is described in the text." border="0" hspace="0" vspace="0"/>
+</p>
+<a name="wp13119"> </a><p class="pBody">
+Not shown in the figure is a utility called <code class="cCode">capdump</code>, which produces a simple ASCII version of the CAP file to aid in debugging. 
+</p>
+<a name="wp13120"> </a><p class="pBody">
+CAP files are processed by an off-card installer (<code class="cCode">scriptgen</code>). This produces an APDU script file as input to the <code class="cCode">apdutool</code>, which then sends APDUs to a Java Card RE implementation. 
+</p>
+<a name="wp14756"> </a><p class="pBody">
+Any implementation of a Java Card RE contains a virtual machine (VM) for the Java Card platform (&#8220;Java Card virtual machine&#8221;), the Java Card Application Programming Interface (API) classes, and support services. 
+</p>
+<a name="wp25764"> </a><p class="pBody">
+<a  href="cJDKintro.html#wp16456"><span style="color: #3366CC">FIGURE&#160;1</span></a> also illustrates other Java Card REs which may be available in other products. In this release, the only Java Card RE provided is written in the C programming language. 
+</p>
+<a name="wp12201"> </a><p class="pBody">
+
+</p>
+
+    <p>&#160;</p>
+    <hr class="pHr" />
+
+    <table class="full-width" id="SummaryNotReq2">
+      <tr>
+        <td class="go-left">
+          <a accesskey="c" href="index.html">
+	    <img id="LongDescNotReq1" src="images/toc.gif" border="0"
+              alt="Contents" /></a>
+	  <a accesskey="p" href="cJDKPreface.html">
+	    <img id="LongDescNotReq2" src="images/prev.gif" border="0"
+              alt="Previous" /></a>
+	  <a accesskey="n" href="cJDKinstall.html">
+	    <img id="LongDescNotReq3" src="images/next.gif" border="0"
+              alt="Next" /></a>
+	  <a accesskey="i" href="cJDK_b_domIX.html">
+	    <img id="LongDescNotReq4" src="images/index.gif" border="0"
+              alt="Index" /></a>
+        </td>
+        <td class="go-right">
+          <span class="copyright">Development Kit User's Guide
+for the Binary Release with Cryptography Extensions <br /> Java Card Platform, Version 2.2.1</span>
+        </td>
+      </tr>
+    </table>
+
+    <p>&#160;</p>
+    
+<p class="copyright"><a 
+       href="copyright.html">Copyright</a> &#169; 2003 Sun Microsystems, Inc. 
+  All rights reserved.</p>	
+  </body>
+</html>

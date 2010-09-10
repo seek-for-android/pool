@@ -1,0 +1,241 @@
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
+    <meta http-equiv="Content-Style-Type" content="text/css" />
+    <meta name="GENERATOR" content="Quadralay WebWorks Publisher Professional Edition 7.0.5.1025" />
+    <meta name="TEMPLATEBASE" content="JCREspecTemplate" />
+    <meta name="LASTUPDATED" content="10/08/03 18:54:28" />
+    <title>Using the Object Deletion Mechanism, and Package and Applet Deletion </title>
+    <link rel="StyleSheet" href="document.css" type="text/css" />
+    <link rel="StyleSheet" href="catalog.css" type="text/css" />
+    <link rel="Table of Contents" href="index.html" />
+    <link rel="Previous" href="preface.html" />
+    <link rel="Next" href="logchan.html" />
+    <link rel="Index" href="devnotesIX.html" />
+  </head>
+
+  <body>
+
+    <table class="full-width" id="SummaryNotReq1">
+      <tr><td class="sun-darkblue">&#160;</td></tr>
+      <tr><td class="sun-lightblue">&#160;</td></tr>
+      <tr><td class="go-right">
+        <a accesskey="c" href="index.html">
+          <img id="LongDescNotReq1" src="images/toc.gif" border="0"
+            alt="Contents" /></a>
+	<a accesskey="p" href="preface.html">
+	  <img id="LongDescNotReq2" src="images/prev.gif" border="0"
+            alt="Previous" /></a>
+        <a accesskey="n" href="logchan.html">
+	  <img id="LongDescNotReq3" src="images/next.gif" border="0"
+            alt="Next" /></a>
+        <a accesskey="i" href="devnotesIX.html">
+	  <img id="LongDescNotReq4" src="images/index.gif" border="0"
+            alt="Index" /></a>
+        </td>
+      </tr>
+    </table>
+
+<a name="wp9095"> </a><h2 class="pChapNum">
+Chapter &#160; 1
+</h2>
+<a name="wp9178"> </a><h2 class="pTitle">
+Using the Object Deletion Mechanism, and Package and Applet Deletion 
+</h2>
+<hr />
+<a name="wp998252"> </a><p class="pBody">
+This chapter describes the object deletion mechanism, and the package and applet deletion features of Java Card platform.
+</p>
+<a name="wp997432"> </a><h2 class="pHeading1">
+Object Deletion Mechanism
+</h2>
+<a name="wp998431"> </a><p class="pBody">
+The object deletion mechanism on the Java Card platform reclaims memory which is being used by &#8220;unreachable&#8221; objects. To be &#8220;unreachable&#8221;, an object can neither be pointed to by a static field nor by an object field. An applet object is reachable until successfully deleted. 
+</p>
+<a name="wp998445"> </a><p class="pBody">
+The object deletion mechanism on the Java Card platform is not like garbage collection in standard Java due to space and time constraints. The amount of available RAM on the card is limited. In addition, since object deletion mechanism is applied to objects stored in persistent memory, it must be used sparingly. EEPROM writes are very time-consuming operations and only a limited number of writes can be performed on a card. Due to these limitations, the object deletion mechanism in Java Card technology is not automatic. It is performed only when an applet requests it. The object deletion mechanism should be used sparingly and only when other Java Card technology-based facilities are cumbersome or inadequate. 
+</p>
+<a name="wp997765"> </a><p class="pBody">
+The object deletion mechanism on the Java Card platform is not meant to change the programming style in which programs for the Java Card platform are written. 
+</p>
+<a name="wp997967"> </a><h3 class="pHeading2">
+Requesting the Object Deletion Mechanism
+</h3>
+<a name="wp997932"> </a><p class="pBody">
+Only the runtime environment for the Java Card platform (&#8220;Java Card Runtime Environment&#8221; or &#8220;Java Card RE&#8221;) can start the object deletion mechanism, although any applet on the card can request it. The applet requests the object deletion mechanism with a call to the <code class="cCode">JCSystem.requestObjectDeletion()</code> method. 
+</p>
+<a name="wp997936"> </a><p class="pBody">
+For example, the following method updates the buffer capacity to the given value. If it is not empty, the method creates a new buffer and removes the old one by requesting the object deletion mechanism.
+</p>
+<div class="pPreformatted"><pre class="pPreformatted">
+/**<a name="wp998712"> </a>
+* The following method updates the buffer size by removing<a name="wp998713"> </a>
+* the old buffer object from the memory by requesting<a name="wp998714"> </a>
+* object deletion and creates a new one with the<a name="wp998715"> </a>
+* required size.<a name="wp998716"> </a>
+*/<a name="wp999136"> </a>
+void updateBuffer(byte requiredSize){<a name="wp999153"> </a>
+&#160;&#160;&#160;&#160;&#160;try{<a name="wp999154"> </a>
+&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;if(buffer != null &amp;&amp; buffer.length == requiredSize){<a name="wp999155"> </a>
+&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;//we already have a buffer of required size<a name="wp999156"> </a>
+&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;return;<a name="wp999157"> </a>
+&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;}<a name="wp999158"> </a>
+&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;JCSystem.beginTransaction();<a name="wp999159"> </a>
+&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;byte[] oldBuffer = buffer;<a name="wp999160"> </a>
+&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;buffer = new byte[requiredSize];<a name="wp999161"> </a>
+&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;if (oldBuffer != null)<a name="wp999162"> </a>
+&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;JCSystem.requestObjectDeletion();<a name="wp999163"> </a>
+&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;JCSystem.commitTransaction();<a name="wp999164"> </a>
+&#160;&#160;&#160;&#160;&#160;}catch(Exception e){<a name="wp999165"> </a>
+&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;JCSystem.abortTransaction();<a name="wp999166"> </a>
+&#160;&#160;&#160;&#160;&#160;}<a name="wp999167"> </a>
+}<a name="wp999148"> </a>
+</pre></div>
+<a name="wp999149"> </a><h3 class="pHeading2">
+Guidelines on Using the Object Deletion Mechanism
+</h3>
+<a name="wp998072"> </a><p class="pBody">
+The object deletion mechanism on the Java Card platform is not to be confused with garbage collection in the standard Java programming language. The following guidelines describe the possible scenarios when the object deletion mechanism may or may not be used: 
+</p>
+<ul class="pBullet1"><a name="wp998075"> </a><div class="pBullet1"><li>When throwing exceptions, avoid creating new exception objects and relying on the object deletion mechanism to perform clean-up. Try to use existing exception objects. </li></div>
+<a name="wp998347"> </a><div class="pBullet1Plus"><li>Similarly try not to create objects in method or block scope. This is acceptable in standard Java, but is an incorrect use of the object deletion mechanism in Java Card technology-based applications.</li></div>
+<a name="wp998126"> </a><div class="pBullet1Plus"><li>Use the object deletion mechanism when a large object, such as a certificate or key, must be replaced with a new one. In this case, instead of updating the old object in a transaction, create a new object and update its pointer within the transaction. Then, use the object deletion mechanism to remove the old object. </li></div>
+<a name="wp998367"> </a><div class="pBullet1Last"><li>Use the object deletion mechanism when object re-sizing is required, as shown in the example in <a  href="garbagecoll.html#wp997967"><span style="color: #3366CC">&quot;Requesting the Object Deletion Mechanism&quot; </span></a>. </li></div>
+</ul>
+<a name="wp997908"> </a><h2 class="pHeading1">
+Package and Applet Deletion
+</h2>
+<a name="wp997963"> </a><p class="pBody">
+Version 2.2.1 of the Java Card platform provides the ability to delete package and applet instances from the card&#8217;s memory. Requests for deletion are sent in the form of an APDU from the terminal to the smart card. Requests to delete an applet or package cannot be sent from an applet on the card. 
+</p>
+<a name="wp997054"> </a><p class="pBody">
+In version 2.2.1 of the Java Card platform, the Installer deletes packages and applets. Once the Installer is selected, it can receive requests from the terminal to delete packages and applets. The following sections describe programming guidelines that will help your packages and applets to be more easily removed. 
+</p>
+<a name="wp997055"> </a><h3 class="pHeading2">
+Guidelines for Developing Removable Packages
+</h3>
+<a name="wp997056"> </a><p class="pBody">
+Package deletion refers to removing all of a package&#8217;s code from the card&#8217;s memory. To be eligible for deletion, nothing on the card should have dependencies on the package to be deleted. This includes:
+</p>
+<ul class="pBullet1"><a name="wp998802"> </a><div class="pBullet1"><li>packages that are dependent on the package to be deleted. </li></div>
+<a name="wp998799"> </a><div class="pBullet1Last"><li>applet instances or objects that either belong to the package, or that belong to a package that depends on the package to be deleted. </li></div>
+</ul>
+<a name="wp998800"> </a><p class="pBody">
+Package deletion will not succeed if:
+</p>
+<ul class="pBullet1"><a name="wp997061"> </a><div class="pBullet1"><li>a reachable instance of a class belonging to the package exists on the card.</li></div>
+<a name="wp997062"> </a><div class="pBullet1Plus"><li>another package on the card depends on the package. </li></div>
+<a name="wp997064"> </a><div class="pBullet1Last"><li>a reset or power failure occurs after the deletion process is begun, but before it is completed.</li></div>
+</ul>
+<a name="wp997066"> </a><p class="pBody">
+To ensure that a package can be removed from the card easily, avoid writing and downloading other packages that might be dependent on the package. If there are other packages on the card that depend on this package, then you must remove all of the dependent packages before you can remove this package from the card memory. 
+</p>
+<a name="wp997067"> </a><h3 class="pHeading2">
+Guidelines for Writing Removable Applets
+</h3>
+<a name="wp997068"> </a><p class="pBody">
+Deleting an applet means that the applet and all of its child objects are deleted. Applet deletion will not succeed if:
+</p>
+<ul class="pBullet1"><a name="wp997071"> </a><div class="pBullet1"><li>any object owned by the applet instance is referenced by an object owned by another applet instance on the card. </li></div>
+<a name="wp997072"> </a><div class="pBullet1Plus"><li>any object owned by the applet instance is referenced from a static field in any package on the card.</li></div>
+<a name="wp997073"> </a><div class="pBullet1Last"><li>the applet is active on the card.</li></div>
+</ul>
+<a name="wp997075"> </a><p class="pBody">
+If you are writing an applet that is deemed to be short-lived and is to be removed from the card after performing some operations, follow these guidelines to ensure that the applet can be removed easily:
+</p>
+<ul class="pBullet1"><a name="wp998039"> </a><div class="pBullet1"><li>try to write cooperating applets if shareable objects are required. To reduce coupling between applets, try to obtain shareable objects on a per-use basis. </li></div>
+<a name="wp998040"> </a><div class="pBullet1Plus"><li>if interdependent applets are required, try to make sure that these applets can be deleted simultaneously. </li></div>
+<a name="wp998041"> </a><div class="pBullet1Last"><li>when static reference type fields exist: </li></div>
+<ul class="pBullet2"><a name="wp998372"> </a><div class="pBullet2"><li>Ensure there is a mechanism available in the applet to disassociate itself from these fields before applet deletion is attempted, or</li></div>
+<a name="wp998377"> </a><div class="pBullet2Last"><li>Ensure that the applet instance and code can be removed from the card simultaneously (that is, by using applet and package deletion).</li></div>
+</ul>
+</ul>
+<a name="wp999260"> </a><h4 class="pHeading3">
+Using the AppletEvent.uninstall method
+</h4>
+<a name="wp999261"> </a><p class="pBody">
+When an applet needs to perform some important actions prior to deletion, it may implement the <code class="cCode">uninstall</code> method of the <code class="cCode">AppletEvent</code> interface. An applet may find it useful to implement this method for the following types of functions:
+</p>
+<ul class="pBullet1"><a name="wp999266"> </a><div class="pBullet1"><li>release resources such as shared keys and static objects.</li></div>
+<a name="wp999267"> </a><div class="pBullet1Plus"><li>backup data into another applet&#39;s space.</li></div>
+<a name="wp999268"> </a><div class="pBullet1Last"><li>notify other dependent applets.</li></div>
+</ul>
+<a name="wp999270"> </a><p class="pBody">
+Calling <code class="cCode">uninstall</code> does not guarantee that the applet will be deleted. The applet may not be deleted after the completion of the <code class="cCode">uninstall</code> method if, for example:
+</p>
+<ul class="pBullet1"><a name="wp999274"> </a><div class="pBullet1"><li>other applets or packages are still dependent on this applet.</li></div>
+<a name="wp999275"> </a><div class="pBullet1Plus"><li>another applet which needs to be deleted simultaneously cannot be deleted at this time.</li></div>
+<a name="wp999277"> </a><div class="pBullet1Plus"><li>the package which needs to be deleted simultaneously cannot be deleted at this time.</li></div>
+<a name="wp999279"> </a><div class="pBullet1Last"><li>a tear occurs before the deletion elements are processed.</li></div>
+</ul>
+<a name="wp999281"> </a><p class="pBody">
+To ensure that the applets are deleted, implement the <code class="cCode">uninstall</code> method defensively. Write your applet such that:
+</p>
+<ul class="pBullet1"><a name="wp999283"> </a><div class="pBullet1"><li>the applet continues to function consistently and securely if deletion fails.</li></div>
+<a name="wp999285"> </a><div class="pBullet1Plus"><li>the applet can withstand a possible tear during the execution.</li></div>
+<a name="wp999286"> </a><div class="pBullet1Last"><li>the <code class="cCode">uninstall</code> method can be called again if deletion is reattempted.</li></div>
+</ul>
+<a name="wp999288"> </a><p class="pBody">
+The following example shows such an implementation:
+</p>
+<div class="pPreformatted"><pre class="pPreformatted">
+public class TestApp1 extends Applet implements AppletEvent{<a name="wp999290"> </a>
+<a name="wp999291"> </a>
+&#160;&#160;&#160;&#160;// field set to true after uninstall<a name="wp999292"> </a>
+&#160;&#160;&#160;&#160;private boolean disableApp = false;<a name="wp999293"> </a>
+<a name="wp999294"> </a>
+&#160;&#160;&#160;&#160;...<a name="wp999295"> </a>
+&#160;&#160;&#160;&#160;public void uninstall(){<a name="wp999296"> </a>
+&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;if (!disableApp){<a name="wp999297"> </a>
+&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;JCSystem.beginTransaction();&#160;&#160;//to protect against tear<a name="wp999298"> </a>
+&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;disableApp = true;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;//mark as uninstalled<a name="wp999299"> </a>
+&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;TestApp2SIO.removeDependency();<a name="wp999300"> </a>
+&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;JCSystem.commitTransaction();<a name="wp999301"> </a>
+&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;}<a name="wp999302"> </a>
+&#160;&#160;&#160;&#160;}<a name="wp999303"> </a>
+<a name="wp999304"> </a>
+&#160;&#160;&#160;&#160;public boolean select(boolean appInstAlreadyActive) {<a name="wp999305"> </a>
+&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;// refuse selection if in uninstalled state<a name="wp999306"> </a>
+&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;if (disableApp) return false;<a name="wp999307"> </a>
+&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;return true;<a name="wp999308"> </a>
+&#160;&#160;&#160;&#160;}<a name="wp999309"> </a>
+&#160;&#160;&#160;&#160;...<a name="wp999310"> </a>
+<a name="wp999311"> </a>
+}<a name="wp999312"> </a>
+</pre></div>
+<a name="wp999247"> </a><p class="pBody">
+
+</p>
+
+    <p>&#160;</p>
+    <hr class="pHr" />
+
+    <table class="full-width" id="SummaryNotReq2">
+      <tr>
+        <td class="go-left">
+          <a accesskey="c" href="index.html">
+	    <img id="LongDescNotReq1" src="images/toc.gif" border="0"
+              alt="Contents" /></a>
+	  <a accesskey="p" href="preface.html">
+	    <img id="LongDescNotReq2" src="images/prev.gif" border="0"
+              alt="Previous" /></a>
+	  <a accesskey="n" href="logchan.html">
+	    <img id="LongDescNotReq3" src="images/next.gif" border="0"
+              alt="Next" /></a>
+	  <a accesskey="i" href="devnotesIX.html">
+	    <img id="LongDescNotReq4" src="images/index.gif" border="0"
+              alt="Index" /></a>
+        </td>
+        <td class="go-right">
+          <span class="copyright">Application Programming Notes <br /> Java Card Platform, Version 2.2.1</span>
+        </td>
+      </tr>
+    </table>
+
+    <p>&#160;</p>
+    
+<p class="copyright"><a 
+       href="copyright.html">Copyright</a> &#169; 2003 Sun Microsystems, Inc. 
+  All rights reserved.</p>	
+  </body>
+</html>

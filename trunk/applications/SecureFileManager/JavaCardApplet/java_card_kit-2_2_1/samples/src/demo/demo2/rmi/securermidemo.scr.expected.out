@@ -1,0 +1,11 @@
+This demo requires a cref or jcwde with com.sun.javacard.SecureRMIDemo
+applet installed and file opencard.properties in the current directory
+Start cref or jcwde before running this demo
+Authenticating as app provider... done.
+Receiving initial reference... OK
+Getting the balance... Balance = 0
+Crediting 20...
+Getting the new balance... Balance = 20
+Debiting 15... Should fail with UserException with code=0x6003
+Received UserException javacard.framework.UserException
+Reason code = 0x6003

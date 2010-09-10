@@ -1,0 +1,208 @@
+#!/bin/sh
+#
+# Copyright © 2003 Sun Microsystems, Inc. All rights reserved.
+# Use is subject to license terms.
+#
+
+# Workfile:@(#)build_samples.sh	1.37
+# Version:1.37
+# Modified:09/29/03 17:06:15
+
+ if [ "$JAVA_HOME" = "" ]; then
+  echo Set environment variable JAVA_HOME
+  exit
+ fi
+
+ if [ "$JC_HOME" = "" ]; then
+  echo Set environment variable JC_HOME
+  exit
+ fi
+
+ if [ "$1" = "help" -o "$1" = "-help" ]; then
+	echo "Usage: build_samples [options]"
+	echo "Where options include:"
+	echo "       -help     print out this message"
+	echo "       -clean    remove all produced files"
+	echo
+	exit
+ fi
+
+ cd $JC_HOME/samples
+
+# Clean
+
+ if [ -d classes ]; then rm -r -f classes; fi
+ if [ -f src/demo/demo2/demo2.scr ]; then rm -f src/demo/demo2/demo2.scr; fi
+ if [ -f src/demo/demo2/demo2crypto.scr ]; then rm -f src/demo/demo2/demo2crypto.scr; fi
+ if [ -f src/demo/jpdemo/JavaLoyalty.scr ]; then rm -f src/demo/jpdemo/JavaLoyalty.scr; fi
+ if [ -f src/demo/jpdemo/JavaPurse.scr ]; then rm -f src/demo/jpdemo/JavaPurse.scr; fi
+ if [ -f src/demo/jpdemo/JavaPurseCrypto.scr ]; then rm -f src/demo/jpdemo/JavaPurseCrypto.scr; fi
+ if [ -f src/demo/jpdemo/SampleLibrary.scr ]; then rm -f src/demo/jpdemo/SampleLibrary.scr; fi
+ if [ -f src/demo/wallet/Wallet.scr ]; then rm -f src/demo/wallet/Wallet.scr; fi
+ if [ -f src/demo/rmidemo/RMIDemo.scr ]; then rm -f src/demo/rmidemo/RMIDemo.scr; fi
+ if [ -f src/demo/elliptic_curve_rmi/_tmp/ECDemo.scr ]; then rm -f src/demo/elliptic_curve_rmi/_tmp/ECDemo.scr; fi
+ if [ -f src/demo/demo2/rmi/_tmp/SecureRMIDemo.scr ]; then rm -f src/demo/demo2/rmi/_tmp/SecureRMIDemo.scr; fi
+ if [ -f src/demo/demo2/photocard/_tmp/photocard.scr ]; then rm -f src/demo/demo2/photocard/_tmp/photocard.scr; fi
+ if [ -f src/demo/object_deletion/odDemo1-1.scr ]; then rm -f src/demo/object_deletion/odDemo1-1.scr; fi
+ if [ -f src/demo/object_deletion/odDemo1-2.scr ]; then rm -f src/demo/object_deletion/odDemo1-2.scr; fi
+ if [ -f src/demo/object_deletion/odDemo1-3.scr ]; then rm -f src/demo/object_deletion/odDemo1-3.scr; fi
+ if [ -f src/demo/object_deletion/odDemo2.scr ]; then rm -f src/demo/object_deletion/odDemo2.scr; fi
+ if [ -f src/demo/object_deletion/_tmp/packageA.scr ]; then rm -f src/demo/object_deletion/_tmp/packageA.scr; fi
+ if [ -f src/demo/object_deletion/_tmp/packageB.scr ]; then rm -f src/demo/object_deletion/_tmp/packageB.scr; fi
+ if [ -f src/demo/object_deletion/_tmp/packageC.scr ]; then rm -f src/demo/object_deletion/_tmp/packageC.scr; fi
+ if [ -f src/demo/logical_channels/channelDemo.scr ]; then rm -f src/demo/logical_channels/channelDemo.scr; fi
+ if [ -f src/demo/logical_channels/_tmp/ChnDemo.scr ]; then rm -f src/demo/logical_channels/_tmp/ChnDemo.scr; fi
+ 
+
+ if [ "$1" = "clean" -o "$1" = "-clean" ]; then exit; fi
+
+ CL_DIR=$JC_HOME/samples/classes
+
+ JC_PATH=".:$CL_DIR:$JC_HOME/lib/api.jar"
+ JCFLAGS="-g -d $CL_DIR -classpath $JC_PATH"
+
+ REMOTE_CLASSES="com.sun.javacard.samples.RMIDemo.PurseImpl com.sun.javacard.samples.SecureRMIDemo.SecurePurseImpl com.sun.javacard.samples.photocard.PhotoCardImpl"
+ 
+ JAVAC_CP=$JC_HOME/lib/javacardframework.jar:$CL_DIR
+ CLIENT_CLASSPATH=$JC_HOME/lib/jcrmiclientframework.jar:$CL_DIR:$JC_HOME/lib/base-core.jar:$JC_HOME/lib/base-opt.jar
+ CLIENT_FILES="$JC_HOME/samples/src_client/com/sun/javacard/clientsamples/purseclient/*.java $JC_HOME/samples/src_client/com/sun/javacard/clientsamples/securepurseclient/*.java $JC_HOME/samples/src_client/com/sun/javacard/clientsamples/photocardclient/*.java"
+ CL_JAR_NAME=$JC_HOME/lib/jcclientsamples.jar
+
+
+# Copy export files
+ 
+ mkdir -p classes
+ cp -r $JC_HOME/api_export_files/* classes/
+
+# Compile samples
+
+ $JAVA_HOME/bin/javac $JCFLAGS src/com/sun/javacard/samples/HelloWorld/*.java
+ $JAVA_HOME/bin/javac $JCFLAGS src/com/sun/javacard/samples/SampleLibrary/*.java
+ $JAVA_HOME/bin/javac $JCFLAGS src/com/sun/javacard/samples/JavaLoyalty/*.java
+ $JAVA_HOME/bin/javac $JCFLAGS src/com/sun/javacard/samples/JavaPurse/*.java
+ $JAVA_HOME/bin/javac $JCFLAGS src/com/sun/javacard/samples/NullApp/*.java
+ $JAVA_HOME/bin/javac $JCFLAGS src/com/sun/javacard/samples/wallet/*.java
+ $JAVA_HOME/bin/javac $JCFLAGS src/com/sun/javacard/samples/RMIDemo/*.java
+ $JAVA_HOME/bin/javac $JCFLAGS src/com/sun/javacard/samples/SecureRMIDemo/*.java
+ $JAVA_HOME/bin/javac $JCFLAGS src/com/sun/javacard/samples/photocard/*.java
+ $JAVA_HOME/bin/javac $JCFLAGS src/com/sun/javacard/samples/odSample/packageA/*.java
+ $JAVA_HOME/bin/javac $JCFLAGS src/com/sun/javacard/samples/odSample/libPackageC/*.java
+ $JAVA_HOME/bin/javac $JCFLAGS src/com/sun/javacard/samples/odSample/packageB/*.java
+ $JAVA_HOME/bin/javac $JCFLAGS src/com/sun/javacard/samples/ChannelsDemo/*.java
+ if [ -d src/com/sun/javacard/samples/JavaPurseCrypto ]; then  
+   $JAVA_HOME/bin/javac $JCFLAGS src/com/sun/javacard/samples/JavaPurseCrypto/*.java;
+ fi
+ if [ -d src/com/sun/javacard/samples/eccrmi ]; then
+ $JAVA_HOME/bin/javac $JCFLAGS src/com/sun/javacard/samples/eccrmi/*.java
+ fi
+
+
+# Convert samples
+
+ cd classes
+ $JC_HOME/bin/converter -config ../src/com/sun/javacard/samples/HelloWorld/HelloWorld.opt
+ $JC_HOME/bin/converter -config ../src/com/sun/javacard/samples/SampleLibrary/SampleLibrary.opt
+ $JC_HOME/bin/converter -config ../src/com/sun/javacard/samples/JavaLoyalty/JavaLoyalty.opt
+ $JC_HOME/bin/converter -config ../src/com/sun/javacard/samples/JavaPurse/JavaPurse.opt
+ $JC_HOME/bin/converter -config ../src/com/sun/javacard/samples/NullApp/NullApp.opt
+ $JC_HOME/bin/converter -config ../src/com/sun/javacard/samples/wallet/Wallet.opt
+ $JC_HOME/bin/converter -config ../src/com/sun/javacard/samples/RMIDemo/RMIDemo.opt
+ $JC_HOME/bin/converter -config ../src/com/sun/javacard/samples/SecureRMIDemo/SecureRMIDemo.opt
+ $JC_HOME/bin/converter -config ../src/com/sun/javacard/samples/photocard/photocard.opt
+ $JC_HOME/bin/converter -config ../src/com/sun/javacard/samples/odSample/packageA/packageA.opt
+ $JC_HOME/bin/converter -config ../src/com/sun/javacard/samples/odSample/libPackageC/libPackageC.opt
+ $JC_HOME/bin/converter -config ../src/com/sun/javacard/samples/odSample/packageB/packageB.opt
+ $JC_HOME/bin/converter -config ../src/com/sun/javacard/samples/ChannelsDemo/ChannelsDemo.opt
+ if [ -d ../src/com/sun/javacard/samples/JavaPurseCrypto ]; then  
+   $JC_HOME/bin/converter -config ../src/com/sun/javacard/samples/JavaPurseCrypto/JavaPurseCrypto.opt;
+ fi
+ if [ -d ../src/com/sun/javacard/samples/eccrmi ]; then
+ $JC_HOME/bin/converter -config ../src/com/sun/javacard/samples/eccrmi/ECPurse.opt
+ fi
+
+ cd ..
+
+# Create SCR for demo2 in cref mode
+
+ cd src/demo/demo2
+ mkdir -p javapurse/_tmp
+ mkdir -p photocard/_tmp
+ mkdir -p rmi/_tmp
+ mkdir -p wallet/_tmp
+
+ cd javapurse
+ $JC_HOME/bin/scriptgen -o _tmp/JavaLoyalty.scr ../../../../classes/com/sun/javacard/samples/JavaLoyalty/javacard/JavaLoyalty.cap
+ $JC_HOME/bin/scriptgen -o _tmp/JavaPurse.scr ../../../../classes/com/sun/javacard/samples/JavaPurse/javacard/JavaPurse.cap
+ if [ -d ../../../../classes/com/sun/javacard/samples/JavaPurseCrypto ]; then  
+   $JC_HOME/bin/scriptgen -o _tmp/JavaPurseCrypto.scr ../../../../classes/com/sun/javacard/samples/JavaPurseCrypto/javacard/JavaPurseCrypto.cap
+ fi
+ $JC_HOME/bin/scriptgen -o _tmp/SampleLibrary.scr ../../../../classes/com/sun/javacard/samples/SampleLibrary/javacard/SampleLibrary.cap
+
+ cd ../wallet
+ $JC_HOME/bin/scriptgen -o _tmp/Wallet.scr ../../../../classes/com/sun/javacard/samples/wallet/javacard/wallet.cap
+
+ cd ../rmi
+ $JC_HOME/bin/scriptgen -o _tmp/RMIDemo.scr ../../../../classes/com/sun/javacard/samples/RMIDemo/javacard/RMIDemo.cap
+ $JC_HOME/bin/scriptgen -o _tmp/SecureRMIDemo.scr ../../../../classes/com/sun/javacard/samples/SecureRMIDemo/javacard/SecureRMIDemo.cap
+
+ cd ../photocard
+ $JC_HOME/bin/scriptgen -o _tmp/photocard.scr ../../../../classes/com/sun/javacard/samples/photocard/javacard/photocard.cap
+
+ cd ../../
+
+ if [ -f demo2/javapurse/_tmp/JavaPurseCrypto.scr ]; then
+    cat misc/Header.scr demo2/javapurse/_tmp/SampleLibrary.scr demo2/javapurse/_tmp/JavaLoyalty.scr demo2/javapurse/_tmp/JavaPurseCrypto.scr demo2/wallet/_tmp/Wallet.scr demo2/rmi/_tmp/RMIDemo.scr demo2/rmi/_tmp/SecureRMIDemo.scr demo2/photocard/_tmp/photocard.scr demo2/javapurse/AppletTestCrypto.scr misc/Footer.scr > demo2/demo2crypto.scr;
+ fi
+    cat misc/Header.scr demo2/javapurse/_tmp/SampleLibrary.scr demo2/javapurse/_tmp/JavaLoyalty.scr demo2/javapurse/_tmp/JavaPurse.scr demo2/wallet/_tmp/Wallet.scr demo2/rmi/_tmp/RMIDemo.scr demo2/rmi/_tmp/SecureRMIDemo.scr demo2/photocard/_tmp/photocard.scr demo2/javapurse/AppletTest.scr misc/Footer.scr > demo2/demo2.scr
+ 
+ mkdir -p object_deletion/_tmp
+
+ $JC_HOME/bin/scriptgen -o object_deletion/_tmp/packageA.scr ../../classes/com/sun/javacard/samples/odSample/packageA/javacard/packageA.cap
+ $JC_HOME/bin/scriptgen -o object_deletion/_tmp/packageB.scr ../../classes/com/sun/javacard/samples/odSample/packageB/javacard/packageB.cap
+ $JC_HOME/bin/scriptgen -o object_deletion/_tmp/packageC.scr ../../classes/com/sun/javacard/samples/odSample/libPackageC/javacard/libPackageC.cap
+
+ cat misc/Header.scr object_deletion/_tmp/packageA.scr object_deletion/_tmp/packageC.scr object_deletion/_tmp/packageB.scr object_deletion//od1.scr misc/Footer.scr > object_deletion//odDemo1-1.scr
+
+ cat misc/Header.scr object_deletion/od2.scr misc/Footer.scr > object_deletion/odDemo1-2.scr
+
+ cat misc/Header.scr object_deletion/od2-2.scr misc/Footer.scr > object_deletion/odDemo1-3.scr
+
+ cat misc/Header.scr object_deletion/_tmp/packageA.scr object_deletion/od3.scr object_deletion/_tmp/packageC.scr object_deletion/od3-2.scr misc/Footer.scr > object_deletion/odDemo2.scr
+
+ mkdir -p logical_channels/_tmp
+ $JC_HOME/bin/scriptgen -o logical_channels/_tmp/ChnDemo.scr ../../classes/com/sun/javacard/samples/ChannelsDemo/javacard/ChannelsDemo.cap
+
+ cat misc/Header.scr logical_channels/_tmp/ChnDemo.scr logical_channels/channel.scr misc/Footer.scr > logical_channels/channelDemo.scr
+
+
+ if [ -d ../../classes/com/sun/javacard/samples/eccrmi ]; then 
+   mkdir -p elliptic_curve_rmi/_tmp
+   $JC_HOME/bin/scriptgen -o elliptic_curve_rmi/_tmp/ECRMIDemo.scr ../../classes/com/sun/javacard/samples/eccrmi/javacard/eccrmi.cap
+   cat misc/Header.scr elliptic_curve_rmi/_tmp/ECRMIDemo.scr elliptic_curve_rmi/ECFooter.scr > elliptic_curve_rmi/ECDemo.scr
+ fi
+
+  echo Building the client part of RMI samples...
+ 
+ $JAVA_HOME/bin/rmic -v1.2 -d $CL_DIR -classpath $JAVAC_CP $REMOTE_CLASSES
+ $JAVA_HOME/bin/javac -classpath $CLIENT_CLASSPATH -d $CL_DIR $CLIENT_FILES
+ cp $JC_HOME/samples/src_client/com/sun/javacard/clientsamples/purseclient/*.properties $CL_DIR/com/sun/javacard/clientsamples/purseclient/
+ cp $JC_HOME/samples/src_client/com/sun/javacard/clientsamples/securepurseclient/*.properties $CL_DIR/com/sun/javacard/clientsamples/securepurseclient/
+ cp $JC_HOME/samples/src_client/com/sun/javacard/clientsamples/photocardclient/*.properties $CL_DIR/com/sun/javacard/clientsamples/photocardclient/
+ 
+ if [ -d $JC_HOME/samples/src_client/com/sun/javacard/clientsamples/ecpurseclient ]; then
+   $JAVA_HOME/bin/rmic -v1.2 -d $CL_DIR -classpath $JAVAC_CP com.sun.javacard.samples.eccrmi.ECPurseImpl
+   $JAVA_HOME/bin/javac -classpath $CLIENT_CLASSPATH -d $CL_DIR $JC_HOME/samples/src_client/com/sun/javacard/clientsamples/ecpurseclient/*.java
+   cp $JC_HOME/samples/src_client/com/sun/javacard/clientsamples/ecpurseclient/*.properties $CL_DIR/com/sun/javacard/clientsamples/ecpurseclient/
+ fi
+
+ mkdir -p $CL_DIR/tmp_client/com/sun/javacard/clientsamples
+ cp -R $CL_DIR/com/sun/javacard/clientsamples/* $CL_DIR/tmp_client/com/sun/javacard/clientsamples/
+
+ $JAVA_HOME/bin/jar -cf $CL_JAR_NAME -C $CL_DIR/tmp_client com
+ rm -rf $CL_DIR/tmp_client
+ 
+ cd ../..
+
+ exit
+
+

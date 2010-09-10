@@ -1,0 +1,446 @@
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
+    <meta http-equiv="Content-Style-Type" content="text/css" />
+    <meta name="GENERATOR" content="Quadralay WebWorks Publisher Professional Edition 7.0.5.1025" />
+    <meta name="TEMPLATEBASE" content="JCUser_b_glo" />
+    <meta name="LASTUPDATED" content="10/10/03 17:25:49" />
+    <title>Using the Java Card Reference Implementation</title>
+    <link rel="StyleSheet" href="document.css" type="text/css" />
+    <link rel="StyleSheet" href="catalog.css" type="text/css" />
+    <link rel="Table of Contents" href="index.html" />
+    <link rel="Previous" href="cJDKcapdump.html" />
+    <link rel="Next" href="cJDKinstaller.html" />
+    <link rel="Index" href="cJDK_b_domIX.html" />
+  </head>
+
+  <body>
+
+    <table class="full-width" id="SummaryNotReq1">
+      <tr><td class="sun-darkblue">&#160;</td></tr>
+      <tr><td class="sun-lightblue">&#160;</td></tr>
+      <tr><td class="go-right">
+        <a accesskey="c" href="index.html">
+          <img id="LongDescNotReq1" src="images/toc.gif" border="0"
+            alt="Contents" /></a>
+	<a accesskey="p" href="cJDKcapdump.html">
+	  <img id="LongDescNotReq2" src="images/prev.gif" border="0"
+            alt="Previous" /></a>
+        <a accesskey="n" href="cJDKinstaller.html">
+	  <img id="LongDescNotReq3" src="images/next.gif" border="0"
+            alt="Next" /></a>
+        <a accesskey="i" href="cJDK_b_domIX.html">
+	  <img id="LongDescNotReq4" src="images/index.gif" border="0"
+            alt="Index" /></a>
+        </td>
+      </tr>
+    </table>
+
+<a name="wp2353"> </a><h2 class="pChapNum">
+Chapter &#160; 11
+</h2>
+<a name="wp11615"> </a><h2 class="pTitle">
+Using the Java Card Reference Implementation
+</h2>
+<hr />
+<a name="wp11616"> </a><p class="pBody">
+The Java Card reference implementation is written in the C programming language and is called the C-language Java Card Runtime Environment (&#8220;C-language Java Card RE&#8221;). It is a simulator that can be built with a ROM mask, much like a real Java Card technology-based implementation. It has the ability to simulate persistent memory (EEPROM), and to save and restore the contents of EEPROM to and from disk files. Applets can be installed in the C-language Java Card RE. The C-language Java Card RE performs I/O via a socket interface, using the TLP-224 protocol, simulating a Java Card technology-compliant smart card in a card reader (CAD).
+</p>
+<a name="wp19220"> </a><p class="pBody">
+The C-language Java Card RE supports the following:
+</p>
+<ul class="pBullet1"><a name="wp19223"> </a><div class="pBullet1"><li>use of up to three logical channels</li></div>
+<a name="wp19224"> </a><div class="pBullet1Plus"><li><code class="cCode">integer</code> data type</li></div>
+<a name="wp19225"> </a><div class="pBullet1Plus"><li>object deletion</li></div>
+<a name="wp19227"> </a><div class="pBullet1Last"><li>card reset in case of object allocation during an aborted transaction</li></div>
+</ul>
+<a name="wp34905"> </a><p class="pBody">
+In version 2.2.1 of the Development Kit, the C-language Java Card RE is available as a 32-bit implementation. The 32-bit implementation gives you the ability to go beyond the 64KB memory access limitation that was present in previous releases. The 2.2.1 release does provide a 16-bit version of the C-language Java Card RE for backward compatibility with older applications. 
+</p>
+<a name="wp36428"> </a><p class="pBody">
+
+</p>
+<a name="wp3183"> </a><h2 class="pHeading1">
+Running the Java Card Runtime Environment
+</h2>
+<a name="wp13935"> </a><p class="pBody">
+The 32-bit implementation of the C-language Java Card RE is supplied as prebuilt executables. <code class="cCode"></code></p><div align="left">
+<table border="0" cellpadding="7"   id="SummaryNotReq34936">
+  <caption><a name="wp34938"> </a><div class="pTableCaption">
+TABLE&#160;17&#160;&#160;&#8211;&#160;&#160;Name and Location of cref Executables 
+</div>
+</caption>
+<thead>
+<tr  align="center">    <th  class="sun-verylightblue" scope="col"><a name="wp34942"> </a><div style="text-align: left" class="pTableHead">
+File Name
+</div>
+
+</th>
+    <th  class="sun-verylightblue" scope="col"><a name="wp34944"> </a><div style="text-align: left" class="pTableHead">
+Description
+</div>
+
+</th>
+</tr>
+</thead>
+  <tr align="left">    <td><a name="wp34946"> </a><div class="pTableText">
+<code class="cCode">%JC_HOME%/bin/cref.exe</code>
+</div>
+</td>
+    <td><a name="wp34948"> </a><div class="pTableText">
+32-bit implementation of <code class="cCode">cref</code> for the Microsoft Windows 2000 platform.
+</div>
+</td>
+</tr>
+  <tr align="left">    <td><a name="wp34972"> </a><div class="pTableText">
+<code class="cCode">$JC_HOME\bin\cref</code>
+</div>
+</td>
+    <td><a name="wp34952"> </a><div class="pTableText">
+32-bit implementation of <code class="cCode">cref</code> for the Solaris or Linux platform.
+</div>
+</td>
+</tr>
+<tr><td colspan="15"><hr class="pTableHr" /></td></tr>
+</table>
+</div>
+<p class="pBody"><code class="cCode">
+</code> 
+</p>
+<a name="wp5696"> </a><h3 class="pHeading2">
+Installer Mask
+</h3>
+<a name="wp5697"> </a><p class="pBody">
+The Development Kit Installer, the Java Card virtual machine interpreter, and the Java Card platform framework are built into the installer mask. It can be used as-is to load and run applets. Other than the Installer, it does not contain any applets.
+</p>
+<a name="wp3184"> </a><p class="pBody">
+The C-language Java Card RE requires no other files to start proper interpretation and execution of the mask image&#8217;s Java Card bytecode. 
+</p>
+<a name="wp2929"> </a><h3 class="pHeading2">
+Runtime Environment Command Line
+</h3>
+<a name="wp5739"> </a><p class="pBody">
+Command line usage of C-language Java Card RE is the same on the Solaris, Linux, and Microsoft Windows 2000 platforms. The syntax is:
+</p>
+<div class="pPreformatted"><pre class="pPreformatted">
+<code class="cCode">cref </code>[<em class="cEmphasis">options</em>]<a name="wp35002"> </a>
+</pre></div>
+<a name="wp22245"> </a><p class="pBody">
+The output of the simulation is logged to standard output, which can be redirected to any desired file. The output stream can range from nothing, to very verbose, depending on the command line options selected.
+</p>
+<a name="wp22246"> </a><h4 class="pHeading3">
+Command-line Options
+</h4>
+<a name="wp22308"> </a><p class="pBody">
+The options are case-sensitive.</p><div align="left">
+<table border="0" cellpadding="7"   id="SummaryNotReq22247">
+  <caption><a name="wp22249"> </a><div class="pTableCaption">
+TABLE&#160;18&#160;&#160;&#8211;&#160;&#160;Runtime Environment Command Line Options 
+</div>
+</caption>
+<thead>
+<tr  align="center">    <th  class="sun-verylightblue" scope="col"><a name="wp22253"> </a><div style="text-align: left" class="pTableHead">
+Option
+</div>
+
+</th>
+    <th  class="sun-verylightblue" scope="col"><a name="wp22255"> </a><div style="text-align: left" class="pTableHead">
+Description
+</div>
+
+</th>
+</tr>
+</thead>
+  <tr align="left">    <td><a name="wp22257"> </a><div class="pTableText">
+<code class="cCode">-b</code> 
+</div>
+</td>
+    <td><a name="wp22259"> </a><div class="pTableText">
+Dumps a Byte Code Histogram at the end of the execution.
+</div>
+</td>
+</tr>
+  <tr align="left">    <td><a name="wp22261"> </a><div class="pTableText">
+<code class="cCode">-e</code> 
+</div>
+</td>
+    <td><a name="wp22263"> </a><div class="pTableText">
+Displays the program counter and stack when an exception occurs.
+</div>
+</td>
+</tr>
+  <tr align="left">    <td><a name="wp22265"> </a><div class="pTableText">
+<code class="cCode">-h</code>, <code class="cCode">-help</code>
+</div>
+</td>
+    <td><a name="wp22267"> </a><div class="pTableText">
+Prints a help screen.
+</div>
+</td>
+</tr>
+  <tr align="left">    <td><a name="wp22269"> </a><div class="pTableText">
+<code class="cCode">-i</code> &lt;<em class="cEmphasis">input filename</em>&gt;
+</div>
+</td>
+    <td><a name="wp22271"> </a><div class="pTableText">
+Specifies a file to initialize EEPROM. Under the Solaris, Linux, and Microsoft Windows 2000 operating systems, file names must be single part--that is, there can be no spaces in the file name.
+</div>
+</td>
+</tr>
+  <tr align="left">    <td><a name="wp22273"> </a><div class="pTableText">
+<code class="cCode">-n</code> 
+</div>
+</td>
+    <td><a name="wp22275"> </a><div class="pTableText">
+Performs a trace display of the native methods that are invoked.
+</div>
+</td>
+</tr>
+  <tr align="left">    <td><a name="wp22277"> </a><div class="pTableText">
+<code class="cCode">-nobanner</code> 
+</div>
+</td>
+    <td><a name="wp22279"> </a><div class="pTableText">
+Suppresses the printing of a program banner.
+</div>
+</td>
+</tr>
+  <tr align="left">    <td><a name="wp22281"> </a><div class="pTableText">
+<code class="cCode">-nomeminfo</code>
+</div>
+</td>
+    <td><a name="wp22283"> </a><div class="pTableText">
+Suppresses the printing of memory statistics when execution starts.
+</div>
+</td>
+</tr>
+  <tr align="left">    <td><a name="wp22285"> </a><div class="pTableText">
+<code class="cCode">-o</code> &lt;<em class="cEmphasis">output filename</em>&gt;
+</div>
+</td>
+    <td><a name="wp22287"> </a><div class="pTableText">
+Saves the EEPROM contents to the named file. Under the Solaris, Linux, and Microsoft Windows 2000 operating systems, file names must be single part&#8212;that is, there can be no spaces in the file name.
+</div>
+</td>
+</tr>
+  <tr align="left">    <td><a name="wp22289"> </a><div class="pTableText">
+<code class="cCode">-p</code> &lt;<em class="cEmphasis">port number</em>&gt;
+</div>
+</td>
+    <td><a name="wp22291"> </a><div class="pTableText">
+Connects to a TCP/IP port using the specified port number.
+</div>
+</td>
+</tr>
+  <tr align="left">    <td><a name="wp22293"> </a><div class="pTableText">
+<code class="cCode">-s</code> 
+</div>
+</td>
+    <td><a name="wp22295"> </a><div class="pTableText">
+Suppresses output. Does not create any output unless followed by other flag options.
+</div>
+</td>
+</tr>
+  <tr align="left">    <td><a name="wp22297"> </a><div class="pTableText">
+<code class="cCode">-t</code> 
+</div>
+</td>
+    <td><a name="wp22299"> </a><div class="pTableText">
+Performs a line-by-line trace display of the mask&#8217;s execution.
+</div>
+</td>
+</tr>
+  <tr align="left">    <td><a name="wp22301"> </a><div class="pTableText">
+<code class="cCode">-version</code> 
+</div>
+</td>
+    <td><a name="wp22303"> </a><div class="pTableText">
+Prints only the program&#8217;s version number. Do not execute.
+</div>
+</td>
+</tr>
+  <tr align="left">    <td><a name="wp22305"> </a><div class="pTableText">
+<code class="cCode">-z</code> 
+</div>
+</td>
+    <td><a name="wp22307"> </a><div class="pTableText">
+Prints the resource consumption statistics.
+</div>
+</td>
+</tr>
+<tr><td colspan="15"><hr class="pTableHr" /></td></tr>
+</table>
+</div>
+<p class="pBody">
+
+</p>
+<a name="wp42703"> </a><h3 class="pHeading2">
+Obtaining Resource Consumption Statistics
+</h3>
+<a name="wp42706"> </a><p class="pBody">
+The C-language Java Card RE provides a command line option (<code class="cCode">-z</code>) for printing resource consumption statistics. This option enables the C-language Java Card RE to print statistics regarding memory usage once at startup and once at shutdown. Although memory usage statistics will vary among Java Card RE implementations, this option provides the applet developer with a general idea of the amount of memory needed to install and execute an applet.
+</p>
+<a name="wp42708"> </a><p class="pBody">
+The following output is obtained by running the <code class="cCode">demo2</code> demonstration program with the <code class="cCode">-z</code> command line option. 
+</p>
+<div class="pPreformatted"><pre class="pPreformatted">
+cref -z<a name="wp42710"> </a>
+Java Card platform version 2.2.1 C Reference Implementation Simulator (version 0.41)<a name="wp42711"> </a>
+32-bit Address Space implementation - no cryptography support<a name="wp42712"> </a>
+Copyright 2003 Sun Microsystems, Inc. All rights reserved.<a name="wp42713"> </a>
+<a name="wp42714"> </a>
+Memory configuration<a name="wp42715"> </a>
+&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;Type&#160;&#160;&#160;&#160;Base&#160;&#160;&#160;&#160;Size&#160;&#160;&#160;&#160;Max Addr<a name="wp42716"> </a>
+&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;RAM&#160;&#160;&#160;&#160;&#160;0x0&#160;&#160;&#160;&#160;&#160;0x500&#160;&#160;&#160;0x4ff<a name="wp42717"> </a>
+&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;ROM&#160;&#160;&#160;&#160;&#160;0x2000&#160;&#160;0xa000&#160;&#160;0xbfff<a name="wp42718"> </a>
+&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;E2P&#160;&#160;&#160;&#160;&#160;0x10020&#160;0xffe0&#160;&#160;0x1ffff<a name="wp42719"> </a>
+<a name="wp42720"> </a>
+&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;ROM Mask size =&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;0x566b =&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;22123 bytes<a name="wp42721"> </a>
+&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;Highest ROM address in mask =&#160;&#160;&#160;0x766a =&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;30314 bytes<a name="wp42722"> </a>
+&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;Space available in ROM =&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;0x4995 =&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;18837 bytes<a name="wp42723"> </a>
+Mask has now been initialized for use<a name="wp42724"> </a>
+&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;0 bytecodes executed.<a name="wp42725"> </a>
+&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;Stack size: 00384 (0x0180) bytes,&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;00000 (0x0000) maximum used<a name="wp42726"> </a>
+&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;EEPROM use: 05935 (0x172f) bytes consumed, 59569 (0xe8b1) available<a name="wp42727"> </a>
+Transaction buffer: 00000 (0x0000) bytes consumed, 02560 (0x0a00) available<a name="wp42728"> </a>
+Clear-On-Reset RAM: 00000 (0x0000) bytes consumed, 00256 (0x0100) available<a name="wp42729"> </a>
+Clear-On-Dsel. RAM: 00000 (0x0000) bytes consumed, 00128 (0x0080) available<a name="wp42730"> </a>
+C-language Java Card RE was powered down.<a name="wp42731"> </a>
+&#160;&#160;&#160;891495 bytecodes executed.<a name="wp42732"> </a>
+&#160;&#160;&#160;&#160;&#160;&#160;&#160;Stack size: 00384 (0x0180) bytes,&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;00244 (0x00f4) maximum used<a name="wp42733"> </a>
+&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;EEPROM use: 14839 (0x39f7) bytes consumed, 50665 (0xc5e9) available<a name="wp42734"> </a>
+Transaction buffer: 00000 (0x0000) bytes consumed, 02560 (0x0a00) available<a name="wp42735"> </a>
+Clear-On-Reset RAM: 00168 (0x00a8) bytes consumed, 00088 (0x0058) available<a name="wp42736"> </a>
+Clear-On-Dsel. RAM: 00026 (0x001a) bytes consumed, 00102 (0x0066) available<a name="wp42737"> </a>
+</pre></div>
+<a name="wp45072"> </a><p class="pBody">
+The <code class="cCode">demo2</code> demonstration program downloads and installs several applets and performs several transactions using a subset of the installed applets. Statistics are provided regarding the following resources: EEPROM, transaction buffer, stack usage, clear-on-reset RAM, and clear-on-deselect RAM. The statistics are printed twice, once at C-language Java Card RE start up and once when it shuts down.
+</p>
+<a name="wp45073"> </a><p class="pBody">
+This particular example shows the resources used to download and install a set of applications and execute several transactions. More fine-grained statistics could be obtained by limiting the actions during a single session. For example, using a single session to download one application would provide information regarding the resources needed to process the application download. The EEPROM contents at the end of the session could be saved using the <code class="cCode">-o</code> option, and subsequent sessions could be used to measure resource usage for other actions, such as applet installation and execution.
+</p>
+<a name="wp42704"> </a><p class="pBody">
+In addition to the command line option, the Java Card API provides programmatic mechanisms for determining resource usage. For more information on these mechanisms, see the <code class="cCode">javacard.framework.JCSystem.getAvailableMemory()</code> method in the <em class="cEmphasis">Application Programming Interface for the Java Card&#8482; Platform, Version 2.2.1 </em>.
+</p>
+<a name="wp17878"> </a><h2 class="pHeading1">
+Reference Implementation Limitations
+</h2>
+<ul class="pBullet1"><a name="wp17884"> </a><div class="pBullet1"><li>The maximum number of remote references that can be returned during one card session is 8.</li></div>
+<a name="wp17885"> </a><div class="pBullet1Plus"><li>The maximum number of remote objects that can be exported simultaneously is 16.</li></div>
+<a name="wp17886"> </a><div class="pBullet1Plus"><li>The maximum number of parameters of type <code class="cCode">array</code> that can be used in remote methods is 8.</li></div>
+<a name="wp19216"> </a><div class="pBullet1Plus"><li>The maximum number of Java Card API packages that the C-language Java Card RE can support is 32. </li></div>
+<a name="wp49359"> </a><div class="pBullet1Plus"><li>The maximum number of library packages that a Java Card system can support is 32.</li></div>
+<a name="wp26454"> </a><div class="pBullet1Last"><li>The maximum number of applets that a Java Card system can support is 16.</li></div>
+</ul>
+<a name="wp4336"> </a><h2 class="pHeading1">
+Input and Output
+</h2>
+<a name="wp5667"> </a><p class="pBody">
+The C-language Java Card RE performs I/O via a socket interface, using the TLP-224 protocol, simulating a Java Card technology-compliant smart card in a card reader (CAD). Use <code class="cCode">apdutool</code> to read script files and send APDUs via a socket to the C-language Java Card RE. See <a  href="cJDKapdu.html#wp5281"><span style="color: #3366CC">&quot;apdutool Examples&quot; </span></a> for details. Note that you can have the C-language Java Card RE running on one workstation and run <code class="cCode">apdutool</code> on another workstation.
+</p>
+<a name="wp5664"> </a><h2 class="pHeading1">
+Working with EEPROM Image Files
+</h2>
+<a name="wp4337"> </a><p class="pBody">
+You can save the state of EEPROM contents, then load it in a later invocation of the C-language Java Card RE. To do this, specify an EEPROM image or &#8220;store&#8221; file to save the EEPROM contents. 
+</p>
+<a name="wp48925"> </a><p class="pBody">
+Use the <code class="cCode">-i</code> and <code class="cCode">-o</code> flags to manipulate EEPROM image files at the cref command line: 
+</p>
+<ul class="pBullet1"><a name="wp4338"> </a><div class="pBullet1"><li>The -<code class="cCode">i</code> flag, followed by a filename, specifies the initial EEPROM image file that will initialize the EEPROM portion of the virtual machine before Java Card virtual machine bytecode execution begins. </li></div>
+<a name="wp4339"> </a><div class="pBullet1Last"><li>The <code class="cCode">-o</code> flag, followed by a filename, saves the updated EEPROM portion of the virtual machine to the named file, overwriting any existing file of the same name. </li></div>
+</ul>
+<a name="wp49000"> </a><p class="pBody">
+The <code class="cCode">-i</code> and <code class="cCode">-o</code> flags do not conflict with the performance of other option flags. File names used with the <code class="cCode">-i</code> and <code class="cCode">-o</code> flags flags must not contain spaces.
+</p>
+<a name="wp4340"> </a><p class="pBody">
+The commit of EEPROM memory changes during the execution of the C-language Java Card RE is not affected by the <code class="cCode">-o</code> flag. Neither standard nor error output is written to the output file named with the -o option. 
+</p>
+<a name="wp4343"> </a><p class="pBody">
+The following examples show how the <code class="cCode">-i</code> and <code class="cCode">-o</code> option flags can be used in a variety of useful execution scenarios.
+</p>
+<a name="wp5472"> </a><h4 class="pHeading3">
+Input EEPROM Image File
+</h4>
+<div class="pPreformatted"><pre class="pPreformatted">
+cref -i e2save<a name="wp15770"> </a>
+</pre></div>
+<a name="wp15772"> </a><p class="pBody">
+The C-language Java Card RE attempts to initialize simulated EEPROM from the EEPROM image file named <code class="cCode">e2save</code>. No output file will be created.
+</p>
+<a name="wp5463"> </a><h4 class="pHeading3">
+Output EEPROM Image File
+</h4>
+<div class="pPreformatted"><pre class="pPreformatted">
+cref -o e2save<a name="wp4354"> </a>
+</pre></div>
+<a name="wp4355"> </a><p class="pBody">
+The C-language Java Card RE writes EEPROM data to the file <code class="cCode">e2save</code>. The file will be created if it does not currently exist. Any existing EEPROM image file named <code class="cCode">e2save</code> is overwritten.
+</p>
+<a name="wp5441"> </a><h4 class="pHeading3">
+Same Input and Output EEPROM Image File
+</h4>
+<div class="pPreformatted"><pre class="pPreformatted">
+cref -i e2save -o e2save<a name="wp4358"> </a>
+</pre></div>
+<a name="wp4359"> </a><p class="pBody">
+The C-language Java Card RE attempts to initialize simulated EEPROM from the EEPROM image file named <code class="cCode">e2save</code>, and during processing, saves the contents of EEPROM to <code class="cCode">e2save</code>, overwriting the contents. This behavior is much like a real Java Card technology-compliant smart card in that the contents of EEPROM is persistent.
+</p>
+<a name="wp4361"> </a><h4 class="pHeading3">
+Different Input and Output EEPROM Image Files
+</h4>
+<div class="pPreformatted"><pre class="pPreformatted">
+cref -i e2save_in -o e2save_out<a name="wp4362"> </a>
+</pre></div>
+<a name="wp48333"> </a><p class="pBody">
+The C-language Java Card RE attempts to initialize simulated EEPROM from the EEPROM image file named <code class="cCode">e2save_in</code>, and during C-language Java Card RE processing, writes EEPROM updates to a EEPROM image file named <code class="cCode">e2save_out</code>. The output file will be created if it does not exist. Using different names for input and output EEPROM image files eliminates much potential confusion. This command line can be executed multiple times with the same results.
+</p>
+<hr class="pHr"/><div class="note">
+<a name="wp5487"> </a>
+<b>Note &#8211;</b>  Be careful naming your EEPROM image files. The C-language Java Card RE will overwrite an existing file specified as an output EEPROM image file. This can, of course, cause a problem if there is already an identically named file with a different purpose in the same directory.
+<hr class="pHr"/></div>
+<a name="wp49593"> </a>
+<a name="wp49592"> </a>
+<a name="wp50710"> </a><h2 class="pHeading1">
+The Default ROM Mask
+</h2>
+<a name="wp7255"> </a><p class="pBody">
+Version 2.2.1 of the Java Card reference implementation provides a 32-bit version of the C-language Java Card RE executable: <code class="cCode">cref.exe</code> for the Microsoft Windows 2000 platform, and <code class="cCode">cref</code> for the Solaris or Linux platform. These executables contain  only the Java Card RE packages, and an installer applet.  
+</p>
+<a name="wp3511"> </a><p class="pBody">
+&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;
+</p>
+
+    <p>&#160;</p>
+    <hr class="pHr" />
+
+    <table class="full-width" id="SummaryNotReq2">
+      <tr>
+        <td class="go-left">
+          <a accesskey="c" href="index.html">
+	    <img id="LongDescNotReq1" src="images/toc.gif" border="0"
+              alt="Contents" /></a>
+	  <a accesskey="p" href="cJDKcapdump.html">
+	    <img id="LongDescNotReq2" src="images/prev.gif" border="0"
+              alt="Previous" /></a>
+	  <a accesskey="n" href="cJDKinstaller.html">
+	    <img id="LongDescNotReq3" src="images/next.gif" border="0"
+              alt="Next" /></a>
+	  <a accesskey="i" href="cJDK_b_domIX.html">
+	    <img id="LongDescNotReq4" src="images/index.gif" border="0"
+              alt="Index" /></a>
+        </td>
+        <td class="go-right">
+          <span class="copyright">Development Kit User's Guide
+for the Binary Release with Cryptography Extensions <br /> Java Card Platform, Version 2.2.1</span>
+        </td>
+      </tr>
+    </table>
+
+    <p>&#160;</p>
+    
+<p class="copyright"><a 
+       href="copyright.html">Copyright</a> &#169; 2003 Sun Microsystems, Inc. 
+  All rights reserved.</p>	
+  </body>
+</html>

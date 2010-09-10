@@ -1,0 +1,129 @@
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
+    <meta http-equiv="Content-Style-Type" content="text/css" />
+    <meta name="GENERATOR" content="Quadralay WebWorks Publisher Professional Edition 7.0.5.1025" />
+    <meta name="TEMPLATEBASE" content="JCUser_b_glo" />
+    <meta name="LASTUPDATED" content="10/10/03 17:26:28" />
+    <title>Java Card RMI Client-Side Reference Implementation</title>
+    <link rel="StyleSheet" href="document.css" type="text/css" />
+    <link rel="StyleSheet" href="catalog.css" type="text/css" />
+    <link rel="Table of Contents" href="index.html" />
+    <link rel="Previous" href="cJDKcrypto.html" />
+    <link rel="Next" href="cJDKAppendixA.html" />
+    <link rel="Index" href="cJDK_b_domIX.html" />
+  </head>
+
+  <body>
+
+    <table class="full-width" id="SummaryNotReq1">
+      <tr><td class="sun-darkblue">&#160;</td></tr>
+      <tr><td class="sun-lightblue">&#160;</td></tr>
+      <tr><td class="go-right">
+        <a accesskey="c" href="index.html">
+          <img id="LongDescNotReq1" src="images/toc.gif" border="0"
+            alt="Contents" /></a>
+	<a accesskey="p" href="cJDKcrypto.html">
+	  <img id="LongDescNotReq2" src="images/prev.gif" border="0"
+            alt="Previous" /></a>
+        <a accesskey="n" href="cJDKAppendixA.html">
+	  <img id="LongDescNotReq3" src="images/next.gif" border="0"
+            alt="Next" /></a>
+        <a accesskey="i" href="cJDK_b_domIX.html">
+	  <img id="LongDescNotReq4" src="images/index.gif" border="0"
+            alt="Index" /></a>
+        </td>
+      </tr>
+    </table>
+
+<a name="wp589636"> </a><h2 class="pChapNum">
+Chapter &#160; 15
+</h2>
+<a name="wp589638"> </a><h2 class="pTitle">
+Java Card RMI Client-Side Reference Implementation
+</h2>
+<hr />
+<a name="wp586866"> </a><p class="pBody">
+A Java Card RMI client application runs on a Card Acceptance Device (CAD) terminal which supports a J2SE or J2ME platform. The client application requires a portable and platform independent mechanism to access the Java Card RMI server applet executing on the smart card. 
+</p>
+<a name="wp586918"> </a><p class="pBody">
+The basic client-side framework is implemented in the package <code class="cCode">com.sun.javacard.javax.smartcard.rmiclient</code>. Refer to <em class="cEmphasis">Java Card&#8482; RMI Client Application Programming Interface, Version 2.2.1</em> (Sun Microsystems, Inc., 2003) .
+</p>
+<a name="wp587741"> </a><p class="pBody">
+The reference implementation of Java Card Client-Side RMI API is implemented in the package <code class="cCode">com.sun.javacard.ocfrmiclientimpl</code>, and is based on the Open Card Framework (OCF 1.2) for its card access mechanisms. The Open Card Framework classes provide a Java application platform independent access to a connected smart card.
+</p>
+<a name="wp588459"> </a><p class="pBody">
+For a detailed description of OCF 1.2, refer to <a  href="http://www.opencard.org/">http://www.opencard.org/</a>.
+</p>
+<a name="wp589384"> </a><p class="pBody">
+For the Java Card RMI Client API Reference Implementation documentation refer to <a  href="cJDKappendixB.html#wp997084"><span style="color: #3366CC">Appendix&#160;D,  &quot;Reference Implementation of Java Card RMI Client-Side API</span></a>.&#8221;
+</p>
+<a name="wp589770"> </a><h2 class="pHeading1">
+The Java Card Remote Stub Object
+</h2>
+<a name="wp592257"> </a><p class="pBody">
+Java Card RMI supports two formats for passing remote references. The format for remote references containing the class name requires stubs for remote objects available to the client application. 
+</p>
+<a name="wp589772"> </a><p class="pBody">
+The standard Java RMIC compiler tool can be used as the stub compilation tool to produce stub classes required for the client application. To produce these stub classes, the RMIC compiler tool must have access to all the non-abstract classes defined in the applet package which directly or indirectly implement remote interfaces. In addition, it needs to access the <code class="cCode">.class</code> files of all the remote interfaces implemented by them.
+</p>
+<a name="wp588534"> </a><p class="pBody">
+If you want the stub class to be Java Card RMI-specific when it is instantiated on the client, it must be customized with a Java Card platform-specific implementation of the <code class="cCode">CardObjectFactory</code> interface.
+</p>
+<a name="wp589985"> </a><p class="pBody">
+The standard Java RMIC compiler is used to generate the remote stub objects. <code class="cCode">JCRemoteRefImpl</code>, a Java Card platform-specific implementation of the <code class="cCode">java.rmi.server.RemoteRef</code> interface, allows these stub objects to work with Java Card RMI. The stub object delegates all method invocations to its configured <code class="cCode">RemoteRef</code> instance.
+</p>
+<a name="wp588518"> </a><p class="pBody">
+The <code class="cCode">com.sun.javacard.ocfrmiclientimpl.JCRemoteRefImpl</code> class is an example of a <code class="cCode">RemoteRef</code> object customized for the Java Card platform.
+</p>
+<a name="wp589414"> </a><p class="pBody">
+For examples of how to use these interfaces and classes, see Chapter 3, &#8220;Developing Java Card RMI Applications&#8221; in the <em class="cEmphasis">Application Programming Notes for the Java Card&#8482; Platform, Version 2.2.1</em>.
+</p>
+<hr class="pHr"/><div class="note">
+<a name="wp588519"> </a>
+<b>Note &#8211;</b>  Since the remote object is configured as a Java Card platform-specific object with a local connection to the smart card via the <code class="cCode">OCFCardAccessor</code> object, the object is inherently not portable. A bridge class must be used if it is to be accessed from outside of this client application.
+<hr class="pHr"/></div>
+<a name="wp592193"> </a><p class="pBody">
+
+</p>
+<hr class="pHr"/><div class="note">
+<a name="wp590599"> </a>
+<b>Note &#8211;</b>  Some versions of the RMIC do not treat <code class="cCode">Thowable</code> as a superclass of <code class="cCode">RemoteException</code>. The workaround is to declare remote methods to throw <code class="cCode">Exception</code> instead.
+<hr class="pHr"/></div>
+<a name="wp588118"> </a><p class="pBody">
+
+</p>
+
+    <p>&#160;</p>
+    <hr class="pHr" />
+
+    <table class="full-width" id="SummaryNotReq2">
+      <tr>
+        <td class="go-left">
+          <a accesskey="c" href="index.html">
+	    <img id="LongDescNotReq1" src="images/toc.gif" border="0"
+              alt="Contents" /></a>
+	  <a accesskey="p" href="cJDKcrypto.html">
+	    <img id="LongDescNotReq2" src="images/prev.gif" border="0"
+              alt="Previous" /></a>
+	  <a accesskey="n" href="cJDKAppendixA.html">
+	    <img id="LongDescNotReq3" src="images/next.gif" border="0"
+              alt="Next" /></a>
+	  <a accesskey="i" href="cJDK_b_domIX.html">
+	    <img id="LongDescNotReq4" src="images/index.gif" border="0"
+              alt="Index" /></a>
+        </td>
+        <td class="go-right">
+          <span class="copyright">Development Kit User's Guide
+for the Binary Release with Cryptography Extensions <br /> Java Card Platform, Version 2.2.1</span>
+        </td>
+      </tr>
+    </table>
+
+    <p>&#160;</p>
+    
+<p class="copyright"><a 
+       href="copyright.html">Copyright</a> &#169; 2003 Sun Microsystems, Inc. 
+  All rights reserved.</p>	
+  </body>
+</html>

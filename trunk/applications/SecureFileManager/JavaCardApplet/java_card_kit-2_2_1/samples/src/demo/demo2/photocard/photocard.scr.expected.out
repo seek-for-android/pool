@@ -1,0 +1,50 @@
+This demo requires a cref or jcwde with com.sun.javacard.photocard applet
+installed and file opencard.properties in the current directory
+Start cref or jcwde before running this demo
+
+
+PhotoCard demo
+
+Reading file: duke_magnify.gif...
+Image size is 21,280 bytes
+Placing picture inside smart card...
+On-card picture ID is 1
+
+Reading file: duke_pencil.gif...
+Image size is 11,723 bytes
+Placing picture inside smart card...
+On-card picture ID is 2
+
+Reading file: duke_wave.gif...
+Image size is 7,553 bytes
+Placing picture inside smart card...
+On-card picture ID is 3
+
+Reading file: duke_thumbsup.gif...
+Image size is 6,771 bytes
+Placing picture inside smart card...
+On-card picture ID is 4
+
+
+Recovering pictures from smart card...
+
+Recovering Picture ID 1...
+On-card image size is 21,280 bytes
+Recovered 21,280 bytes for duke_magnify.gif
+Placing recovered picture in file recv.duke_magnify.gif
+
+Recovering Picture ID 2...
+On-card image size is 11,723 bytes
+Recovered 11,723 bytes for duke_pencil.gif
+Placing recovered picture in file recv.duke_pencil.gif
+
+Recovering Picture ID 3...
+On-card image size is 7,553 bytes
+Recovered 7,553 bytes for duke_wave.gif
+Placing recovered picture in file recv.duke_wave.gif
+
+Recovering Picture ID 4...
+On-card image size is 6,771 bytes
+Recovered 6,771 bytes for duke_thumbsup.gif
+Placing recovered picture in file recv.duke_thumbsup.gif
+

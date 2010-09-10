@@ -1,0 +1,382 @@
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
+    <meta http-equiv="Content-Style-Type" content="text/css" />
+    <meta name="GENERATOR" content="Quadralay WebWorks Publisher Professional Edition 7.0.5.1025" />
+    <meta name="TEMPLATEBASE" content="JCUser_b_glo" />
+    <meta name="LASTUPDATED" content="10/10/03 17:25:29" />
+    <title>Verifying CAP and Export Files</title>
+    <link rel="StyleSheet" href="document.css" type="text/css" />
+    <link rel="StyleSheet" href="catalog.css" type="text/css" />
+    <link rel="Table of Contents" href="index.html" />
+    <link rel="Previous" href="cJDKviewexport.html" />
+    <link rel="Next" href="cJDKcapgen.html" />
+    <link rel="Index" href="cJDK_b_domIX.html" />
+  </head>
+
+  <body>
+
+    <table class="full-width" id="SummaryNotReq1">
+      <tr><td class="sun-darkblue">&#160;</td></tr>
+      <tr><td class="sun-lightblue">&#160;</td></tr>
+      <tr><td class="go-right">
+        <a accesskey="c" href="index.html">
+          <img id="LongDescNotReq1" src="images/toc.gif" border="0"
+            alt="Contents" /></a>
+	<a accesskey="p" href="cJDKviewexport.html">
+	  <img id="LongDescNotReq2" src="images/prev.gif" border="0"
+            alt="Previous" /></a>
+        <a accesskey="n" href="cJDKcapgen.html">
+	  <img id="LongDescNotReq3" src="images/next.gif" border="0"
+            alt="Next" /></a>
+        <a accesskey="i" href="cJDK_b_domIX.html">
+	  <img id="LongDescNotReq4" src="images/index.gif" border="0"
+            alt="Index" /></a>
+        </td>
+      </tr>
+    </table>
+
+<a name="wp2353"> </a><h2 class="pChapNum">
+Chapter &#160; 7
+</h2>
+<a name="wp1884"> </a><h2 class="pTitle">
+Verifying CAP and Export Files
+</h2>
+<hr />
+<a name="wp1891"> </a><p class="pBody">
+Off-card verification provides a means for evaluating CAP and export files in a desktop environment. When applied to the set of CAP files that will reside on a Java Card-compliant smart card and the set of export files used to construct those CAP files, the Java Card technology-enabled off-card verifier (&#8220;Java Card off-card verifier&#8221;) provides the means to assert that the content of the smart card has been verified.
+</p>
+<a name="wp1892"> </a><p class="pBody">
+The off-card verifier is a combination of three tools. Use these tools for:
+</p>
+<ul class="pBullet1"><a name="wp9227"> </a><div class="pBullet1"><li><a  href="cJDKverifier.html#wp4672"><span style="color: #3366CC">Verifying CAP Files</span></a></li></div>
+<a name="wp9233"> </a><div class="pBullet1Plus"><li><a  href="cJDKverifier.html#wp4731"><span style="color: #3366CC">Verifying Export Files</span></a></li></div>
+<a name="wp9238"> </a><div class="pBullet1Last"><li><a  href="cJDKverifier.html#wp8461"><span style="color: #3366CC">Verifying Binary Compatibility</span></a></li></div>
+</ul>
+<a name="wp9183"> </a><p class="pBody">
+The names of the tools that perform these verifications are <code class="cCode">verifycap</code>, <code class="cCode">verifyexp</code>, and <code class="cCode">verifyrev</code>, respectively. The following sections describe how to use each tool.
+</p>
+<a name="wp4672"> </a><h2 class="pHeading1">
+Verifying CAP Files
+</h2>
+<a name="wp10390"> </a><p class="pBody">
+The <code class="cCode">verifycap</code> tool is used to verify a CAP file within the context of package&#39;s export file (if any) and the export files of imported packages. This verification confirms whether a CAP file is internally consistent, as defined in Chapter 6 of the <em class="cEmphasis">Virtual Machine Specification for the Java Card&#8482; Platform, Version 2.2.1</em>, and consistent with a context in which it can reside in a Java Card technology-enabled device.
+</p>
+<a name="wp10405"> </a><p class="pBody">
+Each individual export file is verified as a single unit. The scenario is shown in <a  href="cJDKverifier.html#wp11702"><span style="color: #3366CC">FIGURE&#160;3</span></a>. In the figure, the package <code class="cCode">p2</code> CAP file is being verified. Package <code class="cCode">p2</code> has a dependency on package <code class="cCode">p1</code>, so the export file from package <code class="cCode">p1</code> is also input. The <code class="cCode">p2.exp</code> file is only required if <code class="cCode">p2.cap</code> exports any of its elements. 
+</p>
+<a name="wp11702"> </a><div class="pFigureCaption">
+FIGURE&#160;3&#160;&#160;&#8211;&#160;&#160;Verifying a CAP file
+<br /><br />
+</div><a name="wp11658"> </a><p class="pBody">
+<img src="images/cJDKverifier2.gif" height="232" width="409" alt="This figure is described in the text." border="0" hspace="0" vspace="0"/>
+</p>
+<a name="wp5772"> </a><h3 class="pHeading2">
+Running verifycap
+</h3>
+<a name="wp4698"> </a><p class="pBody">
+Command line usage is:
+</p>
+<div class="pPreformatted"><pre class="pPreformatted">
+verifycap [<em class="cEmphasis">options</em>] &lt;<em class="cEmphasis">export files</em>&gt; &lt;<em class="cEmphasis">CAP file</em>&gt;<a name="wp5137"> </a>
+</pre></div>
+<a name="wp4701"> </a><p class="pBody">
+The file to invoke <code class="cCode">verifycap</code> is a shell script (<code class="cCode">verifycap</code>) on the Solaris or Linux platform and a batch file (<code class="cCode">verifycap.bat</code>) on the Microsoft Windows 2000 platform.
+</p>
+<a name="wp4703"> </a><h4 class="pHeading3">
+Command Line Arguments
+</h4>
+<a name="wp4704"> </a><p class="pBody">
+The arguments to this command line are:</p><div align="left">
+<table border="0" cellpadding="7"   id="SummaryNotReq8286">
+  <caption><a name="wp8288"> </a><div class="pTableCaption">
+TABLE&#160;11&#160;&#160;&#8211;&#160;&#160;verifycap Command Line Arguments 
+</div>
+</caption>
+<thead>
+<tr  align="center">    <th  class="sun-verylightblue" scope="col"><a name="wp8292"> </a><div style="text-align: left" class="pTableHead">
+Argument
+</div>
+
+</th>
+    <th  class="sun-verylightblue" scope="col"><a name="wp8294"> </a><div style="text-align: left" class="pTableHead">
+Description
+</div>
+
+</th>
+</tr>
+</thead>
+  <tr align="left">    <td><a name="wp8296"> </a><div class="pTableText">
+<code class="cCode">&lt;</code><em class="cEmphasis">export files</em><code class="cCode">&gt;</code>
+</div>
+</td>
+    <td><a name="wp8298"> </a><div class="pTableText">
+A list of export files of the packages that this CAP file uses.
+</div>
+</td>
+</tr>
+  <tr align="left">    <td><a name="wp8300"> </a><div class="pTableText">
+<code class="cCode">&lt;</code><em class="cEmphasis">CAP file</em><code class="cCode">&gt;</code>
+</div>
+</td>
+    <td><a name="wp8302"> </a><div class="pTableText">
+Name of the CAP file to be verified.
+</div>
+</td>
+</tr>
+<tr><td colspan="15"><hr class="pTableHr" /></td></tr>
+</table>
+</div>
+<p class="pBody">
+
+</p>
+<a name="wp4712"> </a><h4 class="pHeading3">
+Command Line Options
+</h4>
+<a name="wp5361"> </a>
+<p class="pBody"> For a description of the command line options available for 
+  <code class="cCode">verifycap</code>, see <a  href="cJDKverifier.html#wp4914"><span style="color: #3366CC">&quot;Command 
+  Line Options for Off-Card Verifier Tools&quot;</span></a>. </p>
+<a name="wp4731"> </a><h2 class="pHeading1">
+Verifying Export Files
+</h2>
+<a name="wp6204"> </a><p class="pBody">
+The <code class="cCode">verifyexp</code> tool is used to verify an export file as a single unit. This verification is &#8220;shallow,&#8221; examining only the content of a single export file, not including export files of packages referenced by the package of the export file. The verification determines whether an export file is internally consistent and viable as defined in Chapter 5 of the <em class="cEmphasis">Virtual Machine Specification for the Java Card&#8482; Platform, Version 2.2.1</em>. This scenario is illustrated in <a  href="cJDKverifier.html#wp11651"><span style="color: #3366CC">FIGURE&#160;4</span></a>.
+</p>
+<a name="wp11651"> </a><div class="pFigureCaption">
+FIGURE&#160;4&#160;&#160;&#8211;&#160;&#160;Verifying an export file
+<br /><br />
+</div><a name="wp11619"> </a><p class="pBody">
+<img src="images/cJDKverifiera.gif" height="89" width="418" alt="This figure is described in the text." border="0" hspace="0" vspace="0"/>
+</p>
+<a name="wp4817"> </a><h3 class="pHeading2">
+Running verifyexp
+</h3>
+<a name="wp4818"> </a><p class="pBody">
+Command line usage is:
+</p>
+<div class="pPreformatted"><pre class="pPreformatted">
+verifyexp [<em class="cEmphasis">options</em>] &lt;e<em class="cEmphasis">xport file</em>&gt; <a name="wp5531"> </a>
+</pre></div>
+<a name="wp4821"> </a><p class="pBody">
+The file to invoke <code class="cCode">verifyexp</code> is a shell script (<code class="cCode">verifyexp</code>) on the Solaris or Linux platform and a batch file (<code class="cCode">verifyexp.bat</code>) on the Microsoft Windows 2000 platform.
+</p>
+<a name="wp4823"> </a><h4 class="pHeading3">
+Command Line Arguments
+</h4>
+<a name="wp4824"> </a><p class="pBody">
+The argument to this command line is:</p><div align="left">
+<table border="0" cellpadding="7"   id="SummaryNotReq8541">
+  <caption><a name="wp8543"> </a><div class="pTableCaption">
+TABLE&#160;12&#160;&#160;&#8211;&#160;&#160;verifyexp Command Line Argument 
+</div>
+</caption>
+<thead>
+<tr  align="center">    <th  class="sun-verylightblue" scope="col"><a name="wp8547"> </a><div style="text-align: left" class="pTableHead">
+Argument
+</div>
+
+</th>
+    <th  class="sun-verylightblue" scope="col"><a name="wp8549"> </a><div style="text-align: left" class="pTableHead">
+Description
+</div>
+
+</th>
+</tr>
+</thead>
+  <tr align="left">    <td><a name="wp8551"> </a><div class="pTableText">
+&lt;<em class="cEmphasis">export file</em>&gt; 
+</div>
+</td>
+    <td><a name="wp8553"> </a><div class="pTableText">
+Fully qualified path and name of the export file.
+</div>
+</td>
+</tr>
+<tr><td colspan="15"><hr class="pTableHr" /></td></tr>
+</table>
+</div>
+<p class="pBody">
+
+</p>
+<a name="wp4829"> </a><h4 class="pHeading3">
+Command Line Options
+</h4>
+<a name="wp9444"> </a>
+<p class="pBody"> For a description of the command line options available for 
+  <code class="cCode">verifyexp</code>, see <a  href="cJDKverifier.html#wp4914"><span style="color: #3366CC">&quot;Command 
+  Line Options for Off-Card Verifier Tools&quot;</span></a>. </p>
+<a name="wp8461"> </a><h2 class="pHeading1">
+Verifying Binary Compatibility
+</h2>
+<a name="wp5579"> </a><p class="pBody">
+The <code class="cCode">verifyrev</code> tool checks for binary compatibility between revisions of a package by comparing the respective export files. This scenario is illustrated in <a  href="cJDKverifier.html#wp11568"><span style="color: #3366CC">FIGURE&#160;5</span></a>. The export files from version 1.0 and 1.1 of package <code class="cCode">p1</code> are input to <code class="cCode">verifyrev</code>. The verification examines whether the Java Card platform version rules, including those imposed for binary compatibility as defined in Section 4.4 of the <em class="cEmphasis">Virtual Machine Specification for the Java Card&#8482; Platform, Version 2.2.1</em>, have been followed. 
+</p>
+<a name="wp11568"> </a><div class="pFigureCaption">
+FIGURE&#160;5&#160;&#160;&#8211;&#160;&#160;Verifying binary compatibility of export files
+<br /><br />
+</div><a name="wp11565"> </a><p class="pBody">
+<img src="images/cJDKverifier3.gif" height="163" width="425" alt="This figure is described in the text." border="0" hspace="0" vspace="0"/>
+</p>
+<a name="wp4899"> </a><h3 class="pHeading2">
+Running verifyrev
+</h3>
+<a name="wp4900"> </a><p class="pBody">
+Command line usage is:
+</p>
+<div class="pPreformatted"><pre class="pPreformatted">
+  verifyrev [<em class="cEmphasis">options</em>] &lt;<em class="cEmphasis">export file</em>&gt; &lt;<em class="cEmphasis">export file</em>&gt; <a name="wp5925"> </a>
+</pre></div>
+<a name="wp5926"> </a><p class="pBody">
+The file to invoke <code class="cCode">verifyrev</code> is a shell script (<code class="cCode">verifyrev</code>) on the Solaris or Linux platform and a batch file (<code class="cCode">verifyrev.bat</code>) on the Microsoft Windows 2000 platform.
+</p>
+<a name="wp4905"> </a><h4 class="pHeading3">
+Command Line Arguments
+</h4>
+<a name="wp4906"> </a><p class="pBody">
+The arguments to this command line are:
+</p>
+<div class="pPreformatted"><pre class="pPreformatted">
+&lt;<em class="cEmphasis">export file</em>&gt; &lt;<em class="cEmphasis">export file</em>&gt; <a name="wp5044"> </a>
+</pre></div>
+<a name="wp4909"> </a><p class="pBody">
+Where &lt;<em class="cEmphasis">export file</em>&gt;<em class="cEmphasis"> </em>represents the fully qualified path of the export files to be compared.
+</p>
+<a name="wp4911"> </a><p class="pBody">
+The second export file name must be the same as the first one with a different path. For example, 
+</p>
+<div class="pPreformatted"><pre class="pPreformatted">
+verifyrev d:\testing\old\crypto.exp d:\testing\new\crypto.exp<a name="wp5012"> </a>
+</pre></div>
+<a name="wp9460"> </a><h4 class="pHeading3">
+Command Line Options
+</h4>
+<a name="wp9461"> </a><p class="pBody">
+For a description of the command line options available for <code class="cCode">verifyrev</code>, see <a  href="cJDKverifier.html#wp4914"><span style="color: #3366CC">&quot;Command Line Options for Off-Card Verifier Tools</span></a>&#8221;.
+</p>
+<a name="wp4914"> </a><h2 class="pHeading1">
+Command Line Options for Off-Card Verifier Tools
+</h2>
+<a name="wp9395"> </a><p class="pBody">
+The <code class="cCode">verifycap</code>, <code class="cCode">verifyexp</code>, and <code class="cCode">verifyrev</code>, off-card verifier tools share many of the same command line options. The only exception is the <code class="cCode">-package</code> option which is available for <code class="cCode">verifycap</code> only.
+</p>
+<a name="wp9473"> </a><p class="pBody">
+These options exhibit the same behavior regardless of the tool that calls them. </p><div align="left">
+<table border="0" cellpadding="7"   id="SummaryNotReq9262">
+  <caption><a name="wp9264"> </a><div class="pTableCaption">
+TABLE&#160;13&#160;&#160;&#8211;&#160;&#160;verifycap, verifyexp, verifyrev Command Line Options 
+</div>
+</caption>
+<thead>
+<tr  align="center">    <th  class="sun-verylightblue" scope="col"><a name="wp9268"> </a><div style="text-align: left" class="pTableHead">
+Option
+</div>
+
+</th>
+    <th  class="sun-verylightblue" scope="col"><a name="wp9270"> </a><div style="text-align: left" class="pTableHead">
+Description
+</div>
+
+</th>
+</tr>
+</thead>
+  <tr align="left">    <td><a name="wp9272"> </a><div class="pTableText">
+<code class="cCode">-help</code>
+</div>
+</td>
+    <td><a name="wp9274"> </a><div class="pTableText">
+Prints help message.
+</div>
+</td>
+</tr>
+  <tr align="left">    <td><a name="wp9276"> </a><div class="pTableText">
+<code class="cCode">-nobanner</code> 
+</div>
+</td>
+    <td><a name="wp9278"> </a><div class="pTableText">
+Suppresses banner message.
+</div>
+</td>
+</tr>
+  <tr align="left">    <td><a name="wp9280"> </a><div class="pTableText">
+<code class="cCode">-nowarn</code>
+</div>
+</td>
+    <td><a name="wp9282"> </a><div class="pTableText">
+Suppresses warning messages.
+</div>
+</td>
+</tr>
+  <tr align="left">    <td><a name="wp9284"> </a><div class="pTableText">
+<code class="cCode">-package</code> &lt;<em class="cEmphasis">package name</em>&gt; 
+</div>
+</td>
+    <td><a name="wp9286"> </a><div class="pTableText">
+<em class="cEmphasis">(Available for verifycap only) </em>Sets the name of the package to be verified.
+</div>
+</td>
+</tr>
+  <tr align="left">    <td><a name="wp9288"> </a><div class="pTableText">
+<code class="cCode">-verbose</code>
+</div>
+</td>
+    <td><a name="wp9290"> </a><div class="pTableText">
+Enables verbose mode.
+</div>
+</td>
+</tr>
+  <tr align="left">    <td><a name="wp9292"> </a><div class="pTableText">
+<code class="cCode">-version</code>   
+</div>
+</td>
+    <td><a name="wp9294"> </a><div class="pTableText">
+Prints version number and exit.
+</div>
+</td>
+</tr>
+<tr><td colspan="15"><hr class="pTableHr" /></td></tr>
+</table>
+</div>
+<p class="pBody">
+
+</p>
+<a name="wp9299"> </a><p class="pBody">
+
+</p>
+<a name="wp9300"> </a><p class="pBody">
+
+</p>
+
+    <p>&#160;</p>
+    <hr class="pHr" />
+
+    <table class="full-width" id="SummaryNotReq2">
+      <tr>
+        <td class="go-left">
+          <a accesskey="c" href="index.html">
+	    <img id="LongDescNotReq1" src="images/toc.gif" border="0"
+              alt="Contents" /></a>
+	  <a accesskey="p" href="cJDKviewexport.html">
+	    <img id="LongDescNotReq2" src="images/prev.gif" border="0"
+              alt="Previous" /></a>
+	  <a accesskey="n" href="cJDKcapgen.html">
+	    <img id="LongDescNotReq3" src="images/next.gif" border="0"
+              alt="Next" /></a>
+	  <a accesskey="i" href="cJDK_b_domIX.html">
+	    <img id="LongDescNotReq4" src="images/index.gif" border="0"
+              alt="Index" /></a>
+        </td>
+        <td class="go-right">
+          <span class="copyright">Development Kit User's Guide
+for the Binary Release with Cryptography Extensions <br /> Java Card Platform, Version 2.2.1</span>
+        </td>
+      </tr>
+    </table>
+
+    <p>&#160;</p>
+    
+<p class="copyright"><a 
+       href="copyright.html">Copyright</a> &#169; 2003 Sun Microsystems, Inc. 
+  All rights reserved.</p>	
+  </body>
+</html>

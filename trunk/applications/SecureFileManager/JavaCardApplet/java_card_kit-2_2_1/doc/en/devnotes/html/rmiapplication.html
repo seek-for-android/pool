@@ -1,0 +1,1012 @@
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
+    <meta http-equiv="Content-Style-Type" content="text/css" />
+    <meta name="GENERATOR" content="Quadralay WebWorks Publisher Professional Edition 7.0.5.1025" />
+    <meta name="TEMPLATEBASE" content="JCREspecTemplate" />
+    <meta name="LASTUPDATED" content="10/10/03 11:58:01" />
+    <title>Developing RMI Applications for the Java Card Platform</title>
+    <link rel="StyleSheet" href="document.css" type="text/css" />
+    <link rel="StyleSheet" href="catalog.css" type="text/css" />
+    <link rel="Table of Contents" href="index.html" />
+    <link rel="Previous" href="logchan.html" />
+    <link rel="Next" href="devnotesIX.html" />
+    <link rel="Index" href="devnotesIX.html" />
+  </head>
+
+  <body>
+
+    <table class="full-width" id="SummaryNotReq1">
+      <tr><td class="sun-darkblue">&#160;</td></tr>
+      <tr><td class="sun-lightblue">&#160;</td></tr>
+      <tr><td class="go-right">
+        <a accesskey="c" href="index.html">
+          <img id="LongDescNotReq1" src="images/toc.gif" border="0"
+            alt="Contents" /></a>
+	<a accesskey="p" href="logchan.html">
+	  <img id="LongDescNotReq2" src="images/prev.gif" border="0"
+            alt="Previous" /></a>
+        <a accesskey="n" href="devnotesIX.html">
+	  <img id="LongDescNotReq3" src="images/next.gif" border="0"
+            alt="Next" /></a>
+        <a accesskey="i" href="devnotesIX.html">
+	  <img id="LongDescNotReq4" src="images/index.gif" border="0"
+            alt="Index" /></a>
+        </td>
+      </tr>
+    </table>
+
+<a name="wp584649"> </a><h2 class="pChapNum">
+Chapter &#160; 3
+</h2>
+<a name="wp589681"> </a><h2 class="pTitle">
+Developing RMI Applications for the Java Card Platform
+</h2>
+<hr />
+<a name="wp592859"> </a><p class="pBody">
+This chapter describes how to write RMI applications for the Java Card platform. In this release, you can run and debug Java Card RMI applications in the C-language Java Card RE and the Java Card WDE. 
+</p>
+<a name="wp589682"> </a><h2 class="pHeading1">
+Steps for Developing an RMI Applet for the Java Card Platform
+</h2>
+<a name="wp592970"> </a><p class="pBody">
+The main steps for developing an RMI applet for the Java Card platform include:
+</p>
+<ul class="pBullet1"><a name="wp592971"> </a><div class="pBullet1"><li>Define remote interface(s)</li></div>
+<a name="wp592972"> </a><div class="pBullet1Plus"><li>Develop class(es), implementing the remote interface(s)</li></div>
+<a name="wp592973"> </a><div class="pBullet1Last"><li>Develop the <code class="cCode">main</code> class for the applet</li></div>
+</ul>
+<a name="wp592974"> </a><p class="pBody">
+For a simple applet, the main class of the applet could also be the class implementing the remote interface. 
+</p>
+<a name="wp592975"> </a><h3 class="pHeading2">
+Generating Stubs
+</h3>
+<a name="wp593278"> </a><p class="pBody">
+The Java Card RMI Client framework requires stubs only when the <code class="cCode">remote_ref_with_class</code> format is used for passing remote references. These stubs of remote classes of applets must be pre-generated and available on the client. When the <code class="cCode">remote_ref_with_interfaces</code> format is used, stubs are not necessary.
+</p>
+<a name="wp593279"> </a><p class="pBody">
+In this example, Sun Microsystems, Inc.&#8217;s standard RMI Compiler (<code class="cCode">rmic</code>) is used to generate these stubs.
+</p>
+<a name="wp592977"> </a><p class="pBody">
+The command line to run the <code class="cCode">rmic</code> is: 
+</p>
+<div class="pPreformatted"><pre class="pPreformatted">
+rmic -v1.2 -classpath &lt;<em class="cEmphasis">path</em>&gt; -d &lt;<em class="cEmphasis">output_dir</em>&gt; &lt;<em class="cEmphasis">class_name</em>&gt; <a name="wp592978"> </a>
+</pre></div>
+<a name="wp592979"> </a><p class="pBody">
+where:
+</p>
+<a name="wp592980"> </a><p class="pIndented1">
+<code class="cCode">&lt;</code><em class="cEmphasis">path</em><code class="cCode">&gt;</code> includes the path to the remote class 
+</p>
+<a name="wp592981"> </a><p class="pIndented1">
+<code class="cCode">&lt;</code><em class="cEmphasis">output_dir</em><code class="cCode">&gt;</code> is the directory in which to place the resulting stubs
+</p>
+<a name="wp592982"> </a><p class="pIndented1">
+<code class="cCode">&lt;</code><em class="cEmphasis">class_name</em><code class="cCode">&gt;</code> is the name of the remote class
+</p>
+<a name="wp592983"> </a><p class="pIndented1">
+The <code class="cCode">-v1.2</code> flag is required by the RMI client framework for the Java Card platform.
+</p>
+<a name="wp592984"> </a><p class="pBody">
+The <code class="cCode">rmic</code> must be called for each remote class in your applet.
+</p>
+<hr class="pHr"/><div class="note">
+<a name="wp594278"> </a>
+<b>Note &#8211;</b>  Some versions of the <code class="cCode">rmic</code> do not generate stubs for remote classes which do not list remote interfaces in their <code class="cCode">implements</code> clause. If you encounter this situation, list at least one remote interface in the <code class="cCode">implements</code> clause for each remote class in your project. It is permissible for such a remote class to use a remote interface from a superclass.
+<hr class="pHr"/></div>
+<a name="wp592985"> </a><p class="pBody">
+The file <code class="cCode">javacardframework.jar</code> is provided in version 2.2.1 of the Development Kit for the Java Card platform (&#8220;Java Card Development Kit&#8221;). This jar file contains compiled implementations of packages <code class="cCode">javacard.framework</code>, <code class="cCode">javacard.framework.service</code>, and <code class="cCode">javacard.security</code>. Classes in these packages might be referenced by Java Card RMI applets and thus might be needed by the <code class="cCode">rmic</code> to generate stubs.
+</p>
+<a name="wp597085"> </a><h3 class="pHeading2">
+Running a Java Card RMI Applet
+</h3>
+<a name="wp597086"> </a><p class="pBody">
+The server part (that is, the Java Card RMI-enabled applet) can be run on both CREF and Java Card platform Workstation Development Environment (&#8220;Java Card WDE&#8221;).
+</p>
+<a name="wp597092"> </a><p class="pBody">
+To run the applet on CREF, the standard procedures apply: the applet must be installed first, using the installer applet. After the applet is installed, the EEPROM state can be saved and used to run CREF against the Java Card RMI client. 
+</p>
+<a name="wp597096"> </a><p class="pBody">
+The simplest way to run a Java Card RMI-enabled applet on the Java Card WDE is to add it to the WDE configuration file on the first line. This uses the fact that the Java Card WDE automatically installs the first applet on &#8220;power up&#8221;. The Java Card WDE is a very convenient environment to debug Java Card RMI applets. Of course, all of the standard limitations (such as absence of firewall support) apply.
+</p>
+<a name="wp592986"> </a><h3 class="pHeading2">
+Running the Java Card RMI Client Program
+</h3>
+<a name="wp592987"> </a><p class="pBody">
+The client program can be compiled using <code class="cCode">javac</code> or your favorite IDE. The compiler will require that the remote interfaces for your applet be present in your classpath.
+</p>
+<a name="wp592988"> </a><p class="pBody">
+Running the client program requires that:
+</p>
+<ul class="pBullet1"><a name="wp592989"> </a><div class="pBullet1"><li>OCF1.2 is installed on your workstation, and files <code class="cCode">base-core.jar</code> and <code class="cCode">base-opt.jar</code> must be present in the CLASSPATH.</li></div>
+<a name="wp592990"> </a><div class="pBullet1Plus"><li>the file <code class="cCode">opencard.properties</code> must be present in one of the directories specified in the OpenCard Framework 1.2 Programmers Guide.</li></div>
+<a name="wp592991"> </a><div class="pBullet1Plus"><li>the client framework file <code class="cCode">jcrmiclientframework.jar</code> must be present in the classpath. This file contains all the client framework and necessary classes from the card framework.</li></div>
+<a name="wp592992"> </a><div class="pBullet1Last"><li>the remote interfaces and stubs for your applet must be present in the classpath.</li></div>
+</ul>
+<a name="wp592993"> </a><p class="pBody">
+For a description of the <code class="cCode">opencard.properties</code> file, refer to OCF documentation. A sample <code class="cCode">opencard.properties</code> file is located in the <code class="cCode">samples/src/demo</code> directory Java Card Development Kit, version 2.2.1, and can be used without modification.
+</p>
+<a name="wp592994"> </a><p class="pBody">
+For a sample command line to run a client program, refer to the file <code class="cCode">rmidemo</code> or <code class="cCode">rmidemo.bat</code> in this directory.
+</p>
+<a name="wp604150"> </a><p class="pBody">
+The <code class="cCode">opencard.properties</code> file supplied in the <code class="cCode">samples/src/demo</code> directory configures the client to use the Java Card WDE or CREF. The RMI client can also use a TLP224-compliant card reader connected to a serial port.
+</p>
+<a name="wp604155"> </a><p class="pBody">
+To configure the client to use the card reader, change the <code class="cCode">OpenCard.terminals</code> line in the <code class="cCode">opencard.properties</code> file to the following:
+</p>
+<div class="pPreformatted"><pre class="pPreformatted">
+OpenCard.terminals =com.sun.javacard.comterminal.ComTerminalFactory|com|COM|&lt;<em class="cEmphasis">port#</em>&gt;<a name="wp604159"> </a>
+</pre></div>
+<a name="wp604148"> </a><p class="pBody">
+where <code class="cCode">&lt;</code><em class="cEmphasis">port#</em><code class="cCode">&gt;</code> is the name of the serial port, such as <code class="cCode">COM1</code>.
+</p>
+<a name="wp592967"> </a><h2 class="pHeading1">
+Basic Example
+</h2>
+<a name="wp570065"> </a><p class="pBody">
+The basic example that we will use is the Java Card platform equivalent of &#8220;Hello World&#8221;, which is a program that manages a counter remotely, and is able to decrement the value of the counter, increment the value of the counter, and return the value of the counter.
+</p>
+<a name="wp570069"> </a><h3 class="pHeading2">
+The Main Program
+</h3>
+<a name="wp570071"> </a><p class="pBody">
+As for any Java Card RMI program, the first thing that we need to do is to define the interface that will be used as contract between the server (that is, the Java Card technology-based application) and its clients (that is, the terminal applications):
+</p>
+<div class="pPreformatted"><pre class="pPreformatted">
+package examples.purse ;<a name="wp584829"> </a>
+import java.rmi.* ;<a name="wp584651"> </a>
+import javacard.framework.* ;<a name="wp592607"> </a>
+public interface Purse extends Remote {<a name="wp587016"> </a>
+&#160;&#160;public static final short MAX_AMOUNT = 400 ;<a name="wp587017"> </a>
+&#160;&#160;public static final short REQUEST_FAILED = 0x0102 ;<a name="wp588839"> </a>
+&#160;&#160;public short debit(short amount) throws RemoteException, UserException;<a name="wp587018"> </a>
+&#160;&#160;public short credit(short amount) throws RemoteException,<a name="wp584654"> </a>
+&#160;&#160;&#160;&#160;&#160;&#160;UserException ;<a name="wp603074"> </a>
+&#160;&#160;public short getBalance() throws RemoteException, UserException ;<a name="wp584655"> </a>
+}<a name="wp570097"> </a>
+</pre></div>
+<a name="wp570101"> </a><p class="pBody">
+This interface is a typical Java Card RMI interface:
+</p>
+<ul class="pBullet1"><a name="wp570103"> </a><div class="pBullet1"><li>the interface type extends the <code class="cCode">java.rmi.Remote</code> interface. This interface is a tagging interface that identifies the interface as defining a remotely accessible object.</li></div>
+<a name="wp570105"> </a><div class="pBullet1Plus"><li>every method in the interface must be declared as throwing a <code class="cCode">RemoteException</code> or one of its superclasses (<code class="cCode">IOException</code> or <code class="cCode">Exception</code>). This exception is required in order to encapsulate all the communication problems that may occur during a remote invocation of the method. In addition the <code class="cCode">credit</code>, <code class="cCode">debit</code> and <code class="cCode">getBalance</code> methods also throw the <code class="cCode">UserException</code> to indicate application-specific errors.</li></div>
+<a name="wp570107"> </a><div class="pBullet1Last"><li>the interface may also define values for constants that may be used in the communication between the client and the server. The <code class="cCode">Purse</code> interface defines a constant <code class="cCode">MAX_AMOUNT</code> that represents the maximum allowed value for the transaction amount parameter. It also defines a reason code <code class="cCode">REQUEST_FAILED</code> for the <code class="cCode">UserException</code> qualifier.</li></div>
+</ul>
+<a name="wp592867"> </a><h5 class="pHeading4">
+Implement a Remote Interface
+</h5>
+<a name="wp584656"> </a><p class="pBody">
+The next step consists in providing an implementation for this interface. This implementation will run on a Java Card platform, and it therefore needs to use only features that are supported by a Java Card platform:
+</p>
+<div class="pPreformatted"><pre class="pPreformatted">
+package examples.purse ;<a name="wp595532"> </a>
+import javacard.framework.* ;<a name="wp595533"> </a>
+import javacard.framework.service.* ;<a name="wp595534"> </a>
+import java.rmi.* ;<a name="wp584830"> </a>
+public class PurseImpl extends CardRemoteObject implements Purse<a name="wp584659"> </a>
+{<a name="wp570127"> </a>
+&#160;&#160;private short balance ;<a name="wp570129"> </a>
+&#160;&#160;PurseImpl()<a name="wp584660"> </a>
+&#160;&#160;{<a name="wp570135"> </a>
+&#160;&#160;&#160;&#160;super() ;<a name="wp570137"> </a>
+&#160;&#160;&#160;&#160;balance = 0 ;<a name="wp592870"> </a>
+&#160;&#160;}<a name="wp570139"> </a>
+&#160;&#160;public short debit(short amount) throws RemoteException, UserException<a name="wp584661"> </a>
+&#160;&#160;{<a name="wp570145"> </a>
+&#160;&#160;&#160;&#160;if (( amount &lt; 0 )||( amount &gt; MAX_AMOUNT ))<a name="wp570147"> </a>
+&#160;&#160;&#160;&#160;&#160;&#160;UserException.throwIt(REQUEST_FAILED) ;<a name="wp570149"> </a>
+&#160;&#160;&#160;&#160;balance -= amount ;<a name="wp584662"> </a>
+&#160;&#160;&#160;&#160;return balance ;<a name="wp570155"> </a>
+&#160;&#160;}<a name="wp570157"> </a>
+&#160;&#160;public short credit(short amount) throws RemoteException, UserException<a name="wp584663"> </a>
+&#160;&#160;{<a name="wp570163"> </a>
+&#160;&#160;&#160;&#160;if (( amount &lt; 0 )||( balance &lt; amount ))<a name="wp570165"> </a>
+&#160;&#160;&#160;&#160;&#160;&#160;UserException.throwIt(REQUEST_FAILED) ;<a name="wp570167"> </a>
+&#160;&#160;&#160;&#160;balance -= amount ;<a name="wp584664"> </a>
+&#160;&#160;&#160;&#160;return balance ;<a name="wp570173"> </a>
+&#160;&#160;}<a name="wp570175"> </a>
+&#160;&#160;public short getBalance() throws RemoteException, UserException<a name="wp589267"> </a>
+&#160;&#160;{<a name="wp570181"> </a>
+&#160;&#160;&#160;&#160;return balance ;<a name="wp570183"> </a>
+&#160;&#160;}<a name="wp570185"> </a>
+}<a name="wp570191"> </a>
+</pre></div>
+<a name="wp586967"> </a><p class="pBody">
+Here, the remote interface is the <code class="cCode">Purse</code> interface, which declares the remotely accessible methods.  By implementing this interface, the class establishes a contract between itself and the compiler, by which the class promises that it will provide method bodies for all the methods declared in the interface:
+</p>
+<div class="pPreformatted"><pre class="pPreformatted">
+public class PurseImpl extends CardRemoteObject implements Purse<a name="wp584897"> </a>
+</pre></div>
+<a name="wp584668"> </a><p class="pBody">
+The class also extends the <code class="cCode">javacard.framework.service.CardRemoteObject</code> class. This class provides our class with basic support for remote objects, and in particular the ability to export and/or unexport an object.
+</p>
+<a name="wp570205"> </a><h5 class="pHeading4">
+Define the Constructor for the Remote Object
+</h5>
+<a name="wp570207"> </a><p class="pBody">
+The constructor for a remote class provides the same functionality as the constructor of a non-remote class: it initializes the variables of each newly created instance of the class.
+</p>
+<a name="wp570209"> </a><p class="pBody">
+In addition, the remote object instance will need to be &#8220;exported&#8221;. Exporting a remote object makes it available to accept incoming remote method requests. By extending <code class="cCode">CardRemoteObject</code>, a class guarantees that its instances are exported automatically upon creation on the card.
+</p>
+<a name="wp592823"> </a><p class="pBody">
+If a remote object does not extend <code class="cCode">CardRemoteObject</code> (directly or indirectly), you will need to explicitly export the remote object by calling the <code class="cCode">CardRemoteObject.export</code> method in the constructor of your class (or in any appropriate initialization method). Of course, this class must still implement a remote interface.
+</p>
+<a name="wp592830"> </a><p class="pBody">
+To review:
+</p>
+<a name="wp587011"> </a><p class="pBody">
+The implementation class for a remote object needs to:
+</p>
+<ul class="pBullet1"><a name="wp570229"> </a><div class="pBullet1"><li>implement a remote interface</li></div>
+<a name="wp570231"> </a><div class="pBullet1Last"><li>export the object so that it can accept incoming remote method calls</li></div>
+</ul>
+<a name="wp570233"> </a><h5 class="pHeading4">
+Provide an Implementation for Each Remote Method
+</h5>
+<a name="wp570235"> </a><p class="pBody">
+The implementation class for a remote object contains the code that implements each of the remote methods specified in the remote interface. For example, here is the implementation of the method that debits the purse:
+</p>
+<div class="pPreformatted"><pre class="pPreformatted">
+public short debit(short amount) throws RemoteException, UserException<a name="wp584927"> </a>
+&#160;&#160;<a name="wp570241"> </a>
+&#160;&#160;&#160;&#160;if (( amount &lt; 0 )||( balance &lt; amount )<a name="wp592617"> </a>
+&#160;&#160;&#160;&#160;&#160;&#160;UserException.throwIt(REQUEST_FAILED) ;<a name="wp592618"> </a>
+&#160;&#160;&#160;&#160;balance -= amount ;<a name="wp592619"> </a>
+&#160;&#160;&#160;&#160;return balance ;<a name="wp592620"> </a>
+&#160;&#160;}<a name="wp588887"> </a>
+</pre></div>
+<a name="wp584673"> </a><p class="pBody">
+An operation is only allowed if the value of its parameter is compatible with the current state of the purse object. In this particular case, the application only checks that the amounts handled are positive and that the balance of the purse always remains positive.
+</p>
+<a name="wp570259"> </a><p class="pBody">
+In Java Card RMI, the arguments to, and return values from, remote methods are restricted. The main reason for this limitation is that the Java Card platform does not support object serialization. The rules for the Java Card platform are:
+</p>
+<ul class="pBullet1"><a name="wp570262"> </a><div class="pBullet1"><li>the arguments to remote methods can be of any supported integral type (such as&#160;<code class="cCode">boolean</code>, <code class="cCode">byte</code>, <code class="cCode">short</code> and <code class="cCode">int</code>), or any single-dimensional arrays of these integral types. (Note: The <code class="cCode">int</code> type is optionally supported on the Java Card platform, so applications that use this type may not run on all platforms.)</li></div>
+<a name="wp570264"> </a><div class="pBullet1Last"><li>the return value from a remote method can be any type supported as arguments, as well as any remote interface type. The method can also return <code class="cCode">void</code>.</li></div>
+</ul>
+<a name="wp584674"> </a><p class="pBody">
+On the other hand, object passing in Java Card RMI follows the normal RMI rules:
+</p>
+<ul class="pBullet1"><a name="wp590186"> </a><div class="pBullet1"><li>by default, non-remote objects are passed by copy, which means that all data members of an object are copied, except those marked <code class="cCode">static</code> or <code class="cCode">transient</code>. In the case of the Java Card platform, this rule is trivial to apply, since the only objects concerned are arrays of integral types.</li></div>
+<a name="wp593343"> </a><div class="pBullet1Last"><li>remote objects are passed by reference. In the case of the Java Card platform, remote objects can only be passed as return values. A reference to a remote object is actually a reference to a stub, which is a client-side proxy for the remote objects. Stubs are needed only when the format <code class="cCode">remote_ref_with_class</code> is used for passing remote references. When another format, such as <code class="cCode">remote_ref_with_interfaces</code>, is used, stubs are not necessary. Stubs are described in <a  href="rmiapplication.html#wp570432"><span style="color: #3366CC">&quot;Generate the Stubs&quot; </span></a>.</li></div>
+</ul>
+<hr class="pHr"/><div class="note">
+<a name="wp588931"> </a>
+<b>Note &#8211;</b>  Even though the semantics of the Java Card platform transient arrays is somewhat similar to transient fields in the Java programming language, different rules apply; its contents are copied in Java Card RMI and passed by value when it is returned from a remote method.
+<hr class="pHr"/></div>
+<a name="wp588932"> </a><p class="pBody">
+A class can define methods not specified in a remote interface, but they can only be invoked on-card within the Java Card VM and cannot be invoked remotely.
+</p>
+<a name="wp570280"> </a><h3 class="pHeading2">
+Building an Applet
+</h3>
+<a name="wp593418"> </a><p class="pBody">
+In version 2.2.1 of the Java Card platform (as in version 2.1), all applications must include a class that inherits from <code class="cCode">javacard.framework.Applet</code>, which will provide an interface with the outside world. This also applies to applications which are based on remote objects, for two main reasons:
+</p>
+<ul class="pBullet1"><a name="wp570284"> </a><div class="pBullet1"><li>the remote objects need to be instantiated and initialized, which can be done in an applet&#8217;s <code class="cCode">install</code> method.</li></div>
+<a name="wp570286"> </a><div class="pBullet1Last"><li>the remote objects need to communicate with the outside world, which can be done in an applet&#8217;s <code class="cCode">process</code> method.</li></div>
+</ul>
+<a name="wp594512"> </a><p class="pBody">
+For conversion, an applet should be assigned with an AID known on the client side. 
+</p>
+<a name="wp584675"> </a><p class="pBody">
+This is the basic code for such an applet:
+</p>
+<div class="pPreformatted"><pre class="pPreformatted">
+package examples.purse ;<a name="wp584963"> </a>
+import javacard.framework.* ;<a name="wp592645"> </a>
+import javacard.framework.service.* ;<a name="wp570296"> </a>
+import java.rmi.*;<a name="wp570298"> </a>
+public class PurseApplet extends Applet<a name="wp584677"> </a>
+{<a name="wp570304"> </a>
+&#160;&#160;private Dispatcher dispatcher ;<a name="wp570306"> </a>
+&#160;&#160;private PurseApplet()<a name="wp584678"> </a>
+&#160;&#160;{<a name="wp570314"> </a>
+&#160;&#160;&#160;&#160;// Allocates an RMI service and sets for the Java Card platform<a name="wp570316"> </a>
+&#160;&#160;&#160;&#160;// the initial reference<a name="wp597503"> </a>
+&#160;&#160;&#160;&#160;RemoteService rmi = new RMIService( new PurseImpl() ) ;<a name="wp570318"> </a>
+&#160;&#160;&#160;&#160;// Allocates a dispatcher for the remote service<a name="wp584679"> </a>
+&#160;&#160;&#160;&#160;dispatcher = new Dispatcher((short)1) ;<a name="wp570326"> </a>
+&#160;&#160;&#160;&#160;dispatcher.addService(rmi, Dispatcher.PROCESS_COMMAND) ;<a name="wp570328"> </a>
+&#160;&#160;}<a name="wp570334"> </a>
+&#160;&#160;public static void install(byte[] buffer, short offset, byte length)<a name="wp584680"> </a>
+&#160;&#160;{<a name="wp570340"> </a>
+&#160;&#160;&#160;&#160;// Allocates and registers the applet<a name="wp588951"> </a>
+&#160;&#160;&#160;&#160;(new PurseApplet()).register() ;<a name="wp588952"> </a>
+&#160;&#160;}<a name="wp588953"> </a>
+&#160;&#160;public void process(APDU apdu)<a name="wp584681"> </a>
+&#160;&#160;{<a name="wp570352"> </a>
+&#160;&#160;&#160;&#160;dispatcher.process(apdu) ;<a name="wp570354"> </a>
+&#160;&#160;}<a name="wp584969"> </a>
+}<a name="wp584970"> </a>
+</pre></div>
+<a name="wp570362"> </a><h5 class="pHeading4">
+Preparing and Registering the Remote Object
+</h5>
+<a name="wp570364"> </a><p class="pBody">
+The <code class="cCode">PurseApplet</code> constructor contains the initialization code for the remote object. First, a <code class="cCode">javacard.framework.service.RMIService</code> object needs to be allocated. This service is an object that knows how to handle all the incoming APDU commands related to the Java Card RMI protocol. The service needs to be initialized to allow remote methods on an instance of the <code class="cCode">PurseImpl</code> class. A new instance of <code class="cCode">PurseImpl</code> is created, and is specified as the initial reference parameter to the <code class="cCode">RMIService</code> constructor as shown in the code snippet below. The initial reference is the reference that is made public by an applet to all its clients. It is used as a bootstrap for a client session, and is similar to that registered by a Java RMI server to the Java Card RMI registry.
+</p>
+<div class="pPreformatted"><pre class="pPreformatted">
+RemoteService rmi = new RMIService( new PurseImpl() ) ;<a name="wp588802"> </a>
+</pre></div>
+<a name="wp584685"> </a><p class="pBody">
+Then, a dispatcher is created and initialized. A dispatcher is the glue amongst several services. In our example, the initialization is quite simple, since there is a single service to initialize:
+</p>
+<div class="pPreformatted"><pre class="pPreformatted">
+dispatcher = new Dispatcher((short)1) ;<a name="wp585009"> </a>
+dispatcher.addService(rmi, Dispatcher.PROCESS_COMMAND) ;<a name="wp570386"> </a>
+</pre></div>
+<a name="wp584687"> </a><p class="pBody">
+Finally, the applet needs to register itself to the Java Card RE, to be made selectable. This is done in the <code class="cCode">install</code> method, where the applet constructor is invoked and immediately registered:
+</p>
+<div class="pPreformatted"><pre class="pPreformatted">
+(new PurseApplet()).register() ;<a name="wp585026"> </a>
+</pre></div>
+<a name="wp584689"> </a><h5 class="pHeading4">
+Processing the Incoming Commands
+</h5>
+<a name="wp570400"> </a><p class="pBody">
+The processing of the incoming commands is entirely delegated to the Java Card RMI service, which knows how to handle all the incoming requests. The service will also implement a default behavior for the handling of any request that it does not recognize. In Java Card RMI, there are two kinds of requests that can be handled:
+</p>
+<ul class="pBullet1"><a name="wp570402"> </a><div class="pBullet1"><li>a selection request, to which the service responds by sending its initial remote reference.</li></div>
+<a name="wp570404"> </a><div class="pBullet1Last"><li>a method invocation request, to which the service responds by performing the actual method invocation and returning the result.</li></div>
+</ul>
+<a name="wp584690"> </a><p class="pBody">
+To perform these actions, the service will need privileged access to some resources that are owned by the Java Card RE (in particular to perform the method invocation). The applet delegates processing to the Java Card RMI service from its process method as follows:
+</p>
+<div class="pPreformatted"><pre class="pPreformatted">
+dispatcher.process(apdu) ;<a name="wp586000"> </a>
+</pre></div>
+<a name="wp584692"> </a><p class="pBody">
+This corresponds to the simplest case, in which the handling of commands is entirely delegated to the dispatcher. 
+</p>
+<a name="wp570420"> </a><h3 class="pHeading2">
+Writing a Client
+</h3>
+<a name="wp587198"> </a><p class="pBody">
+The client application runs on a terminal supporting a Java Virtual machine environment such as J2SE or J2ME.
+</p>
+<a name="wp587202"> </a><p class="pBody">
+The <code class="cCode">PurseClient</code> application interacts with the remote stub classes generated by a stub generation tool and the Java Card platform-specific information managed by the Java Card platform client-side framework <code class="cCode">com.sun.javacard.javax.smartcard.rmiclient</code> package. <code class="cCode"> </code> 
+</p>
+<a name="wp588976"> </a><p class="pBody">
+The example we describe here uses standard Java RMIC compiler generated client side stubs. The client application as well as the Java Card client-side framework rely on the Open Card Framework (OCF) for managing and communicating with the card reader and the card on which the Java Card technology-based applet (&#8220;Java Card applet&#8221;) <code class="cCode">PurseApplet</code> resides. This makes the client application very portable on J2SE platforms.
+</p>
+<a name="wp592464"> </a><p class="pBody">
+The OCF can be downloaded from the OCF Web site:
+</p>
+<a name="wp595579"> </a><p class="pBody">
+<a  href="http://www.opencard.org/index-downloads.html">http://www.opencard.org/index-downloads.html</a>
+</p>
+<a name="wp587221"> </a><p class="pBody">
+The following shows a very simple <code class="cCode">PurseClient</code> application which is the client application of the Java Card technology-based program <code class="cCode">PurseApplet</code>:
+</p>
+<div class="pPreformatted"><pre class="pPreformatted">
+import opencard.core.service.* ;<a name="wp587234"> </a>
+import examples.purse.* ;<a name="wp587235"> </a>
+import com.sun.javacard.javax.smartcard.rmiclient.* ;<a name="wp592657"> </a>
+import com.sun.javacard.ocfrmiclientimpl.* ;<a name="wp592658"> </a>
+import javacard.framework.UserException ;<a name="wp593359"> </a>
+<a name="wp592655"> </a>
+&#160;&#160;public class PurseClient extends java.lang.Object {<a name="wp587242"> </a>
+<a name="wp587243"> </a>
+&#160;&#160;&#160;&#160;/** Creates new PurseClient */<a name="wp587244"> </a>
+&#160;&#160;&#160;&#160;public PurseClient() {<a name="wp587245"> </a>
+&#160;&#160;&#160;&#160;}<a name="wp587246"> </a>
+&#160;&#160;&#160;&#160;public static void main(java.lang.String[] argv) {<a name="wp587248"> </a>
+        <a name="wp587249"> </a>
+&#160;&#160;&#160;&#160;&#160;&#160;// arg[0] contains the debit amount<a name="wp587250"> </a>
+&#160;&#160;&#160;&#160;&#160;&#160;short debitAmount = (short) Integer.parseInt(argv[0]) ;   <a name="wp587251"> </a>
+&#160;&#160;&#160;&#160;&#160;&#160;try {<a name="wp587253"> </a>
+&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;// initialize OCF<a name="wp587255"> </a>
+&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;SmartCard.start() ;<a name="wp587256"> </a>
+&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;// wait for a smartcard<a name="wp587258"> </a>
+&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;CardRequest cr = new CardRequest (CardRequest.NEWCARD,<a name="wp587259"> </a>
+&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;null,OCFCardAccessor.class);<a name="wp598554"> </a>
+&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;SmartCard myCard = SmartCard.waitForCard ( cr ) ;<a name="wp603881"> </a>
+&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;// obtain an RMI Card Accessor CardService for the <a name="wp603882"> </a>
+&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;// Java Card platform<a name="wp603896"> </a>
+&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;CardAccessor myCS = (CardAccessor)<a name="wp603883"> </a>
+&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;myCard.getCardService(OCFCardAccessor.class, true) ;<a name="wp597919"> </a>
+&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;// create an RMI connector instance for the Java Card platform<a name="wp587265"> </a>
+&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;JavaCardRMIConnect jcRMI = new JavaCardRMIConnect( myCS ) ;<a name="wp587266"> </a>
+&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;// select the Java Card applet<a name="wp589005"> </a>
+&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;byte[] appAID = new byte[] {0x01,0x02,0x03,0x04,0x05,0x06,0x07, 0x08};    <a name="wp587271"> </a>
+&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;jcRMI.selectApplet( appAID ) ;<a name="wp587272"> </a>
+&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;// obtain the initial reference to the Purse interface<a name="wp587274"> </a>
+&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;Purse myPurse = (Purse) jcRMI.getInitialReference() ;<a name="wp587275"> </a>
+&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;// debit the requested amount<a name="wp587277"> </a>
+&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;try {<a name="wp587278"> </a>
+&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;short balance = myPurse.debit ( debitAmount ) ;<a name="wp587279"> </a>
+&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;}catch ( UserException jce ) {<a name="wp587280"> </a>
+&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;short reasonCode = jce.getReason() ;<a name="wp587281"> </a>
+&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;// process UserException reason information<a name="wp589154"> </a>
+&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;} <a name="wp587285"> </a>
+&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;// display the balance to user<a name="wp587287"> </a>
+&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;}catch (Exception e) {<a name="wp587290"> </a>
+&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;e.printStackTrace() ;<a name="wp587291"> </a>
+&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;} finally {<a name="wp587292"> </a>
+&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;try {<a name="wp587293"> </a>
+&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;SmartCard.shutdown() ;<a name="wp587294"> </a>
+&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;}catch (Exception e) {<a name="wp587295"> </a>
+&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;e.printStackTrace() ;<a name="wp587296"> </a>
+&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;}<a name="wp587297"> </a>
+&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;}<a name="wp587298"> </a>
+&#160;&#160;&#160;&#160;}<a name="wp587299"> </a>
+} <a name="wp587231"> </a>
+</pre></div>
+<a name="wp570422"> </a><h5 class="pHeading4">
+Initializing and Shutting Down OCF
+</h5>
+<a name="wp587449"> </a><p class="pBody">
+The client application needs to initialize the OCF classes on the terminal. The following code shows this as well as how it is shut down:
+</p>
+<div class="pPreformatted"><pre class="pPreformatted">
+try {<a name="wp587456"> </a>
+&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;// initialize OCF<a name="wp587457"> </a>
+&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;SmartCard.start() ;<a name="wp587458"> </a>
+              <a name="wp587461"> </a>
+&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;// the main client work is performed here<a name="wp587462"> </a>
+&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;// ...<a name="wp587476"> </a>
+}catch (Exception e) {<a name="wp587465"> </a>
+&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;e.printStackTrace() ;<a name="wp587466"> </a>
+} finally {<a name="wp587467"> </a>
+&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;try{<a name="wp587468"> </a>
+&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;SmartCard.shutdown() ;<a name="wp587469"> </a>
+&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;}catch (Exception e) {<a name="wp592673"> </a>
+&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160; e.printStackTrace() ;<a name="wp592674"> </a>
+&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;}<a name="wp592675"> </a>
+&#160;&#160;&#160;&#160;}<a name="wp587493"> </a>
+</pre></div>
+<a name="wp587508"> </a><h5 class="pHeading4">
+Obtaining and Using the OCFCardAccessor Object
+</h5>
+<a name="wp587605"> </a><p class="pBody">
+To access the Java Card applet using remote methods, the client application needs to obtain an instance of the <code class="cCode">CardAccessor</code> interface. The <code class="cCode">OCFCardAccessor</code> class implements the <code class="cCode">CardAccessor</code> interface and is an OCF card service.
+</p>
+<a name="wp590627"> </a><p class="pBody">
+The code below shows how the client interacts with the OCF services. Note that the client specifies that it is requesting a <code class="cCode">SmartCard</code> object on any newly inserted card which supports the <code class="cCode">OCFCardAccessor</code> class:
+</p>
+<div class="pPreformatted"><pre class="pPreformatted">
+// wait for a smartcard<a name="wp590629"> </a>
+CardRequest cr = new CardRequest <a name="wp590630"> </a>
+&#160;&#160;&#160;&#160;(CardRequest.NEWCARD,null,<code class="cCode">OCFCardAccessor</code>.class) ;<a name="wp598848"> </a>
+&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;SmartCard myCard = SmartCard.waitForCard ( cr ) ;<a name="wp587552"> </a>
+<a name="wp587566"> </a>
+// obtain a Java Card API Accessor for OCF<a name="wp587553"> </a>
+<code class="cCode">CardAccessor</code> myCS = (<code class="cCode">CardAccessor</code>)<a name="wp587554"> </a>
+&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;myCard.getCardService(<code class="cCode">OCFCardAccessor</code>.class, true) ;<a name="wp587555"> </a>
+</pre></div>
+<a name="wp587613"> </a><p class="pBody">
+The <code class="cCode">CardAccessor</code> interface is a platform and framework independent interface which is used by the RMI framework for the Java Card platform to communicate with the card. The <code class="cCode">CardAccessor</code> object is then provided as a parameter during construction of the <code class="cCode">JavaCardRMIConnect</code> class to initiate an RMI dialogue for the Java Card platform as shown below:
+</p>
+<div class="pPreformatted"><pre class="pPreformatted">
+// create an RMI connection object for the Java Card platform<a name="wp589088"> </a>
+JavaCardRMIConnect jcRMI = new JavaCardRMIConnect( myCS ) ; <a name="wp589089"> </a>
+</pre></div>
+<a name="wp587628"> </a><h5 class="pHeading4">
+Selecting the Java Card Applet and Obtaining the Initial Reference
+</h5>
+<a name="wp587642"> </a><p class="pBody">
+In order to invoke methods on the remote objects of the Java Card applet <code class="cCode">PurseApplet</code> on the card it must first be selected using the AID:
+</p>
+<div class="pPreformatted"><pre class="pPreformatted">
+// select the Java Card applet<a name="wp587659"> </a>
+&#160;&#160;byte[] appAID = new byte[] {0x01,0x02,0x03,0x04,0x05,0x06,0x07, 0x08} ;<a name="wp587655"> </a>
+&#160;&#160;jcRMI.selectApplet( appAID ) ;<a name="wp587656"> </a>
+</pre></div>
+<a name="wp587660"> </a><p class="pBody">
+Then, the client needs to obtain the initial reference remote object for <code class="cCode">PurseApplet</code>. <code class="cCode">JavaCardRMIConnect</code> returns an instance of a stub class corresponding to the <code class="cCode">PurseImpl</code> class on the card which implements the <code class="cCode">Purse</code> interface. The client application knows beforehand that the <code class="cCode">PurseApplet</code>&#8217;s initial remote reference implements the <code class="cCode">Purse</code> interface and therefore casts it appropriately: 
+</p>
+<div class="pPreformatted"><pre class="pPreformatted">
+// obtain the initial reference to the Purse interface<a name="wp587650"> </a>
+Purse myPurse = (Purse) jcRMI.getInitialReference() ;<a name="wp587643"> </a>
+</pre></div>
+<a name="wp587689"> </a><h5 class="pHeading4">
+Using Remote Objects in Remote Method Invocations
+</h5>
+<a name="wp587699"> </a><p class="pBody">
+The client can now invoke remote methods on the initial reference object. The remote methods are declared in the <code class="cCode">Purse</code> interface. The code below shows the client invoking the <code class="cCode">debit</code> method. Note how an <code class="cCode">UserException</code> exception thrown by the remote method is caught by the client code in a normal Java program style.
+</p>
+<div class="pPreformatted"><pre class="pPreformatted">
+// debit the requested amount<a name="wp587726"> </a>
+try {<a name="wp587716"> </a>
+&#160;&#160;&#160;&#160;short balance = myPurse.debit ( debitAmount ) ;<a name="wp587717"> </a>
+&#160;&#160;&#160;&#160;}catch ( UserException jce ) {<a name="wp598890"> </a>
+&#160;&#160;&#160;&#160;short reasonCode = jce.getReason() ;<a name="wp598891"> </a>
+&#160;&#160;&#160;&#160;// process on card exception reason information<a name="wp598892"> </a>
+}<a name="wp587713"> </a>
+</pre></div>
+<a name="wp570432"> </a><h5 class="pHeading4">
+Generate the Stubs
+</h5>
+<a name="wp587763"> </a><p class="pBody">
+The client side scenario outlined above uses RMIC generated stubs for the remote classes. RMIC is the Java RMI stub compiler. For the client application <code class="cCode">PurseClient</code> to execute correctly on the terminal, it needs these remote stub classes and the remote interface class files it uses to be accessible in its classpath.
+</p>
+<a name="wp587775"> </a><p class="pBody">
+The stub class <code class="cCode">PurseImpl_Stub.class</code> for the <code class="cCode">PurseImpl</code> class is produced by running the standard JDK1.2 or JDK1.3 RMIC compiler. For example, when in the <code class="cCode">examples/purse</code> directory, enter:
+</p>
+<a name="wp593364"> </a><p class="pBody">
+<em class="cEmphasis">Solaris and Linux platforms</em>:
+</p>
+<div class="pPreformatted"><pre class="pPreformatted">
+rmic -classpath ../..;$JC_HOME/lib/javacardframework.jar -d ../.. -v1.2 examples.purse.PurseImpl<a name="wp593367"> </a>
+</pre></div>
+<a name="wp593370"> </a><p class="pBody">
+<em class="cEmphasis">Microsoft Windows 2000 platform</em>:
+</p>
+<div class="pPreformatted"><pre class="pPreformatted">
+rmic -classpath ../..;%JC_HOME%/lib/javacardframework.jar -d ../.. -v1.2 examples.purse.PurseImpl<a name="wp593373"> </a>
+</pre></div>
+<a name="wp587760"> </a><p class="pBody">
+This produces a stub class called <code class="cCode">examples.purse.PurseImpl_Stub</code>.
+</p>
+<a name="wp587792"> </a><p class="pBody">
+Thus, for <code class="cCode">PurseClient</code> to run correctly on the terminal, the following files must be present in the <code class="cCode">examples/purse</code> directory and accessible via its classpath or from class loaders:
+</p>
+<div class="pPreformatted"><pre class="pPreformatted">
+PurseImpl_Stub.class<a name="wp587793"> </a>
+Purse.class<a name="wp587794"> </a>
+</pre></div>
+<a name="wp587808"> </a><h3 class="pHeading2">
+Card Terminal Interaction
+</h3>
+<a name="wp587849"> </a><p class="pBody">
+When a Java Card technology-enabled smartcard is first inserted into the card reader, the card sends an ATR (Answer to Reset) to the terminal. The Open Card Framework uses this to help locate the Card Service which may be suitable. In our case, the <code class="cCode">OCFCardAccessorFactory</code>, which has been previously registered with OCF, responds with <code class="cCode">OCFCardAccessor</code> support. <a  href="rmiapplication.html#wp603087">FIGURE&#160;1</a> illustrates this schematically.
+</p>
+<a name="wp595463"> </a><p class="pBody">
+<img src="images/rmiapplicationa.gif" height="49" width="465" alt="This figure is described in the text." border="0" hspace="0" vspace="0"/>
+</p>
+<a name="wp603087"> </a><div class="pFigureCaption">
+FIGURE&#160;1&#160;&#160;&#8211;&#160;&#160;Smart card sends an ATR to the terminal
+<br /><br />
+</div><a name="wp588567"> </a><p class="pBody">
+When the <code class="cCode">PurseClient</code> application calls the <code class="cCode">selectApplet</code> method of <code class="cCode">JavaCardRMIConnect</code>, it sends a SELECT APDU Command to the card via the <code class="cCode">OCFCardAccessor</code> object. This results in a File Control Information (FCI) APDU response from the <code class="cCode">RMIService</code> instance of <code class="cCode">PurseApplet</code> on the card in a TLV (Tag Length Value) format which includes the initial reference remote object information. <a  href="rmiapplication.html#wp603096">FIGURE&#160;2</a> illustrates this schematically.
+</p>
+<a name="wp595475"> </a><p class="pBody">
+<img src="images/rmiapplication2.gif" height="74" width="480" alt="This figure is described in the text." border="0" hspace="0" vspace="0"/>
+</p>
+<a name="wp603096"> </a><div class="pFigureCaption">
+FIGURE&#160;2&#160;&#160;&#8211;&#160;&#160;Terminal sends a SELECT command to the smart card. The card returns an FCI to the terminal
+<br /><br />
+</div><a name="wp587835"> </a><p class="pBody">
+Later, when the <code class="cCode">PurseClient</code> application calls the <code class="cCode">debit</code> method of the remote interface <code class="cCode">Purse</code>, the <code class="cCode">PurseImpl_Stub</code> object sends an invoke command to the card via the <code class="cCode">OCFCardAccessor</code> object, identifying the remote object reference, interface, method and parameter data for method invocation. The <code class="cCode">RMIService</code> instance of <code class="cCode">PurseApplet</code> unmarshalls this information and invokes the <code class="cCode">debit</code> method of the <code class="cCode">PurseImpl</code> instance and returns the return value in the response APDU. <a  href="rmiapplication.html#wp603114">FIGURE&#160;3</a> illustrates this schematically.
+</p>
+<a name="wp603111"> </a><p class="pBody">
+<img src="images/rmiapplication3.gif" height="65" width="481" alt="This figure is described in the text." border="0" hspace="0" vspace="0"/>
+</p>
+<a name="wp603114"> </a><div class="pFigureCaption">
+FIGURE&#160;3&#160;&#160;&#8211;&#160;&#160;Terminal sends an INVOKE command to the smart card. The card returns a value to the terminal.
+<br /><br />
+</div><a name="wp587950"> </a><h2 class="pHeading1">
+Adding Security
+</h2>
+<a name="wp604594"> </a><p class="pBody">
+This first example is extremely simple and is not realistic. In particular, it does not include any kind of security. Users are not authenticated, and no transport security is provided. Of course, every smart card that implements the Java Card platform will include such security mechanisms, since they are central to Java Card technology.
+</p>
+<a name="wp570448"> </a><p class="pBody">
+In the following section, you will see how to add security support to the <code class="cCode">Purse</code> example.
+</p>
+<a name="wp570454"> </a><p class="pBody">
+The <code class="cCode">Purse</code> interface in the package <code class="cCode">examples.securepurse</code> is similar to the <code class="cCode">Purse</code> interface in the previous code sample. In addition, it might include reason codes for exceptions to report security violations to the terminal. It should be replaced with <code class="cCode">examples.securepurse</code>. The interface does not include any implementation, which means that, in particular, it does not include any support for security.
+</p>
+<div class="pPreformatted"><pre class="pPreformatted">
+package examples.securepurse ;<a name="wp585053"> </a>
+import javacard.framework.* ;<a name="wp584694"> </a>
+import javacard.framework.service.* ;<a name="wp570464"> </a>
+import java.rmi.* ;<a name="wp570466"> </a>
+public class SecurePurseImpl implements Purse<a name="wp584695"> </a>
+{<a name="wp570472"> </a>
+&#160;&#160;private short balance ;<a name="wp570474"> </a>
+&#160;&#160;private SecurityService security ;<a name="wp584696"> </a>
+&#160;&#160;SecurePurseImpl(SecurityService security)<a name="wp584697"> </a>
+&#160;&#160;{<a name="wp570484"> </a>
+&#160;&#160;&#160;&#160;this.security = security ;<a name="wp570486"> </a>
+&#160;&#160;}<a name="wp570488"> </a>
+<a name="wp587115"> </a>
+public short debit(short amount) throws RemoteException, UserException<a name="wp584698"> </a>
+&#160;&#160;{<a name="wp570494"> </a>
+&#160;&#160;if<a name="wp589212"> </a>
+&#160;&#160;((!security.isCommandSecure(SecurityService.PROPERTY_INPUT_INTEGRITY))<a name="wp592710"> </a>
+&#160;&#160;||<a name="wp592711"> </a>
+&#160;&#160;(!security.isAuthenticated(SecurityService.PRINCIPAL_CARDHOLDER)))<a name="wp592713"> </a>
+&#160;&#160;&#160;&#160;UserException.throwIt(REQUEST_FAILED) ;<a name="wp589214"> </a>
+&#160;&#160;&#160;&#160;if (( amount &lt; 0 )|| ( balance &lt; amount ))<a name="wp584699"> </a>
+&#160;&#160;&#160;&#160;&#160;&#160;UserException.throwIt(REQUEST_FAILED) ;<a name="wp570506"> </a>
+&#160;&#160;&#160;&#160;balance -= amount ;<a name="wp584700"> </a>
+&#160;&#160;&#160;&#160;return balance ;<a name="wp570512"> </a>
+&#160;&#160;}<a name="wp587121"> </a>
+<a name="wp587126"> </a>
+public short credit(short amount) throws RemoteException, UserException<a name="wp587122"> </a>
+&#160;&#160;{<a name="wp587123"> </a>
+&#160;&#160;&#160;&#160;if<a name="wp570522"> </a>
+&#160;&#160;&#160;&#160;((!security.isCommandSecure(SecurityService.PROPERTY_INPUT_INTEGRITY))<a name="wp592734"> </a>
+&#160;&#160;&#160;&#160;||<a name="wp592717"> </a>
+&#160;&#160;&#160;&#160;(!security.isAuthenticated(SecurityService.PRINCIPAL_APP_PROVIDER)))<a name="wp599083"> </a>
+&#160;&#160;&#160;&#160;&#160;&#160;UserException.throwIt(REQUEST_FAILED) ;<a name="wp589226"> </a>
+&#160;&#160;&#160;&#160;if (( amount &lt; 0 )||( amount &gt; MAX_AMOUNT ))<a name="wp589257"> </a>
+&#160;&#160;&#160;&#160;&#160;&#160;UserException.throwIt(REQUEST_FAILED) ;<a name="wp589258"> </a>
+&#160;&#160;&#160;&#160;balance += amount ;<a name="wp589259"> </a>
+&#160;&#160;&#160;&#160;return balance ;<a name="wp570538"> </a>
+&#160;&#160;}<a name="wp570540"> </a>
+<a name="wp587127"> </a>
+public short getBalance() throws RemoteException, UserException<a name="wp584704"> </a>
+&#160;&#160;{<a name="wp570546"> </a>
+&#160;&#160;&#160;&#160;if ((!security. isAuthenticated(SecurityService.PRINCIPAL_CARDHOLDER)) <a name="wp570548"> </a>
+&#160;&#160;&#160;&#160;&amp;&amp;<a name="wp599185"> </a>
+&#160;&#160;&#160;&#160;(!security.isAuthenticated(SecurityService.PRINCIPAL_APP_PROVIDER)))<a name="wp599186"> </a>
+&#160;&#160;&#160;&#160;&#160;&#160;UserException.throwIt(REQUEST_FAILED) ;<a name="wp599187"> </a>
+&#160;&#160;&#160;&#160;return balance ;<a name="wp584705"> </a>
+&#160;&#160;}<a name="wp570558"> </a>
+}<a name="wp570564"> </a>
+</pre></div>
+<a name="wp584706"> </a><p class="pBody">
+The applet keeps its original organization, but it also includes additional code that is dedicated to the management of security.
+</p>
+<a name="wp570566"> </a><h5 class="pHeading4">
+Initialize a Security Service
+</h5>
+<a name="wp570568"> </a><p class="pBody">
+In this example, basic security services (principal identification and authentication, secure communication channel) are provided by an object that implements the <code class="cCode">SecurityService</code> interface. Since a generic remote object should not be dependent on a particular kind of security service, it should take a reference to this object as a parameter to its constructor. This is exactly what happens here, where the reference to the object is stored in a dedicated private field:
+</p>
+<div class="pPreformatted"><pre class="pPreformatted">
+private SecurityService security ;<a name="wp585060"> </a>
+</pre></div>
+<a name="wp584708"> </a><p class="pBody">
+The <code class="cCode">SecurityService</code> interface is part of the extended application development framework and offers an API that can then be used to check on the current security status.
+</p>
+<a name="wp570578"> </a><h5 class="pHeading4">
+Use the Service to Check the Current Security Status
+</h5>
+<a name="wp570580"> </a><p class="pBody">
+In the example, this required security behavior for the applet is assumed:
+</p>
+<ul class="pBullet1"><a name="wp570582"> </a><div class="pBullet1"><li>the <code class="cCode">debit</code> method should only be authorized if it is sent through a secure channel that ensures at least the integrity of input data, and if the cardholder has been successfully authenticated.</li></div>
+<a name="wp570584"> </a><div class="pBullet1Plus"><li>the <code class="cCode">credit</code> method should only be authorized if it is sent through a secure channel that ensures at least the integrity of input data, and if the application issuer has been successfully authenticated.</li></div>
+<a name="wp570586"> </a><div class="pBullet1Last"><li>the <code class="cCode">getBalance</code> method should only be authorized if the cardholder or the application issuer has been successfully authenticated.</li></div>
+</ul>
+<a name="wp584709"> </a><p class="pBody">
+The <code class="cCode">SecurityService</code> provides methods and constants that allow the implementation to perform such checks. For instance, the code for the checks on the <code class="cCode">debit</code> method is:
+</p>
+<div class="pPreformatted"><pre class="pPreformatted">
+if<a name="wp585078"> </a>
+((!security.isCommandSecure(SecurityService.PROPERTY_INPUT_INTEGRITY))<a name="wp599265"> </a>
+&#160;&#160;||&#160;&#160;<a name="wp599289"> </a>
+&#160;&#160;(security.isAuthenticated(SecurityService.ID_CARDHOLDER)))<a name="wp599290"> </a>
+&#160;&#160;&#160;&#160;UserException.throwIt(REQUEST_FAILED) ;<a name="wp599291"> </a>
+</pre></div>
+<a name="wp584711"> </a><p class="pBody">
+This code is quite self-explanatory. If one of the two conditions is not satisfied, then the remote object throws an exception. This exception is caught by the dispatcher and forwarded to the client.
+</p>
+<a name="wp593733"> </a><h3 class="pHeading2">
+Implementing a Security Service
+</h3>
+<div class="pPreformatted"><pre class="pPreformatted">
+package com.sun.javacard.samples.SecureRMIDemo ;<a name="wp593739"> </a>
+import javacard.framework.* ;<a name="wp593740"> </a>
+import javacard.framework.service.* ;<a name="wp593741"> </a>
+<a name="wp593742"> </a>
+public class MySecurityService extends BasicService implements SecurityService {<a name="wp593744"> </a>
+// list IDs of known parties...<a name="wp593747"> </a>
+&#160;&#160;&#160;&#160;private static final byte[] PRINCIPAL_APP_PROVIDER_ID = {0x12, 0x34} ;<a name="wp593749"> </a>
+&#160;&#160;&#160;&#160;private static final byte[] PRINCIPAL_CARDHOLDER_ID = {0x43, 0x21} ;<a name="wp593750"> </a>
+&#160;&#160;&#160;&#160;private OwnerPIN provider_pin, cardholder_pin = null ;<a name="wp593752"> </a>
+&#160;&#160;&#160;&#160;// and the security-related session flags<a name="wp593754"> </a>
+&#160;&#160;&#160;&#160;...   <a name="wp593755"> </a>
+&#160;&#160;&#160;&#160;public MySecurityService() {<a name="wp593759"> </a>
+&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;// initialize the PINs<a name="wp593760"> </a>
+&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;...<a name="wp593761"> </a>
+&#160;&#160;&#160;&#160;}<a name="wp593762"> </a>
+&#160;&#160;&#160;&#160; public boolean processDataIn(APDU apdu) {<a name="wp593764"> </a>
+&#160;&#160;&#160;&#160;&#160;&#160;if(selectingApplet()) {<a name="wp593767"> </a>
+&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160; // reset all flags<a name="wp593768"> </a>
+&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;...<a name="wp593769"> </a>
+&#160;&#160;&#160;&#160;&#160;&#160;}<a name="wp593770"> </a>
+&#160;&#160;&#160;&#160;&#160;&#160;else {<a name="wp593771"> </a>
+&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;return preprocessCommandAPDU(apdu);<a name="wp593772"> </a>
+&#160;&#160;&#160;&#160;&#160;&#160;}<a name="wp593773"> </a>
+&#160;&#160;}<a name="wp593774"> </a>
+&#160;&#160;public boolean isCommandSecure(byte properties) throws ServiceException {<a name="wp593776"> </a>
+&#160;&#160;&#160;&#160;&#160;&#160;// return the value of appropriate flag<a name="wp593777"> </a>
+&#160;&#160;&#160;&#160;&#160;&#160;....<a name="wp593778"> </a>
+&#160;&#160;}<a name="wp593779"> </a>
+&#160;&#160;public boolean isAuthenticated(short principal) throws ServiceException {<a name="wp593782"> </a>
+&#160;&#160;&#160;&#160;&#160;&#160;// return the value of appropriate flag<a name="wp593783"> </a>
+&#160;&#160;&#160;&#160;&#160;&#160;....<a name="wp593784"> </a>
+&#160;&#160;}<a name="wp593785"> </a>
+&#160;&#160;private byte authenticated ;<a name="wp593787"> </a>
+&#160;&#160;private boolean preprocessCommandAPDU(APDU apdu) {<a name="wp593789"> </a>
+&#160;&#160;&#160;&#160;&#160;&#160;receiveInData(apdu) ;<a name="wp593791"> </a>
+&#160;&#160;&#160;&#160;&#160;&#160;if(checkAndRemoveChecksum(apdu)) {<a name="wp593793"> </a>
+&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;// set DATA_INTEGRITY flag<a name="wp593905"> </a>
+&#160;&#160;&#160;&#160;&#160;&#160;}<a name="wp593906"> </a>
+&#160;&#160;&#160;&#160;&#160;&#160;else {<a name="wp593797"> </a>
+&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;// reset DATA_INTEGRITY flag<a name="wp593798"> </a>
+&#160;&#160;&#160;&#160;&#160;&#160;}<a name="wp593799"> </a>
+&#160;&#160;&#160;&#160;&#160;&#160;return false;&#160;&#160;&#160;// other services may also preprocess the data<a name="wp593801"> </a>
+&#160;&#160;}<a name="wp593802"> </a>
+&#160;&#160;private boolean checkAndRemoveChecksum(APDU apdu) {<a name="wp593804"> </a>
+&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;// remove the checksum<a name="wp593805"> </a>
+&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;// return true if checksum OK, false otherwise<a name="wp593806"> </a>
+&#160;&#160;}<a name="wp593807"> </a>
+&#160;&#160;public boolean processCommand(APDU apdu) {<a name="wp593810"> </a>
+&#160;&#160;&#160;&#160;&#160;&#160;if(isAuthenticate(apdu)) {<a name="wp593811"> </a>
+&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;receiveInData(apdu) ;<a name="wp593812"> </a>
+&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;// check PIN<a name="wp593813"> </a>
+&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;// set AUTHENTICATED flags<a name="wp593814"> </a>
+&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;return true; &#160;&#160;&#160; //  processing of the command is finished<a name="wp593816"> </a>
+&#160;&#160;&#160;&#160;&#160;&#160;}<a name="wp593817"> </a>
+&#160;&#160;&#160;&#160;&#160;&#160;else {<a name="wp593818"> </a>
+&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160; return false ;&#160;&#160;// this command was addressed to another<a name="wp593819"> </a>
+&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;// service - no processing is done<a name="wp600227"> </a>
+&#160;&#160;&#160;&#160;&#160;&#160;}<a name="wp593821"> </a>
+&#160;&#160;}<a name="wp593822"> </a>
+&#160;&#160;public boolean processDataOut(APDU apdu) {<a name="wp593824"> </a>
+&#160;&#160;&#160;&#160;&#160;&#160;// add checksum to outgoing data<a name="wp593826"> </a>
+&#160;&#160;&#160;&#160;&#160;&#160;return false;  // other services may also postprocess outgoing data<a name="wp593827"> </a>
+&#160;&#160;}<a name="wp593875"> </a>
+&#160;&#160;private boolean isAuthenticate(APDU command) {<a name="wp593833"> </a>
+&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;// check values of CLA and INS bytes <a name="wp593834"> </a>
+&#160;&#160;} <a name="wp593835"> </a>
+}<a name="wp593734"> </a>
+</pre></div>
+<a name="wp593735"> </a><h3 class="pHeading2">
+Building an Applet
+</h3>
+<a name="wp570608"> </a><p class="pBody">
+The supporting applet also needs to undergo some significant changes, in particular regarding the initialization of the remote object:
+</p>
+<div class="pPreformatted"><pre class="pPreformatted">
+package examples.securepurse ;<a name="wp585089"> </a>
+import javacard.framework.* ;<a name="wp584713"> </a>
+import javacard.framework.service.* ;<a name="wp570618"> </a>
+import java.rmi.* ;<a name="wp570620"> </a>
+import com.sun.javacard.samples.SecureRMIDemo.MySecurityService ;<a name="wp594618"> </a>
+<a name="wp594616"> </a>
+public class SecurePurseApplet extends Applet<a name="wp584714"> </a>
+{<a name="wp570626"> </a>
+&#160;&#160;Dispatcher dispatcher ;<a name="wp570628"> </a>
+&#160;&#160;private SecurePurseApplet()<a name="wp584715"> </a>
+&#160;&#160;{<a name="wp570636"> </a>
+&#160;&#160;&#160;&#160;SecurityService sec ;<a name="wp570638"> </a>
+&#160;&#160;&#160;&#160;// First get a security service<a name="wp584716"> </a>
+&#160;&#160;&#160;&#160;sec = new MySecurityService() ;<a name="wp570644"> </a>
+&#160;&#160;&#160;&#160;// Allocates an RMI service for the Java Card platform and <a name="wp584717"> </a>
+&#160;&#160;&#160;&#160;// sets the initial reference<a name="wp600449"> </a>
+&#160;&#160;&#160;&#160;RemoteService rmi = new RMIService( new SecurePurseImpl(sec) ) ;<a name="wp587966"> </a>
+&#160;&#160;&#160;&#160;// Allocates and initializes a dispatcher for the remote object<a name="wp587967"> </a>
+&#160;&#160;&#160;&#160;dispatcher = new Dispatcher((short)2) ;<a name="wp587971"> </a>
+&#160;&#160;&#160;&#160;dispatcher.addService(rmi, Dispatcher.PROCESS_COMMAND) ;<a name="wp587968"> </a>
+&#160;&#160;&#160;&#160;dispatcher.addService(sec, Dispatcher.PROCESS_INPUT_DATA) ;<a name="wp570662"> </a>
+&#160;&#160;}<a name="wp570668"> </a>
+&#160;&#160;public static void install(byte[] buffer, short offset, byte length)<a name="wp584720"> </a>
+&#160;&#160;{<a name="wp570674"> </a>
+&#160;&#160;&#160;&#160;// Allocates and registers the applet<a name="wp570676"> </a>
+&#160;&#160;&#160;&#160;(new SecurePurseApplet()).register() ;<a name="wp570678"> </a>
+&#160;&#160;}<a name="wp570680"> </a>
+&#160;&#160;public void process(APDU apdu)<a name="wp584721"> </a>
+&#160;&#160;{<a name="wp570686"> </a>
+&#160;&#160;&#160;&#160;dispatcher.process(apdu) ;<a name="wp570688"> </a>
+&#160;&#160;}<a name="wp570690"> </a>
+}<a name="wp570696"> </a>
+</pre></div>
+<a name="wp584722"> </a><p class="pBody">
+The security service that is used by the remote object needs to be initialized at some point. Here, this is done in the constructor for the <code class="cCode">SecurePurseApplet</code>:
+</p>
+<div class="pPreformatted"><pre class="pPreformatted">
+sec = new MySecurityService() ;<a name="wp585096"> </a>
+</pre></div>
+<a name="wp584724"> </a><p class="pBody">
+The initialization then goes on with the initialization of the Java Card RMI service. The only new thing here is that the remote object being allocated and set as the initial reference is now a <code class="cCode">SecurePurseImpl</code>:
+</p>
+<div class="pPreformatted"><pre class="pPreformatted">
+RemoteService rmi = new RMIService( new SecurePurseImpl(sec) );<a name="wp584725"> </a>
+</pre></div>
+<a name="wp584726"> </a><p class="pBody">
+Next, we need to initialize the dispatcher. Here, it needs to not only dispatch simple Java Card RMI requests, but also to dispatch security-related requests (such as EXTERNAL AUTHENTICATE). In fact, the security service will handle these requests directly. We first need to allocate a dispatcher and to inform it that it will delegate commands to two different services:
+</p>
+<div class="pPreformatted"><pre class="pPreformatted">
+dispatcher = new Dispatcher((short)2);<a name="wp584727"> </a>
+</pre></div>
+<a name="wp584728"> </a><p class="pBody">
+Then, the services are &#8220;registered&#8221; with the dispatcher: the security service as a service that performs pre-processing operations on incoming commands, and the Java Card RMI service as a service that processes the command requested:
+</p>
+<div class="pPreformatted"><pre class="pPreformatted">
+dispatcher.addService(rmi, Dispatcher.PROCESS_COMMAND) ;<a name="wp584729"> </a>
+dispatcher.addService(sec, Dispatcher.PROCESS_INPUT_DATA) ;<a name="wp570728"> </a>
+</pre></div>
+<a name="wp584730"> </a><p class="pBody">
+The rest of the class (that is, the install and process methods) remain unchanged.
+</p>
+<a name="wp584731"> </a><h3 class="pHeading2">
+Writing a Client
+</h3>
+<a name="wp588002"> </a><p class="pBody">
+The driver client application itself only changes minimally to account for the authentication and integrity needs of <code class="cCode">SecurePurseApplet</code>. It does additionally need to interact with the user for identification. Hence, a subclass of <code class="cCode">OCFCardAccessor</code> needs to be developed which provides these additional interactions and the transport filtering required.
+</p>
+<a name="wp588014"> </a><p class="pBody">
+Here is the new <code class="cCode">SecurePurseClient</code> application:
+</p>
+<div class="pPreformatted"><pre class="pPreformatted">
+package examples.securepurseclient ;<a name="wp588017"> </a>
+<a name="wp588019"> </a>
+import com.sun.javacard.javax.smartcard.rmiclient.* ;<a name="wp590822"> </a>
+import com.sun.javacard.clientsamples.securepurseclient.SecureOCFCardAccessor ;<a name="wp594643"> </a>
+import opencard.core.service.* ;<a name="wp589286"> </a>
+import examples.securepurse.* ;<a name="wp588021"> </a>
+import javacard.framework.UserException ;<a name="wp593549"> </a>
+<a name="wp594627"> </a>
+public class SecurePurseClient extends java.lang.Object {<a name="wp594833"> </a>
+<a name="wp594840"> </a>
+// need to authenticate user with the secure purse applet<a name="wp594848"> </a>
+// prompt user for account and password information<a name="wp594841"> </a>
+// to initialize user key and card info from database<a name="wp594842"> </a>
+private final static short PRINCIPAL_CARDHOLDER_ID=0x4321<a name="wp594843"> </a>
+<a name="wp594838"> </a>
+&#160;&#160;&#160;&#160;/** Creates new SecurePurseClient */<a name="wp594834"> </a>
+&#160;&#160;&#160;&#160;public SecurePurseClient() {<a name="wp594835"> </a>
+&#160;&#160;&#160;&#160;}<a name="wp588155"> </a>
+&#160;&#160;&#160;&#160;public static void main(java.lang.String[] argv) {   <a name="wp588157"> </a>
+&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;// arg[0] contains the debit amount<a name="wp588035"> </a>
+&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;short debitAmount = (short) Integer.parseInt(argv[0]) ;<a name="wp588036"> </a>
+&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;try {<a name="wp588038"> </a>
+&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;// initialize OCF<a name="wp588040"> </a>
+&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;SmartCard.start() ;<a name="wp588041"> </a>
+&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;// wait for a smartcard<a name="wp588043"> </a>
+&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;CardRequest cr = new CardRequest ( CardRequest.NEWCARD,<a name="wp588044"> </a>
+&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;null, SecureOCFCardAccessor.class ) ;<a name="wp588172"> </a>
+&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;SmartCard myCard = SmartCard.waitForCard ( cr );<a name="wp588045"> </a>
+&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;// obtain a custom RMI CardAccessor class for <a name="wp588047"> </a>
+&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;// the Java Card platform: SecureOCFCardAccessor<a name="wp600958"> </a>
+&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;SecureOCFCardAccessor myCS =<a name="wp588048"> </a>
+&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;(SecureOCFCardAccessor) myCard.getCardService( <a name="wp588176"> </a>
+&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;SecureOCFCardAccessor.class, true ) ;<a name="wp588186"> </a>
+<a name="wp603997"> </a>
+&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;//create RMI connection for the Java Card platform<a name="wp603998"> </a>
+&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;JavaCardRMIConnect jcRMI = new JavaCardRMIConnect(myCS) ;<a name="wp603999"> </a>
+&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;// select the Java Card applet<a name="wp589326"> </a>
+&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;byte[] appAID = new byte[] {0x01,0x02,0x03,0x04,0x05,0x07} ;  <a name="wp588056"> </a>
+&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;jcRMI.selectApplet( appAID );<a name="wp588057"> </a>
+<a name="wp589349"> </a>
+&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;if (! myCS.authenticateUser( PRINCIPAL_CARDHOLDER_ID )) {<a name="wp588062"> </a>
+&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;// handle error<a name="wp588065"> </a>
+&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160; }<a name="wp588066"> </a>
+&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;// obtain the initial reference to the Purse interface<a name="wp588068"> </a>
+&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;Purse myPurse = (Purse) jcRMI.getInitialReference() ;<a name="wp588219"> </a>
+&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;// debit the requested amount<a name="wp588221"> </a>
+&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;try {<a name="wp588072"> </a>
+&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;// the debit invocation command will be signed<a name="wp588073"> </a>
+&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;// by SecureOCFCardAccessor<a name="wp588232"> </a>
+&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;short balance = myPurse.debit ( debitAmount ) ;<a name="wp588074"> </a>
+&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;}catch ( UserException jce ) {<a name="wp588075"> </a>
+&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;short reasonCode = jce.getReason() ;<a name="wp588076"> </a>
+&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;// process on card exception reason information<a name="wp588078"> </a>
+&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;}<a name="wp588080"> </a>
+&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;// display the balance to user<a name="wp588083"> </a>
+&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;}catch (Exception e) {<a name="wp588085"> </a>
+&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;e.printStackTrace();<a name="wp588086"> </a>
+&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;} finally {<a name="wp588087"> </a>
+&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;try{<a name="wp588088"> </a>
+&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;SmartCard.shutdown();<a name="wp588089"> </a>
+&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;}catch (Exception e) {<a name="wp588090"> </a>
+&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160; e.printStackTrace();<a name="wp588091"> </a>
+&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;}<a name="wp588092"> </a>
+&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;}<a name="wp588093"> </a>
+&#160;&#160;&#160;&#160;}<a name="wp588094"> </a>
+}<a name="wp588015"> </a>
+</pre></div>
+<a name="wp588012"> </a><p class="pBody">
+Note  how the <code class="cCode">SecureOCFCardAccessor</code> instance is now obtained instead of <code class="cCode">OCFCardAccessor</code>:
+</p>
+<div class="pPreformatted"><pre class="pPreformatted">
+CardRequest cr = new CardRequest ( CardRequest.NEWCARD,<a name="wp592792"> </a>
+&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;null, SecurePurseClientCardService.class ) ;<a name="wp592793"> </a>
+SmartCard myCard = SmartCard.waitForCard ( cr );<a name="wp592794"> </a>
+&#160;&#160;&#160;&#160;// obtain a customized Card Accessor class: SecureOCFCardAccessor<a name="wp588248"> </a>
+&#160;&#160;&#160;&#160;SecureOCFCardAccessor myCS =<a name="wp588249"> </a>
+&#160;&#160;&#160;&#160;(SecureOCFCardAccessor) myCard.getCardService( <a name="wp588250"> </a>
+&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;SecureOCFCardAccessor.class, true ) ;<a name="wp588013"> </a>
+</pre></div>
+<a name="wp588256"> </a><p class="pBody">
+An extra step to authenticate with the <code class="cCode">SecurePurseApplet</code> after <code class="cCode">selectApplet</code> has been added. This invokes a new method in <code class="cCode">SecureOCFCardAccessor</code><code class="cCode"> </code>to interact with the card using the users credentials:
+</p>
+<div class="pPreformatted"><pre class="pPreformatted">
+if (! myCS.authenticateUser( PRINCIPAL_CARDHOLDER_ID )) {<a name="wp588265"> </a>
+&#160;&#160;&#160;&#160;// handle error<a name="wp588266"> </a>
+}<a name="wp588267"> </a>
+</pre></div>
+<a name="wp588282"> </a><p class="pBody">
+The rest of <code class="cCode">SecurePurseClient</code> is the same as <code class="cCode">PurseClient</code>.
+</p>
+<a name="wp588292"> </a><h5 class="pHeading4">
+Writing a Custom SecureOCFCardAccessor Class
+</h5>
+<a name="wp588296"> </a><p class="pBody">
+The <code class="cCode">SecurePurseClient</code> application uses a subclass of <code class="cCode">OCFCardAccessor</code> called <code class="cCode">SecureOCFCardAccessor</code> to perform user authentication functions and to sign every message sent thereafter for integrity purposes:
+</p>
+<div class="pPreformatted"><pre class="pPreformatted">
+package examples.securepurseclient;<a name="wp588389"> </a>
+<a name="wp588300"> </a>
+import opencard.core.terminal.* ;<a name="wp588301"> </a>
+public class SecureOCFCardAccessor extends <a name="wp588392"> </a>
+&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;com.sun.javacard.ocfrmiclientimpl.OCFCardAccessor {<a name="wp588402"> </a>
+&#160;&#160;&#160;&#160;&#160;&#160;/** Creates new SecureOCFCardAccessor */<a name="wp588394"> </a>
+&#160;&#160;&#160;&#160;public SecureOCFCardAccessor() {<a name="wp588310"> </a>
+&#160;&#160;&#160;&#160;}<a name="wp588311"> </a>
+&#160;&#160;public byte[] exchangeAPDU( byte[] sendData )<a name="wp589469"> </a>
+throws java.io.IOException {<a name="wp594682"> </a>
+&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<a name="wp589470"> </a>
+&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;byte[] macSignature = null ;<a name="wp589471"> </a>
+&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;byte[] dataWithMAC = new byte[ sendData.length + 4 ] ;<a name="wp589472"> </a>
+        <a name="wp589473"> </a>
+&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;// sign the sendData data using session key        <a name="wp589474"> </a>
+&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;// sign the data in commandBuffer using the user&#39;s session key<a name="wp589475"> </a>
+        <a name="wp589476"> </a>
+&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;// add generated MAC signature to data in buffer before sending<a name="wp589477"> </a>
+        <a name="wp589479"> </a>
+&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;return super.exchangeAPDU( dataWithMAC ) ;<a name="wp589480"> </a>
+&#160;&#160;&#160;&#160;}<a name="wp588342"> </a>
+&#160;&#160;&#160;&#160;boolean authenticateUser( short userKey ) {<a name="wp588345"> </a>
+&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;byte[] externalAuthCommand = null ;<a name="wp589485"> </a>
+        <a name="wp589486"> </a>
+&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;// build and send the appropriate commands to the<a name="wp589487"> </a>
+&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;// applet to authenticate the user using the user Key<a name="wp589589"> </a>
+&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;// and additional info provided<a name="wp589592"> </a>
+&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;try {<a name="wp589489"> </a>
+&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;byte[] response = super.exchangeAPDU ( externalAuthCommand ) ;<a name="wp602841"> </a>
+&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;// ...<a name="wp602842"> </a>
+&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160; }catch (Exception e) {<a name="wp602843"> </a>
+&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;// analyze<a name="wp589493"> </a>
+&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;return false ;<a name="wp593962"> </a>
+&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;}   <a name="wp588347"> </a>
+&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;// Then compute the session key for later use<a name="wp588358"> </a>
+&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;return true; //successful authentication<a name="wp588360"> </a>
+&#160;&#160;&#160;&#160;}<a name="wp588465"> </a>
+}<a name="wp588470"> </a>
+</pre></div>
+<a name="wp588466"> </a><p class="pBody">
+As shown above, the <code class="cCode">SecureOCFCardAccessor</code> class introduces the <code class="cCode">authenticateUser</code> method to send APDU Commands to the <code class="cCode">SecurePurseApplet</code> on the card to authenticate the user described by the <code class="cCode">userKey</code> parameter and other parameters and to compute a transport key. It invokes <code class="cCode">super.sendCommandAPDU</code> method to send the command without modification.
+</p>
+<a name="wp588467"> </a><p class="pBody">
+This custom Java Card RMI Card Accessor class also re-implements the <code class="cCode">exchangeAPDU</code> method declared in a superclass <code class="cCode">OCFCardAccessor</code> to sign each message before it is sent out by <code class="cCode">super.exchangeAPDU</code>. 
+</p>
+<a name="wp589812"> </a><p class="pBody">
+
+</p>
+
+    <p>&#160;</p>
+    <hr class="pHr" />
+
+    <table class="full-width" id="SummaryNotReq2">
+      <tr>
+        <td class="go-left">
+          <a accesskey="c" href="index.html">
+	    <img id="LongDescNotReq1" src="images/toc.gif" border="0"
+              alt="Contents" /></a>
+	  <a accesskey="p" href="logchan.html">
+	    <img id="LongDescNotReq2" src="images/prev.gif" border="0"
+              alt="Previous" /></a>
+	  <a accesskey="n" href="devnotesIX.html">
+	    <img id="LongDescNotReq3" src="images/next.gif" border="0"
+              alt="Next" /></a>
+	  <a accesskey="i" href="devnotesIX.html">
+	    <img id="LongDescNotReq4" src="images/index.gif" border="0"
+              alt="Index" /></a>
+        </td>
+        <td class="go-right">
+          <span class="copyright">Application Programming Notes <br /> Java Card Platform, Version 2.2.1</span>
+        </td>
+      </tr>
+    </table>
+
+    <p>&#160;</p>
+    
+<p class="copyright"><a 
+       href="copyright.html">Copyright</a> &#169; 2003 Sun Microsystems, Inc. 
+  All rights reserved.</p>	
+  </body>
+</html>

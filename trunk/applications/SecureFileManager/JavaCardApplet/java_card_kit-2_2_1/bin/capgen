@@ -1,0 +1,15 @@
+#!/bin/sh
+#
+# Copyright © 2003 Sun Microsystems, Inc. All rights reserved.
+# Use is subject to license terms.
+#
+
+JAVA_HOME=${JAVA_HOME:-/usr/j2se}
+
+bin_home=`dirname $0`
+JC_HOME=${JC_HOME:-$bin_home/..}
+
+JC_PATH=$JC_HOME/lib/apdutool.jar:$JC_HOME/lib/apduio.jar:$JC_HOME/lib/converter.jar:$JC_HOME/lib/jcwde.jar:$JC_HOME/lib/scriptgen.jar:$JC_HOME/lib/offcardverifier.jar:$JC_HOME/lib/api.jar:$JC_HOME/lib/installer.jar:$JC_HOME/lib/capdump.jar:$JC_HOME/samples/classes:$CLASSPATH
+
+JFLAGS="-classpath $JC_PATH"
+$JAVA_HOME/bin/java $JFLAGS com.sun.javacard.jcasm.cap.Main "$@"

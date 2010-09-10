@@ -1,0 +1,517 @@
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
+    <meta http-equiv="Content-Style-Type" content="text/css" />
+    <meta name="GENERATOR" content="Quadralay WebWorks Publisher Professional Edition 7.0.5.1025" />
+    <meta name="TEMPLATEBASE" content="JCUser_b_glo" />
+    <meta name="LASTUPDATED" content="10/10/03 17:25:17" />
+    <title>Converting Java Class Files</title>
+    <link rel="StyleSheet" href="document.css" type="text/css" />
+    <link rel="StyleSheet" href="catalog.css" type="text/css" />
+    <link rel="Table of Contents" href="index.html" />
+    <link rel="Previous" href="cJDKjcwde.html" />
+    <link rel="Next" href="cJDKviewexport.html" />
+    <link rel="Index" href="cJDK_b_domIX.html" />
+  </head>
+
+  <body>
+
+    <table class="full-width" id="SummaryNotReq1">
+      <tr><td class="sun-darkblue">&#160;</td></tr>
+      <tr><td class="sun-lightblue">&#160;</td></tr>
+      <tr><td class="go-right">
+        <a accesskey="c" href="index.html">
+          <img id="LongDescNotReq1" src="images/toc.gif" border="0"
+            alt="Contents" /></a>
+	<a accesskey="p" href="cJDKjcwde.html">
+	  <img id="LongDescNotReq2" src="images/prev.gif" border="0"
+            alt="Previous" /></a>
+        <a accesskey="n" href="cJDKviewexport.html">
+	  <img id="LongDescNotReq3" src="images/next.gif" border="0"
+            alt="Next" /></a>
+        <a accesskey="i" href="cJDK_b_domIX.html">
+	  <img id="LongDescNotReq4" src="images/index.gif" border="0"
+            alt="Index" /></a>
+        </td>
+      </tr>
+    </table>
+
+<a name="wp2353"> </a><h2 class="pChapNum">
+Chapter &#160; 5
+</h2>
+<a name="wp1884"> </a><h2 class="pTitle">
+Converting Java Class Files
+</h2>
+<hr />
+<a name="wp1891"> </a><p class="pBody">
+The Converter processes class files that make up a Java package. In addition to class files, the Converter can process either version 2.2.<em class="cEmphasis">x</em>, or 2.1.<em class="cEmphasis">x</em> export files. Depending on the command line options, the Converter outputs a CAP file, a Java Card Assembly file, and an export file.
+</p>
+<a name="wp9092"> </a><p class="pBody">
+The CAP file is a JAR-format file which contains the executable binary representation of the classes in a Java package. The CAP file also contains a manifest file that provides human-readable information regarding the package that the CAP file represents. For more information on the manifest file and its contents, see <a  href="cJDKAppManifest.html#wp430730"><span style="color: #3366CC">Appendix&#160;B,  &quot;CAP File Manifest File Syntax</span></a>&#8221;. For more information on the CAP file and its format, see Chapter 6 of the <em class="cEmphasis">Virtual Machine Specification for the Java Card&#8482; Platform, Version 2.2.1</em>.
+</p>
+<hr class="pHr"/><div class="note">
+<a name="wp11206"> </a>
+<b>Note &#8211;</b>  For more information on the Java Card Assembly file, see <a  href="cJDKAppendixA.html#wp430730"><span style="color: #3366CC">Appendix&#160;A,  &quot;Java Card Assembly Syntax Example</span></a>&#8221;.
+<hr class="pHr"/></div>
+<a name="wp8739"> </a><p class="pBody">
+The Converter verifies that class files comply to limitations described in Section 2.2, &#8220;Java Card Platform Language Subset&#8221; in the <em class="cEmphasis">Virtual Machine Specification for the Java Card&#8482; Platform, Version 2.2.1</em>. It also checks the correctness of export files.
+</p>
+<a name="wp8743"> </a><p class="pBody">
+You are responsible for the consistency of your input data. This means that:
+</p>
+<ul class="pBullet1"><a name="wp8744"> </a><div class="pBullet1"><li>all input class files are compatible with each other. </li></div>
+<a name="wp8745"> </a><div class="pBullet1Last"><li>export files of imported packages are consistent with class files that were used for compiling the converting package.</li></div>
+</ul>
+<a name="wp5528"> </a><p class="pBody">
+If the package to be converted contains remote classes or interfaces, the Converter generates a CAP file for version 2.2.<em class="cEmphasis">x</em> of the Java Card platform, a Java Card Assembly file and an export file. If the package does not contain remote classes or interfaces, the Converter generates files that can be used by version 2.1 of the Java Card platform. To create a CAP file compatible with version 2.1 of the Java Card platform, you must use export files for Java Card API packages from the Java Card Development Kit 2.1.x. 
+</p>
+<a name="wp3807"> </a><h2 class="pHeading1">
+Setting Java Compiler Options
+</h2>
+<a name="wp3819"> </a><p class="pBody">
+For the most efficient conversion, compile your class files with the SDK Java compiler&#8217;s <code class="cCode">-g</code> command line option. The <code class="cCode">-g</code> option causes the compiler to generate the <code class="cCode">LocalVariableTable</code> attribute in the class file. The Converter uses this attribute to determine local variable types. If you do not use the <code class="cCode">-g</code> option, the Converter attempts to determine the variable types on its own. This is expensive in terms of processing and might not produce the most efficient code.
+</p>
+<a name="wp8371"> </a><p class="pBody">
+Do not compile with the <code class="cCode">-O</code> option. The <code class="cCode">-O</code> option is not recommended on the Java compiler command line, for these reasons:
+</p>
+<ul class="pBullet1"><a name="wp8793"> </a><div class="pBullet1"><li>this option is intended to optimize execution speed rather than minimize memory usage. Minimizing memory usage is much more important in the Java Card environment.</li></div>
+<a name="wp8789"> </a><div class="pBullet1Last"><li>the <code class="cCode">LocalVariableTable</code> attribute will not be generated. </li></div>
+</ul>
+<a name="wp9125"> </a><h3 class="pHeading2">
+Generating the CAP File&#8217;s Debug Component
+</h3>
+<a name="wp9138"> </a><p class="pBody">
+If you want to use the Converter&#8217;s <code class="cCode">-debug</code> option to generate a debug component in the CAP file, then you must first compile your class files with <code class="cCode">-g</code>.
+</p>
+<a name="wp4659"> </a><h2 class="pHeading1">
+Running the Converter
+</h2>
+<a name="wp4660"> </a><p class="pBody">
+Command line usage of the Converter is:
+</p>
+<div class="pPreformatted"><pre class="pPreformatted">
+converter [<em class="cEmphasis">options</em>] &#160;&lt;<em class="cEmphasis">package_name</em>&gt; &lt;<em class="cEmphasis">package_aid</em>&gt; &lt;<em class="cEmphasis">major_version</em>&gt;.&lt;<em class="cEmphasis">minor_version</em>&gt; <a name="wp2075"> </a>
+</pre></div>
+<a name="wp3727"> </a><p class="pBody">
+The file to invoke the Converter is a shell script (<code class="cCode">converter</code>) on the Solaris or Linux platform, and a batch file (<code class="cCode">converter.bat</code>) on the Microsoft Windows 2000 platform.
+</p>
+<a name="wp3728"> </a><h3 class="pHeading2">
+Command Line Arguments
+</h3>
+<a name="wp2547"> </a><p class="pBody">
+The arguments to this command line are:</p><div align="left">
+<table border="0" cellpadding="7"   id="SummaryNotReq7786">
+  <caption><a name="wp7788"> </a><div class="pTableCaption">
+TABLE&#160;8&#160;&#160;&#8211;&#160;&#160;Converter Command Line Arguments 
+</div>
+</caption>
+<thead>
+<tr  align="center">    <th  class="sun-verylightblue" scope="col"><a name="wp7792"> </a><div style="text-align: left" class="pTableHead">
+Option 
+</div>
+
+</th>
+    <th  class="sun-verylightblue" scope="col"><a name="wp7794"> </a><div style="text-align: left" class="pTableHead">
+Description
+</div>
+
+</th>
+</tr>
+</thead>
+  <tr align="left">    <td><a name="wp7796"> </a><div class="pTableText">
+&lt;<em class="cEmphasis">package_name</em>&gt; 
+</div>
+</td>
+    <td><a name="wp7798"> </a><div class="pTableText">
+Fully-qualified name of the package to convert.
+</div>
+</td>
+</tr>
+  <tr align="left">    <td><a name="wp7800"> </a><div class="pTableText">
+&lt;<em class="cEmphasis">package_aid</em>&gt; 
+</div>
+</td>
+    <td><a name="wp7802"> </a><div class="pTableText">
+5- to 16-decimal, hex or octal numbers separated by colons. Each of the numbers must be byte-length.
+</div>
+</td>
+</tr>
+  <tr align="left">    <td><a name="wp7804"> </a><div class="pTableText">
+&lt;<em class="cEmphasis">major_version</em>&gt;.<br />&lt;<em class="cEmphasis">minor_version</em>&gt; 
+</div>
+</td>
+    <td><a name="wp7806"> </a><div class="pTableText">
+User-defined version of the package.
+</div>
+</td>
+</tr>
+<tr><td colspan="15"><hr class="pTableHr" /></td></tr>
+</table>
+</div>
+<p class="pBody">
+ 
+</p>
+<a name="wp2552"> </a><h3 class="pHeading2">
+Command Line Options
+</h3>
+<a name="wp2558"> </a><p class="pBody">
+The options in this command line are:</p><div align="left">
+<table border="0" cellpadding="7"   id="SummaryNotReq7852">
+  <caption><a name="wp7854"> </a><div class="pTableCaption">
+TABLE&#160;9&#160;&#160;&#8211;&#160;&#160;Converter Command Line Options 
+</div>
+</caption>
+<thead>
+<tr  align="center">    <th  class="sun-verylightblue" scope="col"><a name="wp7858"> </a><div style="text-align: left" class="pTableHead">
+Option
+</div>
+
+</th>
+    <th  class="sun-verylightblue" scope="col"><a name="wp7860"> </a><div style="text-align: left" class="pTableHead">
+Description
+</div>
+
+</th>
+</tr>
+</thead>
+  <tr align="left">    <td><a name="wp8387"> </a><div class="pTableText">
+<code class="cCode">-applet</code> &lt;<em class="cEmphasis">AID</em>&gt; &lt;<em class="cEmphasis">class_name</em>&gt;
+</div>
+</td>
+    <td><a name="wp8389"> </a><div class="pTableText">
+Sets the default applet AID and the name of the class that defines the applet. If the package contains multiple applet classes, this option must be specified for each class.
+</div>
+</td>
+</tr>
+  <tr align="left">    <td><a name="wp7862"> </a><div class="pTableText">
+<code class="cCode">-classdir</code> &lt;<em class="cEmphasis">root directory of the class hierarchy</em>&gt;
+</div>
+</td>
+    <td><a name="wp7864"> </a><div class="pTableText">
+Sets the root directory where the Converter will look for classes. If this option is not specified, the Converter uses the current user directory as the root.
+</div>
+</td>
+</tr>
+  <tr align="left">    <td><a name="wp8391"> </a><div class="pTableText">
+<code class="cCode">-d</code> &lt;<em class="cEmphasis">root directory for output</em>&gt;
+</div>
+</td>
+    <td><a name="wp8393"> </a><div class="pTableText">
+Sets the root directory for output.
+</div>
+</td>
+</tr>
+  <tr align="left">    <td><a name="wp8419"> </a><div class="pTableText">
+<code class="cCode">-debug </code>
+</div>
+</td>
+    <td><a name="wp8423"> </a><div class="pTableText">
+Generates the optional debug component of a CAP file. If the <code class="cCode">-mask</code> option is also specified, the file <code class="cCode">debug.msk</code> will be generated in the output directory. 
+</div>
+<a name="wp9133"> </a><div class="pTableText">
+<b class="cBold">Note&#8212;</b>To generate the debug component, you must first compile your class files with the Java compiler&#8217;s <code class="cCode">-g</code> option. 
+</div>
+</td>
+</tr>
+  <tr align="left">    <td><a name="wp7874"> </a><div class="pTableText">
+<code class="cCode">-exportmap</code>
+</div>
+</td>
+    <td><a name="wp7876"> </a><div class="pTableText">
+Uses the token mapping from the pre-defined export file of the package being converted. The Converter will look for the export file in the exportpath.
+</div>
+</td>
+</tr>
+  <tr align="left">    <td><a name="wp8395"> </a><div class="pTableText">
+<code class="cCode">-exportpath</code> &lt;<em class="cEmphasis">list of directories</em>&gt;
+</div>
+</td>
+    <td><a name="wp8397"> </a><div class="pTableText">
+Specifies the root directories in which the Converter will look for export files. The separator character for multiple paths is platform dependent. It is semicolon (<code class="cCode">;</code>) for the Microsoft Windows 2000 platform and colon (<code class="cCode">:</code>) for the Solaris or Linux platform. If this option is not specified, the Converter sets the export path to the Java <code class="cCode">classpath</code>.
+</div>
+</td>
+</tr>
+  <tr align="left">    <td><a name="wp8407"> </a><div class="pTableText">
+<code class="cCode">-help</code> 
+</div>
+</td>
+    <td><a name="wp8409"> </a><div class="pTableText">
+Prints help message.
+</div>
+</td>
+</tr>
+  <tr align="left">    <td><a name="wp8399"> </a><div class="pTableText">
+<code class="cCode">-i</code>     
+</div>
+</td>
+    <td><a name="wp8401"> </a><div class="pTableText">
+Instructs the Converter to support the 32-bit integer type.
+</div>
+</td>
+</tr>
+  <tr align="left">    <td><a name="wp8411"> </a><div class="pTableText">
+<code class="cCode">-mask</code>
+</div>
+</td>
+    <td><a name="wp8413"> </a><div class="pTableText">
+Indicates this package is for a mask, so restrictions on native methods are relaxed.  
+</div>
+</td>
+</tr>
+  <tr align="left">    <td><a name="wp8415"> </a><div class="pTableText">
+<code class="cCode">-nobanner</code> 
+</div>
+</td>
+    <td><a name="wp8417"> </a><div class="pTableText">
+Suppresses all banner messages.
+</div>
+</td>
+</tr>
+  <tr align="left">    <td><a name="wp8430"> </a><div class="pTableText">
+<code class="cCode">-noverify</code>
+</div>
+</td>
+    <td><a name="wp8432"> </a>
+        <div class="pTableText"> Suppresses the verification of input and output 
+          files. For more information on file verification, see <a  href="cJDKconverter.html#wp10628"><span style="color: #3366CC">&quot;Verification 
+          of Input and Output Files&quot;</span></a>. </div>
+</td>
+</tr>
+  <tr align="left">    <td><a name="wp8426"> </a><div class="pTableText">
+<code class="cCode">-nowarn</code> 
+</div>
+</td>
+    <td><a name="wp8428"> </a><div class="pTableText">
+Instructs the Converter not to report warning messages.
+</div>
+</td>
+</tr>
+  <tr align="left">    <td><a name="wp7886"> </a><div class="pTableText">
+<code class="cCode">-out</code> [<em class="cEmphasis">CAP</em>] [<em class="cEmphasis">EXP</em>] [<em class="cEmphasis">JCA</em>]
+</div>
+</td>
+    <td><a name="wp7888"> </a><div class="pTableText">
+Instructs the Converter to output the CAP file, and/or the export file, and/or the Java Card Assembly file. By default (if this option is not specified), the Converter outputs a CAP file and an export file.
+</div>
+</td>
+</tr>
+  <tr align="left">    <td><a name="wp8403"> </a><div class="pTableText">
+<code class="cCode">-v</code>, <code class="cCode">-verbose</code> 
+</div>
+</td>
+    <td><a name="wp8405"> </a><div class="pTableText">
+Enables verbose output. Verbose output includes progress messages, such as &#8220;opening file&#8221;, &#8220;closing file&#8221;, and whether the package requires integer datatype support.
+</div>
+</td>
+</tr>
+  <tr align="left">    <td><a name="wp7890"> </a><div class="pTableText">
+<code class="cCode">-V</code>, <code class="cCode">-version</code> 
+</div>
+</td>
+    <td><a name="wp7892"> </a><div class="pTableText">
+Prints the Converter version string.
+</div>
+</td>
+</tr>
+<tr><td colspan="15"><hr class="pTableHr" /></td></tr>
+</table>
+</div>
+<p class="pBody">
+ 
+</p>
+<hr class="pHr"/><div class="note">
+<a name="wp7841"> </a>
+<b>Note &#8211;</b>  The <code class="cCode">-out</code> <code class="cCode">CAP</code> and <code class="cCode">-mask</code> options cannot be used together.
+<hr class="pHr"/></div>
+<a name="wp10353"> </a><h4 class="pHeading3">
+Using Delimiters with Command Line Options
+</h4>
+<a name="wp10375"> </a><p class="pBody">
+If the command line option argument contains a space symbol, you must use delimiters with this argument. The delimiter for the Solaris or Linux platform is a backslash and double quote (<code class="cCode">\&#8221;</code>); the delimiter for Microsoft Windows 2000 platform is a double quote (<code class="cCode">&#8220;</code>). 
+</p>
+<a name="wp10929"> </a><p class="pBody">
+In the following sample command line, the converter will check for export files in the <code class="cCode">.\export files</code>, <code class="cCode">.\jc22\api_export_files</code>, and current directories.
+</p>
+<a name="wp10398"> </a><p class="pBody">
+<em class="cEmphasis">For the Solaris or Linux platform:</em>
+</p>
+<div class="pPreformatted"><pre class="pPreformatted">
+converter -exportpath \&quot;./export files:.:./jc22/api_export_files\&quot; MyWallet 0xa0:0x00:0x00:0x00:0x62:0x12:0x34 1.0<a name="wp10955"> </a>
+</pre></div>
+<a name="wp10399"> </a><p class="pBody">
+<em class="cEmphasis">For the Microsoft Windows 2000 platform: </em>
+</p>
+<div class="pPreformatted"><pre class="pPreformatted">
+converter -exportpath &quot;.\export files;.;.\jc22\api_export_files&quot; MyWallet 0xa0:0x00:0x00:0x00:0x62:0x12:0x34 1.0<a name="wp10965"> </a>
+</pre></div>
+<a name="wp143"> </a><h3 class="pHeading2">
+Using a Command Configuration File
+</h3>
+<a name="wp3117"> </a><p class="pBody">
+Instead of entering all of the command line arguments and options on the command line, you can include them in a text-format configuration file. This is convenient if you frequently use the same set of arguments and options. 
+</p>
+<a name="wp8645"> </a><p class="pBody">
+The syntax to specify a configuration file is:
+</p>
+<div class="pPreformatted"><pre class="pPreformatted">
+converter &#8211;config &lt;<em class="cEmphasis">configuration file name</em>&gt;<a name="wp2351"> </a>
+</pre></div>
+<a name="wp3126"> </a><p class="pBody">
+The <code class="cCode">&lt;configuration file name&gt;</code> argument contains the file path and file name of the configuration file.
+</p>
+<a name="wp10253"> </a><p class="pBody">
+For Solaris, Linux, and Microsoft Windows 2000 operating systems, you must use double quote (&#8220;) delimiters for the command line options that require arguments in the configuration file. For example, if the options from the command line example used in <a  href="cJDKconverter.html#wp10353"><span style="color: #3366CC">&quot;Using Delimiters with Command Line Options</span></a>&#8221; were placed in a configuration file, the result would look like this:
+</p>
+<a name="wp11145"> </a><p class="pBody">
+<em class="cEmphasis">Solaris or Linux platform</em>
+</p>
+<div class="pPreformatted"><pre class="pPreformatted">
+-exportpath &quot;./export files:.:./jc22/api_export_files&quot; MyWallet 0xa0:0x00:0x00:0x00:0x62:0x12:0x34 1.0<a name="wp10995"> </a>
+</pre></div>
+<a name="wp11125"> </a><p class="pBody">
+<em class="cEmphasis">Microsoft Windows 2000 platform</em>
+</p>
+<div class="pPreformatted"><pre class="pPreformatted">
+-exportpath &quot;.\export files;.;.\jc22\api_export_files&quot; MyWallet 0xa0:0x00:0x00:0x00:0x62:0x12:0x34 1.0<a name="wp11135"> </a>
+</pre></div>
+<a name="wp10509"> </a><h2 class="pHeading1">
+File and Directory Naming Conventions
+</h2>
+<a name="wp10510"> </a><p class="pBody">
+This section describes the names of input and output files for the Converter, and gives the correct location for these files. With some exceptions, the Converter follows the Java naming conventions for default directories for input and output files. These naming conventions are also in accordance with the definitions in § 4.1 of the <em class="cEmphasis">Virtual Machine Specification for the Java Card&#8482; Platform, Version 2.2.1</em> (Sun Microsystems, Inc., 2003).
+</p>
+<a name="wp10514"> </a><h3 class="pHeading2">
+Input File Naming Conventions
+</h3>
+<a name="wp10516"> </a><p class="pBody">
+The files input to the Converter are Java class files named with the <code class="cCode">.class</code> suffix. Generally, there are several class files making up a package. All the class files for a package must be located in the same directory under the root directory, following the Java naming conventions. The root directory can be set from the command line using the <code class="cCode">-classdir</code> option. If this option is not specified, the root directory defaults to be the directory from which the user invoked the Converter.
+</p>
+<a name="wp10517"> </a><p class="pBody">
+Suppose, for example, you wish to convert the package <code class="cCode">java.lang</code>. If you use the <br /><code class="cCode">-classdir</code> flag to specify the root directory as <code class="cCode">C:\mywork</code>, the command line will be:
+</p>
+<div class="pPreformatted"><pre class="pPreformatted">
+converter -classdir C:\mywork java.lang &lt;<em class="cEmphasis">package_aid</em>&gt; &lt;<em class="cEmphasis">package_version</em>&gt;<a name="wp11007"> </a>
+</pre></div>
+<a name="wp10519"> </a><p class="pBody">
+where <code class="cCode">&lt;</code><em class="cEmphasis">package_aid</em><code class="cCode">&gt;</code> is the application ID of the package, and <code class="cCode">&lt;</code><em class="cEmphasis">package_version</em><code class="cCode">&gt;</code> is the user-defined version of the package.
+</p>
+<a name="wp10520"> </a><p class="pBody">
+The Converter will look for all class files in the <code class="cCode">java.lang</code> package in the directory <code class="cCode">C:\mywork\java\lang</code>
+</p>
+<a name="wp10521"> </a><h3 class="pHeading2">
+Output File Naming Conventions
+</h3>
+<a name="wp10523"> </a><p class="pBody">
+The name of the CAP file, export file, and the Java Card Assembly file must be the last portion of the package specification followed by the extensions <code class="cCode">.cap,</code> <code class="cCode">.exp,</code> and <code class="cCode">.jca,</code> respectively. 
+</p>
+<a name="wp10524"> </a><p class="pBody">
+By default, the files output from the Converter are written to a directory called <code class="cCode">javacard</code>, a subdirectory of the input package&#39;s directory. 
+</p>
+<a name="wp10525"> </a><p class="pBody">
+In the above example, the output files are written by default to the directory <code class="cCode">C:\mywork\java\lang\javacard</code>
+</p>
+<a name="wp10526"> </a><p class="pBody">
+The <code class="cCode">-d</code> flag allows you to specify a different root directory for output.
+</p>
+<a name="wp10527"> </a><p class="pBody">
+In the above example, if you use the <code class="cCode">-d</code> flag to specify the root directory for output to be <code class="cCode">C:\myoutput</code>, the Converter will write the output files to the directory <code class="cCode">C:\myoutput\java\lang\javacard</code>.
+</p>
+<a name="wp10529"> </a><p class="pBody">
+When generating a CAP file, the Converter creates a Java Card Assembly file in the output directory as an intermediate result. If you do not want a Java Card Assembly file to be produced, then omit the option <code class="cCode">-out JCA</code>. The Converter deletes the Java Card Assembly file at the end of the conversion.
+</p>
+<a name="wp10628"> </a><h3 class="pHeading2">
+Verification of Input and Output Files 
+</h3>
+<a name="wp10630"> </a><p class="pBody">
+By default, the converter invokes the Java Card technology-based off-card verifier (&#8220;Java Card off-card verifier&#8221;) for every input EXP file and on the output CAP and EXP files. 
+</p>
+<ul class="pBullet1"><a name="wp10631"> </a><div class="pBullet1"><li>If any of the input EXP files do not pass verification, then no output files are created. </li></div>
+<a name="wp10632"> </a><div class="pBullet1Last"><li>If the output CAP or EXP files does not pass verification, then the output EXP and CAP files are deleted. </li></div>
+</ul>
+<a name="wp10635"> </a><p class="pBody">
+If you want to bypass verification of your input and output files, use the <code class="cCode">-noverify</code> command line option. Note that if the converter finds any errors, output files will not be produced.
+</p>
+<a name="wp10540"> </a><h3 class="pHeading2">
+Creating a debug.msk Output File
+</h3>
+<a name="wp10541"> </a>
+<p class="pBody"> If you select the <code class="cCode">-mask</code> and <code class="cCode">-debug</code> 
+  options, the file <code class="cCode">debug.msk</code> is created in the same 
+  directory as the other output files. (Refer to <a  href="cJDKconverter.html#wp2552"><span style="color: #3366CC">&quot;Command 
+  Line Options&quot;</span></a>.) </p>
+<a name="wp10546"> </a><h2 class="pHeading1">
+Loading Export Files
+</h2>
+<a name="wp10548"> </a><p class="pBody">
+A Java Card technology-based export file (&#8220;Java Card export file&#8221;) contains the public API linking information of classes in an entire package. The Unicode string names of classes, methods and fields are assigned unique numeric tokens. 
+</p>
+<a name="wp10549"> </a><p class="pBody">
+Export files are not used directly on a device that implements a Java Card virtual machine. However, the information in an export file is critical to the operation of the virtual machine on a device. An export file is produced by the Converter when a package is converted. This package&#39;s export file can be used later to convert another package that imports classes from the first package. Information in the export file is included in the CAP file of the second package, then is used on the device to link the contents of the second package to items imported from the first package.
+</p>
+<a name="wp10550"> </a><p class="pBody">
+During the conversion, when the code in the currently-converted package references a different package, the Converter loads the export file of the different package.
+</p>
+<a name="wp10554"> </a><p class="pBody">
+<a  href="cJDKconverter.html#wp11576"><span style="color: #3366CC">FIGURE&#160;2</span></a> illustrates how an applet package is linked with the <code class="cCode">java.lang</code>, the <code class="cCode">javacard.framework</code> and <code class="cCode">javacard.security</code> packages via their export files. 
+</p>
+<a name="wp10555"> </a><p class="pBody">
+You can use the <code class="cCode">-exportpath</code> command option to specify the locations of export files. The path consists of a list of root directories in which the Converter looks for export files. Export files must be named as the last portion of the package name followed by the extension <code class="cCode">.exp</code>. Export files are located in a subdirectory called <code class="cCode">javacard</code>, following the Java Card platform&#8217;s directory naming convention.
+</p>
+<a name="wp10556"> </a><p class="pBody">
+For example, to load the export file of the package <code class="cCode">java.lang</code>, if you have specified <br /><code class="cCode">-exportpath</code> as <code class="cCode">c:\myexportfiles</code>, the Converter searches the directory <code class="cCode">c:\myexportfiles\java\lang\javacard</code> for the export file <code class="cCode">lang.exp</code>.
+</p>
+<a name="wp11576"> </a><div class="pFigureCaption">
+FIGURE&#160;2&#160;&#160;&#8211;&#160;&#160;Calls between packages go through the export files
+<br /><br />
+</div><a name="wp10590"> </a><p class="pBody">
+<img src="images/cJDKconvertera.gif" height="245" width="453" alt="This figure is described in the text." border="0" hspace="0" vspace="0"/>
+</p>
+<a name="wp10593"> </a><h2 class="pHeading1">
+Specifying an Export Map
+</h2>
+<a name="wp10595"> </a><p class="pBody">
+You can request the Converter to convert a package using the tokens in the pre-defined export file of the package that is being converted. Use the <code class="cCode">-exportmap</code> command option to do this.
+</p>
+<a name="wp10596"> </a><p class="pBody">
+There are two distinct cases when using the <code class="cCode">-exportmap</code> flag: when the minor version of the package is the same as the version given in the export file (this case is called package reimplementation) and when the minor version increases (package upgrading). During the package reimplementation the API of the package (exportable classes, interfaces, fields and methods) must remain exactly the same. During the package upgrade, changes that do not break binary compatibility with preexisting packages are allowed (See &#8220;Binary Compatibility&#8221; in Section 4.4 of the <em class="cEmphasis">Virtual Machine Specification for the Java Card&#8482; Platform, Version 2.2.1</em>).
+</p>
+<a name="wp10601"> </a><p class="pBody">
+For example, if you have developed a package and would like to reimplement a method (package reimplementation) or upgrade the package by adding new API elements (new exportable classes or new public or protected methods or fields to already existing exportable classes), you must use the <code class="cCode">-exportmap</code> option to preserve binary compatibility with already existing packages that use your package.
+</p>
+<a name="wp10504"> </a><p class="pBody">
+The Converter loads the pre-defined export file in the same way that it loads other export files.
+</p>
+
+    <p>&#160;</p>
+    <hr class="pHr" />
+
+    <table class="full-width" id="SummaryNotReq2">
+      <tr>
+        <td class="go-left">
+          <a accesskey="c" href="index.html">
+	    <img id="LongDescNotReq1" src="images/toc.gif" border="0"
+              alt="Contents" /></a>
+	  <a accesskey="p" href="cJDKjcwde.html">
+	    <img id="LongDescNotReq2" src="images/prev.gif" border="0"
+              alt="Previous" /></a>
+	  <a accesskey="n" href="cJDKviewexport.html">
+	    <img id="LongDescNotReq3" src="images/next.gif" border="0"
+              alt="Next" /></a>
+	  <a accesskey="i" href="cJDK_b_domIX.html">
+	    <img id="LongDescNotReq4" src="images/index.gif" border="0"
+              alt="Index" /></a>
+        </td>
+        <td class="go-right">
+          <span class="copyright">Development Kit User's Guide
+for the Binary Release with Cryptography Extensions <br /> Java Card Platform, Version 2.2.1</span>
+        </td>
+      </tr>
+    </table>
+
+    <p>&#160;</p>
+    
+<p class="copyright"><a 
+       href="copyright.html">Copyright</a> &#169; 2003 Sun Microsystems, Inc. 
+  All rights reserved.</p>	
+  </body>
+</html>

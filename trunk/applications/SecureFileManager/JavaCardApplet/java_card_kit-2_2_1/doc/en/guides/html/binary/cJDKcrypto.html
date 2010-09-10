@@ -1,0 +1,277 @@
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
+    <meta http-equiv="Content-Style-Type" content="text/css" />
+    <meta name="GENERATOR" content="Quadralay WebWorks Publisher Professional Edition 7.0.5.1025" />
+    <meta name="TEMPLATEBASE" content="JCUser_b_glo" />
+    <meta name="LASTUPDATED" content="10/10/03 17:26:24" />
+    <title>Using Cryptography Extensions</title>
+    <link rel="StyleSheet" href="document.css" type="text/css" />
+    <link rel="StyleSheet" href="catalog.css" type="text/css" />
+    <link rel="Table of Contents" href="index.html" />
+    <link rel="Previous" href="cJDKapdu.html" />
+    <link rel="Next" href="cJDKrmiclientAPI.html" />
+    <link rel="Index" href="cJDK_b_domIX.html" />
+  </head>
+
+  <body>
+
+    <table class="full-width" id="SummaryNotReq1">
+      <tr><td class="sun-darkblue">&#160;</td></tr>
+      <tr><td class="sun-lightblue">&#160;</td></tr>
+      <tr><td class="go-right">
+        <a accesskey="c" href="index.html">
+          <img id="LongDescNotReq1" src="images/toc.gif" border="0"
+            alt="Contents" /></a>
+	<a accesskey="p" href="cJDKapdu.html">
+	  <img id="LongDescNotReq2" src="images/prev.gif" border="0"
+            alt="Previous" /></a>
+        <a accesskey="n" href="cJDKrmiclientAPI.html">
+	  <img id="LongDescNotReq3" src="images/next.gif" border="0"
+            alt="Next" /></a>
+        <a accesskey="i" href="cJDK_b_domIX.html">
+	  <img id="LongDescNotReq4" src="images/index.gif" border="0"
+            alt="Index" /></a>
+        </td>
+      </tr>
+    </table>
+
+<a name="wp9095"> </a><h2 class="pChapNum">
+Chapter &#160; 14
+</h2>
+<a name="wp9178"> </a><h2 class="pTitle">
+Using Cryptography Extensions
+</h2>
+<hr />
+<a name="wp999317"> </a><p class="pBody">
+This release provides an implementation of basic security and cryptography classes. These implementations are supported by:
+</p>
+<ul class="pBullet1"><a name="wp999319"> </a><div class="pBullet1"><li>C-language Java Card RE</li></div>
+<a name="wp999312"> </a><div class="pBullet1Last"><li>the Java Card platform Workstation Development Environment tool (Java Card WDE)</li></div>
+</ul>
+<a name="wp997185"> </a><p class="pBody">
+The support for security and cryptography allows you to:
+</p>
+<ul class="pBullet1"><a name="wp997237"> </a><div class="pBullet1"><li>generate message digests using the <code class="cCode">SHA1</code> algorithm</li></div>
+<a name="wp997800"> </a><div class="pBullet1Plus"><li>generate cryptographic keys on Java Card technology-compliant smart cards for use in the <code class="cCode">ECC</code> and <code class="cCode">RSA</code> algorithms</li></div>
+<a name="wp1001023"> </a><div class="pBullet1Plus"><li>set cryptographic keys on Java Card technology-compliant smart cards for use in the <code class="cCode">AES</code>, <code class="cCode">DES</code>, <code class="cCode">3DES</code>, <code class="cCode">ECC</code>, and <code class="cCode">RSA</code> algorithms</li></div>
+<a name="wp997186"> </a><div class="pBullet1Plus"><li>encrypt and decrypt data with the keys using the <code class="cCode">AES</code>, <code class="cCode">DES</code>, <code class="cCode">3DES</code>, and <code class="cCode">RSA</code> algorithms</li></div>
+<a name="wp999441"> </a><div class="pBullet1Plus"><li>generate signatures using the <code class="cCode">AES</code>, <code class="cCode">DES</code>, <code class="cCode">3DES</code>, <code class="cCode">ECC</code>, or <code class="cCode">SHA</code> and <code class="cCode">RSA</code> algorithms</li></div>
+<a name="wp999442"> </a><div class="pBullet1Plus"><li>generate sequences of random bytes</li></div>
+<a name="wp1000087"> </a><div class="pBullet1Last"><li>generate checksums</li></div>
+</ul>
+<hr class="pHr"/><div class="note">
+<a name="wp999085"> </a>
+<b>Note &#8211;</b>  <code class="cCode">DES</code> is also known as single-key <code class="cCode">DES</code>. <code class="cCode">3DES</code> is also known as triple-<code class="cCode">DES</code>.
+<hr class="pHr"/></div>
+<a name="wp997835"> </a><p class="pBody">
+For more information on the <code class="cCode">SHA1</code>, <code class="cCode">DES</code>, <code class="cCode">3DES</code>, and <code class="cCode">RSA</code> encryption schemes, see:
+</p>
+<ul class="pBullet1"><a name="wp997840"> </a><div class="pBullet1"><li>for <code class="cCode">SHA1</code>&#8212;&#8221;<em class="cEmphasis">Secure Hash Standard</em>&#8221;, FIPS Publication 180-1: <br /><a  href="http://www.itl.nist.gov/">http://www.itl.nist.gov/</a></li></div>
+<a name="wp997900"> </a><div class="pBullet1Plus"><li>for <code class="cCode">DES</code>&#8212;&#8221;<em class="cEmphasis">Data Encryption Standard (DES)</em>&#8221;, FIPS Publication 46-2 and &#8220;<em class="cEmphasis">DES Modes of Operation</em>&#8221;, FIPS Publication 81: <br /><a  href="http://www.itl.nist.gov/">http://www.itl.nist.gov/</a></li></div>
+<a name="wp999512"> </a><div class="pBullet1Plus"><li>for <code class="cCode">RSA</code>&#8212;&#8220;<em class="cEmphasis">RSAES-OAEP (Optional Asymmetric Encryption Padding) Encryption Scheme</em>&#8221;: <br /><a  href="http://www.rsasecurity.com/">http://www.rsasecurity.com/</a></li></div>
+<a name="wp1000121"> </a><div class="pBullet1Plus"><li>for <code class="cCode">AES</code>&#8212;<em class="cEmphasis">&#8221;Advanced Encryption Standard (AES)&#8221;</em> FIPs Publication 197:<br /><a  href="http://www.itl.nist.gov/">http://www.itl.nist.gov/</a></li></div>
+<a name="wp1000358"> </a><div class="pBullet1Plus"><li>for <code class="cCode">ECC</code>&#8212;<em class="cEmphasis">&#8221;Public Key Cryptography for the Financial Industry: The Elliptic Curve Digital Signature 
+Algorithm&#8221;</em> (ECDSA): X9.62-1998 <br /><a  href="http://www.x9.org/">http://www.x9.org/</a></li></div>
+<a name="wp1000360"> </a><div class="pBullet1Last"><li>for Checksum&#8212;<em class="cEmphasis">&#8221;Information 
+technology&#8212;Telecommunications and information exchange between 
+systems&#8212;High-level data link control (HDLC) 
+procedures&#8221;</em> <br />ISO/IEC-13239:2002 (replaces ISO-3309): <br /><a  href="http://www.iso.org">http://www.iso.org/</a></li></div>
+</ul>
+<a name="wp998063"> </a><h2 class="pHeading1">
+Supported Cryptography Classes 
+</h2>
+<a name="wp997706"> </a><p class="pBody">
+The implementation of security and cryptography in version 2.2.1 of the Java Card reference implementation supports the use of the following classes:
+</p>
+<ul class="pBullet1"><a name="wp997711"> </a><div class="pBullet1"><li><code class="cCode">javacardx.crypto.Cipher</code></li></div>
+<a name="wp1001042"> </a><div class="pBullet1Plus"><li><code class="cCode">javacard.security.Checksum</code></li></div>
+<a name="wp1001043"> </a><div class="pBullet1Plus"><li><code class="cCode">javacard.security.KeyAgreement</code></li></div>
+<a name="wp997423"> </a><div class="pBullet1Plus"><li><code class="cCode">javacard.security.KeyPair</code></li></div>
+<a name="wp997669"> </a><div class="pBullet1Plus"><li><code class="cCode">javacard.security.KeyBuilder</code></li></div>
+<a name="wp997668"> </a><div class="pBullet1Plus"><li><code class="cCode">javacard.security.MessageDigest</code> </li></div>
+<a name="wp997425"> </a><div class="pBullet1Plus"><li><code class="cCode">javacard.security.RandomData</code> </li></div>
+<a name="wp1001390"> </a><div class="pBullet1Last"><li><code class="cCode">javacard.security.Signature</code> </li></div>
+</ul>
+<a name="wp1000556"> </a><p class="pBody">
+<a  href="cJDKcrypto.html#wp1000561"><span style="color: #3366CC">TABLE&#160;37</span></a> lists the cryptography algorithms that are implemented for CREF and Java Card WDE:</p><div align="left">
+<table border="0" cellpadding="7"   id="SummaryNotReq1000557">
+  <caption><a name="wp1000561"> </a><div class="pTableCaption">
+TABLE&#160;37&#160;&#160;&#8211;&#160;&#160;Algorithms Implemented by the Cryptography Classes 
+</div>
+</caption>
+<thead>
+<tr  align="center">    <th  class="sun-verylightblue" scope="col"><a name="wp1000565"> </a><div style="text-align: left" class="pTableHead">
+Class
+</div>
+
+</th>
+    <th  class="sun-verylightblue" scope="col"><a name="wp1000567"> </a><div style="text-align: left" class="pTableHead">
+Algorithm
+</div>
+
+</th>
+</tr>
+</thead>
+  <tr align="left">    <td><a name="wp1000569"> </a><div class="pTableText">
+<code class="cCode">Checksum</code>
+</div>
+</td>
+    <td><div class="pTableBullet"><ul class="pTableBullet">
+<a name="wp1000571"> </a><div class="pTableBullet"><li><code class="cCode">ALG_ISO3309_CRC16</code>&#8212;ISO/IEC 3309-compliant 16-bit CRC algorithm. This algorithm uses the generator polynomial: <code class="cCode">x^16+x^12+x^5+1</code>. The default initial checksum value used by this algorithm is 0. This algorithm is also compliant with the frame-checking sequence as specified in section 4.2.5.2 of the ISO/IEC 13239 specification.</li></div>
+<a name="wp1000572"> </a><div class="pTableBullet"><li><code class="cCode">ALG_ISO3309_CRC32</code>&#8212;ISO/IEC 3309-compliant 32-bit CRC algorithm. This algorithm uses the generator polynomial: <code class="cCode">X^32+X^26+X^23+X^22+X^16+X^12+X^11+X^10+X^8 +X^7+X^5+X^4+X^2+X+1</code>. The default initial checksum value used by this algorithm is 0. This algorithm is also compliant with the frame-checking sequence as specified in section 4.2.5.3 of the ISO/IEC 13239 specification. </li></div>
+</ul></div>
+</td>
+</tr>
+  <tr align="left">    <td><a name="wp1000574"> </a><div class="pTableText">
+<code class="cCode">Cipher</code>
+</div>
+</td>
+    <td><div class="pTableBullet"><ul class="pTableBullet">
+<a name="wp1000576"> </a><div class="pTableBullet"><li><code class="cCode">ALG_DES_CBC_ISO9797_M2</code>&#8212;provides a cipher using <code class="cCode">DES</code> in <code class="cCode">CBC</code> mode. This algorithm uses <code class="cCode">CBC</code> for <code class="cCode">DES</code> and <code class="cCode">3DES</code>.  Input data is padded according to the ISO 9797 method 2 (ISO 7816-4, EMV&#8217;96) scheme.</li></div>
+<a name="wp1000577"> </a><div class="pTableBullet"><li><code class="cCode">ALG_RSA_PKCS1</code>&#8212;provides a cipher using <code class="cCode">RSA</code>.  Input data is padded according to the <code class="cCode">PKCS#1</code> (v1.5) scheme.</li></div>
+<a name="wp1000578"> </a><div class="pTableBullet"><li><code class="cCode">ALG_AES_BLOCK_128_CBC_NOPAD</code>&#8212;provides a cipher using <code class="cCode">AES</code> with block size 128 in CBC mode and does not pad input data.</li></div>
+</ul></div>
+</td>
+</tr>
+  <tr align="left">    <td><a name="wp1002321"> </a><div class="pTableText">
+<code class="cCode">KeyAgreement</code>
+</div>
+</td>
+    <td><div class="pTableBullet"><ul class="pTableBullet">
+<a name="wp1002323"> </a><div class="pTableBullet"><li><code class="cCode">ALG_EC_SVDP_DH</code>&#8212;elliptic curve secret value derivation primitive, Diffie-Hellman version, as per [IEEE P1363].</li></div>
+<a name="wp1002340"> </a><div class="pTableBullet"><li><code class="cCode">ALG_EC_SVDP_DHC</code>&#8212;elliptic curve secret value derivation primitive, Diffie-Hellman version, with cofactor multiplication, as per [IEEE P1363].</li></div>
+</ul></div>
+</td>
+</tr>
+  <tr align="left">    <td><a name="wp1000580"> </a><div class="pTableText">
+<code class="cCode">KeyBuilder</code>
+</div>
+</td>
+    <td><a name="wp1000582"> </a><div class="pTableText">
+the algorithms define the key lengths for: 
+</div>
+<div class="pTableBullet"><ul class="pTableBullet">
+<a name="wp1000583"> </a><div class="pTableBullet"><li>128-bit <code class="cCode">AES</code></li></div>
+<a name="wp1000584"> </a><div class="pTableBullet"><li>64-bit <code class="cCode">DES</code></li></div>
+<a name="wp1001076"> </a><div class="pTableBullet"><li>112-, 128-, 160-, 192-bit <code class="cCode">ECC</code></li></div>
+<a name="wp1000585"> </a><div class="pTableBullet"><li>128-bit <code class="cCode">DES3</code></li></div>
+<a name="wp1000586"> </a><div class="pTableBullet"><li>512-bit <code class="cCode">RSA</code></li></div>
+</ul></div>
+</td>
+</tr>
+  <tr align="left">    <td><a name="wp1001051"> </a><div class="pTableText">
+<code class="cCode">KeyPair</code>
+</div>
+</td>
+    <td><a name="wp1001061"> </a><div class="pTableText">
+the algorithms define the key lengths for: 
+</div>
+<div class="pTableBullet"><ul class="pTableBullet">
+<a name="wp1001063"> </a><div class="pTableBullet"><li>112-, 128-, 160-, 192-bit <code class="cCode">ECC</code></li></div>
+<a name="wp1001065"> </a><div class="pTableBullet"><li>512-bit <code class="cCode">RSA</code></li></div>
+</ul></div>
+</td>
+</tr>
+  <tr align="left">    <td><a name="wp1000588"> </a><div class="pTableText">
+<code class="cCode">MessageDigest</code>
+</div>
+</td>
+    <td><a name="wp1000590"> </a><div class="pTableText">
+message digest algorithm <code class="cCode">SHA1</code>
+</div>
+</td>
+</tr>
+  <tr align="left">    <td><a name="wp1000592"> </a><div class="pTableText">
+<code class="cCode">RandomData</code>
+</div>
+</td>
+    <td><a name="wp1000594"> </a><div class="pTableText">
+pseudo-random number generator with a 48-bit seed, which is modified using a linear congruential formula. 
+</div>
+</td>
+</tr>
+  <tr align="left">    <td><a name="wp1000596"> </a><div class="pTableText">
+<code class="cCode">Signature</code>
+</div>
+</td>
+    <td><div class="pTableBullet"><ul class="pTableBullet">
+<a name="wp1000598"> </a><div class="pTableBullet"><li><code class="cCode">ALG_DES_MAC8_ISO9797_M2</code>&#8212;generates an 8-byte <code class="cCode">MAC</code> (most significant 8 bytes of encrypted block) using <code class="cCode">DES</code> or <code class="cCode">3DES</code> in <code class="cCode">CBC</code> mode.  This algorithm uses <code class="cCode">CBC</code> for <code class="cCode">DES</code> and <code class="cCode">3DES</code>.  Input data is padded according to the ISO 9797 method 2 (ISO 7816-4, EMV&#8217;96) scheme. </li></div>
+<a name="wp1000599"> </a><div class="pTableBullet"><li><code class="cCode">ALG_RSA_SHA_PKCS1</code>&#8212;encrypts the 20 byte <code class="cCode">SHA1</code> digest using <code class="cCode">RSA</code>.  The digest is padded according to the <code class="cCode">PKCS#1</code> (v1.5) scheme.</li></div>
+<a name="wp1001109"> </a><div class="pTableBullet"><li><code class="cCode">ALG_AES_MAC_128_NOPAD</code>&#8212;generates a 16-byte MAC using <code class="cCode">AES</code> with blocksize 128 in CBC mode and does not pad input data.</li></div>
+<a name="wp1001143"> </a><div class="pTableBullet"><li><code class="cCode">ALG_ECDSA_SHA</code>&#8212;signs/verifies the 20-byte SHA digest using ECDSA. </li></div>
+</ul></div>
+</td>
+</tr>
+<tr><td colspan="15"><hr class="pTableHr" /></td></tr>
+</table>
+</div>
+<p class="pBody">
+ 
+</p>
+<a name="wp997660"> </a><h3 class="pHeading2">
+Instantiating the Classes
+</h3>
+<a name="wp997767"> </a><p class="pBody">
+Implementations of the cryptography classes extend the corresponding base class with implementations of their abstract methods. All data allocation associated with the implementation instance is performed when the instance is constructed. This is done to ensure that any lack of required resources can be flagged when the applet is installed.
+</p>
+<a name="wp997661"> </a><p class="pBody">
+Each cryptography class, except <code class="cCode">KeyPair</code>, has a <code class="cCode">getInstance</code> method which takes the desired algorithm as one of its parameters. The method returns an instance of the class in the context of the calling applet. Instead of using a <code class="cCode">getInstance</code> method, <code class="cCode">KeyPair</code> takes the desired algorithm as a parameter in its constructor.
+</p>
+<a name="wp997662"> </a><p class="pBody">
+If you request an algorithm that is not listed in <a  href="cJDKcrypto.html#wp1000561"><span style="color: #3366CC">TABLE&#160;37</span></a> or that is not implemented in this release, <code class="cCode">getInstance</code> will throw a <code class="cCode">CryptoException</code> with reason code <code class="cCode">NO_SUCH_ALGORITHM</code>. 
+</p>
+<a name="wp1000606"> </a><h2 class="pHeading1">
+Temporary RAM Usage by Cryptography Algorithms
+</h2>
+<a name="wp1000609"> </a><p class="pBody">
+The implementation of the RSA and EC cryptography algorithms in CREF optimizes RAM usage. To do this, CREF dynamically allocates temporary memory areas in RAM. These temporary RAM areas are allocated for the duration of a native method call.
+</p>
+<a name="wp1000712"> </a><p class="pBody">
+These memory areas are used as temporary RAM in the following order:
+</p>
+<ol class="pList1"><a name="wp1000618"> </a><div class="pList1"><li>Inside of the Java platform stack.</li></div>
+<a name="wp1000619"> </a><div class="pList1Plus"><li>The available DTR (clear-on-deselect) space of the current logical channel.</li></div>
+<a name="wp1000621"> </a><div class="pList1Plus"><li>The available RTR (clear-on-reset) space.</li></div>
+<a name="wp1000622"> </a><div class="pList1Last"><li>The available DTR space of other logical channels.</li></div>
+</ol>
+<a name="wp1000638"> </a><p class="pBody">
+Note that the amount of RAM available in the RTR and non-current DTR can be influenced by applets other than the one currently selected. This means that the current applet which uses the RTR and non-current DTR might fail if more applets are installed on the card.
+</p>
+<a name="wp1000912"> </a><p class="pBody">
+When execution completes, CREF prints maximum memory usage in each of these areas to help you track the memory requirements of the cryptography algorithms in your own Java Card VM implementations. 
+</p>
+
+    <p>&#160;</p>
+    <hr class="pHr" />
+
+    <table class="full-width" id="SummaryNotReq2">
+      <tr>
+        <td class="go-left">
+          <a accesskey="c" href="index.html">
+	    <img id="LongDescNotReq1" src="images/toc.gif" border="0"
+              alt="Contents" /></a>
+	  <a accesskey="p" href="cJDKapdu.html">
+	    <img id="LongDescNotReq2" src="images/prev.gif" border="0"
+              alt="Previous" /></a>
+	  <a accesskey="n" href="cJDKrmiclientAPI.html">
+	    <img id="LongDescNotReq3" src="images/next.gif" border="0"
+              alt="Next" /></a>
+	  <a accesskey="i" href="cJDK_b_domIX.html">
+	    <img id="LongDescNotReq4" src="images/index.gif" border="0"
+              alt="Index" /></a>
+        </td>
+        <td class="go-right">
+          <span class="copyright">Development Kit User's Guide
+for the Binary Release with Cryptography Extensions <br /> Java Card Platform, Version 2.2.1</span>
+        </td>
+      </tr>
+    </table>
+
+    <p>&#160;</p>
+    
+<p class="copyright"><a 
+       href="copyright.html">Copyright</a> &#169; 2003 Sun Microsystems, Inc. 
+  All rights reserved.</p>	
+  </body>
+</html>
