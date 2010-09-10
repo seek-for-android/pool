@@ -1,0 +1,349 @@
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
+    <meta http-equiv="Content-Style-Type" content="text/css" />
+    <meta name="GENERATOR" content="Quadralay WebWorks Publisher Professional Edition 7.0.5.1025" />
+    <meta name="TEMPLATEBASE" content="JCUser_b_glo" />
+    <meta name="LASTUPDATED" content="10/10/03 17:26:20" />
+    <title>Sending and Receiving APDU Commands</title>
+    <link rel="StyleSheet" href="document.css" type="text/css" />
+    <link rel="StyleSheet" href="catalog.css" type="text/css" />
+    <link rel="Table of Contents" href="index.html" />
+    <link rel="Previous" href="cJDKinstaller.html" />
+    <link rel="Next" href="cJDKcrypto.html" />
+    <link rel="Index" href="cJDK_b_domIX.html" />
+  </head>
+
+  <body>
+
+    <table class="full-width" id="SummaryNotReq1">
+      <tr><td class="sun-darkblue">&#160;</td></tr>
+      <tr><td class="sun-lightblue">&#160;</td></tr>
+      <tr><td class="go-right">
+        <a accesskey="c" href="index.html">
+          <img id="LongDescNotReq1" src="images/toc.gif" border="0"
+            alt="Contents" /></a>
+	<a accesskey="p" href="cJDKinstaller.html">
+	  <img id="LongDescNotReq2" src="images/prev.gif" border="0"
+            alt="Previous" /></a>
+        <a accesskey="n" href="cJDKcrypto.html">
+	  <img id="LongDescNotReq3" src="images/next.gif" border="0"
+            alt="Next" /></a>
+        <a accesskey="i" href="cJDK_b_domIX.html">
+	  <img id="LongDescNotReq4" src="images/index.gif" border="0"
+            alt="Index" /></a>
+        </td>
+      </tr>
+    </table>
+
+<a name="wp1649"> </a><h2 class="pChapNum">
+Chapter &#160; 13
+</h2>
+<a name="wp4969"> </a><h2 class="pTitle">
+Sending and Receiving APDU Commands
+</h2>
+<hr />
+<a name="wp8707"> </a><p class="pBody">
+The <code class="cCode">apdutool</code> reads a script file containing Application Protocol Data Unit commands (APDUs) and sends them to the C-language Java Card RE (or other Java Card RE) or the Java Card WDE. Each APDU is processed and returned to <code class="cCode">apdutool</code>, which displays both the command and response APDUs on the console. Optionally, <code class="cCode">apdutool</code> can write this information to a log file. 
+</p>
+<a name="wp8710"> </a><h2 class="pHeading1">
+Running apdutool
+</h2>
+<a name="wp5153"> </a><p class="pBody">
+The file to invoke <code class="cCode">apdutool</code> is a shell script (<code class="cCode">apdutool</code>) on the Solaris or Linux platform, and a batch file (<code class="cCode">apdutool.bat</code>) on the Microsoft Windows 2000 platform.
+</p>
+<a name="wp5154"> </a><p class="pBody">
+The command line usage for <code class="cCode">apdutool</code> is:
+</p>
+<div class="pPreformatted"><pre class="pPreformatted">
+apdutool [-h <em class="cEmphasis">hostname</em>] [-nobanner] [-noatr] [-o &lt;<em class="cEmphasis">outputFile</em>&gt;] 	[-p <em class="cEmphasis">port</em>] [-s <em class="cEmphasis">serialPort</em>] [-version] 	&lt;<em class="cEmphasis">inputFile</em>&gt; [&lt;<em class="cEmphasis">inputFile</em>&gt; ...]<a name="wp5177"> </a>
+</pre></div>
+<a name="wp5157"> </a><p class="pBody">
+The option values and their actions are:</p><div align="left">
+<table border="0" cellpadding="7"   id="SummaryNotReq6178">
+  <caption><a name="wp6180"> </a><div class="pTableCaption">
+TABLE&#160;35&#160;&#160;&#8211;&#160;&#160;apdutool Command Line Options 
+</div>
+</caption>
+<thead>
+<tr  align="center">    <th  class="sun-verylightblue" scope="col"><a name="wp6184"> </a><div style="text-align: left" class="pTableHead">
+Option
+</div>
+
+</th>
+    <th  class="sun-verylightblue" scope="col"><a name="wp6186"> </a><div style="text-align: left" class="pTableHead">
+Description
+</div>
+
+</th>
+</tr>
+</thead>
+  <tr align="left">    <td><a name="wp6188"> </a><div class="pTableText">
+<code class="cCode">-h</code> 
+</div>
+</td>
+    <td><a name="wp6190"> </a><div class="pTableText">
+Specifies the host name on which the TCP/IP socket port is found. (See the flag <code class="cCode">-p</code>.) 
+</div>
+</td>
+</tr>
+  <tr align="left">    <td><a name="wp6324"> </a><div class="pTableText">
+<code class="cCode">-help</code> 
+</div>
+</td>
+    <td><a name="wp6326"> </a><div class="pTableText">
+Displays online documentation for this command.
+</div>
+</td>
+</tr>
+  <tr align="left">    <td><a name="wp6192"> </a><div class="pTableText">
+<code class="cCode">-noatr</code> 
+</div>
+</td>
+    <td><a name="wp6194"> </a><div class="pTableText">
+Suppresses outputting an ATR (answer to reset).
+</div>
+</td>
+</tr>
+  <tr align="left">    <td><a name="wp6196"> </a><div class="pTableText">
+<code class="cCode">-nobanner</code> 
+</div>
+</td>
+    <td><a name="wp6198"> </a><div class="pTableText">
+Suppresses all banner messages.
+</div>
+</td>
+</tr>
+  <tr align="left">    <td><a name="wp6200"> </a><div class="pTableText">
+<code class="cCode">-o</code> 
+</div>
+</td>
+    <td><a name="wp6202"> </a><div class="pTableText">
+Specifies an output file. If an output file is not specified with the <code class="cCode">-o</code> flag, output defaults to standard output.
+</div>
+</td>
+</tr>
+  <tr align="left">    <td><a name="wp6204"> </a><div class="pTableText">
+<code class="cCode">-p</code> 
+</div>
+</td>
+    <td><a name="wp6206"> </a><div class="pTableText">
+Specifies a TCP/IP socket port other than the default port (which is 9025).
+</div>
+</td>
+</tr>
+  <tr align="left">    <td><a name="wp6208"> </a><div class="pTableText">
+<code class="cCode">-</code><code class="cCode">s </code><em class="cEmphasis">serialPort</em> 
+</div>
+</td>
+    <td><a name="wp6210"> </a><div class="pTableText">
+Specifies the serial port to use for communication, rather than a TCP/IP socket port. For example, <em style="font-style: oblique" class="cEmphasis">serialPort</em> can be <code class="cCode">COM1</code> on a Microsoft Windows 2000 system and <code class="cCode">/dev/term/a</code> on a Solaris system. 
+</div>
+<a name="wp10367"> </a><div class="pTableText">
+&#160;
+</div>
+<a name="wp10371"> </a><div class="pTableText">
+Currently, this option is not supported on the Linux platform.
+</div>
+<a name="wp10372"> </a><div class="pTableText">
+&#160;
+</div>
+<a name="wp10362"> </a>
+        <div class="pTableText"> To use this option, the <code class="cCode">javax.comm</code> 
+          package must be installed on your system. For more information on installing 
+          this package, see <a  href="cJDKinstall.html#wp5974"><span style="color: #3366CC">&quot;Prerequisites 
+          for Installing the Binary Release&quot;</span></a>. </div>
+<a name="wp10363"> </a><div class="pTableText">
+&#160;
+</div>
+<a name="wp7690"> </a><div class="pTableText">
+If you enter the name of a serial port that does not exist on your system, <code class="cCode">apdutool</code> will respond by printing the names of available ports.
+</div>
+</td>
+</tr>
+  <tr align="left">    <td><a name="wp6212"> </a><div class="pTableText">
+<code class="cCode">-version</code> 
+</div>
+</td>
+    <td><a name="wp6214"> </a><div class="pTableText">
+Outputs the version information.
+</div>
+</td>
+</tr>
+  <tr align="left">    <td><a name="wp6216"> </a><div class="pTableText">
+&lt;<em style="font-style: oblique" class="cEmphasis">inputFile</em><code class="cCode">&gt;</code> 
+</div>
+</td>
+    <td><a name="wp6218"> </a><div class="pTableText">
+Allows you to specify the input script (or scripts).
+</div>
+</td>
+</tr>
+<tr><td colspan="15"><hr class="pTableHr" /></td></tr>
+</table>
+</div>
+<p class="pBody">
+
+</p>
+<a name="wp5281"> </a><h3 class="pHeading2">
+apdutool Examples
+</h3>
+<a name="wp5282"> </a><h4 class="pHeading3">
+Directing Output to the Console
+</h4>
+<a name="wp7614"> </a><p class="pBody">
+The following is a command line invocation sample:
+</p>
+<div class="pPreformatted"><pre class="pPreformatted">
+apdutool example.scr<a name="wp5283"> </a>
+</pre></div>
+<a name="wp1655"> </a><p class="pBody">
+This command runs <code class="cCode">apdutool</code> with the file <code class="cCode">example.scr</code> as input. Output is sent to the console. The default TCP port (9025) is used.
+</p>
+<a name="wp7618"> </a><h4 class="pHeading3">
+Directing Output to a File
+</h4>
+<div class="pPreformatted"><pre class="pPreformatted">
+apdutool &#8211;o example.scr.out example.scr<a name="wp4976"> </a>
+</pre></div>
+<a name="wp1659"> </a><p class="pBody">
+This command runs <code class="cCode">apdutool</code> with the file <code class="cCode">example.scr</code> as input. Output is written to the file <code class="cCode">example.scr.out</code>.
+</p>
+<a name="wp1661"> </a><h3 class="pHeading2">
+Using APDU Script Files
+</h3>
+<a name="wp7622"> </a><p class="pBody">
+An APDU script file is a protocol-independent APDU format containing comments, script file commands, and C-APDUs. Script file commands and C-APDUs are terminated with a semicolon (;). Comments can be of any of the three Java-style comment formats (//, /*, or /**).
+</p>
+<a name="wp1663"> </a><p class="pBody">
+APDUs are represented by decimal, hex or octal digits, UTF-8 quoted literals or UTF-8 quoted strings. C-APDUs may extend across multiple lines.
+</p>
+<a name="wp1665"> </a><p class="pBody">
+C-APDU syntax for <code class="cCode">apdutool</code> is as follows:
+</p>
+<div class="pPreformatted"><pre class="pPreformatted">
+&lt;CLA&gt; &lt;INS&gt; &lt;P1&gt; &lt;P2&gt; &lt;LC&gt; [&lt;byte 0&gt; &lt;byte 1&gt; ... &lt;byte LC-1&gt;] &lt;LE&gt; ;<a name="wp4983"> </a>
+</pre></div>
+<a name="wp4996"> </a><p class="pBody">
+where:
+</p>
+<a name="wp4997"> </a><p class="pBody">
+<code class="cCode">&lt;CLA&gt;</code><code class="cCode"> ::</code><code class="cCode"> </code>ISO 7816-4 class byte. <br /><code class="cCode">&lt;INS&gt; ::</code><code class="cCode"> </code>ISO 7816-4 instruction byte.<br /><code class="cCode">&lt;P1&gt;  ::</code><code class="cCode"> </code>ISO 7816-4 P1 parameter byte.<br /><code class="cCode">&lt;P2&gt;  ::</code><code class="cCode"> </code>ISO 7816-4 P2 parameter byte.<br /><code class="cCode">&lt;LC&gt;  ::</code><code class="cCode"> </code>ISO 7816-4 input byte count.<br /><code class="cCode">&lt;byte 0&gt; ... &lt;byte LC-1&gt; ::</code><code class="cCode"> </code>input data bytes.<br /><code class="cCode">&lt;LE&gt;  ::</code><code class="cCode"> </code>ISO 7816- 4 expected output length byte. 0 implies 256.
+</p>
+<a name="wp6516"> </a><p class="pBody">
+The following script file commands are supported:</p><div align="left">
+<table border="0" cellpadding="7"   id="SummaryNotReq6554">
+  <caption><a name="wp6556"> </a><div class="pTableCaption">
+TABLE&#160;36&#160;&#160;&#8211;&#160;&#160;Supported APDU Script File Commands 
+</div>
+</caption>
+<thead>
+<tr  align="center">    <th  class="sun-verylightblue" scope="col"><a name="wp6560"> </a><div style="text-align: left" class="pTableHead">
+Command
+</div>
+
+</th>
+    <th  class="sun-verylightblue" scope="col"><a name="wp6562"> </a><div style="text-align: left" class="pTableHead">
+Description
+</div>
+
+</th>
+</tr>
+</thead>
+  <tr align="left">    <td><a name="wp6584"> </a><div class="pTableText">
+<code class="cCode">delay &lt;</code><em class="cEmphasis">Integer</em><code class="cCode">&gt;;</code>
+</div>
+</td>
+    <td><a name="wp6586"> </a><div class="pTableText">
+Pauses execution of the script for the number of milliseconds specified by <code class="cCode">&lt;</code><em class="cEmphasis">Integer</em><code class="cCode">&gt;</code>.
+</div>
+</td>
+</tr>
+  <tr align="left">    <td><a name="wp6580"> </a><div class="pTableText">
+<code class="cCode">echo &quot;</code><em class="cEmphasis">string</em><code class="cCode">&quot;;</code>
+</div>
+</td>
+    <td><a name="wp6582"> </a><div class="pTableText">
+Echoes the quoted string to the output file. The leading and trailing quote characters are removed.
+</div>
+</td>
+</tr>
+  <tr align="left">    <td><a name="wp7738"> </a><div class="pTableText">
+<code class="cCode">output off;</code>
+</div>
+</td>
+    <td><a name="wp7740"> </a><div class="pTableText">
+Suppresses printing of the output.
+</div>
+</td>
+</tr>
+  <tr align="left">    <td><a name="wp7742"> </a><div class="pTableText">
+<code class="cCode">output on;</code>
+</div>
+</td>
+    <td><a name="wp7744"> </a><div class="pTableText">
+Restores printing of the output.
+</div>
+</td>
+</tr>
+  <tr align="left">    <td><a name="wp6588"> </a><div class="pTableText">
+<code class="cCode">powerdown;</code>
+</div>
+</td>
+    <td><a name="wp6590"> </a><div class="pTableText">
+Sends a powerdown command to the reader.
+</div>
+</td>
+</tr>
+  <tr align="left">    <td><a name="wp6564"> </a><div class="pTableText">
+<code class="cCode">powerup;</code>
+</div>
+</td>
+    <td><a name="wp6566"> </a><div class="pTableText">
+Sends a power up command to the reader. A powerup command must be executed prior to sending any C-APDUs to the reader.
+</div>
+</td>
+</tr>
+<tr><td colspan="15"><hr class="pTableHr" /></td></tr>
+</table>
+</div>
+<p class="pBody">
+
+</p>
+<a name="wp1691"> </a><p class="pBody">
+
+</p>
+
+    <p>&#160;</p>
+    <hr class="pHr" />
+
+    <table class="full-width" id="SummaryNotReq2">
+      <tr>
+        <td class="go-left">
+          <a accesskey="c" href="index.html">
+	    <img id="LongDescNotReq1" src="images/toc.gif" border="0"
+              alt="Contents" /></a>
+	  <a accesskey="p" href="cJDKinstaller.html">
+	    <img id="LongDescNotReq2" src="images/prev.gif" border="0"
+              alt="Previous" /></a>
+	  <a accesskey="n" href="cJDKcrypto.html">
+	    <img id="LongDescNotReq3" src="images/next.gif" border="0"
+              alt="Next" /></a>
+	  <a accesskey="i" href="cJDK_b_domIX.html">
+	    <img id="LongDescNotReq4" src="images/index.gif" border="0"
+              alt="Index" /></a>
+        </td>
+        <td class="go-right">
+          <span class="copyright">Development Kit User's Guide
+for the Binary Release with Cryptography Extensions <br /> Java Card Platform, Version 2.2.1</span>
+        </td>
+      </tr>
+    </table>
+
+    <p>&#160;</p>
+    
+<p class="copyright"><a 
+       href="copyright.html">Copyright</a> &#169; 2003 Sun Microsystems, Inc. 
+  All rights reserved.</p>	
+  </body>
+</html>

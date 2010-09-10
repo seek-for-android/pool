@@ -1,0 +1,1718 @@
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
+    <meta http-equiv="Content-Style-Type" content="text/css" />
+    <meta name="GENERATOR" content="Quadralay WebWorks Publisher Professional Edition 7.0.5.1025" />
+    <meta name="TEMPLATEBASE" content="JCUser_b_glo" />
+    <meta name="LASTUPDATED" content="10/10/03 17:26:48" />
+    <title>Package</title>
+    <link rel="StyleSheet" href="document.css" type="text/css" />
+    <link rel="StyleSheet" href="catalog.css" type="text/css" />
+    <link rel="Table of Contents" href="index.html" />
+    <link rel="Previous" href="overview.html" />
+    <link rel="Next" href="cJDK_b_domIX.html" />
+    <link rel="Index" href="cJDK_b_domIX.html" />
+  </head>
+
+  <body>
+
+    <table class="full-width" id="SummaryNotReq1">
+      <tr><td class="sun-darkblue">&#160;</td></tr>
+      <tr><td class="sun-lightblue">&#160;</td></tr>
+      <tr><td class="go-right">
+        <a accesskey="c" href="index.html">
+          <img id="LongDescNotReq1" src="images/toc.gif" border="0"
+            alt="Contents" /></a>
+	<a accesskey="p" href="overview.html">
+	  <img id="LongDescNotReq2" src="images/prev.gif" border="0"
+            alt="Previous" /></a>
+        <a accesskey="n" href="cJDK_b_domIX.html">
+	  <img id="LongDescNotReq3" src="images/next.gif" border="0"
+            alt="Next" /></a>
+        <a accesskey="i" href="cJDK_b_domIX.html">
+	  <img id="LongDescNotReq4" src="images/index.gif" border="0"
+            alt="Index" /></a>
+        </td>
+      </tr>
+    </table>
+
+<a name="wp420880"> </a><h2 class="pHeading1">
+Package
+</h2>
+<a name="wp420886"> </a><h2 class="pHeading1">
+com.sun.javacard.ocfrmiclientimpl
+</h2>
+<a name="wp420888"> </a><h4 class="pHeading3">
+Description
+</h4>
+<a name="wp420890"> </a><p class="pBody">
+Provides implementation of classes and interfaces defined in <code class="cCode">com.sun.javacard.javax.smartcard.rmiclient</code>. <br /> This implementation depends on the OCF1.2 as the client framework.
+</p>
+<a name="wp420893"> </a><p class="pBody">
+</p><div align="left">
+<table border="0" cellpadding="7" id="wp420099">
+  <caption></caption>
+<thead>
+<tr  align="center">    <th class="sun-lightblue" scope="col" colspan="2" rowspan="1"><a name="wp420099"> </a><div style="text-align: left" class="pTableHead">
+Class Summary
+</div>
+
+</th>
+</tr>
+</thead>
+  <tr align="left">    <td colspan="2" rowspan="1"><a name="wp420105"> </a><div class="pTableText">
+Classes
+</div>
+</td>
+</tr>
+  <tr align="left">    <td><div class="pPreformatted"><pre class="pPreformatted">
+<span style="color: #3366CC"><a  href="com.sun.javacard.ocfrmiclientimpl.html#wp420903">JavaCardType</a></span><a name="wp420113"> </a>
+</pre></div>
+</td>
+    <td><a name="wp420115"> </a><div class="pTableText">
+An instance of this class is used by the <code class="cCode">OCFCardAccessorFactory</code> to denote that the smart card currently being accessed may be Java Card-compliant.
+</div>
+</td>
+</tr>
+  <tr align="left">    <td><div class="pPreformatted"><pre class="pPreformatted">
+<span style="color: #3366CC"><a  href="com.sun.javacard.ocfrmiclientimpl.html#wp420953">JCCardObjectFactory</a></span><a name="wp420123"> </a>
+</pre></div>
+</td>
+    <td><a name="wp420125"> </a><div class="pTableText">
+Processes the data returned from the card in the format defined for Java Card RMI.
+</div>
+</td>
+</tr>
+  <tr align="left">    <td><div class="pPreformatted"><pre class="pPreformatted">
+<span style="color: #3366CC"><a  href="com.sun.javacard.ocfrmiclientimpl.html#wp421059">JCCardProxyFactory</a></span><a name="wp420133"> </a>
+</pre></div>
+</td>
+    <td><a name="wp420135"> </a><div class="pTableText">
+Processes the data returned from the card in the format defined for Java Card RMI.
+</div>
+</td>
+</tr>
+  <tr align="left">    <td><div class="pPreformatted"><pre class="pPreformatted">
+<span style="color: #3366CC"><a  href="com.sun.javacard.ocfrmiclientimpl.html#wp421165">JCRemoteRefImpl</a></span><a name="wp420143"> </a>
+</pre></div>
+</td>
+    <td><a name="wp420145"> </a><div class="pTableText">
+Represents a reference to a card object.
+</div>
+</td>
+</tr>
+  <tr align="left">    <td><div class="pPreformatted"><pre class="pPreformatted">
+<span style="color: #3366CC"><a  href="com.sun.javacard.ocfrmiclientimpl.html#wp421499">OCFCardAccessor</a></span><a name="wp420153"> </a>
+</pre></div>
+</td>
+    <td><a name="wp420155"> </a><div class="pTableText">
+Passes APDUs between client program and <code class="cCode">CardTerminal</code>.
+</div>
+</td>
+</tr>
+  <tr align="left">    <td><a name="wp420163"> </a><div class="pTableText">
+<span style="color: #3366CC"><a  href="com.sun.javacard.ocfrmiclientimpl.html#wp421605">OCFCardAccessorFactory</a></span>
+</div>
+</td>
+    <td><a name="wp420165"> </a><div class="pTableText">
+The OCFCardAccessorFactory class creates the <code class="cCode">OCFCardAccessor</code> instance which is used by terminal client applications to initiate and conduct a Java Card RMI based dialogue with the smart card.
+</div>
+</td>
+</tr>
+<tr><td colspan="15"><hr class="pTableHr" /></td></tr>
+</table>
+</div>
+<p class="pBody">
+
+</p>
+<a name="wp420895"> </a><div style="color: #000000; font-size: 18pt; font-style: normal; font-variant: normal; font-weight: normal; margin-left: 0pt; margin-right: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none" class="pClassPreHead">
+com.sun.javacard.ocfrmiclientimpl
+</div>
+<a name="wp420903"> </a><div style="color: #000000; font-size: 30pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 16pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+JavaCardType
+</div>
+<a name="wp420905"> </a><h4 class="pHeading3">
+Declaration
+</h4>
+<div class="pPreformatted"><pre class="pPreformatted">
+public class <b class="cBold">JavaCardType</b> extends <code class="cCode">opencard.core.service.CardType</code><a name="wp420907"> </a>
+ <a name="wp420909"> </a>
+<code class="cCode">java.lang.Object</code><a name="wp420911"> </a>
+&#160;&#160;|<a name="wp420913"> </a>
+&#160;&#160;+--<code class="cCode">opencard.core.service.CardType</code><a name="wp420915"> </a>
+&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;|<a name="wp420917"> </a>
+&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;+--<b class="cBold">com.sun.javacard.ocfrmiclientimpl.JavaCardType</b><a name="wp420919"> </a>
+</pre></div>
+<a name="wp420921"> </a><h4 class="pHeading3">
+Description
+</h4>
+<a name="wp420923"> </a><p class="pBody">
+An instance of this class is used by the <code class="cCode">OCFCardAccessorFactory</code> to denote that the smart card currently being accessed may be Java Card technology-compliant.
+</p>
+<a name="wp420926"> </a><p class="pBody">
+</p><div align="left">
+<table border="0" cellpadding="7" id="wp420172">
+  <caption></caption>
+<thead>
+<tr  align="center">    <th class="sun-lightblue" scope="col" colspan="2" rowspan="1"><a name="wp420172"> </a><div style="text-align: left" class="pTableHead">
+Member Summary
+</div>
+
+</th>
+</tr>
+</thead>
+  <tr align="left">    <td colspan="2" rowspan="1"><a name="wp420178"> </a><div class="pTableText">
+Constructors
+</div>
+</td>
+</tr>
+  <tr align="left">    <td><a name="wp420184"> </a><div class="pTableText">
+&#160;
+</div>
+</td>
+    <td><a name="wp420188"> </a><div class="pTableText">
+<span style="color: #3366CC"><a  href="com.sun.javacard.ocfrmiclientimpl.html#wp420939">JavaCardType()</a></span>
+</div>
+<a name="wp420190"> </a><div class="pTableText">
+Creates new <code class="cCode">JavaCardType</code>
+</div>
+</td>
+</tr>
+<tr><td colspan="15"><hr class="pTableHr" /></td></tr>
+</table>
+</div>
+<p class="pBody">
+
+</p>
+<a name="wp420929"> </a><p class="pBody">
+</p><div align="left">
+<table border="0" cellpadding="7" id="wp420195">
+  <caption></caption>
+<thead>
+<tr  align="center">    <th  class="sun-verylightblue" scope="col"><a name="wp420195"> </a><div style="text-align: left" class="pTableHead">
+Inherited Member Summary
+</div>
+
+</th>
+</tr>
+</thead>
+  <tr align="left">    <td><a name="wp420199"> </a><div class="pTableText">
+Fields inherited from class <code class="cCode">CardType</code>
+</div>
+</td>
+</tr>
+  <tr align="left">    <td><a name="wp420203"> </a><div class="pTableText">
+<code class="cCode">UNSUPPORTED</code>
+</div>
+</td>
+</tr>
+  <tr align="left">    <td><a name="wp420207"> </a><div class="pTableText">
+Methods inherited from class <code class="cCode">CardType</code>
+</div>
+</td>
+</tr>
+  <tr align="left">    <td><div class="pPreformatted"><pre class="pPreformatted">
+<code class="cCode">getInfo()</code>, <code class="cCode">getType()</code>, <code class="cCode">setInfo(Object)</code><a name="wp420211"> </a>
+</pre></div>
+</td>
+</tr>
+  <tr align="left">    <td><a name="wp420215"> </a><div class="pTableText">
+Methods inherited from class <code class="cCode">Object</code>
+</div>
+</td>
+</tr>
+  <tr align="left">    <td><a name="wp420219"> </a><div class="pTableText">
+<code class="cCode">clone()</code>, <code class="cCode">equals(Object)</code>, <code class="cCode">finalize()</code>, <code class="cCode">getClass()</code>, <code class="cCode">hashCode()</code>, <code class="cCode">notify()</code>, <code class="cCode">notifyAll()</code>, <code class="cCode">toString()</code>, <code class="cCode">wait()</code>, <code class="cCode">wait()</code>, <code class="cCode">wait()</code>
+</div>
+</td>
+</tr>
+<tr><td colspan="15"><hr class="pTableHr" /></td></tr>
+</table>
+</div>
+<p class="pBody">
+
+</p>
+<a name="wp420931"> </a><h3 class="pHeading2">
+Constructors
+</h3>
+<a name="wp420939"> </a><h4 class="pHeading3">
+JavaCardType()
+</h4>
+<div style="color: #000000; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 5pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-transform: none" class="pPreformattedIndent">
+public <b class="cBold">JavaCardType</b>()
+</div><a name="wp420941"> </a>
+
+<a name="wp420943"> </a><div style="color: #000000; font-size: 10pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 5pt; margin-top: 0pt; text-align: left; text-decoration: none; text-transform: none" class="pMemberIndent">
+Creates new <code class="cCode">JavaCardType</code>
+</div>
+<a name="wp420945"> </a><div style="color: #000000; font-size: 18pt; font-style: normal; font-variant: normal; font-weight: normal; margin-left: 0pt; margin-right: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none" class="pClassPreHead">
+com.sun.javacard.ocfrmiclientimpl
+</div>
+<a name="wp420953"> </a><div style="color: #000000; font-size: 30pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 16pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+JCCardObjectFactory
+</div>
+<a name="wp420955"> </a><h4 class="pHeading3">
+Declaration
+</h4>
+<div class="pPreformatted"><pre class="pPreformatted">
+public class <b class="cBold">JCCardObjectFactory</b> extends <code class="cCode">com.sun.javacard.javax.smartcard.rmiclient.CardObjectFactory</code><a name="wp420957"> </a>
+ <a name="wp420959"> </a>
+<code class="cCode">java.lang.Object</code><a name="wp420961"> </a>
+&#160;&#160;|<a name="wp420963"> </a>
+&#160;&#160;+--<code class="cCode">com.sun.javacard.javax.smartcard.rmiclient.CardObjectFactory</code><a name="wp420965"> </a>
+&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;|<a name="wp420967"> </a>
+&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;+--<b class="cBold">com.sun.javacard.ocfrmiclientimpl.JCCardObjectFactory</b><a name="wp420969"> </a>
+</pre></div>
+<a name="wp420971"> </a><h4 class="pHeading3">
+Description
+</h4>
+<a name="wp420973"> </a><p class="pBody">
+Processes the data returned from the card in the format defined for Java Card RMI. Object references must contain class names. Extends <code class="cCode">CardObjectFactory</code>.
+</p>
+<a name="wp420976"> </a><p class="pBody">
+</p><div align="left">
+<table border="0" cellpadding="7" id="wp420226">
+  <caption></caption>
+<thead>
+<tr  align="center">    <th class="sun-lightblue" scope="col" colspan="2" rowspan="1"><a name="wp420226"> </a><div style="text-align: left" class="pTableHead">
+Member Summary
+</div>
+
+</th>
+</tr>
+</thead>
+  <tr align="left">    <td colspan="2" rowspan="1"><a name="wp420232"> </a><div class="pTableText">
+Constructors
+</div>
+</td>
+</tr>
+  <tr align="left">    <td><a name="wp420238"> </a><div class="pTableText">
+&#160;
+</div>
+</td>
+    <td><a name="wp420242"> </a><div class="pTableText">
+<span style="color: #3366CC"><a  href="com.sun.javacard.ocfrmiclientimpl.html#wp420989">JCCardObjectFactory(com.sun.javacard.javax.smartcard.rmiclient.CardAccessor ca)</a></span>
+</div>
+<a name="wp420244"> </a><div class="pTableText">
+The constructor.
+</div>
+</td>
+</tr>
+  <tr align="left">    <td colspan="2" rowspan="1"><a name="wp420250"> </a><div class="pTableText">
+Methods
+</div>
+</td>
+</tr>
+  <tr align="left">    <td><a name="wp420256"> </a><div class="pTableText">
+protected java.rmi.Remote
+</div>
+</td>
+    <td><div class="pPreformatted"><pre class="pPreformatted">
+<span style="color: #3366CC"><a  href="com.sun.javacard.ocfrmiclientimpl.html#wp421007">getRemoteObject(byte[] buffer, int tagOffset)</a></span><a name="wp420260"> </a>
+</pre></div>
+<a name="wp420262"> </a><div class="pTableText">
+Creates the stub instance for object reference returned from the card, assuming the card returned a reference with class name.
+</div>
+</td>
+</tr>
+  <tr align="left">    <td><a name="wp420268"> </a><div class="pTableText">
+ byte
+</div>
+</td>
+    <td><a name="wp420272"> </a><div class="pTableText">
+<span style="color: #3366CC"><a  href="com.sun.javacard.ocfrmiclientimpl.html#wp421037">getRemoteRefFormat()</a></span>
+</div>
+<a name="wp420274"> </a><div class="pTableText">
+Returns constant <code class="cCode">REF_FORMAT_CLASS</code> defined in class <code class="cCode">com.sun.javacard.javax.smartcard.rmiclient.CardObjectFactory</code>&#160;.
+</div>
+</td>
+</tr>
+<tr><td colspan="15"><hr class="pTableHr" /></td></tr>
+</table>
+</div>
+<p class="pBody">
+
+</p>
+<a name="wp420979"> </a><p class="pBody">
+</p><div align="left">
+<table border="0" cellpadding="7" id="wp420279">
+  <caption></caption>
+<thead>
+<tr  align="center">    <th  class="sun-verylightblue" scope="col"><a name="wp420279"> </a><div style="text-align: left" class="pTableHead">
+Inherited Member Summary
+</div>
+
+</th>
+</tr>
+</thead>
+  <tr align="left">    <td><a name="wp420283"> </a><div class="pTableText">
+Fields inherited from class <code class="cCode">CardObjectFactory</code>
+</div>
+</td>
+</tr>
+  <tr align="left">    <td><a name="wp420287"> </a><div class="pTableText">
+<code class="cCode">REF_FORMAT_CLASS</code>, <code class="cCode">REF_FORMAT_INTERFACES</code>, <code class="cCode">REF_FORMAT_NONE</code>, <code class="cCode">cardAccessor</code>
+</div>
+</td>
+</tr>
+  <tr align="left">    <td><a name="wp420291"> </a><div class="pTableText">
+Methods inherited from class <code class="cCode">CardObjectFactory</code>
+</div>
+</td>
+</tr>
+  <tr align="left">    <td><div class="pPreformatted"><pre class="pPreformatted">
+<code class="cCode">getINSByte()</code>, <code class="cCode">getObject(byte[], int, Class)</code>, <code class="cCode">setINSByte(byte)</code><a name="wp420295"> </a>
+</pre></div>
+</td>
+</tr>
+  <tr align="left">    <td><a name="wp420299"> </a><div class="pTableText">
+Methods inherited from class <code class="cCode">Object</code>
+</div>
+</td>
+</tr>
+  <tr align="left">    <td><a name="wp420303"> </a><div class="pTableText">
+<code class="cCode">clone()</code>, <code class="cCode">equals(Object)</code>, <code class="cCode">finalize()</code>, <code class="cCode">getClass()</code>, <code class="cCode">hashCode()</code>, <code class="cCode">notify()</code>, <code class="cCode">notifyAll()</code>, <code class="cCode">toString()</code>, <code class="cCode">wait()</code>, <code class="cCode">wait()</code>, <code class="cCode">wait()</code>
+</div>
+</td>
+</tr>
+<tr><td colspan="15"><hr class="pTableHr" /></td></tr>
+</table>
+</div>
+<p class="pBody">
+
+</p>
+<a name="wp420981"> </a><h3 class="pHeading2">
+Constructors
+</h3>
+<a name="wp420989"> </a><h4 class="pHeading3">
+JCCardObjectFactory(CardAccessor)
+</h4>
+<div style="color: #000000; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 5pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-transform: none" class="pPreformattedIndent">
+public <b class="cBold">JCCardObjectFactory</b>(<code class="cCode">com.sun.javacard.javax.smartcard.rmiclient.CardAccessor</code> ca)
+</div><a name="wp420991"> </a>
+
+<a name="wp420993"> </a><div style="color: #000000; font-size: 10pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 5pt; margin-top: 0pt; text-align: left; text-decoration: none; text-transform: none" class="pMemberIndent">
+The constructor.
+</div>
+<a name="wp420995"> </a><div style="color: #000000; font-size: 10pt; font-style: normal; font-variant: normal; font-weight: bold; margin-bottom: 0pt; margin-right: 0pt; margin-top: 5pt; text-align: left; text-decoration: none; text-transform: none" class="pHeading4Indent">
+Parameters:
+</div>
+<a name="wp420997"> </a><div style="color: #000000; font-size: 10pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 5pt; margin-top: 0pt; text-align: left; text-decoration: none; text-transform: none" class="pBodyIndent">
+<code class="cCode">ca</code> - The <code class="cCode">CardAccessor</code> of the current card session. It is passed to the Stubs/Proxies created by the Factory.
+</div>
+<a name="wp420999"> </a><h3 class="pHeading2">
+Methods
+</h3>
+<a name="wp421007"> </a><h4 class="pHeading3">
+getRemoteObject(byte[], int)
+</h4>
+<div style="color: #000000; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 5pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-transform: none" class="pPreformattedIndent">
+protected <code class="cCode">java.rmi.Remote</code> <b class="cBold">getRemoteObject</b>(byte[] buffer, int&#160;tagOffset)throws&#160;Exception
+</div><a name="wp421009"> </a>
+
+<a name="wp421011"> </a><div style="color: #000000; font-size: 10pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 5pt; margin-top: 0pt; text-align: left; text-decoration: none; text-transform: none" class="pMemberIndent">
+Creates the stub instance for object reference returned from the card, assuming the card returned a reference with class name.
+</div>
+<a name="wp421013"> </a><div style="color: #000000; font-size: 10pt; font-style: normal; font-variant: normal; font-weight: bold; margin-bottom: 0pt; margin-right: 0pt; margin-top: 5pt; text-align: left; text-decoration: none; text-transform: none" class="pHeading4Indent">
+Overrides:
+</div>
+<a name="wp421015"> </a><div style="color: #000000; font-size: 10pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 5pt; margin-top: 0pt; text-align: left; text-decoration: none; text-transform: none" class="pBodyIndent">
+<code class="cCode">getRemoteObject</code> in class <code class="cCode">CardObjectFactory</code>
+</div>
+<a name="wp421017"> </a><div style="color: #000000; font-size: 10pt; font-style: normal; font-variant: normal; font-weight: bold; margin-bottom: 0pt; margin-right: 0pt; margin-top: 5pt; text-align: left; text-decoration: none; text-transform: none" class="pHeading4Indent">
+Parameters:
+</div>
+<a name="wp421019"> </a><div style="color: #000000; font-size: 10pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 5pt; margin-top: 0pt; text-align: left; text-decoration: none; text-transform: none" class="pBodyIndent">
+<code class="cCode">buffer</code> - APDU buffer
+</div>
+<a name="wp421021"> </a><div style="color: #000000; font-size: 10pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 5pt; margin-top: 0pt; text-align: left; text-decoration: none; text-transform: none" class="pBodyIndent">
+<code class="cCode">tagOffset</code> - Offset to tag
+</div>
+<a name="wp421023"> </a><div style="color: #000000; font-size: 10pt; font-style: normal; font-variant: normal; font-weight: bold; margin-bottom: 0pt; margin-right: 0pt; margin-top: 5pt; text-align: left; text-decoration: none; text-transform: none" class="pHeading4Indent">
+Returns:
+</div>
+<a name="wp421025"> </a><div style="color: #000000; font-size: 10pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 5pt; margin-top: 0pt; text-align: left; text-decoration: none; text-transform: none" class="pBodyIndent">
+The resulting stub.
+</div>
+<a name="wp421027"> </a><div style="color: #000000; font-size: 10pt; font-style: normal; font-variant: normal; font-weight: bold; margin-bottom: 0pt; margin-right: 0pt; margin-top: 5pt; text-align: left; text-decoration: none; text-transform: none" class="pHeading4Indent">
+Throws:
+</div>
+<a name="wp421029"> </a><div style="color: #000000; font-size: 10pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 5pt; margin-top: 0pt; text-align: left; text-decoration: none; text-transform: none" class="pBodyIndent">
+<code class="cCode">java.lang.Exception</code> - Failed to instantiate a stub
+</div>
+<a name="wp421037"> </a><h4 class="pHeading3">
+getRemoteRefFormat()
+</h4>
+<div style="color: #000000; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 5pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-transform: none" class="pPreformattedIndent">
+public byte <b class="cBold">getRemoteRefFormat</b>()
+</div><a name="wp421039"> </a>
+
+<a name="wp421041"> </a><div style="color: #000000; font-size: 10pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 5pt; margin-top: 0pt; text-align: left; text-decoration: none; text-transform: none" class="pMemberIndent">
+Returns constant <code class="cCode">REF_FORMAT_CLASS</code> defined in class <code class="cCode">com.sun.javacard.javax.smartcard.rmiclient.CardObjectFactory</code>&#160;.
+</div>
+<a name="wp421043"> </a><div style="color: #000000; font-size: 10pt; font-style: normal; font-variant: normal; font-weight: bold; margin-bottom: 0pt; margin-right: 0pt; margin-top: 5pt; text-align: left; text-decoration: none; text-transform: none" class="pHeading4Indent">
+Overrides:
+</div>
+<a name="wp421045"> </a><div style="color: #000000; font-size: 10pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 5pt; margin-top: 0pt; text-align: left; text-decoration: none; text-transform: none" class="pBodyIndent">
+<code class="cCode">getRemoteRefFormat</code> in class <code class="cCode">CardObjectFactory</code>
+</div>
+<a name="wp421047"> </a><div style="color: #000000; font-size: 10pt; font-style: normal; font-variant: normal; font-weight: bold; margin-bottom: 0pt; margin-right: 0pt; margin-top: 5pt; text-align: left; text-decoration: none; text-transform: none" class="pHeading4Indent">
+Returns:
+</div>
+<a name="wp421049"> </a><div style="color: #000000; font-size: 10pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 5pt; margin-top: 0pt; text-align: left; text-decoration: none; text-transform: none" class="pBodyIndent">
+REF_FORMAT_CLASS value defined above
+</div>
+<a name="wp421051"> </a><div style="color: #000000; font-size: 18pt; font-style: normal; font-variant: normal; font-weight: normal; margin-left: 0pt; margin-right: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none" class="pClassPreHead">
+com.sun.javacard.ocfrmiclientimpl
+</div>
+<a name="wp421059"> </a><div style="color: #000000; font-size: 30pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 16pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+JCCardProxyFactory
+</div>
+<a name="wp421061"> </a><h4 class="pHeading3">
+Declaration
+</h4>
+<div class="pPreformatted"><pre class="pPreformatted">
+public class <b class="cBold">JCCardProxyFactory</b> extends <code class="cCode">com.sun.javacard.javax.smartcard.rmiclient.CardObjectFactory</code><a name="wp421063"> </a>
+ <a name="wp421065"> </a>
+<code class="cCode">java.lang.Object</code><a name="wp421067"> </a>
+&#160;&#160;|<a name="wp421069"> </a>
+&#160;&#160;+--<code class="cCode">com.sun.javacard.javax.smartcard.rmiclient.CardObjectFactory</code><a name="wp421071"> </a>
+&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;|<a name="wp421073"> </a>
+&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;+--<b class="cBold">com.sun.javacard.ocfrmiclientimpl.JCCardProxyFactory</b><a name="wp421075"> </a>
+</pre></div>
+<a name="wp421077"> </a><h4 class="pHeading3">
+Description
+</h4>
+<a name="wp421079"> </a><p class="pBody">
+Processes the data returned from the card in the format defined for Java Card RMI. Object references must contain lists of interface names. Extends <code class="cCode">CardObjectFactory</code>.
+</p>
+<a name="wp421082"> </a><p class="pBody">
+</p><div align="left">
+<table border="0" cellpadding="7" id="wp420310">
+  <caption></caption>
+<thead>
+<tr  align="center">    <th class="sun-lightblue" scope="col" colspan="2" rowspan="1"><a name="wp420310"> </a><div style="text-align: left" class="pTableHead">
+Member Summary
+</div>
+
+</th>
+</tr>
+</thead>
+  <tr align="left">    <td colspan="2" rowspan="1"><a name="wp420316"> </a><div class="pTableText">
+Constructors
+</div>
+</td>
+</tr>
+  <tr align="left">    <td><a name="wp420322"> </a><div class="pTableText">
+&#160;
+</div>
+</td>
+    <td><a name="wp420326"> </a><div class="pTableText">
+<span style="color: #3366CC"><a  href="com.sun.javacard.ocfrmiclientimpl.html#wp421095">JCCardProxyFactory(com.sun.javacard.javax.smartcard.rmiclient.CardAccessor ca)</a></span>
+</div>
+<a name="wp420328"> </a><div class="pTableText">
+Constructor for the factory.
+</div>
+</td>
+</tr>
+  <tr align="left">    <td colspan="2" rowspan="1"><a name="wp420334"> </a><div class="pTableText">
+Methods
+</div>
+</td>
+</tr>
+  <tr align="left">    <td><a name="wp420340"> </a><div class="pTableText">
+protected java.rmi.Remote
+</div>
+</td>
+    <td><div class="pPreformatted"><pre class="pPreformatted">
+<span style="color: #3366CC"><a  href="com.sun.javacard.ocfrmiclientimpl.html#wp421133">getRemoteObject(byte[] buffer, int tagOffset)</a></span><a name="wp420344"> </a>
+</pre></div>
+<a name="wp420346"> </a><div class="pTableText">
+Creates the stub instance for object reference returned from the card, assuming the card returned a reference with list of interface names.
+</div>
+</td>
+</tr>
+  <tr align="left">    <td><a name="wp420352"> </a><div class="pTableText">
+ byte
+</div>
+</td>
+    <td><a name="wp420356"> </a><div class="pTableText">
+<span style="color: #3366CC"><a  href="com.sun.javacard.ocfrmiclientimpl.html#wp421113">getRemoteRefFormat()</a></span>
+</div>
+<a name="wp420358"> </a><div class="pTableText">
+Returns constant <code class="cCode">REF_FORMAT_INTERFACES</code> defined in class <code class="cCode">com.sun.javacard.javax.smartcard.rmiclient.CardObjectFactory</code>&#160;.
+</div>
+</td>
+</tr>
+<tr><td colspan="15"><hr class="pTableHr" /></td></tr>
+</table>
+</div>
+<p class="pBody">
+
+</p>
+<a name="wp421085"> </a><p class="pBody">
+</p><div align="left">
+<table border="0" cellpadding="7" id="wp420363">
+  <caption></caption>
+<thead>
+<tr  align="center">    <th  class="sun-verylightblue" scope="col"><a name="wp420363"> </a><div style="text-align: left" class="pTableHead">
+Inherited Member Summary
+</div>
+
+</th>
+</tr>
+</thead>
+  <tr align="left">    <td><a name="wp420367"> </a><div class="pTableText">
+Fields inherited from class <code class="cCode">CardObjectFactory</code>
+</div>
+</td>
+</tr>
+  <tr align="left">    <td><a name="wp420371"> </a><div class="pTableText">
+<code class="cCode">REF_FORMAT_CLASS</code>, <code class="cCode">REF_FORMAT_INTERFACES</code>, <code class="cCode">REF_FORMAT_NONE</code>, <code class="cCode">cardAccessor</code>
+</div>
+</td>
+</tr>
+  <tr align="left">    <td><a name="wp420375"> </a><div class="pTableText">
+Methods inherited from class <code class="cCode">CardObjectFactory</code>
+</div>
+</td>
+</tr>
+  <tr align="left">    <td><div class="pPreformatted"><pre class="pPreformatted">
+<code class="cCode">getINSByte()</code>, <code class="cCode">getObject(byte[], int, Class)</code>, <code class="cCode">setINSByte(byte)</code><a name="wp420379"> </a>
+</pre></div>
+</td>
+</tr>
+  <tr align="left">    <td><a name="wp420383"> </a><div class="pTableText">
+Methods inherited from class <code class="cCode">Object</code>
+</div>
+</td>
+</tr>
+  <tr align="left">    <td><a name="wp420387"> </a><div class="pTableText">
+<code class="cCode">clone()</code>, <code class="cCode">equals(Object)</code>, <code class="cCode">finalize()</code>, <code class="cCode">getClass()</code>, <code class="cCode">hashCode()</code>, <code class="cCode">notify()</code>, <code class="cCode">notifyAll()</code>, <code class="cCode">toString()</code>, <code class="cCode">wait()</code>, <code class="cCode">wait()</code>, <code class="cCode">wait()</code>
+</div>
+</td>
+</tr>
+<tr><td colspan="15"><hr class="pTableHr" /></td></tr>
+</table>
+</div>
+<p class="pBody">
+
+</p>
+<a name="wp421087"> </a><h3 class="pHeading2">
+Constructors
+</h3>
+<a name="wp421095"> </a><h4 class="pHeading3">
+JCCardProxyFactory(CardAccessor)
+</h4>
+<div style="color: #000000; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 5pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-transform: none" class="pPreformattedIndent">
+public <b class="cBold">JCCardProxyFactory</b>(<code class="cCode">com.sun.javacard.javax.smartcard.rmiclient.CardAccessor</code> ca)
+</div><a name="wp421097"> </a>
+
+<a name="wp421099"> </a><div style="color: #000000; font-size: 10pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 5pt; margin-top: 0pt; text-align: left; text-decoration: none; text-transform: none" class="pMemberIndent">
+Constructor for the factory.
+</div>
+<a name="wp421101"> </a><div style="color: #000000; font-size: 10pt; font-style: normal; font-variant: normal; font-weight: bold; margin-bottom: 0pt; margin-right: 0pt; margin-top: 5pt; text-align: left; text-decoration: none; text-transform: none" class="pHeading4Indent">
+Parameters:
+</div>
+<a name="wp421103"> </a><div style="color: #000000; font-size: 10pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 5pt; margin-top: 0pt; text-align: left; text-decoration: none; text-transform: none" class="pBodyIndent">
+<code class="cCode">ca</code> - <code class="cCode">CardAccessor</code> for the current session.
+</div>
+<a name="wp421105"> </a><h3 class="pHeading2">
+Methods
+</h3>
+<a name="wp421113"> </a><h4 class="pHeading3">
+getRemoteRefFormat()
+</h4>
+<div style="color: #000000; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 5pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-transform: none" class="pPreformattedIndent">
+public byte <b class="cBold">getRemoteRefFormat</b>()
+</div><a name="wp421115"> </a>
+
+<a name="wp421117"> </a><div style="color: #000000; font-size: 10pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 5pt; margin-top: 0pt; text-align: left; text-decoration: none; text-transform: none" class="pMemberIndent">
+Returns constant <code class="cCode">REF_FORMAT_INTERFACES</code> defined in class <code class="cCode">com.sun.javacard.javax.smartcard.rmiclient.CardObjectFactory</code>&#160;.
+</div>
+<a name="wp421119"> </a><div style="color: #000000; font-size: 10pt; font-style: normal; font-variant: normal; font-weight: bold; margin-bottom: 0pt; margin-right: 0pt; margin-top: 5pt; text-align: left; text-decoration: none; text-transform: none" class="pHeading4Indent">
+Overrides:
+</div>
+<a name="wp421121"> </a><div style="color: #000000; font-size: 10pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 5pt; margin-top: 0pt; text-align: left; text-decoration: none; text-transform: none" class="pBodyIndent">
+<code class="cCode">getRemoteRefFormat</code> in class <code class="cCode">CardObjectFactory</code>
+</div>
+<a name="wp421123"> </a><div style="color: #000000; font-size: 10pt; font-style: normal; font-variant: normal; font-weight: bold; margin-bottom: 0pt; margin-right: 0pt; margin-top: 5pt; text-align: left; text-decoration: none; text-transform: none" class="pHeading4Indent">
+Returns:
+</div>
+<a name="wp421125"> </a><div style="color: #000000; font-size: 10pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 5pt; margin-top: 0pt; text-align: left; text-decoration: none; text-transform: none" class="pBodyIndent">
+The format constant.
+</div>
+<a name="wp421133"> </a><h4 class="pHeading3">
+getRemoteObject(byte[], int)
+</h4>
+<div style="color: #000000; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 5pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-transform: none" class="pPreformattedIndent">
+protected <code class="cCode">java.rmi.Remote</code> <b class="cBold">getRemoteObject</b>(byte[] buffer, int&#160;tagOffset)throws&#160;Exception
+</div><a name="wp421135"> </a>
+
+<a name="wp421137"> </a><div style="color: #000000; font-size: 10pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 5pt; margin-top: 0pt; text-align: left; text-decoration: none; text-transform: none" class="pMemberIndent">
+Creates the stub instance for object reference returned from the card, assuming the card returned a reference with list of interface names.
+</div>
+<a name="wp421139"> </a><div style="color: #000000; font-size: 10pt; font-style: normal; font-variant: normal; font-weight: bold; margin-bottom: 0pt; margin-right: 0pt; margin-top: 5pt; text-align: left; text-decoration: none; text-transform: none" class="pHeading4Indent">
+Overrides:
+</div>
+<a name="wp421141"> </a><div style="color: #000000; font-size: 10pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 5pt; margin-top: 0pt; text-align: left; text-decoration: none; text-transform: none" class="pBodyIndent">
+<code class="cCode">getRemoteObject</code> in class <code class="cCode">CardObjectFactory</code>
+</div>
+<a name="wp421143"> </a><div style="color: #000000; font-size: 10pt; font-style: normal; font-variant: normal; font-weight: bold; margin-bottom: 0pt; margin-right: 0pt; margin-top: 5pt; text-align: left; text-decoration: none; text-transform: none" class="pHeading4Indent">
+Parameters:
+</div>
+<a name="wp421145"> </a><div style="color: #000000; font-size: 10pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 5pt; margin-top: 0pt; text-align: left; text-decoration: none; text-transform: none" class="pBodyIndent">
+<code class="cCode">buffer</code> - <code class="cCode">APDU</code> buffer.
+</div>
+<a name="wp421147"> </a><div style="color: #000000; font-size: 10pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 5pt; margin-top: 0pt; text-align: left; text-decoration: none; text-transform: none" class="pBodyIndent">
+<code class="cCode">tagOffset</code> - Offset to tag.
+</div>
+<a name="wp421149"> </a><div style="color: #000000; font-size: 10pt; font-style: normal; font-variant: normal; font-weight: bold; margin-bottom: 0pt; margin-right: 0pt; margin-top: 5pt; text-align: left; text-decoration: none; text-transform: none" class="pHeading4Indent">
+Returns:
+</div>
+<a name="wp421151"> </a><div style="color: #000000; font-size: 10pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 5pt; margin-top: 0pt; text-align: left; text-decoration: none; text-transform: none" class="pBodyIndent">
+The instance of the proxy.
+</div>
+<a name="wp421153"> </a><div style="color: #000000; font-size: 10pt; font-style: normal; font-variant: normal; font-weight: bold; margin-bottom: 0pt; margin-right: 0pt; margin-top: 5pt; text-align: left; text-decoration: none; text-transform: none" class="pHeading4Indent">
+Throws:
+</div>
+<a name="wp421155"> </a><div style="color: #000000; font-size: 10pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 5pt; margin-top: 0pt; text-align: left; text-decoration: none; text-transform: none" class="pBodyIndent">
+<code class="cCode">java.lang.Exception</code> - Thrown if the proxy instance cannot be instantiated
+</div>
+<a name="wp421157"> </a><div style="color: #000000; font-size: 18pt; font-style: normal; font-variant: normal; font-weight: normal; margin-left: 0pt; margin-right: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none" class="pClassPreHead">
+com.sun.javacard.ocfrmiclientimpl
+</div>
+<a name="wp421165"> </a><div style="color: #000000; font-size: 30pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 16pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+JCRemoteRefImpl
+</div>
+<a name="wp421167"> </a><h4 class="pHeading3">
+Declaration
+</h4>
+<div class="pPreformatted"><pre class="pPreformatted">
+public class <b class="cBold">JCRemoteRefImpl</b> implements <code class="cCode">java.rmi.server.RemoteRef</code>, <code class="cCode">java.lang.reflect.InvocationHandler</code><a name="wp421169"> </a>
+ <a name="wp421171"> </a>
+<code class="cCode">java.lang.Object</code><a name="wp421173"> </a>
+&#160;&#160;|<a name="wp421175"> </a>
+&#160;&#160;+--<b class="cBold">com.sun.javacard.ocfrmiclientimpl.JCRemoteRefImpl</b><a name="wp421177"> </a>
+</pre></div>
+<a name="wp421179"> </a><h5 class="pHeading4">
+All Implemented Interfaces:
+</h5>
+<a name="wp421181"> </a><p class="pBody">
+<code class="cCode">java.io.Externalizable</code>, <code class="cCode">java.lang.reflect.InvocationHandler</code>, <code class="cCode">java.rmi.server.RemoteRef</code>, <code class="cCode">java.io.Serializable</code>
+</p>
+<a name="wp421183"> </a><h4 class="pHeading3">
+Description
+</h4>
+<a name="wp421185"> </a><p class="pBody">
+Represents a reference to a card object. This class is a Java Card RMI implementation of the <code class="cCode">RemoteRef</code> interface. It is used in conjunction with Java RMIC generated stubs or dynamically generated proxies for Java Card RMI method invocations.
+</p>
+<a name="wp421188"> </a><p class="pBody">
+</p><div align="left">
+<table border="0" cellpadding="7" id="wp420394">
+  <caption></caption>
+<thead>
+<tr  align="center">    <th class="sun-lightblue" scope="col" colspan="2" rowspan="1"><a name="wp420394"> </a><div style="text-align: left" class="pTableHead">
+Member Summary
+</div>
+
+</th>
+</tr>
+</thead>
+  <tr align="left">    <td colspan="2" rowspan="1"><a name="wp420400"> </a><div class="pTableText">
+Constructors
+</div>
+</td>
+</tr>
+  <tr align="left">    <td><a name="wp420406"> </a><div class="pTableText">
+&#160;
+</div>
+</td>
+    <td><a name="wp420410"> </a><div class="pTableText">
+<span style="color: #3366CC"><a  href="com.sun.javacard.ocfrmiclientimpl.html#wp421201">JCRemoteRefImpl(short objID, java.lang.String a_string, com.sun.javacard.javax.smartcard.rmiclient.CardAccessor cA, com.sun.javacard.javax.smartcard.rmiclient.CardObjectFactory cOF)</a></span>
+</div>
+<a name="wp420412"> </a><div class="pTableText">
+Creates new <code class="cCode">JCRemoteRefImpl</code>
+</div>
+</td>
+</tr>
+  <tr align="left">    <td colspan="2" rowspan="1"><a name="wp420418"> </a><div class="pTableText">
+Methods
+</div>
+</td>
+</tr>
+  <tr align="left">    <td><a name="wp420424"> </a><div class="pTableText">
+ void
+</div>
+</td>
+    <td><div class="pPreformatted"><pre class="pPreformatted">
+<span style="color: #3366CC"><a  href="com.sun.javacard.ocfrmiclientimpl.html#wp421437">done(java.rmi.server.RemoteCall remoteCall)</a></span><a name="wp420428"> </a>
+</pre></div>
+<a name="wp420430"> </a><div class="pTableText">
+Deprecated and not implemented
+</div>
+</td>
+</tr>
+  <tr align="left">    <td><a name="wp420436"> </a><div class="pTableText">
+ java.lang.String
+</div>
+</td>
+    <td><div class="pPreformatted"><pre class="pPreformatted">
+<span style="color: #3366CC"><a  href="com.sun.javacard.ocfrmiclientimpl.html#wp421225">getRefClass(java.io.ObjectOutput objectOutput)</a></span><a name="wp420440"> </a>
+</pre></div>
+<a name="wp420442"> </a><div class="pTableText">
+Unsupported operation.
+</div>
+</td>
+</tr>
+  <tr align="left">    <td><a name="wp420448"> </a><div class="pTableText">
+ java.lang.Object
+</div>
+</td>
+    <td><div class="pPreformatted"><pre class="pPreformatted">
+<span style="color: #3366CC"><a  href="com.sun.javacard.ocfrmiclientimpl.html#wp421461">invoke(java.lang.Object obj, java.lang.reflect.Method method, java.lang.Object params)</a></span><a name="wp420452"> </a>
+</pre></div>
+<a name="wp420454"> </a><div class="pTableText">
+This method is used by dynamically generated proxies.
+</div>
+</td>
+</tr>
+  <tr align="left">    <td><a name="wp420460"> </a><div class="pTableText">
+ void
+</div>
+</td>
+    <td><div class="pPreformatted"><pre class="pPreformatted">
+<span style="color: #3366CC"><a  href="com.sun.javacard.ocfrmiclientimpl.html#wp421389">invoke(java.rmi.server.RemoteCall remoteCall)</a></span><a name="wp420464"> </a>
+</pre></div>
+<a name="wp420466"> </a><div class="pTableText">
+Deprecated and not implemented
+</div>
+</td>
+</tr>
+  <tr align="left">    <td><a name="wp420472"> </a><div class="pTableText">
+ java.lang.Object
+</div>
+</td>
+    <td><div class="pPreformatted"><pre class="pPreformatted">
+<span style="color: #3366CC"><a  href="com.sun.javacard.ocfrmiclientimpl.html#wp421243">invoke(java.rmi.Remote remote, java.lang.reflect.Method method, java.lang.Object params, long unused)</a></span><a name="wp420476"> </a>
+</pre></div>
+<a name="wp420478"> </a><div class="pTableText">
+This method is used by rmic-generated stubs.
+</div>
+</td>
+</tr>
+  <tr align="left">    <td><a name="wp420484"> </a><div class="pTableText">
+ java.rmi.server.RemoteCall
+</div>
+</td>
+    <td><div class="pPreformatted"><pre class="pPreformatted">
+<span style="color: #3366CC"><a  href="com.sun.javacard.ocfrmiclientimpl.html#wp421365">newCall(java.rmi.server.RemoteObject remoteObject, java.rmi.server.Operation operation, int param, long param3)</a></span><a name="wp420488"> </a>
+</pre></div>
+<a name="wp420490"> </a><div class="pTableText">
+Deprecated and not implemented
+</div>
+</td>
+</tr>
+  <tr align="left">    <td><a name="wp420496"> </a><div class="pTableText">
+ void
+</div>
+</td>
+    <td><div class="pPreformatted"><pre class="pPreformatted">
+<span style="color: #3366CC"><a  href="com.sun.javacard.ocfrmiclientimpl.html#wp421321">readExternal(java.io.ObjectInput objectInput)</a></span><a name="wp420500"> </a>
+</pre></div>
+<a name="wp420502"> </a><div class="pTableText">
+Unsupported operation.
+</div>
+</td>
+</tr>
+  <tr align="left">    <td><a name="wp420508"> </a><div class="pTableText">
+ boolean
+</div>
+</td>
+    <td><div class="pPreformatted"><pre class="pPreformatted">
+<span style="color: #3366CC"><a  href="com.sun.javacard.ocfrmiclientimpl.html#wp421413">remoteEquals(java.rmi.server.RemoteRef remoteRef)</a></span><a name="wp420512"> </a>
+</pre></div>
+<a name="wp420514"> </a><div class="pTableText">
+Compares two remote objects for being identical.
+</div>
+</td>
+</tr>
+  <tr align="left">    <td><a name="wp420520"> </a><div class="pTableText">
+ int
+</div>
+</td>
+    <td><div class="pPreformatted"><pre class="pPreformatted">
+<span style="color: #3366CC"><a  href="com.sun.javacard.ocfrmiclientimpl.html#wp421281">remoteHashCode()</a></span><a name="wp420524"> </a>
+</pre></div>
+<a name="wp420526"> </a><div class="pTableText">
+Unsupported operation.
+</div>
+</td>
+</tr>
+  <tr align="left">    <td><a name="wp420532"> </a><div class="pTableText">
+ java.lang.String
+</div>
+</td>
+    <td><div class="pPreformatted"><pre class="pPreformatted">
+<span style="color: #3366CC"><a  href="com.sun.javacard.ocfrmiclientimpl.html#wp421301">remoteToString()</a></span><a name="wp420536"> </a>
+</pre></div>
+<a name="wp420538"> </a><div class="pTableText">
+String representation of remote object.
+</div>
+</td>
+</tr>
+  <tr align="left">    <td><a name="wp420544"> </a><div class="pTableText">
+ void
+</div>
+</td>
+    <td><a name="wp420548"> </a><div class="pTableText">
+<span style="color: #3366CC"><a  href="com.sun.javacard.ocfrmiclientimpl.html#wp421343">writeExternal(java.io.ObjectOutput objectOutput)</a></span>
+</div>
+<a name="wp420550"> </a><div class="pTableText">
+Unsupported operation.
+</div>
+</td>
+</tr>
+<tr><td colspan="15"><hr class="pTableHr" /></td></tr>
+</table>
+</div>
+<p class="pBody">
+
+</p>
+<a name="wp421191"> </a><p class="pBody">
+</p><div align="left">
+<table border="0" cellpadding="7" id="wp420555">
+  <caption></caption>
+<thead>
+<tr  align="center">    <th  class="sun-verylightblue" scope="col"><a name="wp420555"> </a><div style="text-align: left" class="pTableHead">
+Inherited Member Summary
+</div>
+
+</th>
+</tr>
+</thead>
+  <tr align="left">    <td><a name="wp420559"> </a><div class="pTableText">
+Fields inherited from interface <code class="cCode">RemoteRef</code>
+</div>
+</td>
+</tr>
+  <tr align="left">    <td><a name="wp420563"> </a><div class="pTableText">
+<code class="cCode">packagePrefix</code>, <code class="cCode">serialVersionUID</code>
+</div>
+</td>
+</tr>
+  <tr align="left">    <td><a name="wp420567"> </a><div class="pTableText">
+Methods inherited from class <code class="cCode">Object</code>
+</div>
+</td>
+</tr>
+  <tr align="left">    <td><a name="wp420571"> </a><div class="pTableText">
+<code class="cCode">clone()</code>, <code class="cCode">equals(Object)</code>, <code class="cCode">finalize()</code>, <code class="cCode">getClass()</code>, <code class="cCode">hashCode()</code>, <code class="cCode">notify()</code>, <code class="cCode">notifyAll()</code>, <code class="cCode">toString()</code>, <code class="cCode">wait()</code>, <code class="cCode">wait()</code>, <code class="cCode">wait()</code>
+</div>
+</td>
+</tr>
+<tr><td colspan="15"><hr class="pTableHr" /></td></tr>
+</table>
+</div>
+<p class="pBody">
+
+</p>
+<a name="wp421193"> </a><h3 class="pHeading2">
+Constructors
+</h3>
+<a name="wp421201"> </a><h4 class="pHeading3">
+JCRemoteRefImpl(short, String, CardAccessor, CardObjectFactory)
+</h4>
+<div style="color: #000000; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 5pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-transform: none" class="pPreformattedIndent">
+public <b class="cBold">JCRemoteRefImpl</b>(short objID, <code class="cCode">java.lang.String</code>&#160;a_string, <code class="cCode">com.sun.javacard.javax.smartcard.rmiclient.CardAccessor</code>&#160;cA, <code class="cCode">com.sun.javacard.javax.smartcard.rmiclient.CardObjectFactory</code>&#160;cOF)
+</div><a name="wp421203"> </a>
+
+<a name="wp421205"> </a><div style="color: #000000; font-size: 10pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 5pt; margin-top: 0pt; text-align: left; text-decoration: none; text-transform: none" class="pMemberIndent">
+Creates new <code class="cCode">JCRemoteRefImpl</code>
+</div>
+<a name="wp421207"> </a><div style="color: #000000; font-size: 10pt; font-style: normal; font-variant: normal; font-weight: bold; margin-bottom: 0pt; margin-right: 0pt; margin-top: 5pt; text-align: left; text-decoration: none; text-transform: none" class="pHeading4Indent">
+Parameters:
+</div>
+<a name="wp421209"> </a><div style="color: #000000; font-size: 10pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 5pt; margin-top: 0pt; text-align: left; text-decoration: none; text-transform: none" class="pBodyIndent">
+<code class="cCode">objID</code> - 2 byte Object ID from card remote reference descriptor
+</div>
+<a name="wp421211"> </a><div style="color: #000000; font-size: 10pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 5pt; margin-top: 0pt; text-align: left; text-decoration: none; text-transform: none" class="pBodyIndent">
+<code class="cCode">a_string</code> - Anticollision string for the class of the remote object
+</div>
+<a name="wp421213"> </a><div style="color: #000000; font-size: 10pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 5pt; margin-top: 0pt; text-align: left; text-decoration: none; text-transform: none" class="pBodyIndent">
+<code class="cCode">cA</code> - <code class="cCode">CardAccessor</code>
+</div>
+<a name="wp421215"> </a><div style="color: #000000; font-size: 10pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 5pt; margin-top: 0pt; text-align: left; text-decoration: none; text-transform: none" class="pBodyIndent">
+<code class="cCode">cOF</code> - <code class="cCode">CardObjectFactory</code>
+</div>
+<a name="wp421217"> </a><h3 class="pHeading2">
+Methods
+</h3>
+<a name="wp421225"> </a><h4 class="pHeading3">
+getRefClass(ObjectOutput)
+</h4>
+<div style="color: #000000; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 5pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-transform: none" class="pPreformattedIndent">
+public <code class="cCode">java.lang.String</code> <b class="cBold">getRefClass</b>(<code class="cCode">java.io.ObjectOutput</code> objectOutput)
+</div><a name="wp421227"> </a>
+
+<a name="wp421229"> </a><div style="color: #000000; font-size: 10pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 5pt; margin-top: 0pt; text-align: left; text-decoration: none; text-transform: none" class="pMemberIndent">
+Unsupported operation.
+</div>
+<a name="wp421231"> </a><div style="color: #000000; font-size: 10pt; font-style: normal; font-variant: normal; font-weight: bold; margin-bottom: 0pt; margin-right: 0pt; margin-top: 5pt; text-align: left; text-decoration: none; text-transform: none" class="pHeading4Indent">
+Specified By:
+</div>
+<a name="wp421233"> </a><div style="color: #000000; font-size: 10pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 5pt; margin-top: 0pt; text-align: left; text-decoration: none; text-transform: none" class="pBodyIndent">
+<code class="cCode">getRefClass</code> in interface <code class="cCode">RemoteRef</code>
+</div>
+<a name="wp421235"> </a><div style="color: #000000; font-size: 10pt; font-style: normal; font-variant: normal; font-weight: bold; margin-bottom: 0pt; margin-right: 0pt; margin-top: 5pt; text-align: left; text-decoration: none; text-transform: none" class="pHeading4Indent">
+Parameters:
+</div>
+<a name="wp421243"> </a><h4 class="pHeading3">
+invoke(Remote, Method, Object[], long)
+</h4>
+<div style="color: #000000; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 5pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-transform: none" class="pPreformattedIndent">
+public <code class="cCode">java.lang.Object</code> <b class="cBold">invoke</b>(<code class="cCode">java.rmi.Remote</code> remote, <code class="cCode">java.lang.reflect.Method</code>&#160;method, <code class="cCode">java.lang.Object[]</code>&#160;params, long&#160;unused)throws&#160;IOException,&#160;RemoteException,&#160;Exception
+</div><a name="wp421245"> </a>
+
+<a name="wp421247"> </a><div style="color: #000000; font-size: 10pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 5pt; margin-top: 0pt; text-align: left; text-decoration: none; text-transform: none" class="pMemberIndent">
+This method is used by rmic-generated stubs.
+</div>
+<a name="wp421249"> </a><div style="color: #000000; font-size: 10pt; font-style: normal; font-variant: normal; font-weight: bold; margin-bottom: 0pt; margin-right: 0pt; margin-top: 5pt; text-align: left; text-decoration: none; text-transform: none" class="pHeading4Indent">
+Specified By:
+</div>
+<a name="wp421251"> </a><div style="color: #000000; font-size: 10pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 5pt; margin-top: 0pt; text-align: left; text-decoration: none; text-transform: none" class="pBodyIndent">
+<code class="cCode">invoke</code> in interface <code class="cCode">RemoteRef</code>
+</div>
+<a name="wp421253"> </a><div style="color: #000000; font-size: 10pt; font-style: normal; font-variant: normal; font-weight: bold; margin-bottom: 0pt; margin-right: 0pt; margin-top: 5pt; text-align: left; text-decoration: none; text-transform: none" class="pHeading4Indent">
+Parameters:
+</div>
+<a name="wp421255"> </a><div style="color: #000000; font-size: 10pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 5pt; margin-top: 0pt; text-align: left; text-decoration: none; text-transform: none" class="pBodyIndent">
+<code class="cCode">remote</code> - Reference to the stub - not used.
+</div>
+<a name="wp421257"> </a><div style="color: #000000; font-size: 10pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 5pt; margin-top: 0pt; text-align: left; text-decoration: none; text-transform: none" class="pBodyIndent">
+<code class="cCode">method</code> - <code class="cCode">java.reflect.Method</code> object containing information about the method to be invoked.
+</div>
+<a name="wp421259"> </a><div style="color: #000000; font-size: 10pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 5pt; margin-top: 0pt; text-align: left; text-decoration: none; text-transform: none" class="pBodyIndent">
+<code class="cCode">params</code> - Array of parameters. Primitives are wrapped.
+</div>
+<a name="wp421261"> </a><div style="color: #000000; font-size: 10pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 5pt; margin-top: 0pt; text-align: left; text-decoration: none; text-transform: none" class="pBodyIndent">
+<code class="cCode">unused</code> - rmic-generated hash of the method. Not used.
+</div>
+<a name="wp421263"> </a><div style="color: #000000; font-size: 10pt; font-style: normal; font-variant: normal; font-weight: bold; margin-bottom: 0pt; margin-right: 0pt; margin-top: 5pt; text-align: left; text-decoration: none; text-transform: none" class="pHeading4Indent">
+Returns:
+</div>
+<a name="wp421265"> </a><div style="color: #000000; font-size: 10pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 5pt; margin-top: 0pt; text-align: left; text-decoration: none; text-transform: none" class="pBodyIndent">
+The result returned from the card.
+</div>
+<a name="wp421267"> </a><div style="color: #000000; font-size: 10pt; font-style: normal; font-variant: normal; font-weight: bold; margin-bottom: 0pt; margin-right: 0pt; margin-top: 5pt; text-align: left; text-decoration: none; text-transform: none" class="pHeading4Indent">
+Throws:
+</div>
+<a name="wp421269"> </a><div style="color: #000000; font-size: 10pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 5pt; margin-top: 0pt; text-align: left; text-decoration: none; text-transform: none" class="pBodyIndent">
+<code class="cCode">java.io.IOException</code> - If a communication error occurred.
+</div>
+<a name="wp421271"> </a><div style="color: #000000; font-size: 10pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 5pt; margin-top: 0pt; text-align: left; text-decoration: none; text-transform: none" class="pBodyIndent">
+<code class="cCode">java.rmi.RemoteException</code> - If an RMI error occurred.
+</div>
+<a name="wp421273"> </a><div style="color: #000000; font-size: 10pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 5pt; margin-top: 0pt; text-align: left; text-decoration: none; text-transform: none" class="pBodyIndent">
+<code class="cCode">java.lang.Exception</code> - Exception corresponding to the one that was thrown on the card.
+</div>
+<a name="wp421281"> </a><h4 class="pHeading3">
+remoteHashCode()
+</h4>
+<div style="color: #000000; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 5pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-transform: none" class="pPreformattedIndent">
+public int <b class="cBold">remoteHashCode</b>()
+</div><a name="wp421283"> </a>
+
+<a name="wp421285"> </a><div style="color: #000000; font-size: 10pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 5pt; margin-top: 0pt; text-align: left; text-decoration: none; text-transform: none" class="pMemberIndent">
+Unsupported operation.
+</div>
+<a name="wp421287"> </a><div style="color: #000000; font-size: 10pt; font-style: normal; font-variant: normal; font-weight: bold; margin-bottom: 0pt; margin-right: 0pt; margin-top: 5pt; text-align: left; text-decoration: none; text-transform: none" class="pHeading4Indent">
+Specified By:
+</div>
+<a name="wp421289"> </a><div style="color: #000000; font-size: 10pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 5pt; margin-top: 0pt; text-align: left; text-decoration: none; text-transform: none" class="pBodyIndent">
+<code class="cCode">remoteHashCode</code> in interface <code class="cCode">RemoteRef</code>
+</div>
+<a name="wp421291"> </a><div style="color: #000000; font-size: 10pt; font-style: normal; font-variant: normal; font-weight: bold; margin-bottom: 0pt; margin-right: 0pt; margin-top: 5pt; text-align: left; text-decoration: none; text-transform: none" class="pHeading4Indent">
+Returns:
+</div>
+<a name="wp421293"> </a><div style="color: #000000; font-size: 10pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 5pt; margin-top: 0pt; text-align: left; text-decoration: none; text-transform: none" class="pBodyIndent">
+A number which is the same for all objects.
+</div>
+<a name="wp421301"> </a><h4 class="pHeading3">
+remoteToString()
+</h4>
+<div style="color: #000000; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 5pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-transform: none" class="pPreformattedIndent">
+public <code class="cCode">java.lang.String</code> <b class="cBold">remoteToString</b>()
+</div><a name="wp421303"> </a>
+
+<a name="wp421305"> </a><div style="color: #000000; font-size: 10pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 5pt; margin-top: 0pt; text-align: left; text-decoration: none; text-transform: none" class="pMemberIndent">
+String representation of remote object.
+</div>
+<a name="wp421307"> </a><div style="color: #000000; font-size: 10pt; font-style: normal; font-variant: normal; font-weight: bold; margin-bottom: 0pt; margin-right: 0pt; margin-top: 5pt; text-align: left; text-decoration: none; text-transform: none" class="pHeading4Indent">
+Specified By:
+</div>
+<a name="wp421309"> </a><div style="color: #000000; font-size: 10pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 5pt; margin-top: 0pt; text-align: left; text-decoration: none; text-transform: none" class="pBodyIndent">
+<code class="cCode">remoteToString</code> in interface <code class="cCode">RemoteRef</code>
+</div>
+<a name="wp421311"> </a><div style="color: #000000; font-size: 10pt; font-style: normal; font-variant: normal; font-weight: bold; margin-bottom: 0pt; margin-right: 0pt; margin-top: 5pt; text-align: left; text-decoration: none; text-transform: none" class="pHeading4Indent">
+Returns:
+</div>
+<a name="wp421313"> </a><div style="color: #000000; font-size: 10pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 5pt; margin-top: 0pt; text-align: left; text-decoration: none; text-transform: none" class="pBodyIndent">
+A <code class="cCode">String</code> representation of the remote object.
+</div>
+<a name="wp421321"> </a><h4 class="pHeading3">
+readExternal(ObjectInput)
+</h4>
+<div style="color: #000000; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 5pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-transform: none" class="pPreformattedIndent">
+public void <b class="cBold">readExternal</b>(<code class="cCode">java.io.ObjectInput</code> objectInput)throws&#160;IOException,&#160;ClassNotFoundException
+</div><a name="wp421323"> </a>
+
+<a name="wp421325"> </a><div style="color: #000000; font-size: 10pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 5pt; margin-top: 0pt; text-align: left; text-decoration: none; text-transform: none" class="pMemberIndent">
+Unsupported operation.
+</div>
+<a name="wp421327"> </a><div style="color: #000000; font-size: 10pt; font-style: normal; font-variant: normal; font-weight: bold; margin-bottom: 0pt; margin-right: 0pt; margin-top: 5pt; text-align: left; text-decoration: none; text-transform: none" class="pHeading4Indent">
+Specified By:
+</div>
+<a name="wp421329"> </a><div style="color: #000000; font-size: 10pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 5pt; margin-top: 0pt; text-align: left; text-decoration: none; text-transform: none" class="pBodyIndent">
+<code class="cCode">readExternal</code> in interface <code class="cCode">Externalizable</code>
+</div>
+<a name="wp421331"> </a><div style="color: #000000; font-size: 10pt; font-style: normal; font-variant: normal; font-weight: bold; margin-bottom: 0pt; margin-right: 0pt; margin-top: 5pt; text-align: left; text-decoration: none; text-transform: none" class="pHeading4Indent">
+Parameters:
+</div>
+<a name="wp421333"> </a><div style="color: #000000; font-size: 10pt; font-style: normal; font-variant: normal; font-weight: bold; margin-bottom: 0pt; margin-right: 0pt; margin-top: 5pt; text-align: left; text-decoration: none; text-transform: none" class="pHeading4Indent">
+Throws:
+</div>
+<a name="wp421335"> </a><div style="color: #000000; font-size: 10pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 5pt; margin-top: 0pt; text-align: left; text-decoration: none; text-transform: none" class="pBodyIndent">
+<code class="cCode">java.io.IOException</code>, <code class="cCode">java.lang.ClassNotFoundException</code>
+</div>
+<a name="wp421343"> </a><h4 class="pHeading3">
+writeExternal(ObjectOutput)
+</h4>
+<div style="color: #000000; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 5pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-transform: none" class="pPreformattedIndent">
+public void <b class="cBold">writeExternal</b>(<code class="cCode">java.io.ObjectOutput</code> objectOutput)throws&#160;IOException
+</div><a name="wp421345"> </a>
+
+<a name="wp421347"> </a><div style="color: #000000; font-size: 10pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 5pt; margin-top: 0pt; text-align: left; text-decoration: none; text-transform: none" class="pMemberIndent">
+Unsupported operation.
+</div>
+<a name="wp421349"> </a><div style="color: #000000; font-size: 10pt; font-style: normal; font-variant: normal; font-weight: bold; margin-bottom: 0pt; margin-right: 0pt; margin-top: 5pt; text-align: left; text-decoration: none; text-transform: none" class="pHeading4Indent">
+Specified By:
+</div>
+<a name="wp421351"> </a><div style="color: #000000; font-size: 10pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 5pt; margin-top: 0pt; text-align: left; text-decoration: none; text-transform: none" class="pBodyIndent">
+<code class="cCode">writeExternal</code> in interface <code class="cCode">Externalizable</code>
+</div>
+<a name="wp421353"> </a><div style="color: #000000; font-size: 10pt; font-style: normal; font-variant: normal; font-weight: bold; margin-bottom: 0pt; margin-right: 0pt; margin-top: 5pt; text-align: left; text-decoration: none; text-transform: none" class="pHeading4Indent">
+Parameters:
+</div>
+<a name="wp421355"> </a><div style="color: #000000; font-size: 10pt; font-style: normal; font-variant: normal; font-weight: bold; margin-bottom: 0pt; margin-right: 0pt; margin-top: 5pt; text-align: left; text-decoration: none; text-transform: none" class="pHeading4Indent">
+Throws:
+</div>
+<a name="wp421357"> </a><div style="color: #000000; font-size: 10pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 5pt; margin-top: 0pt; text-align: left; text-decoration: none; text-transform: none" class="pBodyIndent">
+<code class="cCode">java.io.IOException</code>
+</div>
+<a name="wp421365"> </a><h4 class="pHeading3">
+newCall(RemoteObject, Operation[], int, long)
+</h4>
+<div style="color: #000000; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 5pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-transform: none" class="pPreformattedIndent">
+public <code class="cCode">java.rmi.server.RemoteCall</code> <b class="cBold">newCall</b>(<code class="cCode">java.rmi.server.RemoteObject</code> remoteObject, <code class="cCode">java.rmi.server.Operation[]</code>&#160;operation, int&#160;param, long&#160;param3)throws&#160;RemoteException
+</div><a name="wp421367"> </a>
+
+<a name="wp421369"> </a><div style="color: #000000; font-size: 10pt; font-style: normal; font-variant: normal; font-weight: bold; margin-bottom: 0pt; margin-right: 0pt; margin-top: 5pt; text-align: left; text-decoration: none; text-transform: none" class="pHeading4Indent">
+Deprecated.
+</div>
+<a name="wp421371"> </a><div style="color: #000000; font-size: 10pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 5pt; margin-top: 0pt; text-align: left; text-decoration: none; text-transform: none" class="pBodyIndent">
+Deprecated and not implemented
+</div>
+<a name="wp421373"> </a><div style="color: #000000; font-size: 10pt; font-style: normal; font-variant: normal; font-weight: bold; margin-bottom: 0pt; margin-right: 0pt; margin-top: 5pt; text-align: left; text-decoration: none; text-transform: none" class="pHeading4Indent">
+Specified By:
+</div>
+<a name="wp421375"> </a><div style="color: #000000; font-size: 10pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 5pt; margin-top: 0pt; text-align: left; text-decoration: none; text-transform: none" class="pBodyIndent">
+<code class="cCode">newCall</code> in interface <code class="cCode">RemoteRef</code>
+</div>
+<a name="wp421377"> </a><div style="color: #000000; font-size: 10pt; font-style: normal; font-variant: normal; font-weight: bold; margin-bottom: 0pt; margin-right: 0pt; margin-top: 5pt; text-align: left; text-decoration: none; text-transform: none" class="pHeading4Indent">
+Parameters:
+</div>
+<a name="wp421379"> </a><div style="color: #000000; font-size: 10pt; font-style: normal; font-variant: normal; font-weight: bold; margin-bottom: 0pt; margin-right: 0pt; margin-top: 5pt; text-align: left; text-decoration: none; text-transform: none" class="pHeading4Indent">
+Throws:
+</div>
+<a name="wp421381"> </a><div style="color: #000000; font-size: 10pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 5pt; margin-top: 0pt; text-align: left; text-decoration: none; text-transform: none" class="pBodyIndent">
+<code class="cCode">java.rmi.RemoteException</code>
+</div>
+<a name="wp421389"> </a><h4 class="pHeading3">
+invoke(RemoteCall)
+</h4>
+<div style="color: #000000; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 5pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-transform: none" class="pPreformattedIndent">
+public void <b class="cBold">invoke</b>(<code class="cCode">java.rmi.server.RemoteCall</code> remoteCall)throws&#160;Exception
+</div><a name="wp421391"> </a>
+
+<a name="wp421393"> </a><div style="color: #000000; font-size: 10pt; font-style: normal; font-variant: normal; font-weight: bold; margin-bottom: 0pt; margin-right: 0pt; margin-top: 5pt; text-align: left; text-decoration: none; text-transform: none" class="pHeading4Indent">
+Deprecated.
+</div>
+<a name="wp421395"> </a><div style="color: #000000; font-size: 10pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 5pt; margin-top: 0pt; text-align: left; text-decoration: none; text-transform: none" class="pBodyIndent">
+Deprecated and not implemented
+</div>
+<a name="wp421397"> </a><div style="color: #000000; font-size: 10pt; font-style: normal; font-variant: normal; font-weight: bold; margin-bottom: 0pt; margin-right: 0pt; margin-top: 5pt; text-align: left; text-decoration: none; text-transform: none" class="pHeading4Indent">
+Specified By:
+</div>
+<a name="wp421399"> </a><div style="color: #000000; font-size: 10pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 5pt; margin-top: 0pt; text-align: left; text-decoration: none; text-transform: none" class="pBodyIndent">
+<code class="cCode">invoke</code> in interface <code class="cCode">RemoteRef</code>
+</div>
+<a name="wp421401"> </a><div style="color: #000000; font-size: 10pt; font-style: normal; font-variant: normal; font-weight: bold; margin-bottom: 0pt; margin-right: 0pt; margin-top: 5pt; text-align: left; text-decoration: none; text-transform: none" class="pHeading4Indent">
+Parameters:
+</div>
+<a name="wp421403"> </a><div style="color: #000000; font-size: 10pt; font-style: normal; font-variant: normal; font-weight: bold; margin-bottom: 0pt; margin-right: 0pt; margin-top: 5pt; text-align: left; text-decoration: none; text-transform: none" class="pHeading4Indent">
+Throws:
+</div>
+<a name="wp421405"> </a><div style="color: #000000; font-size: 10pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 5pt; margin-top: 0pt; text-align: left; text-decoration: none; text-transform: none" class="pBodyIndent">
+<code class="cCode">java.lang.Exception</code>
+</div>
+<a name="wp421413"> </a><h4 class="pHeading3">
+remoteEquals(RemoteRef)
+</h4>
+<div style="color: #000000; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 5pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-transform: none" class="pPreformattedIndent">
+public boolean <b class="cBold">remoteEquals</b>(<code class="cCode">java.rmi.server.RemoteRef</code> remoteRef)
+</div><a name="wp421415"> </a>
+
+<a name="wp421417"> </a><div style="color: #000000; font-size: 10pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 5pt; margin-top: 0pt; text-align: left; text-decoration: none; text-transform: none" class="pMemberIndent">
+Compares two remote objects for being identical.
+</div>
+<a name="wp421419"> </a><div style="color: #000000; font-size: 10pt; font-style: normal; font-variant: normal; font-weight: bold; margin-bottom: 0pt; margin-right: 0pt; margin-top: 5pt; text-align: left; text-decoration: none; text-transform: none" class="pHeading4Indent">
+Specified By:
+</div>
+<a name="wp421421"> </a><div style="color: #000000; font-size: 10pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 5pt; margin-top: 0pt; text-align: left; text-decoration: none; text-transform: none" class="pBodyIndent">
+<code class="cCode">remoteEquals</code> in interface <code class="cCode">RemoteRef</code>
+</div>
+<a name="wp421423"> </a><div style="color: #000000; font-size: 10pt; font-style: normal; font-variant: normal; font-weight: bold; margin-bottom: 0pt; margin-right: 0pt; margin-top: 5pt; text-align: left; text-decoration: none; text-transform: none" class="pHeading4Indent">
+Parameters:
+</div>
+<a name="wp421425"> </a><div style="color: #000000; font-size: 10pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 5pt; margin-top: 0pt; text-align: left; text-decoration: none; text-transform: none" class="pBodyIndent">
+<code class="cCode">remoteRef</code> - <code class="cCode">RemoteRef</code> to the other remote object.
+</div>
+<a name="wp421427"> </a><div style="color: #000000; font-size: 10pt; font-style: normal; font-variant: normal; font-weight: bold; margin-bottom: 0pt; margin-right: 0pt; margin-top: 5pt; text-align: left; text-decoration: none; text-transform: none" class="pHeading4Indent">
+Returns:
+</div>
+<a name="wp421429"> </a><div style="color: #000000; font-size: 10pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 5pt; margin-top: 0pt; text-align: left; text-decoration: none; text-transform: none" class="pBodyIndent">
+<code class="cCode">true</code> if corresponding remote objects are identical.
+</div>
+<a name="wp421437"> </a><h4 class="pHeading3">
+done(RemoteCall)
+</h4>
+<div style="color: #000000; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 5pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-transform: none" class="pPreformattedIndent">
+public void <b class="cBold">done</b>(<code class="cCode">java.rmi.server.RemoteCall</code> remoteCall)throws&#160;RemoteException
+</div><a name="wp421439"> </a>
+
+<a name="wp421441"> </a><div style="color: #000000; font-size: 10pt; font-style: normal; font-variant: normal; font-weight: bold; margin-bottom: 0pt; margin-right: 0pt; margin-top: 5pt; text-align: left; text-decoration: none; text-transform: none" class="pHeading4Indent">
+Deprecated.
+</div>
+<a name="wp421443"> </a><div style="color: #000000; font-size: 10pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 5pt; margin-top: 0pt; text-align: left; text-decoration: none; text-transform: none" class="pBodyIndent">
+Deprecated and not implemented
+</div>
+<a name="wp421445"> </a><div style="color: #000000; font-size: 10pt; font-style: normal; font-variant: normal; font-weight: bold; margin-bottom: 0pt; margin-right: 0pt; margin-top: 5pt; text-align: left; text-decoration: none; text-transform: none" class="pHeading4Indent">
+Specified By:
+</div>
+<a name="wp421447"> </a><div style="color: #000000; font-size: 10pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 5pt; margin-top: 0pt; text-align: left; text-decoration: none; text-transform: none" class="pBodyIndent">
+<code class="cCode">done</code> in interface <code class="cCode">RemoteRef</code>
+</div>
+<a name="wp421449"> </a><div style="color: #000000; font-size: 10pt; font-style: normal; font-variant: normal; font-weight: bold; margin-bottom: 0pt; margin-right: 0pt; margin-top: 5pt; text-align: left; text-decoration: none; text-transform: none" class="pHeading4Indent">
+Parameters:
+</div>
+<a name="wp421451"> </a><div style="color: #000000; font-size: 10pt; font-style: normal; font-variant: normal; font-weight: bold; margin-bottom: 0pt; margin-right: 0pt; margin-top: 5pt; text-align: left; text-decoration: none; text-transform: none" class="pHeading4Indent">
+Throws:
+</div>
+<a name="wp421453"> </a><div style="color: #000000; font-size: 10pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 5pt; margin-top: 0pt; text-align: left; text-decoration: none; text-transform: none" class="pBodyIndent">
+<code class="cCode">java.rmi.RemoteException</code>
+</div>
+<a name="wp421461"> </a><h4 class="pHeading3">
+invoke(Object, Method, Object[])
+</h4>
+<div style="color: #000000; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 5pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-transform: none" class="pPreformattedIndent">
+public <code class="cCode">java.lang.Object</code> <b class="cBold">invoke</b>(<code class="cCode">java.lang.Object</code> obj, <code class="cCode">java.lang.reflect.Method</code>&#160;method, <code class="cCode">java.lang.Object[]</code>&#160;params)throws&#160;IOException,&#160;RemoteException,&#160;Throwable
+</div><a name="wp421463"> </a>
+
+<a name="wp421465"> </a><div style="color: #000000; font-size: 10pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 5pt; margin-top: 0pt; text-align: left; text-decoration: none; text-transform: none" class="pMemberIndent">
+This method is used by dynamically generated proxies.
+</div>
+<a name="wp421467"> </a><div style="color: #000000; font-size: 10pt; font-style: normal; font-variant: normal; font-weight: bold; margin-bottom: 0pt; margin-right: 0pt; margin-top: 5pt; text-align: left; text-decoration: none; text-transform: none" class="pHeading4Indent">
+Specified By:
+</div>
+<a name="wp421469"> </a><div style="color: #000000; font-size: 10pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 5pt; margin-top: 0pt; text-align: left; text-decoration: none; text-transform: none" class="pBodyIndent">
+<code class="cCode">invoke</code> in interface <code class="cCode">InvocationHandler</code>
+</div>
+<a name="wp421471"> </a><div style="color: #000000; font-size: 10pt; font-style: normal; font-variant: normal; font-weight: bold; margin-bottom: 0pt; margin-right: 0pt; margin-top: 5pt; text-align: left; text-decoration: none; text-transform: none" class="pHeading4Indent">
+Parameters:
+</div>
+<a name="wp421473"> </a><div style="color: #000000; font-size: 10pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 5pt; margin-top: 0pt; text-align: left; text-decoration: none; text-transform: none" class="pBodyIndent">
+<code class="cCode">obj</code> - The reference to the Proxy - not used.
+</div>
+<a name="wp421475"> </a><div style="color: #000000; font-size: 10pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 5pt; margin-top: 0pt; text-align: left; text-decoration: none; text-transform: none" class="pBodyIndent">
+<code class="cCode">method</code> - <code class="cCode">Method</code> object containing information about the method.
+</div>
+<a name="wp421477"> </a><div style="color: #000000; font-size: 10pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 5pt; margin-top: 0pt; text-align: left; text-decoration: none; text-transform: none" class="pBodyIndent">
+<code class="cCode">params</code> - Array of parameters for the method.
+</div>
+<a name="wp421479"> </a><div style="color: #000000; font-size: 10pt; font-style: normal; font-variant: normal; font-weight: bold; margin-bottom: 0pt; margin-right: 0pt; margin-top: 5pt; text-align: left; text-decoration: none; text-transform: none" class="pHeading4Indent">
+Returns:
+</div>
+<a name="wp421481"> </a><div style="color: #000000; font-size: 10pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 5pt; margin-top: 0pt; text-align: left; text-decoration: none; text-transform: none" class="pBodyIndent">
+The result returned from the card.
+</div>
+<a name="wp421483"> </a><div style="color: #000000; font-size: 10pt; font-style: normal; font-variant: normal; font-weight: bold; margin-bottom: 0pt; margin-right: 0pt; margin-top: 5pt; text-align: left; text-decoration: none; text-transform: none" class="pHeading4Indent">
+Throws:
+</div>
+<a name="wp421485"> </a><div style="color: #000000; font-size: 10pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 5pt; margin-top: 0pt; text-align: left; text-decoration: none; text-transform: none" class="pBodyIndent">
+<code class="cCode">java.io.IOException</code> - If a communication error occurred.
+</div>
+<a name="wp421487"> </a><div style="color: #000000; font-size: 10pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 5pt; margin-top: 0pt; text-align: left; text-decoration: none; text-transform: none" class="pBodyIndent">
+<code class="cCode">java.rmi.RemoteException</code> - If an RMI error occurred.
+</div>
+<a name="wp421489"> </a><div style="color: #000000; font-size: 10pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 5pt; margin-top: 0pt; text-align: left; text-decoration: none; text-transform: none" class="pBodyIndent">
+<code class="cCode">java.lang.Throwable</code> - Exception corresponding to the one that was thrown on the card.
+</div>
+<a name="wp421491"> </a><div style="color: #000000; font-size: 18pt; font-style: normal; font-variant: normal; font-weight: normal; margin-left: 0pt; margin-right: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none" class="pClassPreHead">
+com.sun.javacard.ocfrmiclientimpl
+</div>
+<a name="wp421499"> </a><div style="color: #000000; font-size: 30pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 16pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+OCFCardAccessor
+</div>
+<a name="wp421501"> </a><h4 class="pHeading3">
+Declaration
+</h4>
+<div class="pPreformatted"><pre class="pPreformatted">
+public class <b class="cBold">OCFCardAccessor</b> extends <code class="cCode">opencard.core.service.CardService</code> implements <code class="cCode">com.sun.javacard.javax.smartcard.rmiclient.CardAccessor</code><a name="wp421503"> </a>
+ <a name="wp421505"> </a>
+<code class="cCode">java.lang.Object</code><a name="wp421507"> </a>
+&#160;&#160;|<a name="wp421509"> </a>
+&#160;&#160;+--<code class="cCode">opencard.core.service.CardService</code><a name="wp421511"> </a>
+&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;|<a name="wp421513"> </a>
+&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;+--<b class="cBold">com.sun.javacard.ocfrmiclientimpl.OCFCardAccessor</b><a name="wp421515"> </a>
+</pre></div>
+<a name="wp421517"> </a><h5 class="pHeading4">
+All Implemented Interfaces:
+</h5>
+<a name="wp421519"> </a><p class="pBody">
+<code class="cCode">com.sun.javacard.javax.smartcard.rmiclient.CardAccessor</code>
+</p>
+<a name="wp421521"> </a><h4 class="pHeading3">
+Description
+</h4>
+<a name="wp421523"> </a><p class="pBody">
+Passes APDUs between client program and <code class="cCode">CardTerminal</code>. Client programs usually supply their own <code class="cCode">CardAccessor</code> extending this class and performing additional transformations and checks of the data. Implements the <code class="cCode">CardAccessor</code> interface.
+</p>
+<a name="wp421526"> </a><p class="pBody">
+</p><div align="left">
+<table border="0" cellpadding="7" id="wp420578">
+  <caption></caption>
+<thead>
+<tr  align="center">    <th class="sun-lightblue" scope="col" colspan="2" rowspan="1"><a name="wp420578"> </a><div style="text-align: left" class="pTableHead">
+Member Summary
+</div>
+
+</th>
+</tr>
+</thead>
+  <tr align="left">    <td colspan="2" rowspan="1"><a name="wp420584"> </a><div class="pTableText">
+Constructors
+</div>
+</td>
+</tr>
+  <tr align="left">    <td><a name="wp420590"> </a><div class="pTableText">
+&#160;
+</div>
+</td>
+    <td><a name="wp420594"> </a><div class="pTableText">
+<span style="color: #3366CC"><a  href="com.sun.javacard.ocfrmiclientimpl.html#wp421539">OCFCardAccessor()</a></span>
+</div>
+<a name="wp420596"> </a><div class="pTableText">
+Creates new OCFCardAccessor
+</div>
+</td>
+</tr>
+  <tr align="left">    <td colspan="2" rowspan="1"><a name="wp420602"> </a><div class="pTableText">
+Methods
+</div>
+</td>
+</tr>
+  <tr align="left">    <td><a name="wp420608"> </a><div class="pTableText">
+ byte[]
+</div>
+</td>
+    <td><div class="pPreformatted"><pre class="pPreformatted">
+<span style="color: #3366CC"><a  href="com.sun.javacard.ocfrmiclientimpl.html#wp421553">exchangeAPDU(byte[] sendData)</a></span><a name="wp420612"> </a>
+</pre></div>
+<a name="wp420614"> </a><div class="pTableText">
+Exchanges APDU with the card.
+</div>
+</td>
+</tr>
+  <tr align="left">    <td><a name="wp420620"> </a><div class="pTableText">
+ short
+</div>
+</td>
+    <td><a name="wp420624"> </a><div class="pTableText">
+<span style="color: #3366CC"><a  href="com.sun.javacard.ocfrmiclientimpl.html#wp421583">getSessionIdentifier()</a></span>
+</div>
+<a name="wp420626"> </a><div class="pTableText">
+A number identifying the current session.
+</div>
+</td>
+</tr>
+<tr><td colspan="15"><hr class="pTableHr" /></td></tr>
+</table>
+</div>
+<p class="pBody">
+
+</p>
+<a name="wp421529"> </a><p class="pBody">
+</p><div align="left">
+<table border="0" cellpadding="7" id="wp420631">
+  <caption></caption>
+<thead>
+<tr  align="center">    <th  class="sun-verylightblue" scope="col"><a name="wp420631"> </a><div style="text-align: left" class="pTableHead">
+Inherited Member Summary
+</div>
+
+</th>
+</tr>
+</thead>
+  <tr align="left">    <td><a name="wp420635"> </a><div class="pTableText">
+Methods inherited from class <code class="cCode">CardService</code>
+</div>
+</td>
+</tr>
+  <tr align="left">    <td><div class="pPreformatted"><pre class="pPreformatted">
+<code class="cCode">allocateCardChannel()</code>, <code class="cCode">getCHVDialog()</code>, <code class="cCode">getCard()</code>, <code class="cCode">getCardChannel()</code>, <code class="cCode">initialize(CardServiceScheduler, SmartCard, boolean)</code>, <code class="cCode">releaseCardChannel()</code>, <code class="cCode">setCHVDialog(CHVDialog)</code>, <code class="cCode">setCardChannel(CardChannel)</code><a name="wp420639"> </a>
+</pre></div>
+</td>
+</tr>
+  <tr align="left">    <td><a name="wp420643"> </a><div class="pTableText">
+Methods inherited from class <code class="cCode">Object</code>
+</div>
+</td>
+</tr>
+  <tr align="left">    <td><a name="wp420647"> </a><div class="pTableText">
+<code class="cCode">clone()</code>, <code class="cCode">equals(Object)</code>, <code class="cCode">finalize()</code>, <code class="cCode">getClass()</code>, <code class="cCode">hashCode()</code>, <code class="cCode">notify()</code>, <code class="cCode">notifyAll()</code>, <code class="cCode">toString()</code>, <code class="cCode">wait()</code>, <code class="cCode">wait()</code>, <code class="cCode">wait()</code>
+</div>
+</td>
+</tr>
+<tr><td colspan="15"><hr class="pTableHr" /></td></tr>
+</table>
+</div>
+<p class="pBody">
+
+</p>
+<a name="wp421531"> </a><h3 class="pHeading2">
+Constructors
+</h3>
+<a name="wp421539"> </a><h4 class="pHeading3">
+OCFCardAccessor()
+</h4>
+<div style="color: #000000; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 5pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-transform: none" class="pPreformattedIndent">
+public <b class="cBold">OCFCardAccessor</b>()
+</div><a name="wp421541"> </a>
+
+<a name="wp421543"> </a><div style="color: #000000; font-size: 10pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 5pt; margin-top: 0pt; text-align: left; text-decoration: none; text-transform: none" class="pMemberIndent">
+Creates new OCFCardAccessor
+</div>
+<a name="wp421545"> </a><h3 class="pHeading2">
+Methods
+</h3>
+<a name="wp421553"> </a><h4 class="pHeading3">
+exchangeAPDU(byte[])
+</h4>
+<div style="color: #000000; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 5pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-transform: none" class="pPreformattedIndent">
+public byte[] <b class="cBold">exchangeAPDU</b>(byte[] sendData)throws&#160;IOException
+</div><a name="wp421555"> </a>
+
+<a name="wp421557"> </a><div style="color: #000000; font-size: 10pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 5pt; margin-top: 0pt; text-align: left; text-decoration: none; text-transform: none" class="pMemberIndent">
+Exchanges APDU with the card.
+</div>
+<a name="wp421559"> </a><div style="color: #000000; font-size: 10pt; font-style: normal; font-variant: normal; font-weight: bold; margin-bottom: 0pt; margin-right: 0pt; margin-top: 5pt; text-align: left; text-decoration: none; text-transform: none" class="pHeading4Indent">
+Specified By:
+</div>
+<a name="wp421561"> </a><div style="color: #000000; font-size: 10pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 5pt; margin-top: 0pt; text-align: left; text-decoration: none; text-transform: none" class="pBodyIndent">
+<code class="cCode">exchangeAPDU</code> in interface <code class="cCode">CardAccessor</code>
+</div>
+<a name="wp421563"> </a><div style="color: #000000; font-size: 10pt; font-style: normal; font-variant: normal; font-weight: bold; margin-bottom: 0pt; margin-right: 0pt; margin-top: 5pt; text-align: left; text-decoration: none; text-transform: none" class="pHeading4Indent">
+Parameters:
+</div>
+<a name="wp421565"> </a><div style="color: #000000; font-size: 10pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 5pt; margin-top: 0pt; text-align: left; text-decoration: none; text-transform: none" class="pBodyIndent">
+<code class="cCode">sendData</code> - The outgoing <code class="cCode">APDU</code>
+</div>
+<a name="wp421567"> </a><div style="color: #000000; font-size: 10pt; font-style: normal; font-variant: normal; font-weight: bold; margin-bottom: 0pt; margin-right: 0pt; margin-top: 5pt; text-align: left; text-decoration: none; text-transform: none" class="pHeading4Indent">
+Returns:
+</div>
+<a name="wp421569"> </a><div style="color: #000000; font-size: 10pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 5pt; margin-top: 0pt; text-align: left; text-decoration: none; text-transform: none" class="pBodyIndent">
+The response <code class="cCode">APDU</code>
+</div>
+<a name="wp421571"> </a><div style="color: #000000; font-size: 10pt; font-style: normal; font-variant: normal; font-weight: bold; margin-bottom: 0pt; margin-right: 0pt; margin-top: 5pt; text-align: left; text-decoration: none; text-transform: none" class="pHeading4Indent">
+Throws:
+</div>
+<a name="wp421573"> </a><div style="color: #000000; font-size: 10pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 5pt; margin-top: 0pt; text-align: left; text-decoration: none; text-transform: none" class="pBodyIndent">
+IOException - if a communication error occurs.
+</div>
+<a name="wp421575"> </a><div style="color: #000000; font-size: 10pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 5pt; margin-top: 0pt; text-align: left; text-decoration: none; text-transform: none" class="pBodyIndent">
+<code class="cCode">java.io.IOException</code>
+</div>
+<a name="wp421583"> </a><h4 class="pHeading3">
+getSessionIdentifier()
+</h4>
+<div style="color: #000000; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 5pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-transform: none" class="pPreformattedIndent">
+public short <b class="cBold">getSessionIdentifier</b>()
+</div><a name="wp421585"> </a>
+
+<a name="wp421587"> </a><div style="color: #000000; font-size: 10pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 5pt; margin-top: 0pt; text-align: left; text-decoration: none; text-transform: none" class="pMemberIndent">
+A number identifying the current session.
+</div>
+<a name="wp421589"> </a><div style="color: #000000; font-size: 10pt; font-style: normal; font-variant: normal; font-weight: bold; margin-bottom: 0pt; margin-right: 0pt; margin-top: 5pt; text-align: left; text-decoration: none; text-transform: none" class="pHeading4Indent">
+Specified By:
+</div>
+<a name="wp421591"> </a><div style="color: #000000; font-size: 10pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 5pt; margin-top: 0pt; text-align: left; text-decoration: none; text-transform: none" class="pBodyIndent">
+<code class="cCode">getSessionIdentifier</code> in interface <code class="cCode">CardAccessor</code>
+</div>
+<a name="wp421593"> </a><div style="color: #000000; font-size: 10pt; font-style: normal; font-variant: normal; font-weight: bold; margin-bottom: 0pt; margin-right: 0pt; margin-top: 5pt; text-align: left; text-decoration: none; text-transform: none" class="pHeading4Indent">
+Returns:
+</div>
+<a name="wp421595"> </a><div style="color: #000000; font-size: 10pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 5pt; margin-top: 0pt; text-align: left; text-decoration: none; text-transform: none" class="pBodyIndent">
+session ID.
+</div>
+<a name="wp421597"> </a><div style="color: #000000; font-size: 18pt; font-style: normal; font-variant: normal; font-weight: normal; margin-left: 0pt; margin-right: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none" class="pClassPreHead">
+com.sun.javacard.ocfrmiclientimpl
+</div>
+<a name="wp421605"> </a><div style="color: #000000; font-size: 30pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 16pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+OCFCardAccessorFactory
+</div>
+<a name="wp421607"> </a><h4 class="pHeading3">
+Declaration
+</h4>
+<div class="pPreformatted"><pre class="pPreformatted">
+public class <b class="cBold">OCFCardAccessorFactory</b> extends <code class="cCode">opencard.core.service.CardServiceFactory</code><a name="wp421609"> </a>
+ <a name="wp421611"> </a>
+<code class="cCode">java.lang.Object</code><a name="wp421613"> </a>
+&#160;&#160;|<a name="wp421615"> </a>
+&#160;&#160;+--<code class="cCode">opencard.core.service.CardServiceFactory</code><a name="wp421617"> </a>
+&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;|<a name="wp421619"> </a>
+&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;+--<b class="cBold">com.sun.javacard.ocfrmiclientimpl.OCFCardAccessorFactory</b><a name="wp421621"> </a>
+</pre></div>
+<a name="wp421623"> </a><h4 class="pHeading3">
+Description
+</h4>
+<a name="wp421625"> </a><p class="pBody">
+The OCFCardAccessorFactory class creates the <code class="cCode">OCFCardAccessor</code> instance which is used by terminal client applications to initiate and conduct a Java Card RMI based dialogue with the smart card. The methods in this class are intended to be invoked by the OCF <code class="cCode">CardServiceRegistry</code> class. Java Card RMI Client applications should access the <code class="cCode">SmartCard</code> class to obtain instances of <code class="cCode">OCFCardAccessor</code>.
+</p>
+<a name="wp421627"> </a><h5 class="pHeading4">
+See Also:
+</h5>
+<a name="wp421631"> </a><p class="pBody">
+<span style="color: #3366CC"><a  href="com.sun.javacard.ocfrmiclientimpl.html#wp421499">OCFCardAccessor</a></span>
+</p>
+<a name="wp421634"> </a><p class="pBody">
+</p><div align="left">
+<table border="0" cellpadding="7" id="wp420654">
+  <caption></caption>
+<thead>
+<tr  align="center">    <th class="sun-lightblue" scope="col" colspan="2" rowspan="1"><a name="wp420654"> </a><div style="text-align: left" class="pTableHead">
+Member Summary
+</div>
+
+</th>
+</tr>
+</thead>
+  <tr align="left">    <td colspan="2" rowspan="1"><a name="wp420660"> </a><div class="pTableText">
+Constructors
+</div>
+</td>
+</tr>
+  <tr align="left">    <td><a name="wp420666"> </a><div class="pTableText">
+&#160;
+</div>
+</td>
+    <td><a name="wp420670"> </a><div class="pTableText">
+<span style="color: #3366CC"><a  href="com.sun.javacard.ocfrmiclientimpl.html#wp421647">OCFCardAccessorFactory()</a></span>
+</div>
+<a name="wp420672"> </a><div class="pTableText">
+Creates new OCFCardAccessorFactory
+</div>
+</td>
+</tr>
+  <tr align="left">    <td colspan="2" rowspan="1"><a name="wp420678"> </a><div class="pTableText">
+Methods
+</div>
+</td>
+</tr>
+  <tr align="left">    <td><a name="wp420684"> </a><div class="pTableText">
+protected opencard.core.service.CardType
+</div>
+</td>
+    <td><div class="pPreformatted"><pre class="pPreformatted">
+<span style="color: #3366CC"><a  href="com.sun.javacard.ocfrmiclientimpl.html#wp421661">getCardType(opencard.core.terminal.CardID cid, opencard.core.service.CardServiceScheduler scheduler)</a></span><a name="wp420688"> </a>
+</pre></div>
+<a name="wp420690"> </a><div class="pTableText">
+This method examines the <code class="cCode">CardID</code> object (containing the ATR returned by the Card) and checks if the card could be Java Card technology-compliant. If so, this method returns a <code class="cCode">JavaCardType</code> object.
+</div>
+</td>
+</tr>
+  <tr align="left">    <td><a name="wp420696"> </a><div class="pTableText">
+protected java.util.Enumeration
+</div>
+</td>
+    <td><a name="wp420700"> </a><div class="pTableText">
+<span style="color: #3366CC"><a  href="com.sun.javacard.ocfrmiclientimpl.html#wp421687">getClasses(opencard.core.service.CardType type)</a></span>
+</div>
+<a name="wp420702"> </a><div class="pTableText">
+If the input parameter is a <code class="cCode">JavaCardType</code> object, this method returns an enumeration object with the <code class="cCode">OCFCardAccessor</code> object listed.
+</div>
+</td>
+</tr>
+<tr><td colspan="15"><hr class="pTableHr" /></td></tr>
+</table>
+</div>
+<p class="pBody">
+
+</p>
+<a name="wp421637"> </a><p class="pBody">
+</p><div align="left">
+<table border="0" cellpadding="7" id="wp420707">
+  <caption></caption>
+<thead>
+<tr  align="center">    <th  class="sun-verylightblue" scope="col"><a name="wp420707"> </a><div style="text-align: left" class="pTableHead">
+Inherited Member Summary
+</div>
+
+</th>
+</tr>
+</thead>
+  <tr align="left">    <td><a name="wp420711"> </a><div class="pTableText">
+Methods inherited from class <code class="cCode">CardServiceFactory</code>
+</div>
+</td>
+</tr>
+  <tr align="left">    <td><div class="pPreformatted"><pre class="pPreformatted">
+<code class="cCode">getCardServiceInstance(Class, CardType, CardServiceScheduler, SmartCard, boolean)</code>, <code class="cCode">getClassFor(Class, CardType)</code>, <code class="cCode">newCardServiceInstance(Class, CardType, CardServiceScheduler, SmartCard, boolean)</code><a name="wp420715"> </a>
+</pre></div>
+</td>
+</tr>
+  <tr align="left">    <td><a name="wp420719"> </a><div class="pTableText">
+Methods inherited from class <code class="cCode">Object</code>
+</div>
+</td>
+</tr>
+  <tr align="left">    <td><a name="wp420723"> </a><div class="pTableText">
+<code class="cCode">clone()</code>, <code class="cCode">equals(Object)</code>, <code class="cCode">finalize()</code>, <code class="cCode">getClass()</code>, <code class="cCode">hashCode()</code>, <code class="cCode">notify()</code>, <code class="cCode">notifyAll()</code>, <code class="cCode">toString()</code>, <code class="cCode">wait()</code>, <code class="cCode">wait()</code>, <code class="cCode">wait()</code>
+</div>
+</td>
+</tr>
+<tr><td colspan="15"><hr class="pTableHr" /></td></tr>
+</table>
+</div>
+<p class="pBody">
+
+</p>
+<a name="wp421639"> </a><h3 class="pHeading2">
+Constructors
+</h3>
+<a name="wp421647"> </a><h4 class="pHeading3">
+OCFCardAccessorFactory()
+</h4>
+<div style="color: #000000; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 5pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-transform: none" class="pPreformattedIndent">
+public <b class="cBold">OCFCardAccessorFactory</b>()
+</div><a name="wp421649"> </a>
+
+<a name="wp421651"> </a><div style="color: #000000; font-size: 10pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 5pt; margin-top: 0pt; text-align: left; text-decoration: none; text-transform: none" class="pMemberIndent">
+Creates new OCFCardAccessorFactory
+</div>
+<a name="wp421653"> </a><h3 class="pHeading2">
+Methods
+</h3>
+<a name="wp421661"> </a><h4 class="pHeading3">
+getCardType(CardID, CardServiceScheduler)
+</h4>
+<div style="color: #000000; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 5pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-transform: none" class="pPreformattedIndent">
+protected <code class="cCode">opencard.core.service.CardType</code> <b class="cBold">getCardType</b>(<code class="cCode">opencard.core.terminal.CardID</code> cid, <code class="cCode">opencard.core.service.CardServiceScheduler</code>&#160;scheduler)
+</div><a name="wp421663"> </a>
+
+<a name="wp421665"> </a><div style="color: #000000; font-size: 10pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 5pt; margin-top: 0pt; text-align: left; text-decoration: none; text-transform: none" class="pMemberIndent">
+This method examines the <code class="cCode">CardID</code> object (containing the ATR returned by the Card) and checks if the card could be Java Card technology-compliant. If so, this method returns a <code class="cCode">JavaCardType</code> object.
+</div>
+<a name="wp421667"> </a><div style="color: #000000; font-size: 10pt; font-style: normal; font-variant: normal; font-weight: bold; margin-bottom: 0pt; margin-right: 0pt; margin-top: 5pt; text-align: left; text-decoration: none; text-transform: none" class="pHeading4Indent">
+Overrides:
+</div>
+<a name="wp421669"> </a><div style="color: #000000; font-size: 10pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 5pt; margin-top: 0pt; text-align: left; text-decoration: none; text-transform: none" class="pBodyIndent">
+<code class="cCode">getCardType</code> in class <code class="cCode">CardServiceFactory</code>
+</div>
+<a name="wp421671"> </a><div style="color: #000000; font-size: 10pt; font-style: normal; font-variant: normal; font-weight: bold; margin-bottom: 0pt; margin-right: 0pt; margin-top: 5pt; text-align: left; text-decoration: none; text-transform: none" class="pHeading4Indent">
+Parameters:
+</div>
+<a name="wp421673"> </a><div style="color: #000000; font-size: 10pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 5pt; margin-top: 0pt; text-align: left; text-decoration: none; text-transform: none" class="pBodyIndent">
+<code class="cCode">cid</code> - <code class="cCode">CardID</code> received from a Card <code class="cCode">Slot</code>.
+</div>
+<a name="wp421675"> </a><div style="color: #000000; font-size: 10pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 5pt; margin-top: 0pt; text-align: left; text-decoration: none; text-transform: none" class="pBodyIndent">
+<code class="cCode">scheduler</code> - <code class="cCode">CardServiceScheduler</code> that can be used to communicate with the card to determine its type.
+</div>
+<a name="wp421677"> </a><div style="color: #000000; font-size: 10pt; font-style: normal; font-variant: normal; font-weight: bold; margin-bottom: 0pt; margin-right: 0pt; margin-top: 5pt; text-align: left; text-decoration: none; text-transform: none" class="pHeading4Indent">
+Returns:
+</div>
+<a name="wp421679"> </a><div style="color: #000000; font-size: 10pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 5pt; margin-top: 0pt; text-align: left; text-decoration: none; text-transform: none" class="pBodyIndent">
+A <code class="cCode">JavaCardType</code> if the factory can instantiate services for this card. <code class="cCode">CardType.UNSUPPORTED</code> if the factory does not know the card.
+</div>
+<a name="wp421687"> </a><h4 class="pHeading3">
+getClasses(CardType)
+</h4>
+<div style="color: #000000; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 5pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-transform: none" class="pPreformattedIndent">
+protected <code class="cCode">java.util.Enumeration</code> <b class="cBold">getClasses</b>(<code class="cCode">opencard.core.service.CardType</code> type)
+</div><a name="wp421689"> </a>
+
+<a name="wp421691"> </a><div style="color: #000000; font-size: 10pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 5pt; margin-top: 0pt; text-align: left; text-decoration: none; text-transform: none" class="pMemberIndent">
+If the input parameter is a <code class="cCode">JavaCardType</code> object, this method returns an enumeration object with the <code class="cCode">OCFCardAccessor</code> object listed. Subclasses of this class may add subclasses of <code class="cCode">OCFCardAccessor</code> to this list by using the <code class="cCode">add</code> method.
+</div>
+<a name="wp421693"> </a><div style="color: #000000; font-size: 10pt; font-style: normal; font-variant: normal; font-weight: bold; margin-bottom: 0pt; margin-right: 0pt; margin-top: 5pt; text-align: left; text-decoration: none; text-transform: none" class="pHeading4Indent">
+Overrides:
+</div>
+<a name="wp421695"> </a><div style="color: #000000; font-size: 10pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 5pt; margin-top: 0pt; text-align: left; text-decoration: none; text-transform: none" class="pBodyIndent">
+<code class="cCode">getClasses</code> in class <code class="cCode">CardServiceFactory</code>
+</div>
+<a name="wp421697"> </a><div style="color: #000000; font-size: 10pt; font-style: normal; font-variant: normal; font-weight: bold; margin-bottom: 0pt; margin-right: 0pt; margin-top: 5pt; text-align: left; text-decoration: none; text-transform: none" class="pHeading4Indent">
+Parameters:
+</div>
+<a name="wp421699"> </a><div style="color: #000000; font-size: 10pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 5pt; margin-top: 0pt; text-align: left; text-decoration: none; text-transform: none" class="pBodyIndent">
+<code class="cCode">type</code> - The <code class="cCode">CardType</code> of the smart card for which the enumeration is requested.
+</div>
+<a name="wp421701"> </a><div style="color: #000000; font-size: 10pt; font-style: normal; font-variant: normal; font-weight: bold; margin-bottom: 0pt; margin-right: 0pt; margin-top: 5pt; text-align: left; text-decoration: none; text-transform: none" class="pHeading4Indent">
+Returns:
+</div>
+<a name="wp421703"> </a><div style="color: #000000; font-size: 10pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 5pt; margin-top: 0pt; text-align: left; text-decoration: none; text-transform: none" class="pBodyIndent">
+An <code class="cCode">Enumeration</code> of <code class="cCode">OCFCardAccessor</code> class objects
+</div>
+
+    <p>&#160;</p>
+    <hr class="pHr" />
+
+    <table class="full-width" id="SummaryNotReq2">
+      <tr>
+        <td class="go-left">
+          <a accesskey="c" href="index.html">
+	    <img id="LongDescNotReq1" src="images/toc.gif" border="0"
+              alt="Contents" /></a>
+	  <a accesskey="p" href="overview.html">
+	    <img id="LongDescNotReq2" src="images/prev.gif" border="0"
+              alt="Previous" /></a>
+	  <a accesskey="n" href="cJDK_b_domIX.html">
+	    <img id="LongDescNotReq3" src="images/next.gif" border="0"
+              alt="Next" /></a>
+	  <a accesskey="i" href="cJDK_b_domIX.html">
+	    <img id="LongDescNotReq4" src="images/index.gif" border="0"
+              alt="Index" /></a>
+        </td>
+        <td class="go-right">
+          <span class="copyright">Development Kit User's Guide
+for the Binary Release with Cryptography Extensions <br /> Java Card Platform, Version 2.2.1</span>
+        </td>
+      </tr>
+    </table>
+
+    <p>&#160;</p>
+    
+<p class="copyright"><a 
+       href="copyright.html">Copyright</a> &#169; 2003 Sun Microsystems, Inc. 
+  All rights reserved.</p>	
+  </body>
+</html>

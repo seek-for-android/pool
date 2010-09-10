@@ -1,0 +1,31 @@
+#!/bin/sh
+#
+# Copyright © 2003 Sun Microsystems, Inc. All rights reserved.
+# Use is subject to license terms.
+#
+
+# Workfile:@(#)rmidemo.sh	1.9
+# Version:1.9
+# Modified:09/29/03 17:06:15
+
+if [ "$JAVA_HOME" = "" ]; then
+  echo Set environment variable JAVA_HOME
+  exit
+fi
+
+if [ "$JC_HOME" = "" ]; then
+  echo Set environment variable JC_HOME
+  exit
+fi
+
+echo "This demo requires a cref or jcwde with com.sun.javacard.RMIDemo applet" 
+echo "installed and file opencard.properties in the current directory"
+
+echo "Start cref or jcwde before running this demo"
+
+JC_PATH=$JC_HOME/lib/base-core.jar:$JC_HOME/lib/base-opt.jar:$JC_HOME/lib/jcrmiclientframework.jar:$JC_HOME/lib/jcclientsamples.jar:$JC_HOME/lib/apduio.jar:$JC_HOME/samples/classes:$CLASSPATH
+
+
+JFLAGS="-classpath $JC_PATH"
+$JAVA_HOME/bin/java $JFLAGS com.sun.javacard.clientsamples.purseclient.PurseClient $1
+

@@ -1,0 +1,165 @@
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
+    <meta http-equiv="Content-Style-Type" content="text/css" />
+    <meta name="GENERATOR" content="Quadralay WebWorks Publisher Professional Edition 7.0.5.1025" />
+    <meta name="TEMPLATEBASE" content="JCUser_b_glo" />
+    <meta name="LASTUPDATED" content="10/10/03 17:25:45" />
+    <title>Generating a CAP File from a Java Card Assembly File</title>
+    <link rel="StyleSheet" href="document.css" type="text/css" />
+    <link rel="StyleSheet" href="catalog.css" type="text/css" />
+    <link rel="Table of Contents" href="index.html" />
+    <link rel="Previous" href="cJDKverifier.html" />
+    <link rel="Next" href="cJDKcapdump.html" />
+    <link rel="Index" href="cJDK_b_domIX.html" />
+  </head>
+
+  <body>
+
+    <table class="full-width" id="SummaryNotReq1">
+      <tr><td class="sun-darkblue">&#160;</td></tr>
+      <tr><td class="sun-lightblue">&#160;</td></tr>
+      <tr><td class="go-right">
+        <a accesskey="c" href="index.html">
+          <img id="LongDescNotReq1" src="images/toc.gif" border="0"
+            alt="Contents" /></a>
+	<a accesskey="p" href="cJDKverifier.html">
+	  <img id="LongDescNotReq2" src="images/prev.gif" border="0"
+            alt="Previous" /></a>
+        <a accesskey="n" href="cJDKcapdump.html">
+	  <img id="LongDescNotReq3" src="images/next.gif" border="0"
+            alt="Next" /></a>
+        <a accesskey="i" href="cJDK_b_domIX.html">
+	  <img id="LongDescNotReq4" src="images/index.gif" border="0"
+            alt="Index" /></a>
+        </td>
+      </tr>
+    </table>
+
+<a name="wp2353"> </a><h2 class="pChapNum">
+Chapter &#160; 8
+</h2>
+<a name="wp1884"> </a><h2 class="pTitle">
+Generating a CAP File from a Java Card Assembly File
+</h2>
+<hr />
+<a name="wp1891"> </a><p class="pBody">
+Use the <code class="cCode">capgen</code> tool to generate a CAP file from a given Java Card Assembly file. The CAP file which is generated has the same contents as a CAP file produced by the Converter. The <code class="cCode">capgen</code> tool is a backend to the Converter.
+</p>
+<a name="wp2055"> </a><h2 class="pHeading1">
+Running capgen
+</h2>
+<a name="wp57"> </a><p class="pBody">
+The file to invoke <code class="cCode">capgen</code> is a shell script (<code class="cCode">capgen</code>) on the Solaris or Linux platform, and a batch file (<code class="cCode">capgen.bat</code>) on the Microsoft Windows 2000 platform.
+</p>
+<a name="wp2465"> </a><p class="pBody">
+Command line syntax for <code class="cCode">capgen</code> is:
+</p>
+<div class="pPreformatted"><pre class="pPreformatted">
+<code class="cCode">capgen</code> [-<em class="cEmphasis">options</em>] &lt;<em class="cEmphasis">filename</em>&gt;<a name="wp2677"> </a>
+</pre></div>
+<a name="wp65"> </a><p class="pBody">
+where <code class="cCode">&lt;</code><em class="cEmphasis">filename</em><code class="cCode">&gt;</code> is the Java Card Assembly file.
+</p>
+<a name="wp5477"> </a><h3 class="pHeading2">
+Command Line Options
+</h3>
+<a name="wp5474"> </a><p class="pBody">
+The option values and their actions are:</p><div align="left">
+<table border="0" cellpadding="7"   id="SummaryNotReq4254">
+  <caption><a name="wp4256"> </a><div class="pTableCaption">
+TABLE&#160;14&#160;&#160;&#8211;&#160;&#160;capgen Command Line Options 
+</div>
+</caption>
+<thead>
+<tr  align="center">    <th  class="sun-verylightblue" scope="col"><a name="wp4260"> </a><div style="text-align: left" class="pTableHead">
+Option
+</div>
+
+</th>
+    <th  class="sun-verylightblue" scope="col"><a name="wp4262"> </a><div style="text-align: left" class="pTableHead">
+Description
+</div>
+
+</th>
+</tr>
+</thead>
+  <tr align="left">    <td><a name="wp4354"> </a><div class="pTableText">
+<code class="cCode">-help</code> 
+</div>
+</td>
+    <td><a name="wp4356"> </a><div class="pTableText">
+Prints a help message.
+</div>
+</td>
+</tr>
+  <tr align="left">    <td><a name="wp4358"> </a><div class="pTableText">
+<code class="cCode">-nobanner</code> 
+</div>
+</td>
+    <td><a name="wp4360"> </a><div class="pTableText">
+Suppresses all banner messages.
+</div>
+</td>
+</tr>
+  <tr align="left">    <td><a name="wp4264"> </a><div class="pTableText">
+<code class="cCode">-o</code> &lt;<em class="cEmphasis">filename</em>&gt;
+</div>
+</td>
+    <td><a name="wp4266"> </a><div class="pTableText">
+Allows you to specify an output file. If the output file is not specified with the <code class="cCode">-o</code> flag, output defaults to the file <code class="cCode">a.jar</code> in the current directory.
+</div>
+</td>
+</tr>
+  <tr align="left">    <td><a name="wp4268"> </a><div class="pTableText">
+<code class="cCode">-version</code> 
+</div>
+</td>
+    <td><a name="wp4270"> </a><div class="pTableText">
+Outputs the version information.
+</div>
+</td>
+</tr>
+<tr><td colspan="15"><hr class="pTableHr" /></td></tr>
+</table>
+</div>
+<p class="pBody">
+
+</p>
+<a name="wp2483"> </a><p class="pBody">
+
+</p>
+
+    <p>&#160;</p>
+    <hr class="pHr" />
+
+    <table class="full-width" id="SummaryNotReq2">
+      <tr>
+        <td class="go-left">
+          <a accesskey="c" href="index.html">
+	    <img id="LongDescNotReq1" src="images/toc.gif" border="0"
+              alt="Contents" /></a>
+	  <a accesskey="p" href="cJDKverifier.html">
+	    <img id="LongDescNotReq2" src="images/prev.gif" border="0"
+              alt="Previous" /></a>
+	  <a accesskey="n" href="cJDKcapdump.html">
+	    <img id="LongDescNotReq3" src="images/next.gif" border="0"
+              alt="Next" /></a>
+	  <a accesskey="i" href="cJDK_b_domIX.html">
+	    <img id="LongDescNotReq4" src="images/index.gif" border="0"
+              alt="Index" /></a>
+        </td>
+        <td class="go-right">
+          <span class="copyright">Development Kit User's Guide
+for the Binary Release with Cryptography Extensions <br /> Java Card Platform, Version 2.2.1</span>
+        </td>
+      </tr>
+    </table>
+
+    <p>&#160;</p>
+    
+<p class="copyright"><a 
+       href="copyright.html">Copyright</a> &#169; 2003 Sun Microsystems, Inc. 
+  All rights reserved.</p>	
+  </body>
+</html>

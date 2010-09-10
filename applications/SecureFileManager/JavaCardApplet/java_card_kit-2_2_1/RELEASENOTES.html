@@ -1,0 +1,639 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+  <title>Release Notes - Development Kit for the Java Card(TM) Version 2.2.1
+Binary Release</title>
+                                                                        
+               
+  <link rel="stylesheet" href="doc/en/j2me-docs.css" type="text/css">
+</head>
+<body>
+         
+<table width="100%" cellspacing="0" cellpadding="0" border="0"
+ summary="This table is for formatting purposes only.">
+       <tbody>
+         <tr>
+           <td class="sun-darkblue">&nbsp;</td>
+       </tr>
+       <tr>
+           <td class="sun-darkblue">  	                                 
+                                                                
+      <h1>Release Notes</h1>
+                                                                        
+                                   
+      <h2>Development Kit for the Java Card<sup>TM</sup> Platform<br>
+             Version 2.2.1<br>
+             Binary Release</h2>
+                                                                        
+                                   
+      <h4>October, 2003</h4>
+         </td>
+       </tr>
+       <tr>
+           <td class="sun-lightblue">&nbsp;</td>
+       </tr>
+                                              
+  </tbody>     
+</table>
+     <br>
+         
+<p class="nav-link">[<a href="#_maincontent">Skip TOC</a>]<a name="_top"></a></p>
+         
+<h2>Table of Contents</h2>
+         
+<dl>
+  <dt><a href="#introduction">Introduction</a></dt>
+  <dt><a href="#supported_platforms">Supported Platforms</a></dt>
+  <dt><a href="#installation">Installation Instructions and Setting Up Your
+  Environment      </a></dt>
+  <dt><a href="#documentation_roadmap">Documentation Roadmap</a></dt>
+  <dl>
+    <dt><a href="#development_kit">Development Kit Documentation</a> </dt>
+    <dt><a href="#specification">Specification Documentation</a> </dt>
+    <dt> <a href="#whitepapers">White Papers</a> </dt>
+  </dl>
+  <dt><a href="#new_features">New Features and Improvements</a></dt>
+  <dl>
+    <dt><a href="#extended_address">Extended Addressing Capabilities</a></dt>
+    <dt><a href="#rmi_support">Java Card WDE Support for Java Card RMI </a></dt>
+    <dt><a href="#applet_deletion">Enhancements to Applet Deletion</a></dt>
+    <dt><a href="#cryptography_support">Cryptography Support         <em>(Development
+       Kit with Cryptography Extensions only)</em></a></dt>
+    <dt><a href="#specification_bug">Specification Bug Fixes and Clarifications
+        </a></dt>
+  </dl>
+  <dt><a href="#known_bugs_and_issues">Known Bugs and Issues</a></dt>
+  <dt><a href="#prod_info">Where to Find Product Information and News</a></dt>
+  <dt><a href="#feedback">How to Send Feedback and Questions</a></dt>
+</dl>
+     <a name="_maincontent"></a>      
+<h2><a name="introduction"></a>Introduction</h2>
+         
+<p>The Development Kit tools for the Java Card<sup>TM</sup> platform version
+  2.2.1,    run on a workstation using a Java Virtual Machine (VM). The Virtual
+  Machine    for the Java Card platform, version 2.2.1, is written in the
+"C"  programming    language. Separate bundles for the Solaris<sup>TM</sup>,
+Linux,  and Microsoft    Windows 2000 operating systems are available for
+this release.  For more details    on the reference implementation (RI), please
+refer to  the User's Guide that    is installed with the Java Card Development
+Kit,  version 2.2.1. </p>
+         
+<p>The issues discussed in these Release Notes pertain to both the Development
+    Kit Binary Release and the Development Kit Binary Release with Cryptography
+    Extensions. Issues that are marked <em>(Development Kit with Cryptography
+  Extensions    only)</em> pertain only to the Development Kit Binary Release
+  with Cryptography    Extensions, version 2.2.1.</p>
+         
+<p class="nav-link">[<a href="#_top">Top</a>]</p>
+         
+<h2> <a name="supported_platforms"></a>Supported Platforms </h2>
+         
+<ul type="disc">
+       <li>Microsoft Windows 2000, Service Pack 2</li>
+       <li>Solaris 8 (SunOS 5.8) Operating System (SPARC<sup>TM</sup> platforms)</li>
+         
+</ul>
+         
+<p> <b>Java Development Kit:</b> Java<sup>TM</sup> 2 Standard Edition (J2SE<sup>TM</sup>)
+    SDK, version 1.4.1. You can download the supported SDK from <font
+ color="#0000ff"><a href="http://java.sun.com/j2se/">http://java.sun.com/j2se/</a></font>.</p>
+         
+<p><b>NOTE:</b> The Java Card Development Kit, version 2.2.1, has been successfully
+  ported to the Linux platform, but it is not supported.  Furthermore, the
+ Linux platform version of the toolkit is unsupported and has    undergone
+ only limited testing. The Linux platform version was tested only on    the
+ English language Red Hat Linux 7.2, kernel 2.4.7-10, and gcc version 2.96.&nbsp;
+   </p>
+          
+<p class="nav-link">[<a href="#_top">Top</a>] </p>
+         
+<h2> <a name="installation"></a>Installation Instructions and Setting Up
+Your    Environment </h2>
+         
+<p>For instructions on installing the binary release, see Chapter 2, "Installation"
+    in the User's Guide that is included with the version 2.2.1 Development
+  Kit.    This chapter also describes any additional tools you might need
+for  setting    up your environment.</p>
+         
+<p class="nav-link">[<a href="#_top">Top</a>]</p>
+         
+<h2> <a name="documentation_roadmap"></a>Documentation Roadmap </h2>
+         
+<p>Documentation for the version 2.2.1 Java Card platform can be found in
+  the    Development Kit product download bundle and the Specification download
+  bundle.</p>
+         
+<p>HTML can be viewed with any CSS-compliant browser, such as:</p>
+         
+<ul>
+       <li>Netscape<sup>TM</sup> Communicator, version 5.0 or later</li>
+       <li>Mozilla<sup>TM</sup>, version 1.1 or later</li>
+         
+</ul>
+         
+<p>PDF files can be viewed in your web browser <em>with an appropriate plugin</em>
+    or in Adobe Acrobat Reader. Most recent browsers include the PDF reader
+  plugin.    If your browser does not, you can download the plugin from the
+  browser vendor's    web site or the Adobe web site at: </p>
+         
+<p><font color="#0000ff"><a
+ href="http://www.adobe.com/products/acrobat/readstep.html">http://www.adobe.com/products/acrobat/readstep.html</a></font><br>
+     </p>
+         
+<p>Documentation files packaged in the product were current when the product
+  shipped.    See the <a
+ href="http://java.sun.com/products/javacard/faq.html">Java Card technology
+    web site</a> for any updates.</p>
+         
+<h3><a name="development_kit"></a>Development Kit Documentation</h3>
+         
+<p>The following table provides links to the documentation for the binary
+  release    of the Development Kit: <br>
+       &nbsp; </p>
+         
+<table>
+       <thead>    <tr>
+           <th class="sun-lightblue" scope="col" width="40%"
+ valign="top">Document</th>
+         <th class="sun-lightblue" colspan="2" scope="col" valign="top">Format</th>
+         <th class="sun-lightblue" scope="col" width="562">Description</th>
+       </tr>
+       </thead> <tfoot>    <tr>
+           <td colspan="4" width="40%" valign="top">                    
+                                                        
+    <hr class="pHr">    </td>
+       </tr>
+       </tfoot> <tbody>
+         <tr>
+           <td width="40%" valign="top"><em>Java Card<sup>TM</sup> Development
+ Kit User&#8217;s Guide,       version 2.2.1 (binary release) </em></td>
+         <td width="55" valign="top"><a
+ href="doc/en/guides/cJDK_Users_Guide.pdf">PDF</a>,  	<a
+ href="doc/en/guides/html/binary/index.html">HTML</a></td>
+         <td width="1">&nbsp;</td>
+         <td valign="top" width="562">                                  
+                                                                     
+      <p>Describes how to run the binary release of the version 2.2.1 Java
+  Card          platform reference implementation. </p>
+         </td>
+       </tr>
+       <tr>
+           <td valign="top" width="40%"><i>Application Programming Notes</i></td>
+         <td width="55" valign="top"><a
+ href="doc/en/devnotes/programming_notes.pdf">PDF</a>,  	<a
+ href="doc/en/devnotes/html/index.html">HTML</a></td>
+         <td width="1">&nbsp;</td>
+         <td valign="top" width="562">Contains tips and guidelines for the
+ applet  developer        who is using the Java Card Application Programming
+ Interface,  version 2.2.1,        to implement applet management, multiselectable
+ applets,  logical channels        and Java Card RMI. It is also for developers
+ who  are considering creating        a vendor-specific framework based on
+ version  2.2.1 of Java Card technology        specifications. </td>
+       </tr>
+       <tr>
+           <td width="40%" valign="top"><em>API Reference</em></td>
+         <td width="55" valign="top"><a href="doc/en/api/index.html">HTML</a></td>
+         <td width="1">&nbsp;</td>
+         <td width="562">Specifies the Java Card APIs, generated with the
+Javadoc<sup>TM</sup>         tool.</td>
+       </tr>
+       <tr>
+           <td width="40%" valign="top"><em>Frequently Asked Questions (FAQ)</em></td>
+         <td width="55" valign="top"><a
+ href="http://java.sun.com/products/javacard/faq.html">HTML</a></td>
+         <td width="1">&nbsp;</td>
+         <td width="562">                                               
+                                                         
+      <p>The publicly available Technology FAQ contains answers to questions
+  and          clarifications regarding the release. The FAQ resides at the
+  Java Card          technology web site:<font color="#0000ff"> </font><font
+ color="#0000ff">          <a
+ href="http://java.sun.com/products/javacard/faq.html">http://java.sun.com/products/javacard/faq.html</a></font></p>
+         </td>
+       </tr>
+                                              
+  </tbody>     
+</table>
+         
+<h3><a name="specification"></a>Specification Documentation</h3>
+         
+<p>These documents are included in the specification download bundle:</p>
+         
+<table>
+       <thead>    <tr>
+           <th class="sun-lightblue" scope="col" width="40%"
+ valign="top">Document</th>
+         <th class="sun-lightblue" scope="col" width="504">Description</th>
+       </tr>
+       </thead> <tfoot>    <tr>
+           <td colspan="4" width="40%" valign="top">                    
+                                                        
+    <hr class="pHr">    </td>
+       </tr>
+       </tfoot> <tbody>
+         <tr>
+           <td width="40%" valign="top"><em>Application Programming Interface
+ for the Java Card<sup>TM</sup>   Platform,        version 2.2.1</em></td>
+         <td valign="top" width="504">                                  
+                                                                     
+      <p>Provides the documentation for the Java Card API in PDF and HTML
+  formats.</p>
+         </td>
+       </tr>
+       <tr>
+           <td width="40%" valign="top"><em>Virtual Machine Specification
+for  the Java Card<sup>TM</sup>      Platform,        version 2.2.1</em></td>
+         <td width="504">Assists developers in creating an implementation,
+ developing        a specification to extend the Java Card technology specifications,
+  or in        creating an extension to the Java Card runtime environment.
+  The specification       is provided in PDF and HTML formats.</td>
+       </tr>
+       <tr>
+           <td width="40%" valign="top"><em>Runtime Environment Specification
+ for the Java Card<sup>TM</sup>   Platform,        version 2.2.1 </em></td>
+         <td width="504">                                               
+                                                         
+      <p>Assists Java Card runtime environment implementors in creating an
+  implementation,          developing a specification to extend the Java Card
+  technology specifications,          or in creating an extension to the
+Java   Card runtime environment.  The specification       is provided in
+PDF and   HTML formats.</p>
+         </td>
+       </tr>
+                                              
+  </tbody>     
+</table>
+         
+<h3><a name="whitepapers"></a>White Papers</h3>
+         
+<p>The Development Kit documentation references the following white papers.
+  You    can obtain these white papers from the Java Card documentation web
+  site on <a href="http://java.sun.com/products/javacard/">http://java.sun.com/products/javacard</a>.</p>
+         
+<table>
+       <thead>    <tr>
+           <th class="sun-lightblue" scope="col" width="40%"
+ valign="top">Document</th>
+         <th class="sun-lightblue" scope="col" width="504">Description</th>
+       </tr>
+       </thead> <tfoot>    <tr>
+           <td colspan="4" width="40%" valign="top">                    
+                                                        
+    <hr class="pHr">    </td>
+       </tr>
+       </tfoot> <tbody>
+         <tr>
+           <td width="40%" valign="top"><em>Off-Card Verifier White Paper</em></td>
+         <td valign="top" width="504">                                  
+                                                                     
+      <p>This white paper describes the off-card verifier for the Java Card
+  platform.          The off-card verifier provides the functionality for
+verifying  that Java          Card applets ("CAP files") and export files
+conform to  the Java          Card specifications and platform interoperability
+standards.</p>
+         </td>
+       </tr>
+       <tr>
+           <td width="40%" valign="top"><em>RMI Client Application Programming
+  Interface</em></td>
+         <td width="504">This white paper describes a sample client-side
+API   to be        used in client applications which access a Java Card RMI
+server   applet executing        on the smart card. This API is presented
+as an aid   to developers who are        writing their own client-side API.</td>
+       </tr>
+                                              
+  </tbody>     
+</table>
+         
+<p class="nav-link">[<a href="#_top">Top</a>]</p>
+         
+<h2><a name="new_features"></a>New Features and Improvements</h2>
+         
+<ul type="disc">
+       <li><a name="extended_address"></a><strong>Extended Addressing Capabilities</strong></li>
+                                                 
+  <p>Previous versions of the Development Kit for the Java Card platform
+were      released as a 16-bit implementation. For the 2.2.1 release, a 32-bit
+  version      of the Development Kit has been implemented. By breaking the
+  64KB memory limitation      that was present in earlier versions, you can
+  now write larger applications      and access larger areas of storage. The
+  Photo Card demo has been included      in the Development Kit to illustrate
+  the use of the large address space.</p>
+       <li><a name="rmi_support"></a><strong>Java Card WDE support for Java
+ Card  RMI</strong></li>
+                                                 
+  <p>Java Card Workstation Development Environment ("Java Card WDE")    
+now supports Java Card RMI. Any applet that uses Java Card RMI can now be
+    run and debugged on Java Card WDE. The RMI demos in the Development Kit
+can      now run on Java Card WDE.</p>
+       <li><a name="applet_deletion"></a><strong>Enhancement to the Applet
+ Deletion      Mechanism</strong></li>
+                                                 
+  <p>Version 2.2.1 has added an <tt>AppletEvent.uninstall()</tt> method to
+  allow      you greater flexibility in deleting applets. </p>
+       <li><a name="cryptography_support"></a><strong>Cryptography  Support
+     <em>(Development Kit with Cryptography Extensions only)</em></strong></li>
+                                                 
+  <p>Java Card 2.2.1 supports cryptography with the implementation of    
+security and cryptography classes.</p>
+</ul>
+<blockquote>  
+  <p>Both the C-language Java Card  runtime environment      and Java Card
+WDE  support the following  encryption algorithm implementations:</p>
+</blockquote>
+<ul type="disc">
+  
+  <p>    </p>
+         
+  <p> </p>
+   
+</ul>
+     
+<ul style="margin-left: 40px; list-style-type: circle;">
+       
+  <ul style="list-style-type: square;">
+         
+  </ul>
+       
+  <ul style="list-style-type: square;">
+         
+  </ul>
+             
+  <ul style="list-style-type: square;">
+              
+  </ul>
+   
+</ul>
+   
+<ul type="disc">
+                                                              
+  <ul>
+         <li><tt>KeyAgreement</tt>                                      
+                                                                 
+      <ul>
+             <li><tt>ALG_EC_SVDP_DH</tt>&#8212;elliptic curve secret value derivation
+            primitive, Diffie-Hellman version, <i>without</i> cofactor expansion.</li>
+             <li><tt>ALG_EC_SVDP_DHC</tt>&#8212;elliptic curve secret value derivation
+            primitive, Diffie-Hellman version, <i>with</i> cofactor expansion.</li>
+                                                                        
+                                   
+      </ul>
+         </li>
+         <li><tt>Checksum</tt>                                          
+                                                              
+      <ul>
+             <li><tt>ALG_ISO3309_CRC16</tt>&#8212;ISO 3309-compliant 16-bit algorithm.</li>
+             <li><tt>ALG_ISO3309_CRC32</tt>&#8212;ISO 3309-compliant 32-bit algorithm.</li>
+                                                                        
+                                   
+      </ul>
+         </li>
+         <li><tt>Cipher</tt>                                            
+                                                           
+      <ul>
+             <li><tt>ALG_AES_BLOCK_128_CBC_NOPAD</tt>&#8212;AES with block size
+128         in CBC mode and no padding.</li>
+        <li><tt>ALG_DES_CBC_ISO9797_M2</tt>&#8212;DES Cipher Block Chaining with
+ISO 9797 M2 Padder.</li>
+        <li><tt>ALG_RSA_PKCS1</tt>&#8212;RSA Cipher with PKCS1 encoding format.</li>
+                                                                        
+                                   
+      </ul>
+         </li>
+         <li><tt>KeyBuilder</tt>                                        
+                                                                
+      <ul>
+             <li><tt>TYPE_AES</tt>, <tt>TYPE_AES_TRANSIENT_DESELECT</tt>,
+          <tt>TYPE_AES_TRANSIENT_RESET</tt>&#8212;128-bit             AES keys.</li>
+             <li><tt>TYPE_EC_FP_PUBLIC</tt>, <tt>TYPE_EC_FP_PRIVATE</tt>&#8212;112-,
+            128-, 160-, 192-bit ECC keys for operations over large prime fields.</li>
+        <li><tt>TYPE_DES</tt>, <tt>TYPE_DES_TRANSIENT_DESELECT</tt>,     
+      <tt>TYPE_DES_TRANSIENT_RESET</tt>&#8212;64-bit DES and 128-bit DES3 keys.</li>
+                                                                        
+                                   
+      </ul>
+         </li>
+         <li><tt>KeyPair</tt>                                           
+                                                            
+      <ul>
+             <li><tt>ALG_EC_FP</tt>&#8212;Key pair generation for ECC keys over
+large             prime fields. </li>
+                                                                        
+                                   
+      </ul>
+         </li>
+         <li><tt>Signature</tt>                                         
+                                                               
+      <ul>
+             <li><tt>ALG_ECDSA_SHA</tt>&#8212;20-byte SHA digest using ECDSA.<br>
+             </li>
+             <li><tt>ALG_AES_MAC_128_NOPAD</tt>&#8212;16-byte MAC using AES with
+ block            size 128 in CBC mode.</li>
+        <li><tt>ALG_DES_MAC8_ISO9797_M2</tt>&#8212;DES MAC8 Signature with ISO 9797
+M2 Padder.</li>
+        <li><tt>ALG_RSA_SHA_PKCS1</tt>&#8212;RSA Signature with SHA Message Digest
+and PKCS1 encoding format.</li>
+                                                                        
+                                   
+      </ul>
+      </li>
+      <li><span style="font-family: monospace;">MessageDigest</span>&nbsp;</li>
+                     
+    <ul>
+        <li><tt>ALG_SHA</tt>&#8212;Message digest algorithm for SHA.</li>
+                     
+    </ul>
+      <li style="font-family: monospace;">Random Data</li>
+                     
+    <ul>
+        <li><tt>ALG_PSEUDO_RANDOM</tt>&#8212;Pseudo random number generator.</li>
+                     
+    </ul>
+                                                 
+  </ul>
+ 
+</ul>
+ 
+<ul type="disc">
+                                              <li><a
+ name="specification_bug"></a><strong>Specification Bug Fixes and  Clarifications</strong></li>
+                                                 
+  <p>See the Release Notes included with the specification download bundle.</p>
+         
+</ul>
+         
+<p class="nav-link">[<a href="#_top">Top</a>]</p>
+         
+<h2> <a name="known_bugs_and_issues"></a>Known Bugs and Issues </h2>
+         
+<p><strong>Running the Development Kit with J2SE SDK 1.4.2 </strong></p>
+         
+<p>The Development Kit for the Java Card Platform, version 2.2.1, might not
+  work    with the J2SE SDK 1.4.2.</p>
+<!--
+<p><strong>Generating an Elliptic Curve KeyPair</strong></p>
+<p>The Beta Release does not support the generation of an Elliptic Curve KeyPair 
+  without setting the domain parameters. If the domain parameters are not set, 
+  then the implementation throws a <tt>CryptoException</tt> with code <tt>UNINITIALIZED_KEY</tt>. 
+  This behavior will be modified in future releases; that is, a default set of 
+  domain parameters will be used.</p>
+
+<p><b><strong>If an error occurs during installation, the installer may not handle 
+  subsequent APDUs correctly</strong></b></p>
+<p>If the installer encounters an error during installation, it will correctly 
+  report that error. However, it may continue to process subsequent APDUs, and 
+  indicate that the APDUs were processed successfully (SW=0x9000). This is in 
+  contrast to the correct behavior: the installer should report an error for subsequent 
+  APDUs if the original error prevents the installation from completing successfully.</p>
+
+<p><strong>When running the <tt>build_samples</tt> script on the Solaris operating 
+  system, an extraneous error message may be returned</strong></p>
+<p>When running the <tt>build_samples</tt> script on the Solaris operating system, 
+  an extraneous error message may be generated for the Elliptic Curve Java 
+  Card RMI demonstration. This error has no effect on the successful 
+  operation of <tt>build_samples</tt>.</p>
+<p>This bug can occur in the binary global, binary domestic, and source global 
+  releases for the Solaris operating system.</p>
+-->
+            
+<p><strong>Memory Limitations on Different Versions of CREF</strong></p>
+         
+<p>Version 2.2.1 provides a C-language Java Card Reference Implementation
+  (CREF)    that supports 32-bit addressing. The following table lists the
+  RAM, EEPROM,    and ROM memory available for CREF depending on whether
+it   includes cryptography    extensions.</p>
+         
+<table>
+       <thead>    <tr>
+           <th class="sun-lightblue" scope="col" width="190">CREF Configuration</th>
+         <th class="sun-lightblue" scope="col" width="199"
+ align="center">RAM</th>
+         <th class="sun-lightblue" scope="col" width="199"
+ align="center">EEPROM</th>
+         <th class="sun-lightblue" scope="col" width="199"
+ align="center">ROM</th>
+       </tr>
+       </thead> <tfoot>    <tr>
+           <td colspan="6">                                             
+                               
+    <hr class="pHr">    </td>
+       </tr>
+       </tfoot> <tbody>
+         <tr>
+           <td width="190">32-bit, without cryptography extensions</td>
+         <td width="199">                                               
+                                                         
+      <p align="center">1280 bytes</p>
+         </td>
+         <td width="199">                                               
+                                                         
+      <div align="center">64 KB</div>
+         </td>
+         <td width="199">                                               
+                                                         
+      <div align="center">40 KB</div>
+         </td>
+       </tr>
+       <tr>
+           <td width="190">32-bit, with cryptography extensions</td>
+         <td width="199">                                               
+                                                         
+      <div align="center">2048 bytes</div>
+         </td>
+         <td width="199">                                               
+                                                         
+      <div align="center">64 KB</div>
+         </td>
+         <td width="199">                                               
+                                                         
+      <div align="center">44 KB</div>
+         </td>
+       </tr>
+                                              
+  </tbody>     
+</table>
+         
+<p><strong>Cannot Validate that EC Key domain parameters are prime values</strong></p>
+         
+<p>The code in the Java Card WDE which validates that EC Key domain parameters
+    P and R are prime values has currently been commented out due to a bug
+  in JDK    1.4.1. This is because the prime check for the <tt>BigInteger</tt>
+  library will    return false for certain truly prime numbers that are commonly
+  used as one of    these domain parameters. The bug is 4814775 and has been
+  fixed in JDK 1.4.2.</p>
+         
+<p><strong>Default applet settings for logical channels have been changed</strong></p>
+         
+<p>In previous versions of the Java Card reference implementation, the Installer
+    was the default applet on all of the logical channels. In version 2.2.1
+  of the    reference implementation, the Installer is the default applet
+only  on logical    channel 0. The default applet on the other logical channels
+  is set to "<tt>No    applet selected</tt>".</p>
+<!--
+  <ol type="i">
+    <li><a href="#software_limitations">Software Limitations</a></li>
+  </ol>
+  <p><a name="software_limitations"></a> </p>
+
+  <H3>Software Limitations</H3>
+   
+  -->
+                
+<p class="nav-link">[<a href="#_top">Top</a>]</p>
+         
+<h2>    <a name="prod_info"></a>Where to Find Product Information and News
+  </h2>
+         
+<p>Visit the product web site at: </p>
+         
+<p><font color="#0000ff"><a
+ href="http://java.sun.com/products/javacard/">http://java.sun.com/products/javacard/</a></font>
+  </p>
+         
+<p>For the most up-to-date information on: </p>
+         
+<ul type="disc">
+       <li>Product News and Reviews </li>
+       <li>Release Notes and Product Documentation </li>
+       <li>Technical Support Contact Information </li>
+         
+</ul>
+         
+<p class="nav-link">[<a href="#_top">Top</a>] </p>
+         
+<h2>   <a name="feedback"></a>How to Send Feedback and Questions</h2>
+         
+<p>To report a new bug or submit a feature request, fill out the details in
+the easy-to-use form on Sun's web site at:<br>
+           <font color="#0000ff"><br>
+         <a href="http://java.sun.com/cgi-bin/bugreport.cgi">http://java.sun.com/cgi-bin/bugreport.cgi</a></font></p>
+         
+<ul type="disc">
+            
+</ul>
+         
+<p>To get an answer to a question which is not about a bug or a feature request,
+  we recommend you first check the Release Notes, then the Frequently Asked
+       Questions (the Technology FAQ). This is often the fastest way to locate
+  an      answer.&nbsp;</p>
+         
+<ul type="disc">
+            
+</ul>
+         
+<p class="nav-link">[<a href="#_top">Top</a>]</p>
+         
+<hr class="pHr">Copyright &copy; 2003 Sun Microsystems, Inc. All rights reserved.
+  <br>
+     <br>
+     <br>
+     <br>
+     <br>
+     <br>
+     <br>
+    <br>
+   <br>
+   <br>
+<br>
+</body>
+</html>

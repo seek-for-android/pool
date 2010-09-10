@@ -1,0 +1,942 @@
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
+    <meta http-equiv="Content-Style-Type" content="text/css" />
+    <meta name="GENERATOR" content="Quadralay WebWorks Publisher Professional Edition 7.0.5.1025" />
+    <meta name="TEMPLATEBASE" content="JCREspecTemplate" />
+    <meta name="LASTUPDATED" content="10/08/03 18:54:31" />
+    <title>Working with Logical Channels</title>
+    <link rel="StyleSheet" href="document.css" type="text/css" />
+    <link rel="StyleSheet" href="catalog.css" type="text/css" />
+    <link rel="Table of Contents" href="index.html" />
+    <link rel="Previous" href="garbagecoll.html" />
+    <link rel="Next" href="rmiapplication.html" />
+    <link rel="Index" href="devnotesIX.html" />
+  </head>
+
+  <body>
+
+    <table class="full-width" id="SummaryNotReq1">
+      <tr><td class="sun-darkblue">&#160;</td></tr>
+      <tr><td class="sun-lightblue">&#160;</td></tr>
+      <tr><td class="go-right">
+        <a accesskey="c" href="index.html">
+          <img id="LongDescNotReq1" src="images/toc.gif" border="0"
+            alt="Contents" /></a>
+	<a accesskey="p" href="garbagecoll.html">
+	  <img id="LongDescNotReq2" src="images/prev.gif" border="0"
+            alt="Previous" /></a>
+        <a accesskey="n" href="rmiapplication.html">
+	  <img id="LongDescNotReq3" src="images/next.gif" border="0"
+            alt="Next" /></a>
+        <a accesskey="i" href="devnotesIX.html">
+	  <img id="LongDescNotReq4" src="images/index.gif" border="0"
+            alt="Index" /></a>
+        </td>
+      </tr>
+    </table>
+
+<a name="wp9095"> </a><h2 class="pChapNum">
+Chapter &#160; 2
+</h2>
+<a name="wp9178"> </a><h2 class="pTitle">
+Working with Logical Channels
+</h2>
+<hr />
+<a name="wp997053"> </a><p class="pBody">
+Version 2.2.1 of the Java Card platform has the ability to support up to four logical channels. This gives an ISO-7816-4-compliant terminal the ability to open up to four sessions into the smart card, one session per logical channel. Logical channels allow the concurrent execution of multiple applications on the card, allowing a terminal to handle different tasks at the same time. 
+</p>
+<a name="wp997055"> </a><p class="pBody">
+Applets written for version 2.1 of the Java Card platform will still work correctly, but they will not be aware of logical channel support. In contrast, applets written for version 2.2.1 can take advantage of this feature. 
+</p>
+<a name="wp997057"> </a><p class="pBody">
+For example, you could write an applet for version 2.2.1 of the Java Card platform which is capable of handling security on one channel, while another applet attempts to access user personal information on another channel, using security information on the first. By following this design, it is possible to access information owned by a different applet without having to deselect the currently selected applet which is handling session information. Thus, you avoid losing your session-specific security data, which is usually stored in <code class="cCode">CLEAR_ON_DESELECT</code> RAM memory.
+</p>
+<a name="wp997059"> </a><h2 class="pHeading1">
+Applets and Logical Channels 
+</h2>
+<a name="wp998257"> </a><p class="pBody">
+In version 2.2.1 of the Java Card platform, you can work with applets that are aware of multiple channels and applets that are not aware of multiple channels.
+</p>
+<a name="wp1000856"> </a><p class="pBody">
+The logical channel implementation in version 2.2.1 of the Java Card platform preserves backward compatibility with applets written for the Java Card platform version 2.1. It also allows you the option of writing your applets to use the logical channel feature or of writing the applets to work independently on any channel without using the logical channels at all.
+</p>
+<a name="wp997060"> </a><h3 class="pHeading2">
+Non-multiselectable Applets
+</h3>
+<a name="wp997061"> </a><p class="pBody">
+In version 2.2.1 of the Java Card platform, you have the option of writing applets that can operate in a multiple channel environment, or you can write applets that do not take advantage of this feature. Applets written for the Java Card platform that do not take advantage of the multiple channel environment are similar to applets written for the version 2.1 Java Card specification. An applet written for the Java Card platform that was not designed to be aware of multiple channels cannot be selected more than once nor can any other applet inside the package be selected concurrently on a different channel. 
+</p>
+<a name="wp997063"> </a><p class="pBody">
+You can have several non-multiselectable applets operating simultaneously on different channels, as long as they do not interfere with each other&#8217;s data while they are active. For example, you can open up to 4 channels and run a distinct applet on each as long as they do not inter-operate with each other. You can control their operation by multiplexing commands into the APDU communications channel. If the applets are independent of each other, then the results will be the same as if each of these applets were running one at a time, each in a separate session.
+</p>
+<a name="wp997065"> </a><h3 class="pHeading2">
+Multiselectable Applets
+</h3>
+<a name="wp997066"> </a><p class="pBody">
+If you design your applets to take advantage of multi-session functionality, they will be able to inter-operate with each other from different channels and have the ability to be selected multiple times in different channels. For example, the card might be handling security information on one channel, while data is being accessed on a second channel, while the third channel takes care of data encoding operations. 
+</p>
+<a name="wp997391"> </a><h2 class="pHeading1">
+Understanding the MultiSelectable Interface
+</h2>
+<a name="wp997392"> </a><p class="pBody">
+For an applet to be selectable on multiple channels at the same time, or to have another applet belonging to the same package selected simultaneously, it must implement the <code class="cCode">javacard.framework.MultiSelectable</code> interface. Implementing this interface allows the applet to be informed when it has been selected more than once or when applets in the same package are already selected during applet activation.
+</p>
+<a name="wp999164"> </a><p class="pBody">
+If an applet that does not implement <code class="cCode">MultiSelectable</code> is selected more than once on different channels, or selected concurrently with applets in the same package, then an error is returned to the terminal.
+</p>
+<hr class="pHr"/><div class="note">
+<a name="wp1001154"> </a>
+<b>Note &#8211;</b>  If an applet in any package implements the <code class="cCode">MultiSelectable</code> interface, then all applets in the package must also implement the <code class="cCode">MultiSelectable</code> interface. It is not possible to have multiselectable and non-multiselectable applets in the same package. 
+<hr class="pHr"/></div>
+<a name="wp998821"> </a><p class="pBody">
+The <code class="cCode">MultiSelectable</code> interface contains a <code class="cCode">select</code> and a <code class="cCode">deselect</code> method to help manage multiselectable applets. 
+</p>
+<a name="wp1000209"> </a><h3 class="pHeading2">
+Applet Selection for MultiSelectable Applets
+</h3>
+<div class="pPreformatted"><pre class="pPreformatted">
+public boolean MultiSelectable.select(boolean appInstAlreadySelected)<a name="wp998995"> </a>
+</pre></div>
+<a name="wp998991"> </a><p class="pBody">
+The <code class="cCode">MultiSelectable.select(boolean)</code> method informs the applet instance if it has been selected more than once on different channels, or if another applet in the same package has been selected on another channel. The parameter <code class="cCode">appInstAlreadySelected</code> is <code class="cCode">true</code> if the applet has already been selected on a different channel. It is <code class="cCode">false</code> if it has not been previously selected. The method can return either <code class="cCode">true</code> or <code class="cCode">false</code> to accept or reject applet selection.
+</p>
+<a name="wp999026"> </a><p class="pBody">
+This method can be called as a result of a <code class="cCode">SELECT FILE</code> or <code class="cCode">MANAGE CHANNEL</code> <code class="cCode">OPEN</code> APDU command being issued to select an applet. If the applet has not been previously selected, then the <code class="cCode">appInstAlreadySelected</code> parameter is passed as <code class="cCode">false</code> to signal an applet activation event. If the applet is subsequently selected on another channel, <code class="cCode">MultiSelectable.select(boolean)</code> is called again, but this time, the <code class="cCode">appInstAlreadySelected</code> parameter is passed as <code class="cCode">true</code>, to indicate that the applet is already active. 
+</p>
+<a name="wp1000210"> </a><h3 class="pHeading2">
+Applet Deselection for MultiSelectable Applets
+</h3>
+<div class="pPreformatted"><pre class="pPreformatted">
+public void MultiSelectable.deselect(boolean appInstStillSelected)<a name="wp999074"> </a>
+</pre></div>
+<a name="wp999000"> </a><p class="pBody">
+The <code class="cCode">MultiSelectable.deselect(boolean)</code> method informs the applet instance if it is being deselected on the logical channel while the same applet instance or another applet in the same package is still active on another channel. The parameter <code class="cCode">appInstStillSelected</code> is <code class="cCode">true</code> if the applet remains active on a different channel. It is <code class="cCode">false</code> if it is not active on another channel. A value of <code class="cCode">false</code> indicates that this is the last remaining active instance of the applet. 
+</p>
+<a name="wp999838"> </a><p class="pBody">
+This method can be called as the result of a <code class="cCode">MANAGE CHANNEL CLOSE</code> or <code class="cCode">SELECT FILE</code> APDU command. If the applet still remains active on a different channel, then the <code class="cCode">appInstStillSelected</code> parameter is passed as <code class="cCode">true</code>. Note that if the <code class="cCode">MultiSelectable.deselect(boolean)</code> method is called it basically means that either an instance of this applet or another applet from the same package remains active on another channel; therefore, <code class="cCode">CLEAR_ON_DESELECT</code> transients are not cleared. Only when the last applet instance from the entire package has been deselected, a call to <code class="cCode">Applet.deselect()</code> results instead, resulting in <code class="cCode">CLEAR_ON_DESELECT</code> transients being erased. 
+</p>
+<a name="wp999844"> </a><h2 class="pHeading1">
+Writing Multiselectable Applets
+</h2>
+<a name="wp999993"> </a><p class="pBody">
+This section describes how to write a multiselectable applet which will perform various tasks based on whether it is selected. The code samples in this section provide examples of extending the applet to implement the <code class="cCode">MultiSelectable</code> interface, and of implementing the <code class="cCode">MultiSelectable.select(boolean)</code> and <code class="cCode">deselect(boolean)</code> methods. The code samples also provide examples of how the <code class="cCode">Applet.select()</code> and <code class="cCode">deselect()</code> methods can be used to work with multiselectable applets.
+</p>
+<a name="wp1000211"> </a><p class="pBody">
+To take advantage of multiple channel operation, an applet must implement the <code class="cCode">javacard.framework.MultiSelectable</code> interface. For example:
+</p>
+<div class="pPreformatted"><pre class="pPreformatted">
+public class SampleApplet extends Applet <a name="wp1000823"> </a>
+&#160;&#160;&#160;&#160;implements MultiSelectable {<a name="wp1000824"> </a>
+&#160;&#160;&#160;&#160;...<a name="wp1000825"> </a>
+&#160;&#160;&#160;&#160;}<a name="wp999849"> </a>
+</pre></div>
+<a name="wp1000707"> </a><p class="pBody">
+The new applet needs to provide implementation for the <code class="cCode">MultiSelectable.select(boolean)</code> and <code class="cCode">MultiSelectable.deselect(boolean)</code> methods. These methods are responsible for encoding the behavior that the applet should have during a selection event if either of the following situations occurs:
+</p>
+<ul class="pBullet1"><a name="wp1000729"> </a><div class="pBullet1"><li>the applet is already selected on a different channel</li></div>
+<a name="wp1000735"> </a><div class="pBullet1Last"><li>one or more applets from the same package are also selected on different channels</li></div>
+</ul>
+<a name="wp1000736"> </a><p class="pBody">
+The behavior to be encoded might include initializing applet state, accepting or rejecting the selection request, or clearing data structures in case of deselection.
+</p>
+<div class="pPreformatted"><pre class="pPreformatted">
+public boolean select(boolean appInstAlreadySelected) {<a name="wp1000709"> </a>
+<a name="wp1000710"> </a>
+&#160;&#160;&#160;&#160;// Implement the logic to control applet selection<a name="wp1000711"> </a>
+&#160;&#160;&#160;&#160;// during a multiselection situation<a name="wp1000712"> </a>
+&#160;&#160;&#160;&#160;...<a name="wp1000713"> </a>
+}<a name="wp1000714"> </a>
+<a name="wp1000715"> </a>
+public void deselect(boolean appInstStillSelected) {<a name="wp1000716"> </a>
+<a name="wp1000717"> </a>
+&#160;&#160;&#160;&#160;// Implement the logic to control applet deselection<a name="wp1000718"> </a>
+&#160;&#160;&#160;&#160;// during a multiselection situation<a name="wp1000719"> </a>
+&#160;&#160;&#160;&#160;...<a name="wp1000720"> </a>
+}<a name="wp1000721"> </a>
+</pre></div>
+<a name="wp1000747"> </a><p class="pBody">
+Note that the applet is still required to implement the <code class="cCode">Applet.select()</code> and <code class="cCode">Applet.deselect()</code> methods in addition to the <code class="cCode">MultiSelectable</code> interface. These methods would handle applet selection and deselection behavior when a multiselection situation does not happen.
+</p>
+<a name="wp999851"> </a><h3 class="pHeading2">
+A MultiSelectable Applet Example
+</h3>
+<a name="wp1000705"> </a><p class="pBody">
+In this example, assume that the multiselectable applet, <code class="cCode">SampleApplet</code>, must initialize the following two arrays of data when it is selected: 
+</p>
+<ul class="pBullet1"><a name="wp1000082"> </a><div class="pBullet1"><li>an array of package data that will be initialized when the first applet in the package becomes active</li></div>
+<a name="wp1000081"> </a><div class="pBullet1Last"><li>an array of private applet data that will be initialized upon applet instance activation </li></div>
+</ul>
+<a name="wp1000083"> </a><p class="pBody">
+You can make these distinctions in your code because the <code class="cCode">MultiSelectable</code> interface allows the applet to recognize the circumstances under which it was selected. 
+</p>
+<a name="wp1000112"> </a><p class="pBody">
+Also, assume that the applet requires you to:
+</p>
+<ul class="pBullet1"><a name="wp1000203"> </a><div class="pBullet1"><li>clear the package data once no applet in the package is active</li></div>
+<a name="wp1000205"> </a><div class="pBullet1Last"><li>clear the applet private data when the applet instance is deselected</li></div>
+</ul>
+<a name="wp1000206"> </a><p class="pBody">
+and that the following methods are responsible for clearing and setting the data:
+</p>
+<div class="pPreformatted"><pre class="pPreformatted">
+// dataType parameter as above<a name="wp999853"> </a>
+final static byte DATA_PRIVATE      = (byte)01;<a name="wp999854"> </a>
+final static byte DATA_PACKAGE      = (byte)02;<a name="wp999855"> </a>
+...<a name="wp999856"> </a>
+<a name="wp999857"> </a>
+public void initData(byte[] dataArray, byte dataType) {<a name="wp999858"> </a>
+...<a name="wp999859"> </a>
+}<a name="wp999860"> </a>
+<a name="wp999861"> </a>
+public void clearData(byte[] dataArray) {<a name="wp999862"> </a>
+...<a name="wp999863"> </a>
+}<a name="wp999864"> </a>
+<a name="wp999865"> </a>
+</pre></div>
+<a name="wp999867"> </a><p class="pBody">
+To achieve the behavior specified above, you will need to modify the selection and deselection methods in your sample applet.
+</p>
+<a name="wp999869"> </a><p class="pBody">
+The code for <code class="cCode">Applet.select()</code>, which is invoked when this applet is the first to become active in the package, could be implemented like this:
+</p>
+<div class="pPreformatted"><pre class="pPreformatted">
+public boolean select() {<a name="wp999871"> </a>
+        <a name="wp999872"> </a>
+&#160;&#160;&#160;&#160;// First applet to be selected in package, so <a name="wp999873"> </a>
+&#160;&#160;&#160;&#160;// initialize package data and applet data<a name="wp999874"> </a>
+&#160;&#160;&#160;&#160;initData(packageData, DATA_PACKAGE);<a name="wp999875"> </a>
+&#160;&#160;&#160;&#160;initData(privateData, DATA_PRIVATE);<a name="wp999876"> </a>
+<a name="wp999877"> </a>
+&#160;&#160;&#160;&#160;return true;<a name="wp999878"> </a>
+<a name="wp999879"> </a>
+}<a name="wp999880"> </a>
+</pre></div>
+<a name="wp999885"> </a><p class="pBody">
+Likewise, the implementation of the method <code class="cCode">MultiSelectable.select(boolean)</code> would need to determine whether the applet is already active. According to its definition, this method is called when there is another applet within this package that is active. <code class="cCode">MultiSelectable.select(boolean)</code> could be implemented such that if <code class="cCode">appInstAlreadySelected</code> is <code class="cCode">false</code>, then the applet private data could be initialized. For example:
+</p>
+<div class="pPreformatted"><pre class="pPreformatted">
+public boolean select(boolean appInstAlreadySelected) {<a name="wp999887"> </a>
+<a name="wp999888"> </a>
+&#160;&#160;&#160;&#160;// If boolean parameter is false, <a name="wp999889"> </a>
+&#160;&#160;&#160;&#160;// then we have applet activation<a name="wp1000044"> </a>
+&#160;&#160;&#160;&#160;// Otherwise, no applet activation occurs.<a name="wp999890"> </a>
+&#160;&#160;&#160;&#160;if (appInstAlreadySelected == false) {<a name="wp999891"> </a>
+&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;// Initialize applet private data, upon activation<a name="wp999892"> </a>
+&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;initData(privateData, DATA_PRIVATE);<a name="wp999893"> </a>
+&#160;&#160;&#160;&#160;}<a name="wp999894"> </a>
+&#160;&#160;&#160;&#160;return true;<a name="wp999895"> </a>
+}<a name="wp999896"> </a>
+</pre></div>
+<a name="wp999898"> </a><p class="pBody">
+In the case of deselection, the applet data needs to be cleared. The method <code class="cCode">MultiSelectable.deselect(boolean)</code> could be implemented so that it would clear applet data only if the applet is no longer active. For example:
+</p>
+<div class="pPreformatted"><pre class="pPreformatted">
+public void deselect(boolean appInstStillSelected) {<a name="wp999900"> </a>
+    <a name="wp999901"> </a>
+&#160;&#160;&#160;&#160;// If boolean parameter is false, then applet is no longer<a name="wp999902"> </a>
+&#160;&#160;&#160;&#160;// active.  It is O.K. to clear applet private data.<a name="wp999903"> </a>
+&#160;&#160;&#160;&#160;if (appInstStillSelected == false) {<a name="wp999904"> </a>
+&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;clearData(privateData);<a name="wp999905"> </a>
+&#160;&#160;&#160;&#160;}<a name="wp999906"> </a>
+}<a name="wp999907"> </a>
+</pre></div>
+<a name="wp999909"> </a><p class="pBody">
+If this applet is the last one to be deactivated from the package, it would also need to clear package data. This situation would result in a call to <code class="cCode">Applet.deselect()</code>. This method could be implemented like this: 
+</p>
+<div class="pPreformatted"><pre class="pPreformatted">
+public void deselect() {<a name="wp999911"> </a>
+&#160;&#160;&#160;&#160;// This call means that the applet is no longer active and<a name="wp999912"> </a>
+&#160;&#160;&#160;&#160;// that no other applet in the package is.  Data for both<a name="wp999913"> </a>
+&#160;&#160;&#160;&#160;// applet and package must be cleared.<a name="wp999914"> </a>
+&#160;&#160;&#160;&#160;clearData(packageData);<a name="wp999915"> </a>
+&#160;&#160;&#160;&#160;clearData(privateData);<a name="wp999916"> </a>
+<a name="wp999917"> </a>
+}<a name="wp999918"> </a>
+</pre></div>
+<a name="wp1000946"> </a><h4 class="pHeading3">
+Handling Channel Information on APDU Commands 
+</h4>
+<a name="wp1000947"> </a><p class="pBody">
+Only specific APDU commands can contain encoded logical channel information. These are the commands whose CLA byte contains the bytes 0x0X, 0x8X, 0x9X, and 0xAX. 
+</p>
+<a name="wp1000948"> </a><p class="pBody">
+The X nibble is responsible for logical channels and secure message encoding; only the two least significant bits of the nibble are used for channel encoding, which ranges from 0 to 3. When an APDU command is received, the card processes it and determines whether the command has logical channel information encoding. If logical channel information is encoded, then the card sends the APDU command to the respective channel. All other APDU commands are forwarded to the card&#8217;s basic channel (0). For example, the command 0xB1 forwards the command to the card&#8217;s basic channel (0), since the CLA byte with the nibble 0xBX does not contain logical channel information. 
+</p>
+<a name="wp1000949"> </a><p class="pBody">
+This also means, that all applets willing to use the logical channel capabilities must comply with the ISO 7816-4 CLA byte encoding specification, and choose APDU commands accordingly.
+</p>
+<a name="wp999922"> </a><p class="pBody">
+Just as the deselection and selection mechanisms need to be written to take into consideration a multiple-channel environment, it is important to write the <code class="cCode">Applet.process()</code> method in such a way that it handles channel information correctly. Due to the fact that some APDUs could be digitally signed, the APDU command is passed to the applet&#8217;s <code class="cCode">process</code> method as it is sent by the terminal. That means, any logical channel information is not cleared, and passed intact to the applet. The applet must deal with this situation.
+</p>
+<a name="wp999924"> </a><p class="pBody">
+Note that in the following example, a bit mask, <code class="cCode">CHANNEL_FILTER</code>, is used to filter out logical channel information from the APDU command, so that the applet can correctly interpret it. The task of correctly interpreting <code class="cCode">CLA</code> byte channel information is the responsibility of the applet developer.
+</p>
+<div class="pPreformatted"><pre class="pPreformatted">
+final static byte CHANNEL_FILTER    = (byte)0xFC;<a name="wp999929"> </a>
+...<a name="wp999930"> </a>
+<a name="wp999931"> </a>
+// Applet&#8217;s process method<a name="wp999932"> </a>
+public void process(APDU apdu) {<a name="wp999933"> </a>
+<a name="wp999934"> </a>
+&#160;&#160;&#160;&#160;byte[] buffer = apdu.getBuffer();<a name="wp999935"> </a>
+    <a name="wp999936"> </a>
+&#160;&#160;&#160;&#160;// check SELECT APDU command<a name="wp999937"> </a>
+&#160;&#160;&#160;&#160;if (Applet.selectingApplet()) {<a name="wp999944"> </a>
+&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;return;<a name="wp1000701"> </a>
+&#160;&#160;&#160;&#160;}<a name="wp1000703"> </a>
+<a name="wp1000704"> </a>
+&#160;&#160;&#160;&#160;// check wallet CLA<a name="wp1000702"> </a>
+&#160;&#160;&#160;&#160;// filter channel information<a name="wp999945"> </a>
+&#160;&#160;&#160;&#160;if ((byte)(buffer[ISO7816.OFFSET_CLA] &amp; <a name="wp999946"> </a>
+&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;CHANNEL_FILTER) != Sample_CLA)<a name="wp999947"> </a>
+&#160;&#160;&#160;&#160;ISOException.throwIt(ISO7816.SW_CLA_NOT_SUPPORTED);<a name="wp999948"> </a>
+<a name="wp999949"> </a>
+&#160;&#160;&#160;&#160;...<a name="wp999950"> </a>
+}<a name="wp999839"> </a>
+</pre></div>
+<a name="wp1000320"> </a><h3 class="pHeading2">
+Writing ISO 7816-4-compliant Applets
+</h3>
+<a name="wp1000321"> </a><p class="pBody">
+If your applets must be compliant with the ISO 7816-4 specification, then you must track the applet security state on each channel where it is active. Additionally, in the case of multiselectable applets, you must copy the state (including its security configuration) when you perform <code class="cCode">MANAGE</code> <code class="cCode">CHANNEL</code> commands from a channel other than the basic channel. 
+</p>
+<a name="wp1000322"> </a><p class="pBody">
+For example, applets might need to perform some sort of initialization upon activation, as well as cleanup procedures during deactivation. To do these tasks, a multiselectable applet might need to keep track of which channels it is being selected on during a card session. 
+</p>
+<a name="wp1000317"> </a><p class="pBody">
+To track this information, you need to know the channel on which the task is being performed. Tracking is done by two methods in the Java Card API:
+</p>
+<ul class="pBullet1"><a name="wp1002986"> </a><div class="pBullet1"><li>In the <code class="cCode">APDU</code> class: <code class="cCode">public static byte getCLAChannel();</code></li></div>
+<a name="wp1002988"> </a><p class="pIndented1">
+This method returns the origin channel where the command was issued. In case of <code class="cCode">MANAGE</code> <code class="cCode">CHANNEL</code> or <code class="cCode">SELECT</code> <code class="cCode">FILE</code> commands, if this method is called within the <code class="cCode">Applet.select()</code>, <code class="cCode">MultiSelectable.select(boolean)</code>, <code class="cCode">Applet.deselect()</code>, or <code class="cCode">MultiSelectable.deselect(boolean)</code> method, it returns the APDU command logical channel as specified in the CLA byte. 
+</p>
+<a name="wp1000261"> </a><div class="pBullet1Last"><li>In the <code class="cCode">JCSystem</code> class: <code class="cCode">public static byte getAssignedChannel();</code></li></div>
+
+<a name="wp1000264"> </a><p class="pIndented1">
+This method returns the channel of the currently selected applet. In case of a <code class="cCode">MANAGE</code> <code class="cCode">CHANNEL</code> command, if this method is invoked inside the <code class="cCode">Applet.select()</code>, <code class="cCode">MultiSelectable.select(boolean)</code>, <code class="cCode">Applet.deselect()</code>, or <code class="cCode">MultiSelectable.deselect(boolean)</code> method, it returns the channel where the applet to be selected or deselected is assigned to run.
+</p>
+</ul>
+<a name="wp1000266"> </a><h4 class="pHeading3">
+An ISO 7816-4-compliant Applet Example
+</h4>
+<a name="wp1000452"> </a><p class="pBody">
+In case of a <code class="cCode">MANAGE</code> <code class="cCode">CHANNEL</code> command from a non-zero channel to another non-zero channel, the ISO 7816-4 specification requires that the security state from the applet selected in the origin channel must be copied into the new channel. In the example presented in this section, assume that the state information is stored in the array <code class="cCode">appState</code> inside the applet:
+</p>
+<div class="pPreformatted"><pre class="pPreformatted">
+StateObj appState[MAX_CHANNELS];&#160;&#160;&#160;&#160;// Holds the security state<a name="wp1000268"> </a>
+&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;// for each logical channel<a name="wp1000769"> </a>
+</pre></div>
+<a name="wp1000272"> </a><p class="pBody">
+You can use the <code class="cCode">APDU.getCLAChannel()</code> and <code class="cCode">JCSystem.getAssignedChannel()</code> methods to identify if the applet selection case corresponds to an ISO 7816-4 case where the security state needs to be copied. Note that if such an event occurs, it will also be a multiselection situation, where the applet is also selected on the newly opened channel.
+</p>
+<a name="wp1000274"> </a><p class="pBody">
+In this example, the code to identify the applet selection case is included in the implementation of the <code class="cCode">MultiSelectable.select(boolean)</code> method:
+</p>
+<div class="pPreformatted"><pre class="pPreformatted">
+public boolean select(boolean appInstAlreadySelected) {<a name="wp1000506"> </a>
+&#160;&#160;&#160;&#160;...<a name="wp1000504"> </a>
+&#160;&#160;&#160;&#160;// Obtain logical channels information<a name="wp1000451"> </a>
+&#160;&#160;&#160;&#160;// This call returns the channel where <a name="wp1000431"> </a>
+&#160;&#160;&#160;&#160;// the command was issued<a name="wp1000436"> </a>
+&#160;&#160;&#160;&#160;byte origChannel = APDU.getCLAChannel();<a name="wp1000278"> </a>
+<a name="wp1000279"> </a>
+&#160;&#160;&#160;&#160;// This call returns the channel where the applet is being<a name="wp1000280"> </a>
+&#160;&#160;&#160;&#160;// selected<a name="wp1000281"> </a>
+&#160;&#160;&#160;&#160;byte targetChannel = JCSystem.getAssignedChannel();<a name="wp1000282"> </a>
+<a name="wp1000283"> </a>
+&#160;&#160;&#160;&#160;if (origChannel == targetChannel) {<a name="wp1000284"> </a>
+&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;// This is a SELECT FILE command.<a name="wp1000285"> </a>
+&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;// Do processing here.<a name="wp1000286"> </a>
+&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;...<a name="wp1000287"> </a>
+&#160;&#160;&#160;&#160;}<a name="wp1000288"> </a>
+<a name="wp1000289"> </a>
+&#160;&#160;&#160;&#160;if (origChannel == 0) {<a name="wp1000290"> </a>
+&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;// This is a MANAGE CHANNEL command from channel 0.<a name="wp1000291"> </a>
+&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;// ISO 7816-4 state sharing case does not <a name="wp1000292"> </a>
+&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;// apply here.<a name="wp1000442"> </a>
+&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;// Do processing here.<a name="wp1000293"> </a>
+&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;...<a name="wp1000294"> </a>
+&#160;&#160;&#160;&#160;} else {<a name="wp1000295"> </a>
+&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;// Since origChannel != 0, the special <a name="wp1000296"> </a>
+&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;// ISO 7816-4 case applies.<a name="wp1000437"> </a>
+&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;// Copy security state from origin channel <a name="wp1000297"> </a>
+&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;// to assigned logical channel.<a name="wp1000438"> </a>
+&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;appState[targetChannel] = appState[origChannel];<a name="wp1000299"> </a>
+<a name="wp1000300"> </a>
+&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;// Do further processing here<a name="wp1000301"> </a>
+&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;...<a name="wp1000302"> </a>
+&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;}<a name="wp1000303"> </a>
+&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;...<a name="wp1000516"> </a>
+}<a name="wp1000517"> </a>
+</pre></div>
+<a name="wp997428"> </a><h3 class="pHeading2">
+Applet Firewall Operation Requirements
+</h3>
+<a name="wp997430"> </a><p class="pBody">
+To ensure proper operation and protection, a number of applet firewall checks have been added to the virtual machine for the Java Card platform (&#8220;Java Card virtual machine&#8221; or &#8220;Java Card VM&#8221;) regarding security checks on method invocations. 
+</p>
+<a name="wp999278"> </a><p class="pBody">
+Applets that implement <code class="cCode">MultiSelectable</code> are designed to handle calls to Shareable objects across packages when several applets are active on different logical channels. In contrast, an applet written for version 2.1 of the Java Card platform, or an applet written for version 2.2.1 that does not implement <code class="cCode">MultiSelectable</code> has exclusive control over any changes to its internal objects or data when it is selected. Only when the non-multiselectable applet is in a deselected state can other applets modify its internal data structures. Therefore, if an applet is non-multiselectable, no calls to its Shareable objects should be made when it is selected.
+</p>
+<a name="wp1001175"> </a><h4 class="pHeading3">
+Working with Non-multiselectable Applets
+</h4>
+<a name="wp1001176"> </a><p class="pBody">
+Applets written for version 2.2.1 of the Java Card platform do not have to implement the <code class="cCode">MultiSelectable</code> interface. In this case, the applet will assume that it is uniquely selected and its owned objects will not be modified via Shareable interface objects while it is selected. The following points describe the limitations that are imposed when you interact with applets that do not implement <code class="cCode">MultiSelectable</code>:
+</p>
+<ul class="pBullet1"><a name="wp1001177"> </a><div class="pBullet1"><li>It is not possible to select more than one applet simultaneously from a package if any of the applets you want to select does not implement the <code class="cCode">MultiSelectable</code> interface.</li></div>
+<a name="wp1001178"> </a><div class="pBullet1Last"><li>It is not possible to invoke methods of a Shareable object belonging to a non-multiselectable applet when an applet, belonging to the same group context, is active.</li></div>
+</ul>
+<a name="wp998264"> </a><h3 class="pHeading2">
+ISO 7816-4 Specific APDU Commands for Logical Channel Management
+</h3>
+<a name="wp998265"> </a><p class="pBody">
+There are two ISO-specific APDU commands that you can use to work with logical channels in a smart card:
+</p>
+<ul class="pBullet1"><a name="wp998266"> </a><div class="pBullet1"><li><code class="cCode">SELECT FILE</code>&#8212;This command selects the specified applet on the specified channel number. The channel number can be from 0 to 3 and is specified in the lower two bits of the CLA byte. If the channel is closed, it will be opened and the specified applet will be selected on the channel. <code class="cCode">SELECT FILE</code> commands are forwarded to the newly selected applet.</li></div>
+<a name="wp998267"> </a><div class="pBullet1Last"><li><code class="cCode">MANAGE CHANNEL</code>&#8212;This command can be used to open a new channel from another channel, or close it. It provides the flexibility to allow you to specify the channel to be used or to allow the smart card to select the channel. Like <code class="cCode">SELECT FILE</code>, this command uses the lower two bits of the CLA byte to specify the channel number. <code class="cCode">MANAGE CHANNEL</code> commands are not forwarded to the applet.</li></div>
+</ul>
+<a name="wp998268"> </a><p class="pBody">
+When you work with these commands, keep in mind that: 
+</p>
+<ul class="pBullet1"><a name="wp998269"> </a><div class="pBullet1"><li>Origin logical channel values are encoded in the two least significant bits of the CLA byte. </li></div>
+<a name="wp998270"> </a><div class="pBullet1Plus"><li>Logical channel values can be 0, 1, 2, or 3 only.</li></div>
+<a name="wp998271"> </a><div class="pBullet1Plus"><li>Logical channel 0 is known as the <em class="cEmphasis">basic channel</em>, and it cannot be closed.</li></div>
+<a name="wp998272"> </a><div class="pBullet1Last"><li>At card reset, the basic channel (channel 0) is open. All other channels (1, 2, and 3) are closed.</li></div>
+</ul>
+<a name="wp998273"> </a><p class="pBody">
+The <code class="cCode">MANAGE CHANNEL</code> and <code class="cCode">SELECT FILE</code> commands are read by the Java Card RE dispatcher, which performs the functions specified by the commands. These functions include:
+</p>
+<ul class="pBullet1"><a name="wp998274"> </a><div class="pBullet1"><li>managing logical channels </li></div>
+<a name="wp998275"> </a><div class="pBullet1Plus"><li>deselecting applets</li></div>
+<a name="wp998276"> </a><div class="pBullet1Last"><li>selecting applets</li></div>
+</ul>
+<a name="wp998279"> </a><h4 class="pHeading3">
+MANAGE CHANNEL OPEN
+</h4>
+<a name="wp998280"> </a><p class="pBody">
+In response to the <code class="cCode">MANAGE CHANNEL OPEN</code> command, the Dispatcher will follow this procedure:
+</p>
+<ol class="pList1"><a name="wp1001666"> </a><div class="pList1"><li>If the origin channel is not open, an error is returned.</li></div>
+<a name="wp998281"> </a><div class="pList1Plus"><li>Determines whether the channel is open or closed. If the channel is open, an error is returned.</li></div>
+<a name="wp998282"> </a><div class="pList1Plus"><li>Opens the channel.</li></div>
+<a name="wp998283"> </a><div class="pList1Plus"><li>If the origin channel is 0, then the default applet (if there is one) is selected in the new channel.</li></div>
+<a name="wp998284"> </a><div class="pList1Last"><li>If the origin channel is not 0, then the selected applet on the origin channel becomes the selected applet in new channel.</li></div>
+</ol>
+<a name="wp998598"> </a><p class="pBody">
+This <code class="cCode">MANAGE CHANNEL OPEN</code> command opens a new channel from channel Q:</p><div align="left">
+<table border="0" cellpadding="7"   id="SummaryNotReq998609">
+  <caption><a name="wp1000675"> </a><p class="pBody">
+
+</p>
+</caption>
+<thead>
+<tr  align="center">    <th  class="sun-verylightblue" scope="col"><a name="wp1002667"> </a><div style="text-align: left" class="pTableHead">
+CLA
+</div>
+
+</th>
+    <th  class="sun-verylightblue" scope="col"><a name="wp1002669"> </a><div style="text-align: left" class="pTableHead">
+INS
+</div>
+
+</th>
+    <th  class="sun-verylightblue" scope="col"><a name="wp1002671"> </a><div style="text-align: left" class="pTableHead">
+P1
+</div>
+
+</th>
+    <th  class="sun-verylightblue" scope="col"><a name="wp1002673"> </a><div style="text-align: left" class="pTableHead">
+P2
+</div>
+
+</th>
+    <th  class="sun-verylightblue" scope="col"><a name="wp1002675"> </a><div style="text-align: left" class="pTableHead">
+Lc
+</div>
+
+</th>
+    <th  class="sun-verylightblue" scope="col"><a name="wp1002677"> </a><div style="text-align: left" class="pTableHead">
+Data
+</div>
+
+</th>
+    <th  class="sun-verylightblue" scope="col"><a name="wp1002679"> </a><div style="text-align: left" class="pTableHead">
+Le
+</div>
+
+</th>
+    <th  class="sun-verylightblue" scope="col"><a name="wp1003937"> </a><div style="text-align: left" class="pTableHead">
+Data
+</div>
+
+</th>
+    <th  class="sun-verylightblue" scope="col"><a name="wp1003939"> </a><div style="text-align: left" class="pTableHead">
+SW1
+</div>
+
+</th>
+    <th  class="sun-verylightblue" scope="col"><a name="wp1003941"> </a><div style="text-align: left" class="pTableHead">
+SW2
+</div>
+
+</th>
+</tr>
+</thead>
+  <tr align="left">    <td><a name="wp998625"> </a><div class="pTableText">
+0x0Q
+</div>
+</td>
+    <td><a name="wp998627"> </a><div class="pTableText">
+0x70
+</div>
+</td>
+    <td><a name="wp998629"> </a><div class="pTableText">
+00
+</div>
+</td>
+    <td><a name="wp998631"> </a><div class="pTableText">
+00
+</div>
+</td>
+    <td><a name="wp998633"> </a><div class="pTableText">
+0
+</div>
+</td>
+    <td><a name="wp998635"> </a><div class="pTableText">
+-
+</div>
+</td>
+    <td><a name="wp998637"> </a><div class="pTableText">
+1
+</div>
+</td>
+    <td><a name="wp1003943"> </a><div class="pTableText">
+0x0R
+</div>
+</td>
+    <td><a name="wp1003945"> </a><div class="pTableText">
+0x90
+</div>
+</td>
+    <td><a name="wp1003947"> </a><div class="pTableText">
+00
+</div>
+</td>
+</tr>
+<tr><td colspan="15"><hr class="pTableHr" /></td></tr>
+</table>
+</div>
+<p class="pBody">
+
+</p>
+<a name="wp998653"> </a><p class="pBody">
+This command will produce the following results:
+</p>
+<ul class="pBullet1"><a name="wp998654"> </a><div class="pBullet1"><li>the new open channel will be R. The card will select this channel automatically.</li></div>
+<a name="wp998655"> </a><div class="pBullet1Plus"><li>if channel Q is the basic channel (channel 0), the card&#8217;s default applet will be selected on channel R. No applet will be selected if no default applet is defined.</li></div>
+<a name="wp998656"> </a><div class="pBullet1Plus"><li>if channel Q is other than the basic channel (channels 1, 2 or 3), the selected applet on channel Q will become the current applet selected on channel R. </li></div>
+<a name="wp998657"> </a><div class="pBullet1Last"><li>applet on channel R can either accept or reject selection.</li></div>
+</ul>
+<a name="wp998658"> </a><p class="pBody">
+This command can return an error if:
+</p>
+<ul class="pBullet1"><a name="wp998659"> </a><div class="pBullet1"><li>the applet does not implement the <code class="cCode">javacard.framework.MultiSelectable </code>interface, when an attempt to select the applet in more than one channel takes place.</li></div>
+<a name="wp998660"> </a><div class="pBullet1Plus"><li>the applet rejects selection or throws exception.</li></div>
+<a name="wp998661"> </a><div class="pBullet1Plus"><li>no channel available.</li></div>
+<a name="wp998662"> </a><div class="pBullet1Last"><li>channel Q is not open.</li></div>
+</ul>
+<a name="wp998663"> </a><p class="pBody">
+This <code class="cCode">MANAGE CHANNEL OPEN</code> command opens channel R from channel Q:</p><div align="left">
+<table border="0" cellpadding="7"   id="SummaryNotReq998664">
+  <caption><a name="wp1000618"> </a><p class="pBody">
+
+</p>
+</caption>
+<thead>
+<tr  align="center">    <th  class="sun-verylightblue" scope="col"><a name="wp1002759"> </a><div style="text-align: left" class="pTableHead">
+CLA
+</div>
+
+</th>
+    <th  class="sun-verylightblue" scope="col"><a name="wp1002761"> </a><div style="text-align: left" class="pTableHead">
+INS
+</div>
+
+</th>
+    <th  class="sun-verylightblue" scope="col"><a name="wp1002763"> </a><div style="text-align: left" class="pTableHead">
+P1
+</div>
+
+</th>
+    <th  class="sun-verylightblue" scope="col"><a name="wp1002765"> </a><div style="text-align: left" class="pTableHead">
+P2
+</div>
+
+</th>
+    <th  class="sun-verylightblue" scope="col"><a name="wp1002767"> </a><div style="text-align: left" class="pTableHead">
+Lc
+</div>
+
+</th>
+    <th  class="sun-verylightblue" scope="col"><a name="wp1002769"> </a><div style="text-align: left" class="pTableHead">
+Data
+</div>
+
+</th>
+    <th  class="sun-verylightblue" scope="col"><a name="wp1002771"> </a><div style="text-align: left" class="pTableHead">
+Le
+</div>
+
+</th>
+    <th  class="sun-verylightblue" scope="col"><a name="wp1003909"> </a><div style="text-align: left" class="pTableHead">
+SW1
+</div>
+
+</th>
+    <th  class="sun-verylightblue" scope="col"><a name="wp1003911"> </a><div style="text-align: left" class="pTableHead">
+SW2
+</div>
+
+</th>
+</tr>
+</thead>
+  <tr align="left">    <td><a name="wp998680"> </a><div class="pTableText">
+0x0Q
+</div>
+</td>
+    <td><a name="wp998682"> </a><div class="pTableText">
+0x70
+</div>
+</td>
+    <td><a name="wp998684"> </a><div class="pTableText">
+00
+</div>
+</td>
+    <td><a name="wp998686"> </a><div class="pTableText">
+0x0R
+</div>
+</td>
+    <td><a name="wp998688"> </a><div class="pTableText">
+0
+</div>
+</td>
+    <td><a name="wp998690"> </a><div class="pTableText">
+-
+</div>
+</td>
+    <td><a name="wp998692"> </a><div class="pTableText">
+0
+</div>
+</td>
+    <td><a name="wp1003913"> </a><div class="pTableText">
+0x90
+</div>
+</td>
+    <td><a name="wp1003915"> </a><div class="pTableText">
+00
+</div>
+</td>
+</tr>
+<tr><td colspan="15"><hr class="pTableHr" /></td></tr>
+</table>
+</div>
+<p class="pBody">
+
+</p>
+<a name="wp998704"> </a><p class="pBody">
+This command will produce the following results:
+</p>
+<ul class="pBullet1"><a name="wp998705"> </a><div class="pBullet1"><li>if channel Q is the basic channel (channel 0), then the card&#8217;s default applet will be selected on channel R. No applet will be selected if no default applet is defined.</li></div>
+<a name="wp998706"> </a><div class="pBullet1Plus"><li>if channel Q is other than the basic channel (channels 1, 2 or 3), then the selected applet on channel Q will become the current applet selected on channel R. </li></div>
+<a name="wp998707"> </a><div class="pBullet1Last"><li>the applet on channel R can either accept or reject selection.</li></div>
+</ul>
+<a name="wp998708"> </a><p class="pBody">
+This command will return an error if:
+</p>
+<ul class="pBullet1"><a name="wp998709"> </a><div class="pBullet1"><li>the applet does not implement the <code class="cCode">javacard.framework.MultiSelectable</code> interface and you attempt to select it in more than one channel. </li></div>
+<a name="wp998710"> </a><div class="pBullet1Plus"><li>the applet rejects selection or throws an exception.</li></div>
+<a name="wp998712"> </a><div class="pBullet1Last"><li>channel Q is not open.</li></div>
+</ul>
+<a name="wp998286"> </a><h4 class="pHeading3">
+MANAGE CHANNEL CLOSE
+</h4>
+<a name="wp1001768"> </a><p class="pBody">
+In response to the <code class="cCode">MANAGE CHANNEL CLOSE</code> command, the Dispatcher will follow this procedure:
+</p>
+<ol class="pList1"><a name="wp1001769"> </a><div class="pList1"><li>If the origin channel is not open, an error is returned.</li></div>
+<a name="wp1001770"> </a><div class="pList1Plus"><li>If the channel to be closed is 0, an error is returned.</li></div>
+<a name="wp1003187"> </a><div class="pList1Plus"><li>If the channel to be closed is not open or not available, a warning will be thrown.</li></div>
+<a name="wp1003188"> </a><div class="pList1Plus"><li>Deselects the applet in the channel to be closed.</li></div>
+<a name="wp1003189"> </a><div class="pList1Last"><li>Closes the logical channel.</li></div>
+</ol>
+<a name="wp1003140"> </a><p class="pBody">
+This <code class="cCode">MANAGE CHANNEL CLOSE</code> command closes channel R from channel Q:</p><div align="left">
+<table border="0" cellpadding="7"   id="SummaryNotReq1003141">
+  <caption><a name="wp1003144"> </a><p class="pBody">
+
+</p>
+</caption>
+<thead>
+<tr  align="center">    <th  class="sun-verylightblue" scope="col"><a name="wp1003158"> </a><div style="text-align: left" class="pTableHead">
+CLA
+</div>
+
+</th>
+    <th  class="sun-verylightblue" scope="col"><a name="wp1003160"> </a><div style="text-align: left" class="pTableHead">
+INS
+</div>
+
+</th>
+    <th  class="sun-verylightblue" scope="col"><a name="wp1003162"> </a><div style="text-align: left" class="pTableHead">
+P1
+</div>
+
+</th>
+    <th  class="sun-verylightblue" scope="col"><a name="wp1003164"> </a><div style="text-align: left" class="pTableHead">
+P2
+</div>
+
+</th>
+    <th  class="sun-verylightblue" scope="col"><a name="wp1003166"> </a><div style="text-align: left" class="pTableHead">
+Lc
+</div>
+
+</th>
+    <th  class="sun-verylightblue" scope="col"><a name="wp1003168"> </a><div style="text-align: left" class="pTableHead">
+Data
+</div>
+
+</th>
+    <th  class="sun-verylightblue" scope="col"><a name="wp1003170"> </a><div style="text-align: left" class="pTableHead">
+Le
+</div>
+
+</th>
+    <th  class="sun-verylightblue" scope="col"><a name="wp1003860"> </a><div style="text-align: left" class="pTableHead">
+SW1
+</div>
+
+</th>
+    <th  class="sun-verylightblue" scope="col"><a name="wp1003862"> </a><div style="text-align: left" class="pTableHead">
+SW2
+</div>
+
+</th>
+</tr>
+</thead>
+  <tr align="left">    <td><a name="wp1003172"> </a><div class="pTableText">
+0x0Q
+</div>
+</td>
+    <td><a name="wp1003174"> </a><div class="pTableText">
+0x70
+</div>
+</td>
+    <td><a name="wp1003176"> </a><div class="pTableText">
+0x80
+</div>
+</td>
+    <td><a name="wp1003178"> </a><div class="pTableText">
+0x0R
+</div>
+</td>
+    <td><a name="wp1003180"> </a><div class="pTableText">
+0
+</div>
+</td>
+    <td><a name="wp1003182"> </a><div class="pTableText">
+-
+</div>
+</td>
+    <td><a name="wp1003184"> </a><div class="pTableText">
+0
+</div>
+</td>
+    <td><a name="wp1003864"> </a><div class="pTableText">
+0x90
+</div>
+</td>
+    <td><a name="wp1003866"> </a><div class="pTableText">
+00
+</div>
+</td>
+</tr>
+<tr><td colspan="15"><hr class="pTableHr" /></td></tr>
+</table>
+</div>
+<p class="pBody">
+
+</p>
+<a name="wp998582"> </a><p class="pBody">
+This command will close channel R. Channel R must not be the basic channel (it can be channel 1, 2 or 3 only).
+</p>
+<a name="wp998584"> </a><p class="pBody">
+This command will return an error if: 
+</p>
+<ul class="pBullet1"><a name="wp998585"> </a><div class="pBullet1"><li>channel R is the basic channel.</li></div>
+<a name="wp998586"> </a><div class="pBullet1Last"><li>channel Q is not open.</li></div>
+</ul>
+<a name="wp998587"> </a><p class="pBody">
+It can return a warning if channel R is not open.
+</p>
+<a name="wp998293"> </a><h4 class="pHeading3">
+SELECT FILE
+</h4>
+<a name="wp998294"> </a><p class="pBody">
+In response to the <code class="cCode">SELECT FILE</code> command, the Dispatcher will follow this procedure:
+</p>
+<ol class="pList1"><a name="wp998295"> </a><div class="pList1"><li>If the specified channel is closed, open the channel.</li></div>
+<a name="wp998296"> </a><div class="pList1Plus"><li>Deselect currently selected applet in channel if needed.</li></div>
+<a name="wp998297"> </a><div class="pList1Last"><li>Select specified applet in the channel.</li></div>
+</ol>
+<a name="wp998739"> </a><p class="pBody">
+This <code class="cCode">SELECT FILE</code> command selects an applet on channel R:</p><div align="left">
+<table border="0" cellpadding="7"   id="SummaryNotReq998740">
+  <caption><a name="wp1000657"> </a><p class="pBody">
+
+</p>
+</caption>
+<thead>
+<tr  align="center">    <th  class="sun-verylightblue" scope="col"><a name="wp1002867"> </a><div style="text-align: left" class="pTableHead">
+CLA
+</div>
+
+</th>
+    <th  class="sun-verylightblue" scope="col"><a name="wp1002869"> </a><div style="text-align: left" class="pTableHead">
+INS
+</div>
+
+</th>
+    <th  class="sun-verylightblue" scope="col"><a name="wp1002871"> </a><div style="text-align: left" class="pTableHead">
+P1
+</div>
+
+</th>
+    <th  class="sun-verylightblue" scope="col"><a name="wp1002873"> </a><div style="text-align: left" class="pTableHead">
+P2
+</div>
+
+</th>
+    <th  class="sun-verylightblue" scope="col"><a name="wp1002875"> </a><div style="text-align: left" class="pTableHead">
+Lc
+</div>
+
+</th>
+    <th  class="sun-verylightblue" scope="col"><a name="wp1002877"> </a><div style="text-align: left" class="pTableHead">
+Data
+</div>
+
+</th>
+    <th  class="sun-verylightblue" scope="col"><a name="wp1002879"> </a><div style="text-align: left" class="pTableHead">
+Le
+</div>
+
+</th>
+    <th  class="sun-verylightblue" scope="col"><a name="wp1003885"> </a><div style="text-align: left" class="pTableHead">
+SW1
+</div>
+
+</th>
+    <th  class="sun-verylightblue" scope="col"><a name="wp1003887"> </a><div style="text-align: left" class="pTableHead">
+SW2
+</div>
+
+</th>
+</tr>
+</thead>
+  <tr align="left">    <td><a name="wp998756"> </a><div class="pTableText">
+0x0R
+</div>
+</td>
+    <td><a name="wp998758"> </a><div class="pTableText">
+0xA4
+</div>
+</td>
+    <td><a name="wp998760"> </a><div class="pTableText">
+0x04
+</div>
+</td>
+    <td><a name="wp998762"> </a><div class="pTableText">
+0x00
+</div>
+</td>
+    <td><a name="wp998764"> </a><div class="pTableText">
+(AID len)
+</div>
+</td>
+    <td><a name="wp998766"> </a><div class="pTableText">
+(AID)
+</div>
+</td>
+    <td><a name="wp998768"> </a><div class="pTableText">
+0
+</div>
+</td>
+    <td><a name="wp1003889"> </a><div class="pTableText">
+0x90
+</div>
+</td>
+    <td><a name="wp1003891"> </a><div class="pTableText">
+00
+</div>
+</td>
+</tr>
+<tr><td colspan="15"><hr class="pTableHr" /></td></tr>
+</table>
+</div>
+<p class="pBody">
+
+</p>
+<a name="wp998780"> </a><p class="pBody">
+This command will produce the following results:
+</p>
+<ul class="pBullet1"><a name="wp998781"> </a><div class="pBullet1"><li>channel R can be any (opened or unopened) channel, including the basic channel.</li></div>
+<a name="wp998782"> </a><div class="pBullet1Plus"><li>the applet identified in the Data section will become the selected applet on channel R.</li></div>
+<a name="wp998783"> </a><div class="pBullet1Plus"><li>if channel R is not open, this command will open channel R.</li></div>
+<a name="wp998784"> </a><div class="pBullet1Last"><li>if channel R is open, this command will change the selected applet in the channel to the one specified.</li></div>
+</ul>
+<a name="wp998785"> </a><p class="pBody">
+This command can return an error if:
+</p>
+<ul class="pBullet1"><a name="wp998786"> </a><div class="pBullet1"><li>the applet could not be found or is not available. The current applet is left selected and an error is returned. </li></div>
+<a name="wp998787"> </a><div class="pBullet1Plus"><li>an active applet belonging to the same package does not implement the <code class="cCode">javacard.framework.MultiSelectable</code> interface, or if the applet to be selected does not implement this interface.</li></div>
+<a name="wp1001200"> </a><div class="pBullet1Last"><li>channel R not available.</li></div>
+</ul>
+<a name="wp998262"> </a><p class="pBody">
+
+</p>
+
+    <p>&#160;</p>
+    <hr class="pHr" />
+
+    <table class="full-width" id="SummaryNotReq2">
+      <tr>
+        <td class="go-left">
+          <a accesskey="c" href="index.html">
+	    <img id="LongDescNotReq1" src="images/toc.gif" border="0"
+              alt="Contents" /></a>
+	  <a accesskey="p" href="garbagecoll.html">
+	    <img id="LongDescNotReq2" src="images/prev.gif" border="0"
+              alt="Previous" /></a>
+	  <a accesskey="n" href="rmiapplication.html">
+	    <img id="LongDescNotReq3" src="images/next.gif" border="0"
+              alt="Next" /></a>
+	  <a accesskey="i" href="devnotesIX.html">
+	    <img id="LongDescNotReq4" src="images/index.gif" border="0"
+              alt="Index" /></a>
+        </td>
+        <td class="go-right">
+          <span class="copyright">Application Programming Notes <br /> Java Card Platform, Version 2.2.1</span>
+        </td>
+      </tr>
+    </table>
+
+    <p>&#160;</p>
+    
+<p class="copyright"><a 
+       href="copyright.html">Copyright</a> &#169; 2003 Sun Microsystems, Inc. 
+  All rights reserved.</p>	
+  </body>
+</html>

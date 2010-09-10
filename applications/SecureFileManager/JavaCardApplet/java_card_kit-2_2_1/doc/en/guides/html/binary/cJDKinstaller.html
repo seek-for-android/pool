@@ -1,0 +1,1398 @@
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
+    <meta http-equiv="Content-Style-Type" content="text/css" />
+    <meta name="GENERATOR" content="Quadralay WebWorks Publisher Professional Edition 7.0.5.1025" />
+    <meta name="TEMPLATEBASE" content="JCUser_b_glo" />
+    <meta name="LASTUPDATED" content="10/10/03 17:25:55" />
+    <title>Using the Installer</title>
+    <link rel="StyleSheet" href="document.css" type="text/css" />
+    <link rel="StyleSheet" href="catalog.css" type="text/css" />
+    <link rel="Table of Contents" href="index.html" />
+    <link rel="Previous" href="cJDKc-jcre.html" />
+    <link rel="Next" href="cJDKapdu.html" />
+    <link rel="Index" href="cJDK_b_domIX.html" />
+  </head>
+
+  <body>
+
+    <table class="full-width" id="SummaryNotReq1">
+      <tr><td class="sun-darkblue">&#160;</td></tr>
+      <tr><td class="sun-lightblue">&#160;</td></tr>
+      <tr><td class="go-right">
+        <a accesskey="c" href="index.html">
+          <img id="LongDescNotReq1" src="images/toc.gif" border="0"
+            alt="Contents" /></a>
+	<a accesskey="p" href="cJDKc-jcre.html">
+	  <img id="LongDescNotReq2" src="images/prev.gif" border="0"
+            alt="Previous" /></a>
+        <a accesskey="n" href="cJDKapdu.html">
+	  <img id="LongDescNotReq3" src="images/next.gif" border="0"
+            alt="Next" /></a>
+        <a accesskey="i" href="cJDK_b_domIX.html">
+	  <img id="LongDescNotReq4" src="images/index.gif" border="0"
+            alt="Index" /></a>
+        </td>
+      </tr>
+    </table>
+
+<a name="wp198"> </a><h2 class="pChapNum">
+Chapter &#160; 12
+</h2>
+<a name="wp5553"> </a><h2 class="pTitle">
+Using the Installer
+</h2>
+<hr />
+<a name="wp204"> </a><p class="pBody">
+The Development Kit installer can be used to:
+</p>
+<ul class="pBullet1"><a name="wp16259"> </a><div class="pBullet1"><li>Dynamically download a Java Card package to a Java Card technology-compliant smart card. During development, the CAP file can be installed in the C-language Java Card RE rather than on a Java Card technology-compliant smart card. The installer is capable of downloading version 2.1 and 2.2 Java Card technology-based CAP files (&#8220;Java Card CAP files&#8221;).</li></div>
+<a name="wp16260"> </a><div class="pBullet1Plus"><li>Perform necessary on-card linking.</li></div>
+<a name="wp16278"> </a><div class="pBullet1Last"><li>Delete applets and packages from a Java Card technology-compliant smart card. Once the installer is selected, requests for deletion can be sent from the terminal to the Java Card technology-compliant smart card in the form of APDU commands. For more information, see <a  href="cJDKinstaller.html#wp8960"><span style="color: #3366CC">&quot;Deleting Packages and Applets&quot; </span></a>.</li></div>
+</ul>
+<a name="wp16268"> </a><p class="pBody">
+The installer is not a multiselectable application. On startup, the installer is the default applet on logical channel 0. The default applet on the other logical channels is set to &#8220;<code class="cCode">No applet selected</code>&#8221;. 
+</p>
+<a name="wp10193"> </a><h2 class="pHeading1">
+Installer Components and Data Flow
+</h2>
+<a name="wp10224"> </a><p class="pBody">
+<a  href="cJDKinstaller.html#wp10192"><span style="color: #3366CC">FIGURE&#160;6</span></a> illustrates the components of the installer and how they relate to the rest of Java Card technology. The dotted line encloses the installer components that are described in this chapter.
+</p>
+<a name="wp10192"> </a><div class="pFigureCaption">
+FIGURE&#160;6&#160;&#160;&#8211;&#160;&#160;Installer Components
+<br /><br />
+</div><a name="wp17614"> </a><p class="pBody">
+<img src="images/cJDKinstaller2.gif" height="261" width="482" alt="This figure is described in the text." border="0" hspace="0" vspace="0"/>
+</p>
+<a name="wp231"> </a><p class="pBody">
+The data flow of the installation process is as follows: 
+</p>
+<div class="pStep1">
+<ol class="pStep1"><a name="wp5640"> </a><li>An off-card installer takes a version 2.1 or 2.2 CAP file, produced by the Java Card technology-based converter (&#8220;Java Card converter&#8221;), as the input, and produces a text file that contains a sequence of APDU commands.   </li>
+<a name="wp5641"> </a><li>This set of APDUs is then read by the APDUTool and sent to the on-card installer. </li>
+<a name="wp5642"> </a><li>The on-card installer processes the CAP file contents contained in the APDU commands as it receives them. </li>
+<a name="wp5643"> </a><li>The response APDU from the on-card installer contains a status and optional response data. </li>
+
+<a name="wp5644"> </a><p class="pBody">
+The off-card installer is called <code class="cCode">scriptgen</code>. The on-card installer is simply called &#8220;installer&#8221; in this document.
+</p>
+<a name="wp239"> </a><p class="pBody">
+For more information about the installer, please see the <em class="cEmphasis">Runtime Environment Specification for the Java Card&#8482; Platform, Version 2.2.1</em> (Sun Microsystems, Inc., 2003).
+</p>
+</ol>
+</div>
+<a name="wp241"> </a><h2 class="pHeading1">
+Running scriptgen
+</h2>
+<a name="wp245"> </a><p class="pBody">
+The <code class="cCode">scriptgen</code> tool converts a package contained in a CAP file into a script file. The script file contains a sequence of APDUs in ASCII format suitable for another tool, such as <code class="cCode">apdutool</code>, to send to the CAD. The CAP file component order in the APDU script is identical to the order recommended by the <em class="cEmphasis">Virtual Machine Specification for the Java Card&#8482; Platform, Version 2.2.1</em> (Sun Microsystems, Inc., 2003).
+</p>
+<a name="wp249"> </a><p class="pBody">
+Enter the <code class="cCode">scriptgen</code> command on the command line in this format:
+</p>
+<div class="pPreformatted"><pre class="pPreformatted">
+scriptgen [options] &lt;capFilePath&gt;<a name="wp5700"> </a>
+</pre></div>
+<a name="wp11038"> </a><p class="pBody">
+where <code class="cCode">options</code> include:</p><div align="left">
+<table border="0" cellpadding="7"   id="SummaryNotReq11058">
+  <caption><a name="wp11060"> </a><div class="pTableCaption">
+TABLE&#160;19&#160;&#160;&#8211;&#160;&#160;scriptgen Command Line Options 
+</div>
+</caption>
+<thead>
+<tr  align="center">    <th  class="sun-verylightblue" scope="col"><a name="wp11064"> </a><div style="text-align: left" class="pTableHead">
+Option 
+</div>
+
+</th>
+    <th  class="sun-verylightblue" scope="col"><a name="wp11066"> </a><div style="text-align: left" class="pTableHead">
+Description
+</div>
+
+</th>
+</tr>
+</thead>
+  <tr align="left">    <td><a name="wp11068"> </a><div class="pTableText">
+<code class="cCode">-help</code>     
+</div>
+</td>
+    <td><a name="wp11070"> </a><div class="pTableText">
+Prints a help message and exits.
+</div>
+</td>
+</tr>
+  <tr align="left">    <td><a name="wp11084"> </a><div class="pTableText">
+<code class="cCode">-nobanner</code> 
+</div>
+</td>
+    <td><a name="wp11123"> </a><div class="pTableText">
+Suppresses printing of the version number.
+</div>
+</td>
+</tr>
+  <tr align="left">    <td><a name="wp11092"> </a><div class="pTableText">
+<code class="cCode">-nobeginend</code>    
+</div>
+</td>
+    <td><a name="wp11094"> </a><div class="pTableText">
+Suppresses the output of the <a  href="cJDKinstaller.html#wp7995"><span style="color: #3366CC">&quot;CAP Begin</span></a>&#8221; and <a  href="cJDKinstaller.html#wp8014"><span style="color: #3366CC">&quot;CAP End</span></a>&#8221; APDU commands.
+</div>
+</td>
+</tr>
+  <tr align="left">    <td><a name="wp11949"> </a><div class="pTableText">
+<code class="cCode">-o</code> &lt;<em class="cEmphasis">filename</em>&gt; 
+</div>
+</td>
+    <td><a name="wp11951"> </a><div class="pTableText">
+Specifies an output filename (default is <code class="cCode">stdout</code>).
+</div>
+</td>
+</tr>
+  <tr align="left">    <td><a name="wp15987"> </a><div class="pTableText">
+<code class="cCode">-package</code> &lt;<em class="cEmphasis">package_name</em>&gt;
+</div>
+</td>
+    <td><a name="wp15991"> </a><div class="pTableText">
+Specifies the name of the package contained in the CAP file. According to the <em class="cEmphasis">Virtual Machine Specification for the Java Card&#8482; Platform, Version 2.2.1</em>, the CAP file can contain components besides the ones required by the package. This option helps to avoid any possible ambiguity in determining which components should be included. 
+</div>
+</td>
+</tr>
+  <tr align="left">    <td><a name="wp11945"> </a><div class="pTableText">
+<code class="cCode">-version</code>    
+</div>
+</td>
+    <td><a name="wp11947"> </a><div class="pTableText">
+Prints the version number and exits.
+</div>
+</td>
+</tr>
+<tr><td colspan="15"><hr class="pTableHr" /></td></tr>
+</table>
+</div>
+<p class="pBody">
+
+</p>
+<hr class="pHr"/><div class="note">
+<a name="wp11055"> </a>
+<b>Note &#8211;</b>  If the CAP file contains components of multiple packages, you <b class="cBold">must</b> use the <code class="cCode">-package</code> <code style="font-style: normal" class="cCode">&lt;</code><em style="font-style: italic" class="cEmphasis">package_name</em><code class="cCode">&gt;</code> option to specify which package to process.
+<hr class="pHr"/></div>
+<a name="wp18058"> </a><p class="pBody">
+
+</p>
+<hr class="pHr"/><div class="note">
+<a name="wp16782"> </a>
+<b>Note &#8211;</b>  The APDUtool commands: <code class="cCode">powerup;</code> and <code class="cCode">powerdown;</code> are not included in the output from <code class="cCode">scriptgen</code>.
+<hr class="pHr"/></div>
+<a name="wp7899"> </a><h2 class="pHeading1">
+Installer Applet AID
+</h2>
+<a name="wp7900"> </a><p class="pBody">
+The on-card installer applet AID is: <code class="cCode">0xa0,0x00,0x00,0x00,0x62,0x03,0x01,0x08,0x01</code>
+</p>
+<a name="wp287"> </a><h2 class="pHeading1">
+Downloading CAP Files and Creating Applets
+</h2>
+<a name="wp291"> </a><p class="pBody">
+The installer is invoked by using the APDUtool. (See <a  href="cJDKapdu.html#wp4969"><span style="color: #3366CC">Chapter&#160;13, &quot;Sending and Receiving APDU Commands</span></a>.&#8221;)
+</p>
+<a name="wp6537"> </a><p class="pBody">
+Procedures for CAP file download and applet instance creation are described in the following sections:
+</p>
+<ul class="pBullet1"><a name="wp7532"> </a><div class="pBullet1"><li><a  href="cJDKinstaller.html#wp16909"><span style="color: #3366CC">Downloading the CAP File</span></a></li></div>
+<a name="wp7533"> </a><div class="pBullet1Last"><li><a  href="cJDKinstaller.html#wp317"><span style="color: #3366CC">Creating an Applet Instance</span></a></li></div>
+</ul>
+<a name="wp16906"> </a><p class="pBody">
+These scenarios are described in the following sections.
+</p>
+<a name="wp16909"> </a><h3 class="pHeading2Proc">
+<img src="images/triangle.gif" width="13" height="11" alt="triangle pointing down" id="LongDescNotReq"/>&#160; 	Downloading the CAP File 
+</h3>
+<a name="wp16910"> </a><p class="pBody">
+In this scenario, the CAP file is downloaded and applet creation (instantiation) is postponed until a later time. (Refer to the Create Only scenario below.) Follow these steps to perform this installation:
+</p>
+<div class="pStep1">
+<ol class="pStep1"><a name="wp297"> </a><li>Use <code class="cCode">scriptgen</code> to convert a CAP file to an APDU script file.</li>
+<a name="wp6364"> </a><li>Prepend these commands to the APDU script file: </li>
+<div class="pPreformatted"><pre class="pPreformatted">
+powerup;<a name="wp6377"> </a>
+// Select the installer applet<a name="wp305"> </a>
+0x00 0xA4 0x04 0x00 0x09 0xa0 0x00 0x00 0x00 0x62 0x03 0x01 0x08 0x01 0x7F;<a name="wp307"> </a>
+</pre></div>
+<a name="wp309"> </a><li>Append this command to the APDU script file:</li>
+<div class="pPreformatted"><pre class="pPreformatted">
+powerdown;<a name="wp6445"> </a>
+</pre></div>
+<a name="wp313"> </a><li>Invoke APDUTool with this APDU script file path as the argument.</li>
+</ol>
+</div>
+<a name="wp317"> </a><h3 class="pHeading2Proc">
+<img src="images/triangle.gif" width="13" height="11" alt="triangle pointing down" id="LongDescNotReq"/>&#160; 	Creating an Applet Instance
+</h3>
+<a name="wp6326"> </a><p class="pBody">
+In this scenario, the applet from a previously downloaded CAP file or an applet compiled in the mask is created. For example, follow these steps to create the JavaPurse applet:
+</p>
+<div class="pStep1">
+<ol class="pStep1"><a name="wp319"> </a><li>Determine the applet AID.</li>
+<a name="wp321"> </a><li>Create an APDU script similar to this:</li>
+<div class="pPreformatted"><pre class="pPreformatted">
+powerup;<a name="wp6376"> </a>
+// Select the installer applet<a name="wp327"> </a>
+0x00 0xA4 0x04 0x00 0x09 0xa0 0x00 0x00 0x00 0x62 0x03 0x01 0x08 0x01 0x7F;<a name="wp329"> </a>
+// create JavaPurse<a name="wp8711"> </a>
+0x80 0xB8 0x00 0x00 0x0b 0x09 0xa0 0x00 0x00 0x00 0x62 0x03 0x01 0x04 0x01 0x00<a name="wp8712"> </a>
+0x7F;<a name="wp8713"> </a>
+powerdown;<a name="wp353"> </a>
+</pre></div>
+<a name="wp355"> </a><li>Invoke APDUTool with this APDU script file path as the argument.</li>
+</ol>
+</div>
+<a name="wp7906"> </a><h3 class="pHeading2">
+Installer APDU Protocol
+</h3>
+<a name="wp7907"> </a><p class="pBody">
+The Installer APDU protocol follows a specific time sequence of events in the transmission of Applet Protocol Data Units as shown in the following figure.
+</p>
+<a name="wp17706"> </a><div class="pFigureCaption">
+FIGURE&#160;7&#160;&#160;&#8211;&#160;&#160;Installer APDU Transmission Sequence
+<br /><br />
+</div><a name="wp7950"> </a><p class="pBody">
+<img src="images/cJDKinstallera.gif" height="463" width="494" alt="This figure is described in the text." border="0" hspace="0" vspace="0"/>
+</p>
+<a name="wp7953"> </a><h4 class="pHeading3">
+APDU Types
+</h4>
+<a name="wp7954"> </a><p class="pBody">
+There are many different APDU types, which are distinguished by their fields, and field values. The following is a general list of APDUs.
+</p>
+<ul class="pBullet1"><a name="wp7955"> </a><div class="pBullet1"><li><a  href="cJDKinstaller.html#wp7965"><span style="color: #3366CC">Select</span></a></li></div>
+<a name="wp7956"> </a><div class="pBullet1Plus"><li><a  href="cJDKinstaller.html#wp10312"><span style="color: #3366CC">Response</span></a></li></div>
+<a name="wp7957"> </a><div class="pBullet1Plus"><li><a  href="cJDKinstaller.html#wp7995"><span style="color: #3366CC">CAP Begin</span></a></li></div>
+<a name="wp7958"> </a><div class="pBullet1Plus"><li><a  href="cJDKinstaller.html#wp8014"><span style="color: #3366CC">CAP End</span></a></li></div>
+<a name="wp7959"> </a><div class="pBullet1Plus"><li><a  href="cJDKinstaller.html#wp8033"><span style="color: #3366CC">Component ## Begin</span></a></li></div>
+<a name="wp7960"> </a><div class="pBullet1Plus"><li><a  href="cJDKinstaller.html#wp8052"><span style="color: #3366CC">Component ## End</span></a></li></div>
+<a name="wp7961"> </a><div class="pBullet1Plus"><li><a  href="cJDKinstaller.html#wp8071"><span style="color: #3366CC">Component ## Data</span></a></li></div>
+<a name="wp7962"> </a><div class="pBullet1Plus"><li><a  href="cJDKinstaller.html#wp8090"><span style="color: #3366CC">Create Applet</span></a></li></div>
+<a name="wp7963"> </a><div class="pBullet1Last"><li><a  href="cJDKinstaller.html#wp8121"><span style="color: #3366CC">Abort</span></a></li></div>
+</ul>
+<a name="wp7964"> </a><p class="pBody">
+Descriptions of each of these APDU data types, including their bit frame formats, field names and field values follows.
+</p>
+<hr class="pHr"/><div class="note">
+<a name="wp16405"> </a>
+<b>Note &#8211;</b>  In the following APDU commands, the x in the second nibble of the class byte indicates that the installer can be invoked on channels 0, 1, or 2. For example, <code style="font-style: normal" class="cCode">0x8</code>x.
+<hr class="pHr"/></div>
+<a name="wp7965"> </a><h5 class="pHeading4">
+Select
+</h5>
+<a name="wp10293"> </a><p class="pBody">
+The table below specifies the field sequence in the Select APDU, which is used to invoke the on-card installer. </p><div align="left">
+<table border="0" cellpadding="7"   id="SummaryNotReq10335">
+  <caption><a name="wp10337"> </a><div class="pTableCaption">
+TABLE&#160;20&#160;&#160;&#8211;&#160;&#160;Select APDU Command 
+</div>
+</caption><thead>
+<tr><th colspan="15"><hr class="pTableHr" /></th></tr></thead>
+  <tr align="left">    <td><a name="wp10992"> </a><div class="pTableText">
+0x0x, 0xa4, 0x04, 0x00
+</div>
+</td>
+    <td><a name="wp10368"> </a><div class="pTableText">
+Lc field
+</div>
+</td>
+    <td><a name="wp10372"> </a><div class="pTableText">
+Installer AID
+</div>
+</td>
+    <td><a name="wp10358"> </a><div class="pTableText">
+Le field
+</div>
+</td>
+</tr>
+<tr><td colspan="15"><hr class="pTableHr" /></td></tr>
+</table>
+</div>
+<p class="pBody">
+
+</p>
+<a name="wp10312"> </a><h5 class="pHeading4">
+Response
+</h5>
+<a name="wp7985"> </a><p class="pBody">
+The table below specifies the field sequence in the Response APDU. A Response APDU is sent as a response by the on-card installer after each APDU that it receives. The Response APDU can be either an Acknowledgment (called an ACK) which indicates that the most recent APDU was received successfully, or it can be a Negative Acknowledgement (called a NAK) which indicates that the most recent APDU was not received successfully and must be either resent or the entire installer transmission must be restarted. The first ACK indicates that the on-card installer is ready to receive. The value for an ACK frame SW1SW2 is 9000, and the value for a NAK frame SW1SW2 is 6XXX.</p><div align="left">
+<table border="0" cellpadding="7"   id="SummaryNotReq7986">
+  <caption><a name="wp7988"> </a><div class="pTableCaption">
+TABLE&#160;21&#160;&#160;&#8211;&#160;&#160;Response APDU Command 
+</div>
+</caption><thead>
+<tr><th colspan="15"><hr class="pTableHr" /></th></tr></thead>
+  <tr align="left">    <td><a name="wp7992"> </a><div class="pTableText">
+[optional response data]
+</div>
+</td>
+    <td><a name="wp7994"> </a><div class="pTableText">
+SW1SW2 
+</div>
+</td>
+</tr>
+<tr><td colspan="15"><hr class="pTableHr" /></td></tr>
+</table>
+</div>
+<p class="pBody">
+
+</p>
+<a name="wp7995"> </a><h5 class="pHeading4">
+CAP Begin
+</h5>
+<a name="wp7996"> </a><p class="pBody">
+The table below specifies the field sequence in the CAP Begin APDU. The CAP&#160;Begin&#160;APDU is sent to the on-card installer, and indicates that the CAP file components are going to be sent next, in sequentially numbered APDUs.</p><div align="left">
+<table border="0" cellpadding="7"   id="SummaryNotReq7997">
+  <caption><a name="wp7999"> </a><div class="pTableCaption">
+TABLE&#160;22&#160;&#160;&#8211;&#160;&#160;CAP Begin APDU Command 
+</div>
+</caption><thead>
+<tr><th colspan="15"><hr class="pTableHr" /></th></tr></thead>
+  <tr align="left">    <td><a name="wp8007"> </a><div class="pTableText">
+ 0x8x, 0xb0, 0x00, 0x00
+</div>
+</td>
+    <td><a name="wp8009"> </a><div class="pTableText">
+[Lc field]
+</div>
+</td>
+    <td><a name="wp8011"> </a><div class="pTableText">
+[optional data]
+</div>
+</td>
+    <td><a name="wp8013"> </a><div class="pTableText">
+Le field
+</div>
+</td>
+</tr>
+<tr><td colspan="15"><hr class="pTableHr" /></td></tr>
+</table>
+</div>
+<p class="pBody">
+
+</p>
+<a name="wp8014"> </a><h5 class="pHeading4">
+CAP End
+</h5>
+<a name="wp8015"> </a><p class="pBody">
+The table below specifies the field sequence in the CAP End APDU. The CAP&#160;End&#160;APDU is sent to the on-card installer, and indicates that all of the CAP file components have been sent.</p><div align="left">
+<table border="0" cellpadding="7"   id="SummaryNotReq8016">
+  <caption><a name="wp8018"> </a><div class="pTableCaption">
+TABLE&#160;23&#160;&#160;&#8211;&#160;&#160;CAP End APDU Command 
+</div>
+</caption><thead>
+<tr><th colspan="15"><hr class="pTableHr" /></th></tr></thead>
+  <tr align="left">    <td><a name="wp8026"> </a><div class="pTableText">
+ 0x8x, 0xba, 0x00, 0x00
+</div>
+</td>
+    <td><a name="wp8028"> </a><div class="pTableText">
+[Lc field]
+</div>
+</td>
+    <td><a name="wp8030"> </a><div class="pTableText">
+[optional data]
+</div>
+</td>
+    <td><a name="wp8032"> </a><div class="pTableText">
+Le field
+</div>
+</td>
+</tr>
+<tr><td colspan="15"><hr class="pTableHr" /></td></tr>
+</table>
+</div>
+<p class="pBody">
+
+</p>
+<a name="wp8033"> </a><h5 class="pHeading4">
+Component ## Begin
+</h5>
+<a name="wp8034"> </a><p class="pBody">
+The table below specifies the field sequence in the Component ## Begin APDU. The double pound sign indicates the component token of the component being sent. The CAP file is divided into many components, based on class, method, etc. The Component ## Begin&#160;APDU is sent to the on-card installer, and indicates that component ## of the CAP file is going to be sent next.</p><div align="left">
+<table border="0" cellpadding="7"   id="SummaryNotReq8035">
+  <caption><a name="wp8037"> </a><div class="pTableCaption">
+TABLE&#160;24&#160;&#160;&#8211;&#160;&#160;Component ## Begin APDU Command 
+</div>
+</caption><thead>
+<tr><th colspan="15"><hr class="pTableHr" /></th></tr></thead>
+  <tr align="left">    <td><a name="wp8045"> </a><div class="pTableText">
+<b class="cBold"> </b>0x8x, 0xb2, 0x##, 0x00
+</div>
+</td>
+    <td><a name="wp8047"> </a><div class="pTableText">
+[Lc field]
+</div>
+</td>
+    <td><a name="wp8049"> </a><div class="pTableText">
+[optional data]
+</div>
+</td>
+    <td><a name="wp8051"> </a><div class="pTableText">
+Le field
+</div>
+</td>
+</tr>
+<tr><td colspan="15"><hr class="pTableHr" /></td></tr>
+</table>
+</div>
+<p class="pBody">
+
+</p>
+<a name="wp8052"> </a><h5 class="pHeading4">
+Component ## End
+</h5>
+<a name="wp8053"> </a><p class="pBody">
+The table below specifies the field sequence in the Component ## End APDU. The Component ##&#160;End&#160;APDU is sent to the on-card installer, and indicates that component ## of the CAP file has been sent.</p><div align="left">
+<table border="0" cellpadding="7"   id="SummaryNotReq8054">
+  <caption><a name="wp8056"> </a><div class="pTableCaption">
+TABLE&#160;25&#160;&#160;&#8211;&#160;&#160;Component ## End APDU Command 
+</div>
+</caption><thead>
+<tr><th colspan="15"><hr class="pTableHr" /></th></tr></thead>
+  <tr align="left">    <td><a name="wp8064"> </a><div class="pTableText">
+<b class="cBold"> </b>0x8x, 0xbc, 0x##, 0x00
+</div>
+</td>
+    <td><a name="wp8066"> </a><div class="pTableText">
+[Lc field]
+</div>
+</td>
+    <td><a name="wp8068"> </a><div class="pTableText">
+[optional data]
+</div>
+</td>
+    <td><a name="wp8070"> </a><div class="pTableText">
+Le field
+</div>
+</td>
+</tr>
+<tr><td colspan="15"><hr class="pTableHr" /></td></tr>
+</table>
+</div>
+<p class="pBody">
+
+</p>
+<a name="wp8071"> </a><h5 class="pHeading4">
+Component ## Data
+</h5>
+<a name="wp8072"> </a><p class="pBody">
+The table below specifies the field sequence in the Component ## Data APDU. The Component ##&#160;Data&#160;APDU is sent to the on-card installer, and contains the data for component ## of the CAP file.</p><div align="left">
+<table border="0" cellpadding="7"   id="SummaryNotReq8073">
+  <caption><a name="wp8075"> </a><div class="pTableCaption">
+TABLE&#160;26&#160;&#160;&#8211;&#160;&#160;Component ## Data APDU Command 
+</div>
+</caption><thead>
+<tr><th colspan="15"><hr class="pTableHr" /></th></tr></thead>
+  <tr align="left">    <td><a name="wp8083"> </a><div class="pTableText">
+<b class="cBold"> </b>0x8x, 0xb4, 0x##, 0x00
+</div>
+</td>
+    <td><a name="wp8085"> </a><div class="pTableText">
+Lc field
+</div>
+</td>
+    <td><a name="wp8087"> </a><div class="pTableText">
+Data field
+</div>
+</td>
+    <td><a name="wp8089"> </a><div class="pTableText">
+Le field
+</div>
+</td>
+</tr>
+<tr><td colspan="15"><hr class="pTableHr" /></td></tr>
+</table>
+</div>
+<p class="pBody">
+
+</p>
+<a name="wp8090"> </a><h5 class="pHeading4">
+Create Applet
+</h5>
+<a name="wp8091"> </a><p class="pBody">
+The table below specifies the field sequence in the Create Applet APDU. The Create&#160;Applet&#160;APDU is sent to the on-card installer, and tells the on-card installer to create an applet instance from each of the already sequentially transmitted components of the CAP file.</p><div align="left">
+<table border="0" cellpadding="7"   id="SummaryNotReq8092">
+  <caption><a name="wp8094"> </a><div class="pTableCaption">
+TABLE&#160;27&#160;&#160;&#8211;&#160;&#160;Create Applet APDU Command 
+</div>
+</caption><thead>
+<tr><th colspan="15"><hr class="pTableHr" /></th></tr></thead>
+  <tr align="left">    <td><a name="wp8108"> </a><div class="pTableText">
+0x8x, 0xb8, 0x00, 0x00
+</div>
+</td>
+    <td><a name="wp8110"> </a><div class="pTableText">
+Lc field
+</div>
+</td>
+    <td><a name="wp8112"> </a><div class="pTableText">
+AID length field
+</div>
+</td>
+    <td><a name="wp8114"> </a><div class="pTableText">
+AID field
+</div>
+</td>
+    <td><a name="wp8116"> </a><div class="pTableText">
+parameter length field
+</div>
+</td>
+    <td><a name="wp8118"> </a><div class="pTableText">
+[parameters]
+</div>
+</td>
+    <td><a name="wp8120"> </a><div class="pTableText">
+Le field
+</div>
+</td>
+</tr>
+<tr><td colspan="15"><hr class="pTableHr" /></td></tr>
+</table>
+</div>
+<p class="pBody">
+
+</p>
+<a name="wp8121"> </a><h5 class="pHeading4">
+Abort
+</h5>
+<a name="wp8122"> </a><p class="pBody">
+The table below specifies the data sequence in the Abort APDU. The Abort APDU indicates that the transmission of the CAP file is terminated, and that the transmission is not complete and must be redone from the beginning in order to be successful.</p><div align="left">
+<table border="0" cellpadding="7"   id="SummaryNotReq8123">
+  <caption><a name="wp8125"> </a><div class="pTableCaption">
+TABLE&#160;28&#160;&#160;&#8211;&#160;&#160;Abort APDU Command 
+</div>
+</caption><thead>
+<tr><th colspan="15"><hr class="pTableHr" /></th></tr></thead>
+  <tr align="left">    <td><a name="wp8133"> </a><div class="pTableText">
+0x8x, 0xbe, 0x00, 0x00
+</div>
+</td>
+    <td><a name="wp8135"> </a><div class="pTableText">
+Lc field
+</div>
+</td>
+    <td><a name="wp8137"> </a><div class="pTableText">
+[optional data]
+</div>
+</td>
+    <td><a name="wp8139"> </a><div class="pTableText">
+Le field
+</div>
+</td>
+</tr>
+<tr><td colspan="15"><hr class="pTableHr" /></td></tr>
+</table>
+</div>
+<p class="pBody">
+
+</p>
+<a name="wp472"> </a><h3 class="pHeading2">
+APDU Responses to Installation Requests
+</h3>
+<a name="wp15922"> </a><p class="pBody">
+The installer sends a response code of <code class="cCode">0x9000</code> to indicate that a command completed successfully. Version 2.2.1 of the Java Card reference implementation provides a number of codes that can be sent in response to unsuccessful installation requests. <a  href="cJDKinstaller.html#wp14869"><span style="color: #3366CC">TABLE&#160;29</span></a> describes these codes.</p><div align="left">
+<table border="0" cellpadding="7"   id="SummaryNotReq14641">
+  <caption><a name="wp14869"> </a><div class="pTableCaption">
+TABLE&#160;29&#160;&#160;&#8211;&#160;&#160;APDU Responses to Installation Requests 
+</div>
+</caption>
+<thead>
+<tr  align="center">    <th  class="sun-verylightblue" scope="col"><a name="wp14873"> </a><div style="text-align: left" class="pTableHead">
+Response Code
+</div>
+
+</th>
+    <th  class="sun-verylightblue" scope="col"><a name="wp14875"> </a><div style="text-align: left" class="pTableHead">
+Description
+</div>
+
+</th>
+</tr>
+</thead>
+  <tr align="left">    <td><a name="wp14877"> </a><div class="pTableText">
+0x6402
+</div>
+</td>
+    <td><a name="wp14879"> </a><div class="pTableText">
+Invalid CAP file magic number. 
+</div>
+<div class="pTableBullet"><ul class="pTableBullet">
+<a name="wp19127"> </a><div class="pTableBullet"><li><b class="cBold">Cause:</b> An incorrect magic number was specified in the CAP file. </li></div>
+<a name="wp19128"> </a><div class="pTableBullet"><li><b class="cBold">Solution:</b> Refer to the <em class="cEmphasis">Java&#8482; Virtual Machine Specification</em> for the correct magic number. Ensure that the CAP file is built correctly, run it through <code class="cCode">scriptgen</code>, and download the resulting script file to the card.</li></div>
+</ul></div>
+</td>
+</tr>
+  <tr align="left">    <td><a name="wp14881"> </a><div class="pTableText">
+0x6403
+</div>
+</td>
+    <td><a name="wp14883"> </a><div class="pTableText">
+Invalid CAP file minor number.
+</div>
+<div class="pTableBullet"><ul class="pTableBullet">
+<a name="wp19108"> </a><div class="pTableBullet"><li><b class="cBold">Cause: </b>An invalid CAP file minor number was specified in the CAP file. </li></div>
+<a name="wp19112"> </a><div class="pTableBullet"><li><b class="cBold">Solution</b>: Refer to the <em class="cEmphasis">Java&#8482; Virtual Machine Specification</em> for the correct minor number. Ensure that the CAP file is built correctly, run it through <code class="cCode">scriptgen</code>, and download the resulting script file to the card.</li></div>
+</ul></div>
+</td>
+</tr>
+  <tr align="left">    <td><a name="wp14885"> </a><div class="pTableText">
+0x6404
+</div>
+</td>
+    <td><a name="wp14887"> </a><div class="pTableText">
+Invalid CAP file major number.
+</div>
+<div class="pTableBullet"><ul class="pTableBullet">
+<a name="wp19164"> </a><div class="pTableBullet"><li><b class="cBold">Cause: </b>An invalid CAP file major number was specified in the CAP file. </li></div>
+<a name="wp19168"> </a><div class="pTableBullet"><li><b class="cBold">Solution</b>: Refer to the <em class="cEmphasis">Java&#8482; Virtual Machine Specification</em> for the correct major number. Ensure that the CAP file is built correctly, run it through <code class="cCode">scriptgen</code>, and download the resulting script file to the card.</li></div>
+</ul></div>
+</td>
+</tr>
+  <tr align="left">    <td><a name="wp14889"> </a><div class="pTableText">
+0x640b
+</div>
+</td>
+    <td><a name="wp14891"> </a><div class="pTableText">
+Integer not supported. 
+</div>
+<div class="pTableBullet"><ul class="pTableBullet">
+<a name="wp19177"> </a><div class="pTableBullet"><li><b class="cBold">Cause:</b> An attempt was made to download a CAP file that requires integer support into a CREF that does not support integers. </li></div>
+<a name="wp19184"> </a><div class="pTableBullet"><li><b class="cBold">Solution:</b> Either change the CAP file so that it does not require integer support or build the version of CREF that supports integers. </li></div>
+</ul></div>
+</td>
+</tr>
+  <tr align="left">    <td><a name="wp14893"> </a><div class="pTableText">
+0x640c
+</div>
+</td>
+    <td><a name="wp14895"> </a><div class="pTableText">
+Duplicate package AID found. 
+</div>
+<div class="pTableBullet"><ul class="pTableBullet">
+<a name="wp19191"> </a><div class="pTableBullet"><li><b class="cBold">Cause: </b>A duplicate package AID was detected in CREF. </li></div>
+<a name="wp19199"> </a><div class="pTableBullet"><li><b class="cBold">Solution:</b> Choose a new AID for the package to be installed.</li></div>
+</ul></div>
+</td>
+</tr>
+  <tr align="left">    <td><a name="wp14897"> </a><div class="pTableText">
+0x640d
+</div>
+</td>
+    <td><a name="wp14899"> </a><div class="pTableText">
+Duplicate Applet AID found.
+</div>
+<div class="pTableBullet"><ul class="pTableBullet">
+<a name="wp19323"> </a><div class="pTableBullet"><li><b class="cBold">Cause:</b> A duplicate Applet AID was detected in CREF. </li></div>
+<a name="wp19204"> </a><div class="pTableBullet"><li><b class="cBold">Solution:</b> Choose a new AID for the applet to be installed. </li></div>
+</ul></div>
+</td>
+</tr>
+  <tr align="left">    <td><a name="wp14901"> </a><div class="pTableText">
+0x640f
+</div>
+</td>
+    <td><a name="wp14903"> </a><div class="pTableText">
+Installation aborted. 
+</div>
+<div class="pTableBullet"><ul class="pTableBullet">
+<a name="wp19322"> </a><div class="pTableBullet"><li><b class="cBold">Cause:</b> Installation was aborted by an outside command.</li></div>
+<a name="wp19337"> </a><div class="pTableBullet"><li><b class="cBold">Solution:</b> Restart the CAP installation from the beginning and check the <code class="cCode">INS</code> bytes in the installation script for the offending command.</li></div>
+</ul></div>
+</td>
+</tr>
+  <tr align="left">    <td><a name="wp14905"> </a><div class="pTableText">
+0x6421
+</div>
+</td>
+    <td><a name="wp14907"> </a><div class="pTableText">
+Installer in error state. 
+</div>
+<div class="pTableBullet"><ul class="pTableBullet">
+<a name="wp19342"> </a><div class="pTableBullet"><li><b class="cBold">Cause:</b> A non-recoverable error previously occurred. </li></div>
+<a name="wp19209"> </a><div class="pTableBullet"><li><b class="cBold">Solution:</b> Scan the <code class="cCode">apdutool</code> output for previous APDU responses indicating an error. Restart the CAP installation.</li></div>
+</ul></div>
+</td>
+</tr>
+  <tr align="left">    <td><a name="wp14909"> </a><div class="pTableText">
+0x6422
+</div>
+</td>
+    <td><a name="wp14911"> </a><div class="pTableText">
+CAP file component out of order. 
+</div>
+<div class="pTableBullet"><ul class="pTableBullet">
+<a name="wp19352"> </a><div class="pTableBullet"><li><b class="cBold">Cause:</b> Installer unable to proceed because it did not receive a component that is a prerequisite to process the current component. </li></div>
+<a name="wp19214"> </a><div class="pTableBullet"><li><b class="cBold">Solution:</b> Check the script file contents for the correct component ordering. </li></div>
+</ul></div>
+</td>
+</tr>
+  <tr align="left">    <td><a name="wp14913"> </a><div class="pTableText">
+0x6424
+</div>
+</td>
+    <td><a name="wp14915"> </a><div class="pTableText">
+Exception occurred. 
+</div>
+<div class="pTableBullet"><ul class="pTableBullet">
+<a name="wp19362"> </a><div class="pTableBullet"><li><b class="cBold">Cause:</b> General purpose error in the installer or applet code. </li></div>
+<a name="wp19219"> </a><div class="pTableBullet"><li><b class="cBold">Solution:</b> Check your applet code for errors. </li></div>
+</ul></div>
+</td>
+</tr>
+  <tr align="left">    <td><a name="wp14917"> </a><div class="pTableText">
+0x6425
+</div>
+</td>
+    <td><a name="wp14919"> </a><div class="pTableText">
+Install APDU command out of order. 
+</div>
+<div class="pTableBullet"><ul class="pTableBullet">
+<a name="wp19370"> </a><div class="pTableBullet"><li><b class="cBold">Cause:</b> Installer APDU commands were received out of order. </li></div>
+<a name="wp19224"> </a><div class="pTableBullet"><li><b class="cBold">Solution:</b> Check the script file for the order of APDU commands. See <a  href="cJDKinstaller.html#wp7906"><span style="color: #3366CC">&quot;Installer APDU Protocol&quot; </span></a> for more information on the ordering of APDU commands.</li></div>
+</ul></div>
+</td>
+</tr>
+  <tr align="left">    <td><a name="wp14921"> </a><div class="pTableText">
+0x6428
+</div>
+</td>
+    <td><a name="wp14923"> </a><div class="pTableText">
+Invalid component tag number. 
+</div>
+<div class="pTableBullet"><ul class="pTableBullet">
+<a name="wp19375"> </a><div class="pTableBullet"><li><b class="cBold">Cause:</b> An incorrect component tag number was detected during download. </li></div>
+<a name="wp19229"> </a><div class="pTableBullet"><li><b class="cBold">Solution:</b> Refer to Chapter 6 in the <em class="cEmphasis">Java&#8482; Virtual Machine Specification</em> for the correct tag number.</li></div>
+</ul></div>
+</td>
+</tr>
+  <tr align="left">    <td><a name="wp14925"> </a><div class="pTableText">
+0x6436
+</div>
+</td>
+    <td><a name="wp14927"> </a><div class="pTableText">
+Invalid install instruction. 
+</div>
+<div class="pTableBullet"><ul class="pTableBullet">
+<a name="wp19389"> </a><div class="pTableBullet"><li><b class="cBold">Cause:</b> An invalid Installer APDU commands was received. </li></div>
+<a name="wp19234"> </a><div class="pTableBullet">
+              <li><b class="cBold">Solution:</b> Check the script file for the 
+                offending command. See <a  href="cJDKinstaller.html#wp7906"><span style="color: #3366CC">&quot;Installer 
+                APDU Protocol&quot; </span></a> for more information on APDU commands.</li>
+            </div>
+</ul></div>
+</td>
+</tr>
+  <tr align="left">    <td><a name="wp14929"> </a><div class="pTableText">
+0x6437
+</div>
+</td>
+    <td><a name="wp14931"> </a><div class="pTableText">
+On-card package max exceeded. 
+</div>
+<div class="pTableBullet"><ul class="pTableBullet">
+<a name="wp19402"> </a><div class="pTableBullet"><li><b class="cBold">Cause:</b> Package installation failed because the number of packages that can be stored on the card has been exceeded. </li></div>
+<a name="wp19239"> </a><div class="pTableBullet"><li><b class="cBold">Solution:</b> Remove some packages from the CREF. </li></div>
+</ul></div>
+</td>
+</tr>
+  <tr align="left">    <td><a name="wp14933"> </a><div class="pTableText">
+0x6438
+</div>
+</td>
+    <td><a name="wp14935"> </a><div class="pTableText">
+Imported package not found. 
+</div>
+<div class="pTableBullet"><ul class="pTableBullet">
+<a name="wp19412"> </a><div class="pTableBullet"><li><b class="cBold">Cause:</b> A package that is required by the current package was not found. </li></div>
+<a name="wp19244"> </a><div class="pTableBullet"><li><b class="cBold">Solution:</b> Download the required package first. </li></div>
+</ul></div>
+</td>
+</tr>
+  <tr align="left">    <td><a name="wp14941"> </a><div class="pTableText">
+0x643a
+</div>
+</td>
+    <td><a name="wp14943"> </a><div class="pTableText">
+On-card applet package max exceeded. 
+</div>
+<div class="pTableBullet"><ul class="pTableBullet">
+<a name="wp19435"> </a><div class="pTableBullet"><li><b class="cBold">Cause:</b> Installation of an applet package failed because the number of applet packages that can be stored on the card has been exceeded. </li></div>
+<a name="wp19249"> </a><div class="pTableBullet"><li><b class="cBold">Solution:</b> Remove some applet packages from the CREF.</li></div>
+</ul></div>
+</td>
+</tr>
+  <tr align="left">    <td><a name="wp14945"> </a><div class="pTableText">
+ 0x6442
+</div>
+</td>
+    <td><a name="wp14947"> </a><div class="pTableText">
+Maximum allowable package methods exceeded. 
+</div>
+<div class="pTableBullet"><ul class="pTableBullet">
+<a name="wp19442"> </a><div class="pTableBullet"><li><b class="cBold">Cause:</b> The limit of 128 package methods on the card has been exceeded. </li></div>
+<a name="wp19254"> </a><div class="pTableBullet"><li><b class="cBold">Solution:</b> Modify the package to support fewer methods.</li></div>
+</ul></div>
+</td>
+</tr>
+  <tr align="left">    <td><a name="wp14949"> </a><div class="pTableText">
+0x6443
+</div>
+</td>
+    <td><a name="wp14951"> </a><div class="pTableText">
+Applet not found for installation. 
+</div>
+<div class="pTableBullet"><ul class="pTableBullet">
+<a name="wp19453"> </a><div class="pTableBullet"><li><b class="cBold">Cause:</b> An attempt was made to create an applet instance, but the applet code was not installed on the card. </li></div>
+<a name="wp19259"> </a><div class="pTableBullet"><li><b class="cBold">Solution:</b> Verify that the applet package has been downloaded to the card. </li></div>
+</ul></div>
+</td>
+</tr>
+  <tr align="left">    <td><a name="wp14953"> </a><div class="pTableText">
+0x6444
+</div>
+</td>
+    <td><a name="wp14955"> </a><div class="pTableText">
+Applet creation failed. 
+</div>
+<div class="pTableBullet"><ul class="pTableBullet">
+<a name="wp19461"> </a><div class="pTableBullet"><li><b class="cBold">Cause:</b> A general purpose error to indicate that an unsuccessful attempt was made to create the applet. </li></div>
+<a name="wp19264"> </a><div class="pTableBullet"><li><b class="cBold">Solution:</b> Verify availability of resources on the card, check the applet&#8217;s <code class="cCode">install</code> method, and so on.</li></div>
+</ul></div>
+</td>
+</tr>
+  <tr align="left">    <td><a name="wp16092"> </a><div class="pTableText">
+0x644f
+</div>
+</td>
+    <td><a name="wp16094"> </a><div class="pTableText">
+Package name is too long. 
+</div>
+<div class="pTableBullet"><ul class="pTableBullet">
+<a name="wp19474"> </a><div class="pTableBullet"><li><b class="cBold">Cause:</b> The package name exceeds the length specified in Section 2.2.4.1of the <em class="cEmphasis">Java&#8482; Virtual Machine Specification</em>. </li></div>
+<a name="wp19269"> </a><div class="pTableBullet"><li><b class="cBold">Solution:</b> Replace the name and rebuild. </li></div>
+</ul></div>
+</td>
+</tr>
+  <tr align="left">    <td><a name="wp14957"> </a><div class="pTableText">
+0x6445
+</div>
+</td>
+    <td><a name="wp19508"> </a><div class="pTableText">
+Maximum allowable applet instances exceeded. 
+</div>
+<div class="pTableBullet"><ul class="pTableBullet">
+<a name="wp19509"> </a><div class="pTableBullet"><li><b class="cBold">Cause:</b> Creation of the applet instance failed because the number of applet instances that can be stored on the card has been exceeded. </li></div>
+<a name="wp19274"> </a><div class="pTableBullet"><li><b class="cBold">Solution:</b> Remove some applet instances from the CREF.</li></div>
+</ul></div>
+</td>
+</tr>
+  <tr align="left">    <td><a name="wp14961"> </a><div class="pTableText">
+0x6446
+</div>
+</td>
+    <td><a name="wp14963"> </a><div class="pTableText">
+Memory allocation failed. 
+</div>
+<div class="pTableBullet"><ul class="pTableBullet">
+<a name="wp19517"> </a><div class="pTableBullet"><li><b class="cBold">Cause:</b> The amount of memory available on the card has been exceeded. </li></div>
+<a name="wp19279"> </a><div class="pTableBullet"><li><b class="cBold">Solution:</b> Verify the amount of memory that is available on the card. Remove packages, applets, and so on, to create enough space. Check the memory requirements of the applet or package being installed or downloaded. </li></div>
+</ul></div>
+</td>
+</tr>
+  <tr align="left">    <td><a name="wp14965"> </a><div class="pTableText">
+0x6447
+</div>
+</td>
+    <td><a name="wp14967"> </a><div class="pTableText">
+Imported class not found. 
+</div>
+<div class="pTableBullet"><ul class="pTableBullet">
+<a name="wp19525"> </a><div class="pTableBullet"><li><b class="cBold">Cause:</b> A class that is required by the current class was not found. </li></div>
+<a name="wp19284"> </a><div class="pTableBullet"><li><b class="cBold">Solution:</b> Download the required class first. </li></div>
+</ul></div>
+</td>
+</tr>
+<tr><td colspan="15"><hr class="pTableHr" /></td></tr>
+</table>
+</div>
+<p class="pBody">
+
+</p>
+<a name="wp676"> </a><h3 class="pHeading2">
+A Sample APDU Script
+</h3>
+<a name="wp678"> </a><p class="pBody">
+The following is a sample APDU script to download, create, and select the <code class="cCode">HelloWorld</code> applet.
+</p>
+<div class="pPreformatted"><pre class="pPreformatted">
+powerup;<a name="wp7290"> </a>
+<a name="wp7291"> </a>
+// Select the installer applet<a name="wp7292"> </a>
+0x00 0xA4 0x04 0x00 0x09 0xa0 0x00 0x00 0x00 0x62 0x03 0x01 0x08 0x01 0x7F;<a name="wp7293"> </a>
+<a name="wp7294"> </a>
+// CAP Begin <a name="wp7295"> </a>
+0x80 0xB0 0x00 0x00 0x00 0x7F;<a name="wp7296"> </a>
+<a name="wp7297"> </a>
+// com/sun/javacard/samples/HelloWorld/javacard/Header.cap<a name="wp7298"> </a>
+// component begin<a name="wp7299"> </a>
+0x80 0xB2 0x01 0x00 0x00 0x7F;<a name="wp7300"> </a>
+// component data<a name="wp7301"> </a>
+0x80 0xB4 0x01 0x00 0x16 0x01 0x00 0x13 0xDE 0xCA 0xFF 0xED 0x01 0x02 0x04 0x00 0x01 0x09 0xA0 0x00 0x00 0x00 0x62 0x03 0x01 0x0C 0x01 0x7F;<a name="wp7302"> </a>
+// component end<a name="wp7303"> </a>
+0x80 0xBC 0x01 0x00 0x00 0x7F;<a name="wp7304"> </a>
+<a name="wp7305"> </a>
+// com/sun/javacard/samples/HelloWorld/javacard/Directory.cap<a name="wp7306"> </a>
+0x80 0xB2 0x02 0x00 0x00 0x7F;<a name="wp7307"> </a>
+0x80 0xB4 0x02 0x00 0x20 0x02 0x00 0x1F 0x00 0x13 0x00 0x1F 0x00 0x0E 0x00 0x0B 0x00 0x36 0x00 0x0C 0x00 0x65 0x00 0x0A 0x00 0x13 0x00 0x00 0x00 0x6C 0x00 0x00 0x00 0x00 0x00 0x00 0x01 0x7F;<a name="wp7308"> </a>
+0x80 0xB4 0x02 0x00 0x02 0x01 0x00 0x7F;<a name="wp7309"> </a>
+0x80 0xBC 0x02 0x00 0x00 0x7F;<a name="wp7310"> </a>
+<a name="wp7311"> </a>
+// com/sun/javacard/samples/HelloWorld/javacard/Import.cap<a name="wp7312"> </a>
+0x80 0xB2 0x04 0x00 0x00 0x7F;<a name="wp7313"> </a>
+0x80 0xB4 0x04 0x00 0x0E 0x04 0x00 0x0B 0x01 0x00 0x01 0x07 0xA0 0x00 0x00 0x00 0x62 0x01 0x01 0x7F;<a name="wp7314"> </a>
+0x80 0xBC 0x04 0x00 0x00 0x7F;<a name="wp7315"> </a>
+<a name="wp7316"> </a>
+// com/sun/javacard/samples/HelloWorld/javacard/Applet.cap<a name="wp7317"> </a>
+0x80 0xB2 0x03 0x00 0x00 0x7F;<a name="wp7318"> </a>
+0x80 0xB4 0x03 0x00 0x11 0x03 0x00 0x0E 0x01 0x0A 0xA0 0x00 0x00 0x00 0x62 0x03 0x01 0x0C 0x01 0x01 0x00 0x14 0x7F;<a name="wp7319"> </a>
+0x80 0xBC 0x03 0x00 0x00 0x7F;<a name="wp7320"> </a>
+<a name="wp7321"> </a>
+// com/sun/javacard/samples/HelloWorld/javacard/Class.cap<a name="wp7322"> </a>
+0x80 0xB2 0x06 0x00 0x00 0x7F;<a name="wp7323"> </a>
+0x80 0xB4 0x06 0x00 0x0F 0x06 0x00 0x0C 0x00 0x80 0x03 0x01 0x00 0x01 0x07 0x01 0x00 0x00 0x00 0x1D 0x7F;<a name="wp7324"> </a>
+0x80 0xBC 0x06 0x00 0x00 0x7F;<a name="wp7325"> </a>
+<a name="wp7326"> </a>
+// com/sun/javacard/samples/HelloWorld/javacard/Method.cap<a name="wp7327"> </a>
+0x80 0xB2 0x07 0x00 0x00 0x7F;<a name="wp7328"> </a>
+0x80 0xB4 0x07 0x00 0x20 0x07 0x00 0x65 0x00 0x02 0x10 0x18 0x8C 0x00 0x01 0x18 0x11 0x01 0x00 0x90 0x0B 0x87 0x00 0x18 0x8B 0x00 0x02 0x7A 0x01 0x30 0x8F 0x00 0x03 0x8C 0x00 0x04 0x7A 0x7F;<a name="wp7329"> </a>
+0x80 0xB4 0x07 0x00 0x20 0x05 0x23 0x19 0x8B 0x00 0x05 0x2D 0x19 0x8B 0x00 0x06 0x32 0x03 0x29 0x04 0x70 0x19 0x1A 0x08 0xAD 0x00 0x16 0x04 0x1F 0x8D 0x00 0x0B 0x3B 0x16 0x04 0x1F 0x41 0x7F;<a name="wp7330"> </a>
+0x80 0xB4 0x07 0x00 0x20 0x29 0x04 0x19 0x08 0x8B 0x00 0x0C 0x32 0x1F 0x64 0xE8 0x19 0x8B 0x00 0x07 0x3B 0x19 0x16 0x04 0x08 0x41 0x8B 0x00 0x08 0x19 0x03 0x08 0x8B 0x00 0x09 0x19 0xAD 0x7F;<a name="wp7331"> </a>
+0x80 0xB4 0x07 0x00 0x08 0x00 0x03 0x16 0x04 0x8B 0x00 0x0A 0x7A 0x7F;<a name="wp7332"> </a>
+0x80 0xBC 0x07 0x00 0x00 0x7F;<a name="wp7333"> </a>
+<a name="wp7334"> </a>
+// com/sun/javacard/samples/HelloWorld/javacard/StaticField.cap<a name="wp7335"> </a>
+0x80 0xB2 0x08 0x00 0x00 0x7F;<a name="wp7336"> </a>
+0x80 0xB4 0x08 0x00 0x0D 0x08 0x00 0x0A 0x00 0x00 0x00 0x00 0x00 0x00 0x00 0x00 0x00 0x00 0x7F;<a name="wp7337"> </a>
+0x80 0xBC 0x08 0x00 0x00 0x7F;<a name="wp7338"> </a>
+<a name="wp7339"> </a>
+// com/sun/javacard/samples/HelloWorld/javacard/ConstantPool.cap<a name="wp7340"> </a>
+0x80 0xB2 0x05 0x00 0x00 0x7F;<a name="wp7341"> </a>
+0x80 0xB4 0x05 0x00 0x20 0x05 0x00 0x36 0x00 0x0D 0x02 0x00 0x00 0x00 0x06 0x80 0x03 0x00 0x03 0x80 0x03 0x01 0x01 0x00 0x00 0x00 0x06 0x00 0x00 0x01 0x03 0x80 0x0A 0x01 0x03 0x80 0x0A 0x7F;<a name="wp7342"> </a>
+0x80 0xB4 0x05 0x00 0x19 0x06 0x03 0x80 0x0A 0x07 0x03 0x80 0x0A 0x09 0x03 0x80 0x0A 0x04 0x03 0x80 0x0A 0x05 0x06 0x80 0x10 0x02 0x03 0x80 0x0A 0x03 0x7F;<a name="wp7343"> </a>
+0x80 0xBC 0x05 0x00 0x00 0x7F;<a name="wp7344"> </a>
+<a name="wp7345"> </a>
+// com/sun/javacard/samples/HelloWorld/javacard/RefLocation.cap<a name="wp7346"> </a>
+0x80 0xB2 0x09 0x00 0x00 0x7F;<a name="wp7347"> </a>
+0x80 0xB4 0x09 0x00 0x16 0x09 0x00 0x13 0x00 0x03 0x0E 0x23 0x2C 0x00 0x0C 0x05 0x0C 0x06 0x03 0x07 0x05 0x10 0x0C 0x08 0x09 0x06 0x09 0x7F;<a name="wp7348"> </a>
+0x80 0xBC 0x09 0x00 0x00 0x7F;<a name="wp7349"> </a>
+<a name="wp7360"> </a>
+// CAP End<a name="wp7361"> </a>
+0x80 0xBA 0x00 0x00 0x00 0x7F;<a name="wp7362"> </a>
+<a name="wp8678"> </a>
+// create HelloWorld<a name="wp8679"> </a>
+0x80 0xB8 0x00 0x00 0x0b 0x09 0xa0 0x00 0x00 0x00 0x62 0x03 0x01 0x03;<a name="wp8680"> </a>
+0x01 0x00 0x7F;<a name="wp8681"> </a>
+<a name="wp7363"> </a>
+// Select HelloWorld<a name="wp7364"> </a>
+0x00 0xA4 0x04 0x00 9 0xA0 0x00 0x00 0x00 0x62 0x03 0x01 0x03 0x01 0x7F;<a name="wp7365"> </a>
+<a name="wp7366"> </a>
+powerdown;<a name="wp7367"> </a>
+</pre></div>
+<a name="wp8960"> </a><h2 class="pHeading1">
+Deleting Packages and Applets
+</h2>
+<a name="wp8968"> </a><p class="pBody">
+The Installer in version 2.2.1 of the Java Card reference implementation provides the ability to delete package and applet instances from the card&#8217;s memory. Once the Installer is selected, it can receive deletion requests from the terminal in the form of ADPU commands. Requests to delete an applet or package cannot be sent from an applet on the card. For more information on package and applet deletion, see the <em class="cEmphasis">Runtime Environment Specification for the Java Card&#8482; Platform, Version 2.2.1</em> (Sun Microsystems, Inc., 2003).
+</p>
+<a name="wp8986"> </a><h3 class="pHeading2Proc">
+<img src="images/triangle.gif" width="13" height="11" alt="triangle pointing down" id="LongDescNotReq"/>&#160; 	How to Send a Deletion Request
+</h3>
+<div class="pStep1">
+<ol class="pStep1"><a name="wp9311"> </a><li>Select the Installer applet on the card.</li>
+<a name="wp9312"> </a><li>Send the ADPU for the appropriate deletion request to the Installer. The requests that you can send are described in the following sections:</li>
+</ol>
+</div>
+<ul class="pBullet2"><a name="wp8992"> </a><div class="pBullet2"><li><a  href="cJDKinstaller.html#wp9009"><span style="color: #3366CC">Delete Package</span></a> </li></div>
+<a name="wp8996"> </a><div class="pBullet2Plus"><li><a  href="cJDKinstaller.html#wp9056"><span style="color: #3366CC">Delete Package and Applets</span></a> </li></div>
+<a name="wp9000"> </a><div class="pBullet2Last"><li><a  href="cJDKinstaller.html#wp9103"><span style="color: #3366CC">Delete Applets</span></a> </li></div>
+</ul>
+<a name="wp9001"> </a>
+<p class="pBody"> For information on the responses that the ADPU requests can 
+  return, see <a  href="cJDKinstaller.html#wp9257"><span style="color: #3366CC">&quot;APDU 
+  Responses to Deletion Requests&quot;</span></a>. </p>
+<a name="wp9006"> </a><h4 class="pHeading3">
+APDU Requests to Delete Packages and Applets
+</h4>
+<a name="wp9007"> </a><p class="pBody">
+You can send requests to delete a package, a package and its applets, and individual applets.
+</p>
+<hr class="pHr"/><div class="note">
+<a name="wp16388"> </a>
+<b>Note &#8211;</b>  In the following APDU commands, the x in the second nibble of the class byte indicates that the installer can be invoked on channels 0, 1, or 2. For example, <code style="font-style: normal" class="cCode">0x8</code>x.
+<hr class="pHr"/></div>
+<a name="wp9009"> </a><h5 class="pHeading4">
+Delete Package
+</h5>
+<a name="wp17166"> </a><p class="pBody">
+In this request, the Data field contains the size of the package AID and the AID of the package to be deleted. The following is the format of the Delete Package request and the expected response:</p><div align="left">
+<table border="0" cellpadding="7"   id="SummaryNotReq17167">
+  <caption><a name="wp17169"> </a><div class="pTableCaption">
+TABLE&#160;30&#160;&#160;&#8211;&#160;&#160;Delete Package Command 
+</div>
+</caption><thead>
+<tr><th colspan="15"><hr class="pTableHr" /></th></tr></thead>
+  <tr align="left">    <td><a name="wp17177"> </a><div class="pTableText">
+0x8x, 0xc0, 0x<em class="cEmphasis">XX</em>, 0x<em class="cEmphasis">XX</em>
+</div>
+</td>
+    <td><a name="wp17179"> </a><div class="pTableText">
+Lc field
+</div>
+</td>
+    <td><a name="wp17181"> </a><div class="pTableText">
+Data field
+</div>
+</td>
+    <td><a name="wp17183"> </a><div class="pTableText">
+Le field
+</div>
+</td>
+</tr>
+<tr><td colspan="15"><hr class="pTableHr" /></td></tr>
+</table>
+</div>
+<p class="pBody">
+ 
+</p>
+<a name="wp17184"> </a><p class="pBody">
+where 0x<em class="cEmphasis">XX</em> can be any value for the <b class="cBold">P1</b> and <b class="cBold">P2</b> parameters. The installer will ignore the 0x<em class="cEmphasis">XX</em> values. An example of a delete package request on channel 1 would be: 
+</p>
+<div class="pPreformatted"><pre class="pPreformatted">
+//Delete Package Request:<a name="wp17146"> </a>
+ 0x81 0xC0 0x00 0x00 0x08 0x07 0xa0 0x00 0x00 0x00 0x62 0x12 0x34 0x7F;<a name="wp9184"> </a>
+</pre></div>
+<a name="wp9181"> </a><p class="pBody">
+In this example, <code class="cCode">0x07</code> is the AID length and <code class="cCode">0xa0 0x00 0x00 0x00 0x62 0x12 0x34</code> is the package AID.
+</p>
+<a name="wp9056"> </a><h5 class="pHeading4">
+Delete Package and Applets
+</h5>
+<a name="wp9057"> </a><p class="pBody">
+This request is similar to the Delete Package command. In this case the package and applets are removed simultaneously. The data field will contain the size of the package AID and the AID of the package to be deleted. The following is the format of the Delete Packages and Applets request and the expected response:</p><div align="left">
+<table border="0" cellpadding="7"   id="SummaryNotReq11152">
+  <caption><a name="wp11154"> </a><div class="pTableCaption">
+TABLE&#160;31&#160;&#160;&#8211;&#160;&#160;Delete Package and Applets Command 
+</div>
+</caption><thead>
+<tr><th colspan="15"><hr class="pTableHr" /></th></tr></thead>
+  <tr align="left">    <td><a name="wp11162"> </a><div class="pTableText">
+0x8x, 0xc2, 0x<em class="cEmphasis">XX</em>, 0x<em class="cEmphasis">XX</em>
+</div>
+</td>
+    <td><a name="wp11164"> </a><div class="pTableText">
+Lc field
+</div>
+</td>
+    <td><a name="wp11166"> </a><div class="pTableText">
+Data field
+</div>
+</td>
+    <td><a name="wp11168"> </a><div class="pTableText">
+Le field
+</div>
+</td>
+</tr>
+<tr><td colspan="15"><hr class="pTableHr" /></td></tr>
+</table>
+</div>
+<p class="pBody">
+ 
+</p>
+<a name="wp11170"> </a><p class="pBody">
+where 0x<em class="cEmphasis">XX</em> can be any value for the <b class="cBold">P1</b> and <b class="cBold">P2</b> parameters. The installer will ignore the 0x<em class="cEmphasis">XX</em> values. An example of a package and applets deletion request on channel 1 would be: 
+</p>
+<div class="pPreformatted"><pre class="pPreformatted">
+//Delete Package And Applets request<a name="wp9197"> </a>
+0x81 0xC2 0x00 0x00 0x08 0x07 0xa0 0x00 0x00 0x00 0x62 0x12 0x34 0x7F;<a name="wp9191"> </a>
+</pre></div>
+<a name="wp9203"> </a><p class="pBody">
+In this example, <code class="cCode">0x07</code> is the AID length and <code class="cCode">0xa0 0x00 0x00 0x00 0x62 0x12 0x34</code> is the package AID.
+</p>
+<a name="wp9103"> </a><h5 class="pHeading4">
+Delete Applets 
+</h5>
+<a name="wp9104"> </a><p class="pBody">
+In this request, the &#8220;#&#8221; symbol in the <b class="cBold">P1</b> byte indicates the number of applets to be deleted which can have a maximum value of eight. The <b class="cBold">Lc</b> field contains the size of the data field. Data field contains a list of AID size and AID pairs. The following is the format of the Delete Applet request and the expected response:</p><div align="left">
+<table border="0" cellpadding="7"   id="SummaryNotReq9106">
+  <caption><a name="wp11184"> </a><div class="pTableCaption">
+TABLE&#160;32&#160;&#160;&#8211;&#160;&#160;Delete Applet Command 
+</div>
+</caption><thead>
+<tr><th colspan="15"><hr class="pTableHr" /></th></tr></thead>
+  <tr align="left">    <td><a name="wp10904"> </a><div class="pTableText">
+0x8x, 0xc4, 0x0#, 0x<em class="cEmphasis">XX</em>
+</div>
+</td>
+    <td><a name="wp10906"> </a><div class="pTableText">
+Lc field
+</div>
+</td>
+    <td><a name="wp10908"> </a><div class="pTableText">
+Data field
+</div>
+</td>
+    <td><a name="wp10910"> </a><div class="pTableText">
+Le field
+</div>
+</td>
+</tr>
+<tr><td colspan="15"><hr class="pTableHr" /></td></tr>
+</table>
+</div>
+<p class="pBody">
+ 
+</p>
+<a name="wp9211"> </a><p class="pBody">
+where 0x<em class="cEmphasis">XX</em> can be any value for the <b class="cBold">P2</b> parameter. The installer will ignore the 0x<em class="cEmphasis">XX</em> values. An example of a applet deletion request on channel 1 would be: 
+</p>
+<div class="pPreformatted"><pre class="pPreformatted">
+//Delete the applet&#8217;s request for two applets<a name="wp9214"> </a>
+0x81 0xC4 0x02 0x00 0x12 0x08 0xa0 0x00 0x00 0x00 0x62 0x12 0x34 0x12 0x08 0xa0 0x00 0x00 0x00 0x62 0x12 0x34 0x13 0x7F;<a name="wp9215"> </a>
+</pre></div>
+<a name="wp9255"> </a><p class="pBody">
+In this example, the &#8220;#&#8221; symbol is replaced with &#8220;<code class="cCode">2</code>&#8221; (<code class="cCode">0x02</code>) indicating that there are two applets to be deleted. The first applet is <code class="cCode">0xa0 0x00 0x00 0x00 0x62 0x12 0x34 0x12</code> and the second applet is <code class="cCode">0xa0 0x00 0x00 0x00 0x62 0x12 0x34 0x13</code>. 
+</p>
+<a name="wp9257"> </a><h3 class="pHeading2">
+APDU Responses to Deletion Requests
+</h3>
+<a name="wp9258"> </a><p class="pBody">
+When the installer receives the request from the terminal, it can return any of the following responses: </p><div align="left">
+<table border="0" cellpadding="7"   id="SummaryNotReq15111">
+  <caption><a name="wp15182"> </a><div class="pTableCaption">
+TABLE&#160;33&#160;&#160;&#8211;&#160;&#160;APDU Responses to Deletion Requests 
+</div>
+</caption>
+<thead>
+<tr  align="center">    <th  class="sun-verylightblue" scope="col"><a name="wp15229"> </a><div style="text-align: left" class="pTableHead">
+Response Code
+</div>
+
+</th>
+    <th  class="sun-verylightblue" scope="col"><a name="wp15236"> </a><div style="text-align: left" class="pTableHead">
+Description
+</div>
+
+</th>
+</tr>
+</thead>
+  <tr align="left">    <td><a name="wp16691"> </a><div class="pTableText">
+0x6a86
+</div>
+</td>
+    <td><a name="wp16693"> </a><div class="pTableText">
+Invalid value for P1 or P2 parameter.
+</div>
+<div class="pTableBullet"><ul class="pTableBullet">
+<a name="wp19636"> </a><div class="pTableBullet"><li><b class="cBold">Cause:</b> Value for P1 is less than 1 or greater than 8.</li></div>
+<a name="wp19637"> </a><div class="pTableBullet"><li><b class="cBold">Solution:</b> Ensure that the value for P1 is between 1 and 8.</li></div>
+</ul></div>
+</td>
+</tr>
+  <tr align="left">    <td><a name="wp16154"> </a><div class="pTableText">
+0x6443
+</div>
+</td>
+    <td><a name="wp19657"> </a><div class="pTableText">
+Applet not found for deletion.
+</div>
+<div class="pTableBullet"><ul class="pTableBullet">
+<a name="wp19658"> </a><div class="pTableBullet"><li><b class="cBold">Cause:</b> The applet with the specified AID does not exist.</li></div>
+<a name="wp19659"> </a><div class="pTableBullet"><li><b class="cBold">Solution:</b> Check and correct the AID.</li></div>
+</ul></div>
+</td>
+</tr>
+  <tr align="left">    <td><a name="wp15202"> </a><div class="pTableText">
+0x644b
+</div>
+</td>
+    <td><a name="wp19663"> </a><div class="pTableText">
+Package not found.
+</div>
+<div class="pTableBullet"><ul class="pTableBullet">
+<a name="wp19664"> </a><div class="pTableBullet"><li><b class="cBold">Cause:</b> The package with the specified AID does not exist.</li></div>
+<a name="wp19761"> </a><div class="pTableBullet"><li><b class="cBold">Solution:</b> Check and correct the AID.</li></div>
+</ul></div>
+</td>
+</tr>
+  <tr align="left">    <td><a name="wp15206"> </a><div class="pTableText">
+0x644c
+</div>
+</td>
+    <td><a name="wp19669"> </a><div class="pTableText">
+Dependencies on package.
+</div>
+<div class="pTableBullet"><ul class="pTableBullet">
+<a name="wp19772"> </a><div class="pTableBullet"><li><b class="cBold">Cause:</b> Package has other packages dependent on it, or there are some object instances of classes belonging to this package residing in memory.</li></div>
+<a name="wp19779"> </a><div class="pTableBullet"><li><b class="cBold">Solution:</b> Determine which packages are dependent and remove them. If there are object instances of classes belonging to this package residing in memory, try the package and applet deletion combination command to remove the package from card memory.</li></div>
+</ul></div>
+</td>
+</tr>
+  <tr align="left">    <td><a name="wp15210"> </a><div class="pTableText">
+0x644d
+</div>
+</td>
+    <td><a name="wp19675"> </a><div class="pTableText">
+One or more applet instances of this package are present.
+</div>
+<div class="pTableBullet"><ul class="pTableBullet">
+<a name="wp19676"> </a><div class="pTableBullet"><li><b class="cBold">Cause:</b> One or more applet instances of this package are present</li></div>
+<a name="wp19820"> </a><div class="pTableBullet"><li><b class="cBold">Solution:</b> Remove the applets first and then try package deletion, or try the package and applet deletion combination command.</li></div>
+</ul></div>
+</td>
+</tr>
+  <tr align="left">    <td><a name="wp15214"> </a><div class="pTableText">
+0x644e
+</div>
+</td>
+    <td><a name="wp19681"> </a><div class="pTableText">
+Package is ROM package.
+</div>
+<div class="pTableBullet"><ul class="pTableBullet">
+<a name="wp19682"> </a><div class="pTableBullet"><li><b class="cBold">Cause:</b> An attempt was made to delete a package in ROM.</li></div>
+<a name="wp19831"> </a><div class="pTableBullet"><li><b class="cBold">Solution:</b> There is no solution to this problem since packages in ROM cannot be deleted.</li></div>
+</ul></div>
+</td>
+</tr>
+  <tr align="left">    <td><a name="wp16162"> </a><div class="pTableText">
+0x6448
+</div>
+</td>
+    <td><a name="wp19694"> </a><div class="pTableText">
+Dependencies on applet.
+</div>
+<div class="pTableBullet"><ul class="pTableBullet">
+<a name="wp19695"> </a><div class="pTableBullet"><li><b class="cBold">Cause:</b> Other applets are using objects owned by this applet.</li></div>
+<a name="wp19842"> </a><div class="pTableBullet"><li><b class="cBold">Solution:</b> Remove references from other applets to this applet&#8217;s objects, or try to delete the dependent applets along with this applet.</li></div>
+</ul></div>
+</td>
+</tr>
+  <tr align="left">    <td><a name="wp16158"> </a><div class="pTableText">
+0x6449
+</div>
+</td>
+    <td><a name="wp19700"> </a><div class="pTableText">
+Internal memory constraints.
+</div>
+<div class="pTableBullet"><ul class="pTableBullet">
+<a name="wp19849"> </a><div class="pTableBullet"><li><b class="cBold">Cause:</b> There is not enough memory available for the intermediate structures required by applet deletion.</li></div>
+<a name="wp19856"> </a><div class="pTableBullet"><li><b class="cBold">Solution:</b> It may not be possible to recover from this error. One possible thing that can be tried in case of multiple applet deletion is to try to delete applets individually.</li></div>
+</ul></div>
+</td>
+</tr>
+  <tr align="left">    <td><a name="wp20363"> </a><div class="pTableText">
+0x6452
+</div>
+</td>
+    <td><a name="wp20367"> </a><div class="pTableText">
+Cannot delete applet; an applet in the same context is currently active on one of the logical channels. 
+</div>
+<div class="pTableBullet"><ul class="pTableBullet">
+<a name="wp20368"> </a><div class="pTableBullet"><li><b class="cBold">Cause:</b> An attempt was made to delete an applet while another applet in the same context is currently active on one of the logical channels. </li></div>
+<a name="wp20607"> </a><div class="pTableBullet"><li><b class="cBold">Solution:</b> In the context of the applet that you are attempting to delete, make sure that no applet is selected on any of the logical channels. Then, re-attempt to delete the applet.</li></div>
+</ul></div>
+</td>
+</tr>
+  <tr align="left">    <td><a name="wp16707"> </a><div class="pTableText">
+0x6700
+</div>
+</td>
+    <td><a name="wp19712"> </a><div class="pTableText">
+Invalid value for <code class="cCode">Lc</code> parameter.
+</div>
+<div class="pTableBullet"><ul class="pTableBullet">
+<a name="wp19877"> </a><div class="pTableBullet"><li><b class="cBold">Cause:</b> In case of package deletion, the value for <code class="cCode">Lc</code> is less than 6 or greater than 17. In case of applet deletion, the value for <code class="cCode">Lc</code> is less than 7 or greater than 136.</li></div>
+<a name="wp19887"> </a><div class="pTableBullet"><li><b class="cBold">Solution:</b> Value of <code class="cCode">Lc</code> in both of these cases depends on the AIDs being passed in the APDU. Make sure the AIDs are correct and value for <code class="cCode">Lc</code> is between 6 and 16 in case of package deletion and between 7 and 135 in case of applet deletion.</li></div>
+</ul></div>
+</td>
+</tr>
+<tr><td colspan="15"><hr class="pTableHr" /></td></tr>
+</table>
+</div>
+<p class="pBody">
+
+</p>
+<a name="wp9160"> </a><p class="pBody">
+The response has the following format:</p><div align="left">
+<table border="0" cellpadding="7"   id="SummaryNotReq9161">
+  <caption><a name="wp11202"> </a><div class="pTableCaption">
+TABLE&#160;34&#160;&#160;&#8211;&#160;&#160;APDU Response Format 
+</div>
+</caption><thead>
+<tr><th colspan="15"><hr class="pTableHr" /></th></tr></thead>
+  <tr align="left">    <td><a name="wp17199"> </a><div class="pTableText">
+[optional response data]
+</div>
+</td>
+    <td><a name="wp9165"> </a><div class="pTableText">
+<b class="cBold"> </b>SW1SW2
+</div>
+</td>
+</tr>
+<tr><td colspan="15"><hr class="pTableHr" /></td></tr>
+</table>
+</div>
+<p class="pBody">
+ 
+</p>
+<a name="wp11670"> </a><h2 class="pHeading1">
+Installer Limitations
+</h2>
+<ul class="pBullet1"><a name="wp844"> </a><div class="pBullet1"><li>The maximum length of the parameter in the applet creation APDU command is 110.</li></div>
+<a name="wp13521"> </a><div class="pBullet1Plus"><li>The maximum number of packages to be downloaded is 32, including up to 16 applet packages.</li></div>
+<a name="wp13522"> </a><div class="pBullet1Plus"><li>The maximum number of applet instances to be created is 16.</li></div>
+<a name="wp850"> </a><div class="pBullet1Plus"><li>The maximum length of data in the installer APDU commands is 128.</li></div>
+<a name="wp854"> </a><div class="pBullet1Plus"><li>No on-card CAP file verification is supported.</li></div>
+<a name="wp858"> </a><div class="pBullet1Plus"><li>All subsequent APDU commands enclosed in a &#8220;<code class="cCode">CAP Begin</code>,&#8221; &#8220;<code class="cCode">CAP End</code>&#8221; APDU pair will continue to fail after an error occurs.</li></div>
+<a name="wp10916"> </a><div class="pBullet1Last"><li>The maximum number of applets that can be deleted using one command is eight.</li></div>
+</ul>
+
+    <p>&#160;</p>
+    <hr class="pHr" />
+
+    <table class="full-width" id="SummaryNotReq2">
+      <tr>
+        <td class="go-left">
+          <a accesskey="c" href="index.html">
+	    <img id="LongDescNotReq1" src="images/toc.gif" border="0"
+              alt="Contents" /></a>
+	  <a accesskey="p" href="cJDKc-jcre.html">
+	    <img id="LongDescNotReq2" src="images/prev.gif" border="0"
+              alt="Previous" /></a>
+	  <a accesskey="n" href="cJDKapdu.html">
+	    <img id="LongDescNotReq3" src="images/next.gif" border="0"
+              alt="Next" /></a>
+	  <a accesskey="i" href="cJDK_b_domIX.html">
+	    <img id="LongDescNotReq4" src="images/index.gif" border="0"
+              alt="Index" /></a>
+        </td>
+        <td class="go-right">
+          <span class="copyright">Development Kit User's Guide
+for the Binary Release with Cryptography Extensions <br /> Java Card Platform, Version 2.2.1</span>
+        </td>
+      </tr>
+    </table>
+
+    <p>&#160;</p>
+    
+<p class="copyright"><a 
+       href="copyright.html">Copyright</a> &#169; 2003 Sun Microsystems, Inc. 
+  All rights reserved.</p>	
+  </body>
+</html>

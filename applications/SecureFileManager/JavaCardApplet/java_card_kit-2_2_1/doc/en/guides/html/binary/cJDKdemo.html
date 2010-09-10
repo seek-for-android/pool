@@ -1,0 +1,1070 @@
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
+    <meta http-equiv="Content-Style-Type" content="text/css" />
+    <meta name="GENERATOR" content="Quadralay WebWorks Publisher Professional Edition 7.0.5.1025" />
+    <meta name="TEMPLATEBASE" content="JCUser_b_glo" />
+    <meta name="LASTUPDATED" content="10/10/03 17:25:04" />
+    <title>Development Kit Samples and Demonstrations</title>
+    <link rel="StyleSheet" href="document.css" type="text/css" />
+    <link rel="StyleSheet" href="catalog.css" type="text/css" />
+    <link rel="Table of Contents" href="index.html" />
+    <link rel="Previous" href="cJDKinstall.html" />
+    <link rel="Next" href="cJDKjcwde.html" />
+    <link rel="Index" href="cJDK_b_domIX.html" />
+  </head>
+
+  <body>
+
+    <table class="full-width" id="SummaryNotReq1">
+      <tr><td class="sun-darkblue">&#160;</td></tr>
+      <tr><td class="sun-lightblue">&#160;</td></tr>
+      <tr><td class="go-right">
+        <a accesskey="c" href="index.html">
+          <img id="LongDescNotReq1" src="images/toc.gif" border="0"
+            alt="Contents" /></a>
+	<a accesskey="p" href="cJDKinstall.html">
+	  <img id="LongDescNotReq2" src="images/prev.gif" border="0"
+            alt="Previous" /></a>
+        <a accesskey="n" href="cJDKjcwde.html">
+	  <img id="LongDescNotReq3" src="images/next.gif" border="0"
+            alt="Next" /></a>
+        <a accesskey="i" href="cJDK_b_domIX.html">
+	  <img id="LongDescNotReq4" src="images/index.gif" border="0"
+            alt="Index" /></a>
+        </td>
+      </tr>
+    </table>
+
+<a name="wp46"> </a><h2 class="pChapNum">
+Chapter &#160; 3
+</h2>
+<a name="wp2388"> </a><h2 class="pTitle">
+Development Kit Samples and Demonstrations
+</h2>
+<hr />
+<a name="wp89835"> </a><p class="pBody">
+This release includes several demonstration programs which illustrate the use of the Java Card API, and a scenario of post-manufacture installation.
+</p>
+<a name="wp89839"> </a><h2 class="pHeading1">
+The Demonstrations
+</h2>
+<a name="wp115060"> </a><p class="pBody">
+Version 2.2.1 of the Development Kit includes the following demonstration programs: 
+</p>
+<ul class="pBullet1"><a name="wp115076"> </a><div class="pBullet1"><li><a  href="cJDKdemo.html#wp7408"><span style="color: #3366CC">Demo 1</span></a><b class="cBold"> </b>(<code class="cCode">demo1</code>)&#8212;illustrates the use of packages masked into card ROM: <code class="cCode">JavaPurse</code>, <code class="cCode">JavaLoyalty</code>, <code class="cCode">Wallet</code> and <code class="cCode">SampleLibrary</code>.</li></div>
+<a name="wp115080"> </a><div class="pBullet1Plus"><li><a  href="cJDKdemo.html#wp4828"><span style="color: #3366CC">Demo 2</span></a><b class="cBold"> </b>(<code class="cCode">demo2</code>)&#8212;downloads these packages into the C-language Java Card RE using the installer applet: <code class="cCode">JavaPurse</code>, <code class="cCode">JavaLoyalty</code>, <code class="cCode">Wallet</code>, <code class="cCode">SampleLibrary</code>, <code class="cCode">RMIDemo</code>, <code class="cCode">SecureRMIDemo</code>, and <code class="cCode">photocard</code>. <code class="cCode">demo2</code> also exercises the <code class="cCode">JavaPurse</code>, <code class="cCode">JavaLoyalty</code>, and <code class="cCode">Wallet</code> applets.</li></div>
+<a name="wp175467"> </a><div class="pBullet1Plus"><li><a  href="cJDKdemo.html#wp175474"><span style="color: #3366CC">Demo 2 Cryptography Demo</span></a><span style="color: #3366CC"> </span>(<code class="cCode">demo2crypto</code>)&#8212;is similar to <code class="cCode">demo2</code>, except it uses a version of <code class="cCode">JavaPurse</code> that uses a DES MAC algorithm.</li></div>
+<a name="wp115088"> </a><div class="pBullet1Plus"><li><a  href="cJDKdemo.html#wp9070"><span style="color: #3366CC">Demo 3</span></a><span style="color: #3366CC"> </span>(<code class="cCode">demo3</code>)&#8212;illustrates the second time power-up of an already initialized mask. It uses the card state file created by  <code class="cCode">demo2</code>.</li></div>
+<a name="wp115104"> </a><div class="pBullet1Plus"><li><a  href="cJDKdemo.html#wp45792"><span style="color: #3366CC">Java Card RMI Demo</span></a> (<code class="cCode">RMIDemo</code>)&#8212;demonstrates the use of the Java Card platform Remote Method Invocation (&#8220;Java Card RMI&#8221;) API. The basic example used is a program that manages a counter remotely, and is able to decrement, increment, and return the value of an account. On <code class="cCode">cref</code>, <code class="cCode">RMIDemo</code> uses the card state file created by <code class="cCode">demo2</code>.</li></div>
+<a name="wp130535"> </a><div class="pBullet1Plus"><li><a  href="cJDKdemo.html#wp28577"><span style="color: #3366CC">Logical Channels Demo</span></a><b class="cBold"> </b>(<code class="cCode">channelDemo</code>)&#8212;demonstrates the use of logical channels which allows selecting multiple applets at the same time.</li></div>
+<a name="wp130542"> </a><div class="pBullet1Plus"><li><a  href="cJDKdemo.html#wp46305"><span style="color: #3366CC">Object Deletion Demo 1</span></a> (<code class="cCode">odDemo1</code>)&#8212;demonstrates applet and package deletion, as well as the object deletion mechanism which removes unreachable objects.</li></div>
+<a name="wp130543"> </a><div class="pBullet1Plus"><li><a  href="cJDKdemo.html#wp46348"><span style="color: #3366CC">Object Deletion Demo2</span></a> (<code class="cCode">odDemo2</code>)&#8212;demonstrates package deletion and checks that persistent memory has been returned to the memory manager.</li></div>
+<a name="wp130536"> </a><div class="pBullet1Plus"><li><a  href="cJDKdemo.html#wp109964"><span style="color: #3366CC">Photo Card Demo</span></a><span style="color: #3366CC"> </span>(<code class="cCode">photocard</code>)&#8212;demonstrates how you can store images in the large address space which is available in the 32-bit version of the reference implementation for the Java Card platform (&#8220;Java Card reference implementation&#8221;), version 2.2.1. </li></div>
+<a name="wp115108"> </a><div class="pBullet1Last"><li><a  href="cJDKdemo.html#wp46285"><span style="color: #3366CC">Secure Java Card RMI Demo</span></a><b class="cBold"> </b>(<code class="cCode">SecureRMIDemo</code>)&#8212;is similar to <code class="cCode">RMIDemo</code>, but demonstrates additional security at the transport level. It also uses the card state file created on <code class="cCode">cref</code> by <code class="cCode">demo2</code>. </li></div>
+</ul>
+<a name="wp34768"> </a><h3 class="pHeading2">
+Directories and Files in the demo Directory
+</h3>
+<a name="wp34798"> </a><p class="pBody">
+The directories and files for the Development Kit demonstrations are described in <a  href="cJDKdemo.html#wp125072"><span style="color: #3366CC">TABLE&#160;3</span></a> and <a  href="cJDKdemo.html#wp130577"><span style="color: #3366CC">TABLE&#160;4</span></a>.
+</p>
+<hr class="pHr"/><div class="note">
+<a name="wp130546"> </a>
+<b>Note &#8211;</b>  Many of the directories listed in <a  href="cJDKdemo.html#wp125072"><span style="color: #3366CC">TABLE&#160;3</span></a> and <a  href="cJDKdemo.html#wp130577"><span style="color: #3366CC">TABLE&#160;4</span></a> contain a <code class="cCode">_tmp</code> subdirectory. This subdirectory contains intermediate temporary files needed to construct the final <code class="cCode">*.scr</code> source files.
+<hr class="pHr"/></div>
+<a name="wp130547"> </a><p class="pBody">
+</p><div align="left">
+<table border="0" cellpadding="7"   id="SummaryNotReq34769">
+  <caption><a name="wp125072"> </a><div class="pTableCaption">
+TABLE&#160;3&#160;&#160;&#8211;&#160;&#160;Directories and Files in the demo Directory 
+</div>
+</caption>
+<thead>
+<tr  align="center">    <th  class="sun-verylightblue" scope="col"><a name="wp125076"> </a><div style="text-align: left" class="pTableHead">
+Directories/Files
+</div>
+
+</th>
+    <th  class="sun-verylightblue" scope="col"><a name="wp125078"> </a><div style="text-align: left" class="pTableHead">
+Description
+</div>
+
+</th>
+</tr>
+</thead>
+  <tr align="left">    <td><a name="wp125080"> </a><div class="pTableText">
+<code class="cCode">demo1</code> 
+</div>
+</td>
+    <td><a name="wp125082"> </a><div class="pTableText">
+Contains the files required to run and verify <code class="cCode">demo1</code>:
+</div>
+<div class="pTableBullet"><ul class="pTableBullet">
+<a name="wp125084"> </a><div class="pTableBullet"><li><code class="cCode">demo1.scr</code>&#8212;demonstration <code class="cCode">apdutool</code> script file</li></div>
+<a name="wp125085"> </a><div class="pTableBullet"><li><code class="cCode">demo1.scr.expected.out</code>&#8212;for comparison with <code class="cCode">apdutool</code> output when the demo is run</li></div>
+</ul></div>
+</td>
+</tr>
+  <tr align="left">    <td><a name="wp125087"> </a><div class="pTableText">
+<code class="cCode">demo2</code> 
+</div>
+</td>
+    <td><a name="wp125089"> </a><div class="pTableText">
+Contains the files required to run and verify <code class="cCode">demo2</code> and <code class="cCode">demo2crypto</code>:
+</div>
+<div class="pTableBullet"><ul class="pTableBullet">
+<a name="wp125091"> </a><div class="pTableBullet"><li><code class="cCode">demo2.scr</code>, <code class="cCode">demo2crypto.scr</code>&#8212;demonstration <code class="cCode">apdutool</code> script files</li></div>
+<a name="wp125092"> </a><div class="pTableBullet"><li><code class="cCode">demo2.scr.expected.out</code>, <code class="cCode">demo2crypto.scr.expected.out</code>&#8212;for comparison with <code class="cCode">apdutool</code> output when the demo is run</li></div>
+</ul></div>
+<a name="wp130603"> </a><div class="pTableText">
+&#160;
+</div>
+<a name="wp130607"> </a><div class="pTableText">
+This directory also contains the subdirectories for the demos that depend on the output of <code class="cCode">demo2</code>. For more information on the contents of these subdirectories and the demos they represent, see <a  href="cJDKdemo.html#wp130577"><span style="color: #3366CC">TABLE&#160;4</span></a>.
+</div>
+</td>
+</tr>
+  <tr align="left">    <td><a name="wp125094"> </a><div class="pTableText">
+<code class="cCode">demo3</code> 
+</div>
+</td>
+    <td><a name="wp125096"> </a><div class="pTableText">
+Contains the files required to run and verify <code class="cCode">demo3</code>:
+</div>
+<div class="pTableBullet"><ul class="pTableBullet">
+<a name="wp125097"> </a><div class="pTableBullet"><li><code class="cCode">demo3.scr</code>&#8212;demonstration <code class="cCode">apdutool</code> script file</li></div>
+<a name="wp125098"> </a><div class="pTableBullet"><li><code class="cCode">demo3.scr.expected.out</code>&#8212;for comparison with <code class="cCode">apdutool</code> output when the demo is run</li></div>
+</ul></div>
+</td>
+</tr>
+  <tr align="left">    <td><a name="wp125108"> </a><div class="pTableText">
+<code class="cCode">jcwde</code>
+</div>
+</td>
+    <td><a name="wp131088"> </a><div class="pTableText">
+Contains the files required to run Java Card WDE:
+</div>
+<div class="pTableBullet"><ul class="pTableBullet">
+<a name="wp125110"> </a><div class="pTableBullet"><li><code class="cCode">jcwde.app&#8212;</code>lists all of the applets (and their AIDs) to be loaded into the simulated mask for Java Card WDE.</li></div>
+<a name="wp125111"> </a><div class="pTableBullet"><li><code class="cCode">jcwde_rmi.app</code> and <code class="cCode">jcwde_securermi.app</code>&#8212;lists the contents of Java Card WDE for running the <code class="cCode">RMIDemo</code> and <code class="cCode">SecureRMIDemo</code> respectively.</li></div>
+</ul></div>
+</td>
+</tr>
+  <tr align="left">    <td><a name="wp125121"> </a><div class="pTableText">
+<code class="cCode">logical_channels</code> 
+</div>
+</td>
+    <td><a name="wp125123"> </a><div class="pTableText">
+Contains the files required to run and verify the logical channels demo:
+</div>
+<div class="pTableBullet"><ul class="pTableBullet">
+<a name="wp125124"> </a><div class="pTableBullet"><li><code class="cCode">channel.scr</code>, <code class="cCode">channelDemo.scr</code>, <code class="cCode">ChnDemo.scr</code>&#8212;demonstration <code class="cCode">apdutool</code> script files</li></div>
+<a name="wp125125"> </a><div class="pTableBullet"><li><code class="cCode">channelDemo.scr.expected.out</code>&#8212;for comparison with <code class="cCode">apdutool</code> output when the demo is run</li></div>
+</ul></div>
+</td>
+</tr>
+  <tr align="left">    <td><a name="wp125127"> </a><div class="pTableText">
+<code class="cCode">misc</code>
+</div>
+</td>
+    <td><a name="wp125129"> </a><div class="pTableText">
+<code class="cCode">Footer.scr</code>, <code class="cCode">Header.scr</code>&#8212;scripts to terminate and initialize the session, respectively.
+</div>
+</td>
+</tr>
+  <tr align="left">    <td><a name="wp125131"> </a><div class="pTableText">
+<code class="cCode">object_deletion</code> 
+</div>
+</td>
+    <td><a name="wp125133"> </a><div class="pTableText">
+Contains the files required to run and verify <code class="cCode">odDemo1</code> and <code class="cCode">odDemo2</code>:
+</div>
+<div class="pTableBullet"><ul class="pTableBullet">
+<a name="wp125134"> </a><div class="pTableBullet">
+              <li><code class="cCode">packageA.scr</code>, <code class="cCode">packageB.scr</code>, 
+                <code class="cCode">packageC.scr</code>&#8212;intermediate script 
+                files for building the final <code class="cCode"> odDemo1-*.scr</code> 
+                files. </li>
+            </div>
+<a name="wp125135"> </a><div class="pTableBullet">
+              <li><code class="cCode">odDemo1-1.scr</code>, <code class="cCode">odDemo1-2.scr</code>, 
+                <code> </code> <code class="cCode">odDemo1-3.scr</code>&#8212;demonstration 
+                <code class="cCode">apdutool</code> script files</li>
+            </div>
+<a name="wp125136"> </a><div class="pTableBullet">
+              <li><code class="cCode">od1.scr</code>, <code class="cCode">od2.scr</code>, 
+                <code class="cCode">od2-2.scr</code>, <code class="cCode">od3.scr</code>, 
+                <code> </code> <code class="cCode">od3-2.scr</code>&#8212; script 
+                files used for building the <code class="cCode"> odDemo1-*.scr</code> 
+                files</li>
+            </div>
+<a name="wp125137"> </a><div class="pTableBullet">
+              <li><code class="cCode">odDemo1-1.scr.expected.out</code>, <code class="cCode"> 
+                odDemo1-2.scr.expected.out</code>, <code class="cCode"> odDemo1-3.scr.expected.out</code>, 
+                <code class="cCode">odDemo2.scr.expected.out</code>&#8212;for 
+                comparison with <code class="cCode">apdutool</code> output when 
+                the demos are run</li>
+            </div>
+</ul></div>
+</td>
+</tr>
+<tr><td colspan="15"><hr class="pTableHr" /></td></tr>
+</table>
+</div>
+<p class="pBody">
+
+</p>
+<a name="wp129868"> </a><p class="pBody">
+Several of the Development Kit demonstrations use the output generated by the Demo 2 demonstration. These demonstrations are stored in subdirectories of <code class="cCode">demo2</code>. The <code class="cCode">demo2</code> directory also contains the files that the demos need to run <code class="cCode">JavaPurse</code>, <code class="cCode">JavaLoyalty</code>, and <code class="cCode">Wallet</code>. The demonstrations and subdirectories contained in <code class="cCode">demo2</code> are described in <a  href="cJDKdemo.html#wp130577"><span style="color: #3366CC">TABLE&#160;4</span></a>. </p><div align="left">
+<table border="0" cellpadding="7"   id="SummaryNotReq130575">
+  <caption><a name="wp130577"> </a><div class="pTableCaption">
+TABLE&#160;4&#160;&#160;&#8211;&#160;&#160;Subdirectories and Demonstrations in the demo2 Directory
+</div>
+</caption>
+<thead>
+<tr  align="center">    <th  class="sun-verylightblue" scope="col"><a name="wp130581"> </a><div style="text-align: left" class="pTableHead">
+Subdirectories
+</div>
+
+</th>
+    <th  class="sun-verylightblue" scope="col"><a name="wp130583"> </a><div style="text-align: left" class="pTableHead">
+Description
+</div>
+
+</th>
+</tr>
+</thead>
+  <tr align="left">    <td><a name="wp130638"> </a><div class="pTableText">
+<code class="cCode">javapurse</code>
+</div>
+</td>
+    <td><a name="wp130640"> </a><div class="pTableText">
+Contains the files required to run the demos that use <code class="cCode">JavaPurse</code>:
+</div>
+<div class="pTableBullet"><ul class="pTableBullet">
+<a name="wp130641"> </a><div class="pTableBullet"><li><code class="cCode">AppletTest.scr</code>, <code class="cCode">AppletTestCrypto.scr</code>&#8212;downloads and executes the demonstration applets</li></div>
+<a name="wp130642"> </a><div class="pTableBullet"><li><code class="cCode">JavaLoyalty.scr</code>&#8212;installation script for the <code class="cCode">JavaLoyalty</code> Java Card applet</li></div>
+<a name="wp130643"> </a><div class="pTableBullet"><li><code class="cCode">JavaPurse.scr</code>, <code class="cCode">JavaPurseCrypto.scr</code>&#8212;installation scripts for the <code class="cCode">JavaPurse</code> Java Card applet</li></div>
+<a name="wp130644"> </a><div class="pTableBullet"><li><code class="cCode">SampleLibrary.scr</code>&#8212;installation script for the <code class="cCode">SampleLibrary</code> library package</li></div>
+</ul></div>
+</td>
+</tr>
+  <tr align="left">    <td><a name="wp130662"> </a><div class="pTableText">
+<code class="cCode">photocard</code>
+</div>
+</td>
+    <td><a name="wp130664"> </a><div class="pTableText">
+Contains the files required to run and verify the photo card demo:
+</div>
+<div class="pTableBullet"><ul class="pTableBullet">
+<a name="wp130665"> </a><div class="pTableBullet"><li><code class="cCode">photocard</code>, <code class="cCode">photocard.bat</code>&#8212;script/batch file to run the photo card demo</li></div>
+<a name="wp130666"> </a><div class="pTableBullet"><li><code class="cCode">photocard.scr</code>&#8212;installation script for the photocard applet package</li></div>
+<a name="wp130667"> </a><div class="pTableBullet"><li><code class="cCode">photocard.scr.expected.out</code>&#8212;for comparison with <code class="cCode">apdutool</code> output when the demo is run</li></div>
+<a name="wp130668"> </a><div class="pTableBullet"><li><code class="cCode">*.gif</code> files&#8212;sample photo files</li></div>
+<a name="wp130669"> </a><div class="pTableBullet"><li><code class="cCode">opencard.properties</code>&#8212;contains OCF settings for the photo card demo</li></div>
+</ul></div>
+</td>
+</tr>
+  <tr align="left">    <td><a name="wp130671"> </a><div class="pTableText">
+<code class="cCode">rmi</code>
+</div>
+</td>
+    <td><a name="wp130673"> </a><div class="pTableText">
+Contains the files required to run and verify <code class="cCode">RMIDemo</code> and <code class="cCode">SecureRMIDemo</code>:
+</div>
+<div class="pTableBullet"><ul class="pTableBullet">
+<a name="wp130674"> </a><div class="pTableBullet"><li><code class="cCode">rmidemo</code> or <code class="cCode">rmidemo.bat</code>, <code class="cCode">securermidemo</code> or <code class="cCode">securermidemo.bat</code>&#8212;Shell scripts and batch files for running the Java Card RMI and secure Java Card RMI demos, respectively</li></div>
+<a name="wp130675"> </a><div class="pTableBullet"><li><code class="cCode">rmidemo.scr.expected.out</code>, <code class="cCode">securermidemo.scr.expected.out</code>&#8212;for comparison with <code class="cCode">apdutool</code> output when the demos are run</li></div>
+<a name="wp130676"> </a><div class="pTableBullet"><li><code class="cCode">RMIDemo.scr</code>, <code class="cCode">SecureRMIDemo.scr</code>&#8212;installation scripts to install the <code class="cCode">RMIDemo</code> and <code class="cCode">SecureRMIDemo</code> applet packages, respectively</li></div>
+<a name="wp130677"> </a><div class="pTableBullet"><li><code class="cCode">opencard.properties</code>&#8212;contains OCF settings for the Java Card RMI demos</li></div>
+</ul></div>
+</td>
+</tr>
+  <tr align="left">    <td><a name="wp130682"> </a><div class="pTableText">
+<code class="cCode">wallet</code>
+</div>
+</td>
+    <td><a name="wp130684"> </a><div class="pTableText">
+Contains the file required to run the demos that use the <code class="cCode">Wallet</code> applet:
+</div>
+<a name="wp130685"> </a><div class="pTableText">
+<code class="cCode">Wallet.scr</code>&#8212;installation script for the <code class="cCode">Wallet</code> applet package
+</div>
+</td>
+</tr>
+<tr><td colspan="15"><hr class="pTableHr" /></td></tr>
+</table>
+</div>
+<p class="pBody">
+
+</p>
+<a name="wp3766"> </a>
+<a name="wp173245"> </a><h2 class="pHeading1">
+Preliminaries
+</h2>
+<a name="wp173246"> </a><p class="pBody">
+ All  demo programs are pre-built. If you make any changes to the demos, the following sections describe how you can rebuild them. 
+</p>
+<a name="wp59965"> </a><p class="pBody">
+
+</p>
+<a name="wp4031"> </a><h2 class="pHeading1">
+Building Samples
+</h2>
+<a name="wp86300"> </a><p class="pBody">
+A script file is provided to build the samples. To understand what is going on behind the scenes, it is very instructive to look at the script.
+</p>
+<a name="wp86303"> </a><p class="pBody">
+The script file is <code class="cCode">$JC_HOME/samples/build_samples</code> (for a Solaris or Linux platform installation) or <code class="cCode">%JC_HOME%\samples\build_samples.bat</code> (for a Microsoft Windows 2000 platform installation).
+</p>
+<a name="wp6995"> </a><h4 class="pHeading3">
+Running the Script
+</h4>
+<a name="wp7013"> </a><p class="pBody">
+The command line syntax for the script is:
+</p>
+<div class="pPreformatted"><pre class="pPreformatted">
+build_<code class="cCode">samples</code> [options]<a name="wp7014"> </a>
+</pre></div>
+<a name="wp69049"> </a><p class="pBody">
+<a  href="cJDKdemo.html#wp24460"><span style="color: #3366CC">TABLE&#160;5</span></a> describes the possible values for <em class="cEmphasis">options</em>.
+</p>
+<a name="wp102459"> </a><p class="pBody">
+</p><div align="left">
+<table border="0" cellpadding="7"   id="SummaryNotReq7016">
+  <caption><a name="wp24460"> </a><div class="pTableCaption">
+TABLE&#160;5&#160;&#160;&#8211;&#160;&#160;build_samples Command Line Options 
+</div>
+</caption>
+<thead>
+<tr  align="center">    <th  class="sun-verylightblue" scope="col"><a name="wp7018"> </a><div style="text-align: left" class="pTableHead">
+Value of options
+</div>
+
+</th>
+    <th  class="sun-verylightblue" scope="col"><a name="wp7020"> </a><div style="text-align: left" class="pTableHead">
+Description
+</div>
+
+</th>
+</tr>
+</thead>
+  <tr align="left">    <td><a name="wp38753"> </a><div class="pTableText">
+<code class="cCode">-clean</code>
+</div>
+</td>
+    <td><a name="wp38755"> </a><div class="pTableText">
+Removes all files produced by the script.
+</div>
+</td>
+</tr>
+  <tr align="left">    <td><a name="wp7026"> </a><div class="pTableText">
+<code class="cCode">-help</code>
+</div>
+</td>
+    <td><a name="wp7028"> </a><div class="pTableText">
+Prints out a help message and exits.
+</div>
+</td>
+</tr>
+  <tr align="left">    <td><a name="wp38757"> </a><div class="pTableText">
+[no options]
+</div>
+</td>
+    <td><a name="wp38759"> </a><div class="pTableText">
+Builds all sample applets, client samples, and demo scripts.
+</div>
+</td>
+</tr>
+<tr><td colspan="15"><hr class="pTableHr" /></td></tr>
+</table>
+</div>
+<p class="pBody">
+ 
+</p>
+<a name="wp3705"> </a><h4 class="pHeading3">
+Setting Environment Variables
+</h4>
+<a name="wp7764"> </a>
+<p class="pBody"> The <code class="cCode">build_samples</code> script uses the 
+  environment variables <code class="cCode">JC_HOME</code> and <code class="cCode">JAVA_HOME</code>. 
+  To correctly set these environment variables, refer to <a  href="cJDKinstall.html#wp4268"><span style="color: #3366CC">&quot;Setting 
+  Environment Variables for the Solaris or Linux Platform&quot; </span></a> or 
+  <a  href="cJDKinstall.html#wp3826"><span style="color: #3366CC">&quot;Setting 
+  Environment Variables for Microsoft Windows 2000 Platform&quot;</span></a>. 
+</p>
+<a name="wp7834"> </a><h2 class="pHeading1">
+Building the Sample Applets
+</h2>
+<a name="wp7836"> </a><p class="pBody">
+Run the script without parameters to build the samples:
+</p>
+<div class="pPreformatted"><pre class="pPreformatted">
+build_<code class="cCode">samples </code><a name="wp70722"> </a>
+</pre></div>
+<a name="wp7072"> </a><h3 class="pHeading2Proc">
+<img src="images/triangle.gif" width="13" height="11" alt="triangle pointing down" id="LongDescNotReq"/>&#160; 	Preparing to Compile the Sample Applets
+</h3>
+<hr class="pHr"/><div class="note">
+<a name="wp58636"> </a>
+<b>Note &#8211;</b>  This section details the steps taken by the script, but you can run the commands yourself if you choose.
+<hr class="pHr"/></div>
+<div class="pStep1">
+<ol class="pStep1"><a name="wp4463"> </a><li>A <code class="cCode">classes</code> directory is created as a peer to <code class="cCode">src</code> under the <code class="cCode">samples</code> directory.</li>
+<a name="wp4465"> </a><li>The Java Card API export files are copied to the <code class="cCode">classes</code> directory. </li>
+</ol>
+</div>
+<a name="wp4466"> </a><h3 class="pHeading2">
+Compiling the Sample Applets
+</h3>
+<a name="wp4467"> </a><p class="pBody">
+The next step is to compile the Java sources for the sample applets. For example, from the <code class="cCode">samples</code> directory, issue the following command:
+</p>
+<a name="wp33341"> </a><p class="pBody">
+<em class="cEmphasis">Solaris or Linux platform:</em>
+</p>
+<div class="pPreformatted"><pre class="pPreformatted">
+javac -g -classpath ./classes:../lib/api.jar:../lib/installer.jar src/com/sun/javacard/samples/HelloWorld/*.java <a name="wp4468"> </a>
+</pre></div>
+<a name="wp33342"> </a><p class="pBody">
+<em class="cEmphasis">Microsoft Windows 2000 platform:</em>
+</p>
+<div class="pPreformatted"><pre class="pPreformatted">
+javac -g -classpath .\classes;..\lib\api.jar;..\lib\installer.jar src\com\sun\javacard\samples\HelloWorld\*.java <a name="wp33351"> </a>
+</pre></div>
+<a name="wp34861"> </a><p class="pBody">
+where: 
+</p>
+<ul class="pBullet1"><a name="wp116157"> </a><div class="pBullet1"><li><code class="cCode">api.jar</code> contains the Java Card API</li></div>
+<a name="wp116160"> </a><div class="pBullet1Plus"><li><code class="cCode">installer.jar</code> contains the installer applet</li></div>
+<a name="wp116161"> </a><div class="pBullet1Last"><li>the <code class="cCode">classes</code> directory is required for packages that import other sample packages</li></div>
+</ul>
+<a name="wp7790"> </a><h3 class="pHeading2">
+Converting the Class Files
+</h3>
+<a name="wp7788"> </a><p class="pBody">
+The next step is to convert the Java class files.
+</p>
+<a name="wp7797"> </a><p class="pBody">
+Conversion parameters for each package are specified in a configuration file. 
+</p>
+<a name="wp4470"> </a><p class="pBody">
+For example, a configuration file contains items such as:
+</p>
+<div class="pPreformatted"><pre class="pPreformatted">
+-out EXP JCA CAP<a name="wp4472"> </a>
+-exportpath .<a name="wp4473"> </a>
+-applet  0xa0:0x0:0x0:0x0:0x62:0x3:0x1:0xc:0x1:0x1<a name="wp4474"> </a>
+com.sun.javacard.samples.HelloWorld.HelloWorld<a name="wp4475"> </a>
+com.sun.javacard.samples.HelloWorld<a name="wp4476"> </a>
+0xa0:0x0:0x0:0x0:0x62:0x3:0x1:0xc:0x1 1.0<a name="wp4477"> </a>
+</pre></div>
+<a name="wp4478"> </a><p class="pBody">
+In this example, the <code class="cCode">converter</code> will output three kinds of files: export (<code class="cCode">*.exp</code>), CAP (<code class="cCode">*.cap</code>) and Java Card Assembly (<code class="cCode">*.jca</code>) files. 
+</p>
+<a name="wp4479"> </a><p class="pBody">
+Refer to the &#8220;Convert samples&#8221; section of the script file to see the detailed <code class="cCode">converter</code> tool steps.
+</p>
+<a name="wp65171"> </a><p class="pBody">
+For more information about the <code class="cCode">converter</code> tool, refer to <a  href="cJDKconverter.html#wp1884"><span style="color: #3366CC">Chapter&#160;5, &quot;Converting Java Class Files</span></a>.&#8221;
+</p>
+<a name="wp68726"> </a><h3 class="pHeading2">
+Running scriptgen to Generate Script Files
+</h3>
+<a name="wp68727"> </a><p class="pBody">
+Generate script files for <code class="cCode">apdutool</code> using the <code class="cCode">scriptgen</code> tool. This step must be done for each package to be downloaded. For example: 
+</p>
+<div class="pPreformatted"><pre class="pPreformatted">
+scriptgen -o JavaLoyalty.scr ./classes/com/sun/javacard/samples/JavaLoyalty/javacard/JavaLoyalty.cap <a name="wp68728"> </a>
+</pre></div>
+<a name="wp68729"> </a><p class="pBody">
+The new scripts are included into the demonstration scripts. For example, <code class="cCode">demo2.scr</code> file is composed of these scripts: 
+</p>
+<ul class="pBullet1"><a name="wp81808"> </a><div class="pBullet1"><li><code class="cCode">Header.scr</code>&#8212;a script that initializes the session</li></div>
+<a name="wp81809"> </a><div class="pBullet1Plus"><li><code class="cCode">SampleLibrary.scr</code>, <code class="cCode">JavaLoyalty.scr</code>, <code class="cCode">JavaPurse.scr</code>, <code class="cCode">Wallet.scr</code>, <code class="cCode">RMIDemo.scr</code>, <code class="cCode">SecureRMIDemo.scr</code>, <code class="cCode">photocard.scr</code>&#8212;package installation scripts </li></div>
+<a name="wp81810"> </a><div class="pBullet1Plus"><li><code class="cCode">AppletTest.scr</code>&#8212;a script that creates the <code class="cCode">JavaLoyalty</code>, <code class="cCode">JavaPurse</code>, <code class="cCode">Wallet</code>, <code class="cCode">JavaPurseCrypto</code>, <code class="cCode">RMIDemo</code>, and <code class="cCode">SecureRMIDemo</code> applets so that you can see each of them invoked when the simulation is run. <code class="cCode">AppletTest.scr</code> also excercises the <code class="cCode">JavaLoyalty.scr</code>, <code class="cCode">JavaPurse.scr</code>, and <code class="cCode">Wallet.scr</code> applets.</li></div>
+<a name="wp81844"> </a><div class="pBullet1Last"><li><code class="cCode">Footer.scr</code>&#8212;a script that terminates the session</li></div>
+</ul>
+<hr class="pHr"/><div class="note">
+<a name="wp77875"> </a>
+<b>Note &#8211;</b>  The script files for the demonstrations use the <code class="cCode">output</code> <code class="cCode">off;</code> apdutool directive to suppress the logging of CAP file download APDU commands to the output log file, and the <code class="cCode">output</code> <code class="cCode">on;</code> directive to enable the logging of other commands. To enable logging of package download commands, comment out the <code class="cCode">output</code> <code class="cCode">off;</code> directive in the script file <code class="cCode">Header.scr</code> and run the <code class="cCode">build_samples</code> script.
+<hr class="pHr"/></div>
+<a name="wp45594"> </a><h2 class="pHeading1">
+Running the Demonstrations
+</h2>
+<a name="wp46367"> </a><p class="pBody">
+The following sections describe the Development Kit demonstrations and how to run them.
+</p>
+<a name="wp83750"> </a><p class="pBody">
+A demonstration can use a card EEPROM image created by another demonstration. The <code class="cCode">cref</code> command line option <code class="cCode">-o</code> <code style="font-style: normal" class="cCode">&lt;</code><em style="font-style: italic" class="cEmphasis">filename</em><code class="cCode">&gt;</code> lets you save the EEPROM image into a file after a simulated card session. The option <code class="cCode">-i</code> <code style="font-style: normal" class="cCode">&lt;</code><em style="font-style: italic" class="cEmphasis">filename</em><code class="cCode">&gt;</code> restores the image from the file for a new card session. For more information, see <a  href="cJDKc-jcre.html#wp11615"><span style="color: #3366CC">Chapter&#160;11, &quot;Using the Java Card Reference Implementation</span></a>&#8221;.
+</p>
+<a name="wp7408"> </a><h3 class="pHeading2">
+Demo 1
+</h3>
+<a name="wp46131"> </a><p class="pBody">
+The Demo 1 demonstration, <code class="cCode">demo1</code>, exercises the <code class="cCode">JavaPurse</code>, <code class="cCode">JavaLoyalty</code>, and <code class="cCode">Wallet</code> applets by simulating transactions where amounts are credited and debited from the card. The demonstration begins by powering up the Java Card technology-enabled smart card and creating the applets <code class="cCode">JavaPurse</code>, <code class="cCode">JavaLoyalty</code>, and <code class="cCode">Wallet</code>. 
+</p>
+<a name="wp46929"> </a><p class="pBody">
+The <code class="cCode">JavaPurse</code> applet demonstrates a simple electronic cash application. The applet is selected and initialized with various parameters such as the Purse ID, the expiration date of the card, the Master and User PINs, maximum balance, and maximum transaction. Transaction operations perform the actual debits and credits to the electronic purse. If there is a configured loyalty applet assigned for the CAD performing the transaction <code class="cCode">JavaPurse</code> communicates with it to grant loyalty points. In this case, <code class="cCode">JavaLoyalty</code> is the provided loyalty applet. 
+</p>
+<a name="wp46132"> </a><p class="pBody">
+A number of transaction sessions are simulated where amounts are credited and debited from the card. In an additional session, transactions with intentional errors are attempted to demonstrate the security features of the card. 
+</p>
+<a name="wp46998"> </a><p class="pBody">
+The <code class="cCode">JavaLoyalty</code> applet is designed to interact with the <code class="cCode">JavaPurse</code> applet, and to demonstrate the use of shareable interfaces. The shareable <code class="cCode">JavaLoyaltyInterface</code> is defined in a separate library package, <code class="cCode">com.sun.javacard.SampleLibrary</code>.
+</p>
+<a name="wp47002"> </a><p class="pBody">
+<code class="cCode">JavaLoyalty</code> is a minimalistic loyalty applet. It is registered with <code class="cCode">JavaPurse</code> when a <code class="cCode">Parameter Update</code> APDU command with an appropriate parameter tag is executed, and when the AID part of the parameter corresponds to the AID of the <code class="cCode">JavaLoyalty</code> applet. The applet contains a <code class="cCode">grantPoints</code> method. This method implements the main interaction with the client. When the first 2 bytes of the CAD ID in a request by a <code class="cCode">JavaPurse</code> transaction correspond to the 2 bytes of CAD ID in the corresponding <code class="cCode">Parameter Update</code> APDU command, the <code class="cCode">grantPoints</code> method implementing the <code class="cCode">JavaLoyaltyInterface</code> is requested.
+</p>
+<a name="wp46996"> </a><p class="pBody">
+<code class="cCode">JavaLoyalty</code> maintains the balance of loyalty points. The applet contains methods to credit and debit the account of points and to get and set the balance.
+</p>
+<a name="wp61702"> </a><p class="pBody">
+The <code class="cCode">Wallet</code> applet demonstrates a simplified cash card application. It keeps a balance, and exercises some of the Java Card API features such as the use of a PIN to control access to the applet.
+</p>
+<a name="wp58644"> </a><h4 class="pHeading3Proc">
+<img src="images/triangle.gif" width="13" height="11" alt="triangle pointing down" id="LongDescNotReq" />&#160; 	Running demo1
+</h4>
+<a name="wp46141"> </a><p class="pBody">
+<code class="cCode">demo1</code> runs in the Java Card WDE.
+</p>
+<div class="pStep1">
+<ol class="pStep1"><a name="wp7409"> </a><li>Navigate to the <code class="cCode">jcwde</code> directory (this will be <code class="cCode">$JC_HOME/samples/src/demo/jcwde</code> on the Solaris or Linux platform or <code class="cCode">$JC_HOME\samples\src\demo\jcwde</code> on the Microsoft Windows 2000 platform). Enter the command:</li>
+<div class="pPreformatted"><pre class="pPreformatted">
+jcwde jcwde.app<a name="wp7286"> </a>
+</pre></div>
+<a name="wp7288"> </a><li>In a separate command window, navigate to the <code class="cCode">$JC_HOME/samples/src/demo/demo1</code> directory (or <code class="cCode">%JC_HOME%\samples\src\demo\demo1</code> on the Microsoft Windows 2000 platform) and run <code class="cCode">apdutool</code>, using the following command:</li>
+
+<div class="pPreformatted"><pre class="pPreformatted">
+apdutool -nobanner -noatr demo1.scr &gt; demo1.scr.jcwde.out<a name="wp7290"> </a>
+</pre></div>
+<a name="wp7292"> </a><p class="pBody">
+If the run is successful, the <code class="cCode">apdutool</code> log, <code class="cCode">demo1.scr.jcwde.out</code>, is identical to the file <code class="cCode">demo1.scr.expected.out</code>.
+</p>
+</ol>
+</div>
+<a name="wp4828"> </a><h3 class="pHeading2">
+Demo 2
+</h3>
+<a name="wp46171"> </a><p class="pBody">
+The Demo 2 demonstration, <code class="cCode">demo2</code>, illustrates downloading Java Card packages onto the card. This demonstration contains the installer applet in the mask image. After the card is powered up, the <code class="cCode">Photocard</code>, <code class="cCode">SampleLibrary</code>, <code class="cCode">JavaPurse</code>, <code class="cCode">JavaLoyalty</code>, <code class="cCode">Wallet</code>, <code class="cCode">RMIDemo</code>, and <code class="cCode">SecureRMIDemo</code> packages are downloaded. The commands from <code class="cCode">demo1</code> are repeated. Finally, the card is powered down.
+</p>
+<a name="wp46163"> </a><h4 class="pHeading3Proc">
+<img src="images/triangle.gif" width="13" height="11" alt="triangle pointing down" id="LongDescNotReq" />&#160; 	Running demo2
+</h4>
+<a name="wp46183"> </a><p class="pBody">
+<code class="cCode">demo2</code> runs in the C-language Java Card RE because the Java Card WDE is not able to support the downloading of CAP files.
+</p>
+<div class="pStep1">
+<ol class="pStep1"><a name="wp7419"> </a><li>Run <code class="cCode">cref</code> using the following command:</li>
+<div class="pPreformatted"><pre class="pPreformatted">
+cref -o demoee<a name="wp7421"> </a>
+</pre></div>
+<a name="wp7423"> </a><li>In a separate command window, navigate to the <code class="cCode">$JC_HOME/samples/src/demo/demo2</code> directory (or <code class="cCode">%JC_HOME%\samples\src\demo\demo2</code> on the Microsoft Windows 2000 platform) and run <code class="cCode">apdutool</code>, using the following command:</li>
+
+<div class="pPreformatted"><pre class="pPreformatted">
+apdutool -nobanner -noatr demo2.scr &gt; demo2.scr.cref.out<a name="wp7425"> </a>
+</pre></div>
+<a name="wp7426"> </a><p class="pBody">
+If the run is successful, the <code class="cCode">apdutool</code> log, <code class="cCode">demo2.scr.cref.out</code>, should be identical to the file <code class="cCode">demo2.scr.expected.out</code>.
+</p>
+<a name="wp77865"> </a><p class="pBody">
+After <code class="cCode">cref</code> completes executing, an EEPROM image is stored in the file <code class="cCode">demoee</code>. (For more information, refer to <a  href="cJDKc-jcre.html#wp11615"><span style="color: #3366CC">Chapter&#160;11, &quot;Using the Java Card Reference Implementation</span></a>.&#8221;)
+</p>
+</ol>
+</div>
+<a name="wp9070"> </a><h3 class="pHeading2">
+Demo 3
+</h3>
+<a name="wp82300"> </a><p class="pBody">
+The Demo 3 demonstration, <code class="cCode">demo3</code>, illustrates the capabilities of a Java Card technology-enabled smart card to save its state across sessions. After running  <code class="cCode">demo2</code>, the state of the card can be saved. This card state must be used as the initial state for running <code class="cCode">demo3</code>. 
+</p>
+<a name="wp46201"> </a><h4 class="pHeading3Proc">
+<img src="images/triangle.gif" width="13" height="11" alt="triangle pointing down" id="LongDescNotReq" />&#160; 	Running demo3
+</h4>
+<a name="wp46262"> </a><p class="pBody">
+<code class="cCode">demo3</code> should be run after <code class="cCode">demo2</code>. <code class="cCode">demo3</code> runs in the C-language Java Card RE because the virtual machine state must be restored after the initial run.
+</p>
+<div class="pStep1">
+<ol class="pStep1"><a name="wp9074"> </a><li> Run <code class="cCode">cref</code> using the following command:</li>
+<div class="pPreformatted"><pre class="pPreformatted">
+cref -i demoee<a name="wp7450"> </a>
+</pre></div>
+<a name="wp9427"> </a><p class="pBody">
+<code class="cCode">cref</code> will restore the EEPROM image from the file <code class="cCode">demoee</code>. (For more information, refer to <a  href="cJDKc-jcre.html#wp11615"><span style="color: #3366CC">Chapter&#160;11, &quot;Using the Java Card Reference Implementation</span></a>.&#8221;)
+</p>
+<a name="wp7452"> </a><li>In a separate command window, navigate to the <code class="cCode">$JC_HOME/samples/src/demo/demo3</code> directory (or <code class="cCode">%JC_HOME%\samples\src\demo\demo3</code> on the Microsoft Windows 2000 platform) and run <code class="cCode">apdutool</code>, using the following command:</li>
+
+<div class="pPreformatted"><pre class="pPreformatted">
+apdutool -nobanner -noatr demo3.scr &gt; demo3.scr.cref.out<a name="wp7454"> </a>
+</pre></div>
+<a name="wp44017"> </a><p class="pBody">
+If the run is successful, the <code class="cCode">apdutool</code> log, <code class="cCode">demo3.scr.cref.out</code>, should be identical to the file <code class="cCode">demo3.scr.expected.out</code>.
+</p>
+</ol>
+</div>
+<a name="wp45792"> </a><h3 class="pHeading2">
+Java Card RMI Demo
+</h3>
+<a name="wp27778"> </a><p class="pBody">
+Every Java Card RMI application consists of two parts: a card applet and a client program communicating with it. In this case, the <code class="cCode">RMIDemo</code> applet is installed in EEPROM image when you run <code class="cCode">demo2</code> on CREF. On Java Card WDE, the applets are included in the simulated mask.
+</p>
+<a name="wp61554"> </a><p class="pBody">
+The client framework uses the OCF framework, version 1.2 (files <code class="cCode">base-core.jar</code>, and <code class="cCode">base-opt.jar</code>), to communicate with C-language Java Card RE. The OCF settings are stored in file <code class="cCode">opencard.properties</code>. The file <code class="cCode">opencard.properties</code> is located in the <code class="cCode">demo\demo2\rmi</code> directory.
+</p>
+<a name="wp61622"> </a><p class="pBody">
+Note that OCF searches for this file in the following locations:
+</p>
+<ul class="pBullet1"><a name="wp61555"> </a><div class="pBullet1"><li><code class="cCode">[java.home]/lib/opencard.properties</code></li></div>
+<a name="wp61556"> </a><div class="pBullet1Plus"><li><code class="cCode">[user.home]/.opencard.properties</code></li></div>
+<a name="wp61557"> </a><div class="pBullet1Plus"><li><code class="cCode">[user.dir]/opencard.properties</code></li></div>
+<a name="wp61558"> </a><div class="pBullet1Last"><li><code class="cCode">[user.dir]/.opencard.properties</code></li></div>
+</ul>
+<a name="wp47106"> </a><p class="pBody">
+where <code class="cCode">[java.home]</code>, <code class="cCode">[user.home]</code>, and <code class="cCode">[user.dir]</code> correspond to the Java system properties. 
+</p>
+<a name="wp45815"> </a><p class="pBody">
+The <code class="cCode">RMIDemo</code> uses the card applet <code class="cCode">PurseApplet</code>, the <code class="cCode">Purse</code> interface and its implementation <code class="cCode">PurseImpl</code>. These classes reside in the package <code class="cCode">com.sun.javacard.samples.RMIDemo</code>. The client-side program <code class="cCode">PurseClient</code> resides in the package <code class="cCode">com.sun.javacard.clientsamples.purseclient</code>. 
+</p>
+<a name="wp45816"> </a><p class="pBody">
+The <code class="cCode">Purse</code> interface describes the supported functionality: methods for getting the account balance, debiting and crediting the account, and getting and setting an account number. The interface also defines the constants used for error reporting. The <code class="cCode">PurseImpl</code> class implements <code class="cCode">Purse</code>. 
+</p>
+<a name="wp45821"> </a><p class="pBody">
+The card applet <code class="cCode">PurseApplet</code> creates and registers instances of the dispatcher and the Java Card RMI service. 
+</p>
+<a name="wp45832"> </a><p class="pBody">
+The client-side program, <code class="cCode">PurseClient</code>, represents a simple Java Card RMI client and uses the Open Card Framework (OCF) as the client side framework. The program initializes the OCF, creates the Java Card RMI <code class="cCode">Connect</code> instance, and selects the Java Card applet (in this case, the <code class="cCode">PurseApplet</code>). The program then gets the initial reference from <code class="cCode">PurseApplet</code> (the reference to an instance of <code class="cCode">PurseImpl</code>) and casts it to the <code class="cCode">Purse</code> interface type. This allows <code class="cCode">PurseImpl</code> to be treated as a local object. The program can then exercise the card by debiting and crediting different amounts, and by setting and getting the account number. The program demonstrates error handling by intentionally attempting to set an account number of incorrect size. This will cause a <code class="cCode">UserException</code> to be thrown with the appropriate error code. 
+</p>
+<a name="wp46410"> </a><p class="pBody">
+The client part of the <code class="cCode">RMIDemo</code> can be run without parameters or with the <code class="cCode">-i</code> parameter: 
+</p>
+<ul class="pBullet1"><a name="wp53556"> </a><div class="pBullet1"><li>If the demo is run without parameters, remote references are identified using the class name of the remote object. </li></div>
+<a name="wp53566"> </a><div class="pBullet1Last"><li>If the demo is run with the <code class="cCode">-i</code> parameter, remote references are identified using the list of remote interfaces implemented by the remote object.</li></div>
+</ul>
+<a name="wp53555"> </a><p class="pBody">
+For more information on these formats, see Chapter 8 of the <em class="cEmphasis">Runtime Environment Specification for the Java Card&#8482; Platform, Version 2.2.1</em> (Sun Microsystems, Inc., 2003).
+</p>
+<a name="wp46231"> </a><h4 class="pHeading3Proc">
+<img src="images/triangle.gif" width="13" height="11" alt="triangle pointing down" id="LongDescNotReq" />&#160; 	Running the Java Card RMI Demo
+</h4>
+<a name="wp119436"> </a><p class="pBody">
+The <code class="cCode">RMIDemo</code> can be run on either C-language Java Card RE or Java Card WDE. On C-language Java Card RE, <code class="cCode">RMIDemo</code> can be run only after <code class="cCode">demo2</code> has successfully completed. 
+</p>
+<a name="wp123237"> </a><p class="pBody">
+The <code class="cCode">RMIDemo</code> applet can be run in Java Card WDE by listing it on the first line of the applet configuration file <code class="cCode">jcwde_rmi.app</code>.
+</p>
+<a name="wp119437"> </a><p class="pBody">
+If the run is successful, the output in the file will be the same as contained in file <code class="cCode">rmidemo.scr.expected.out</code>. 
+</p>
+<a name="wp119438"> </a><h5 class="pHeading4">
+To Run RMIDemo on the C-Language Java Card RE:
+</h5>
+<div class="pStep1">
+<ol class="pStep1"><a name="wp147899"> </a><li>Run <code class="cCode">cref</code> using the command:</li>
+<div class="pPreformatted"><pre class="pPreformatted">
+cref -i demoee<a name="wp82315"> </a>
+</pre></div>
+<a name="wp27811"> </a><li>Run the Java Card RMI client program with either of these commands:</li>
+
+<div class="pPreformatted"><pre class="pPreformatted">
+rmidemo &gt; rmidemo.scr.cref.out<a name="wp32159"> </a>
+rmidemo -i &gt; rmidemo.scr.cref.out<a name="wp53581"> </a>
+</pre></div>
+</ol>
+</div>
+<a name="wp114395"> </a><h5 class="pHeading4">
+To Run RMIDemo on Java Card WDE: 
+</h5>
+<div class="pStep1">
+<ol class="pStep1"><a name="wp114390"> </a><li>Run Java Card WDE using the command:</li>
+<div class="pPreformatted"><pre class="pPreformatted">
+jcwde jcwde_rmi.app<a name="wp114400"> </a>
+</pre></div>
+<a name="wp114402"> </a><li>In a separate command window, navigate to the <code class="cCode">$JC_HOME/samples/src/demo/demo2/rmi</code> directory (on the Solaris or Linux platform) or <code class="cCode">%JC_HOME%\samples\src\demo\demo2\rmi</code> directory (on the Microsoft Windows 2000 platform). Run the Java Card RMI client program with either of these commands:</li>
+
+<div class="pPreformatted"><pre class="pPreformatted">
+rmidemo &gt; rmidemo.scr.jcwde.out<a name="wp114403"> </a>
+rmidemo -i &gt; rmidemo.scr.jcwde.out<a name="wp114404"> </a>
+</pre></div>
+</ol>
+</div>
+<a name="wp46285"> </a><h3 class="pHeading2">
+Secure Java Card RMI Demo
+</h3>
+<a name="wp83945"> </a><p class="pBody">
+The secure Java Card RMI demo, <code class="cCode">SecureRMIDemo</code>, can be thought of as a version of the <code class="cCode">RMIDemo</code> with an added security service. <code class="cCode">SecureRMIDemo</code> uses the card applet <code class="cCode">SecurePurseApplet</code>, the <code class="cCode">Purse</code> interface and its implementation <code class="cCode">SecurePurseImpl</code>, and a definition of the security service <code class="cCode">MySecurityService</code>. These classes reside in the package <code class="cCode">com.sun.javacard.samples.SecureRMIDemo</code>. The demo also uses the client-side program <code class="cCode">SecurePurseClient</code> and the specialized card accessor <code class="cCode">SecureOCFCardAccessor</code>. These classes reside in the package <code class="cCode">com.sun.javacard.clientsamples.securepurseclient</code>. 
+</p>
+<a name="wp45865"> </a><p class="pBody">
+The <code class="cCode">Purse</code> interface is similar to the interface used in the non-secure case, however, there is an extra constant: <code class="cCode">REQUEST_DENIED</code>. This constant is used to report situations where the client tries to invoke a method that it is not allowed to access. 
+</p>
+<a name="wp45901"> </a><p class="pBody">
+The <code class="cCode">MySecurityService</code> class is a security service that is responsible for ensuring data integrity by verifying checksums on incoming commands and attaching checksums to outgoing commands. The program also requires the client to authenticate itself as the principal application provider or principal cardholder by sending a two-byte PIN.
+</p>
+<a name="wp45902"> </a><p class="pBody">
+The implementation of <code class="cCode">Purse</code>, <code class="cCode">SecurePurseImpl</code>, is similar to the non-secure case, however, at the beginning of each method call, there is a call to the security service which ensures that the business rules are satisfied and that the data is not corrupted.
+</p>
+<a name="wp45908"> </a><p class="pBody">
+The applet <code class="cCode">SecurePurseApplet</code> is similar to the non-secure case, but it also creates and registers an instance of <code class="cCode">MySecurityService</code>. 
+</p>
+<a name="wp45911"> </a><p class="pBody">
+The client-side program, <code class="cCode">SecurePurseClient</code>, is similar to the non-secure case, but instead of a generic card accessor, it uses its own implementation: <code class="cCode">SecureOCFCardAccessor</code>, which performs additional pre- and post-processing of data and supports the additional command <code class="cCode">authenticateUser</code>. 
+</p>
+<a name="wp45937"> </a><p class="pBody">
+<code class="cCode">SecurePurseClient</code> also requires verification of the user. After the applet is inserted, a PIN must be given to the card-side applet by calling <code class="cCode">authenticateUser</code> on <code class="cCode">SecureOCFCardAccessor</code>. 
+</p>
+<a name="wp160811"> </a><p class="pBody">
+When <code class="cCode">authenticateUser</code> is called, <code class="cCode">SecureOCFCardAccessor</code> prepares and sends the following command: </p><div align="left">
+<table border="0" cellpadding="7"   id="SummaryNotReq160812">
+  <caption><a name="wp160814"> </a><div class="pTableCaption">
+TABLE&#160;6&#160;&#160;&#8211;&#160;&#160;Authenticate User Command
+</div>
+</caption>
+<thead>
+<tr  align="center">    <th  class="sun-verylightblue" scope="col"><a name="wp160828"> </a><div style="text-align: left" class="pTableHead">
+CLA_AUTH
+</div>
+
+</th>
+    <th  class="sun-verylightblue" scope="col"><a name="wp160830"> </a><div style="text-align: left" class="pTableHead">
+INS_AUTH
+</div>
+
+</th>
+    <th  class="sun-verylightblue" scope="col"><a name="wp160832"> </a><div style="text-align: left" class="pTableHead">
+P1 field
+</div>
+
+</th>
+    <th  class="sun-verylightblue" scope="col"><a name="wp160834"> </a><div style="text-align: left" class="pTableHead">
+P2 field
+</div>
+
+</th>
+    <th  class="sun-verylightblue" scope="col"><a name="wp160836"> </a><div style="text-align: left" class="pTableHead">
+LC field
+</div>
+
+</th>
+    <th class="sun-verylightblue" scope="col" colspan="2" rowspan="1"><a name="wp160838"> </a><div style="text-align: left" class="pTableHead">
+PIN (two bytes)
+</div>
+
+</th>
+</tr>
+</thead>
+  <tr align="left">    <td><a name="wp160842"> </a><div class="pTableText">
+0x80
+</div>
+</td>
+    <td><a name="wp160844"> </a><div class="pTableText">
+0x39
+</div>
+</td>
+    <td><a name="wp160846"> </a><div class="pTableText">
+0
+</div>
+</td>
+    <td><a name="wp160848"> </a><div class="pTableText">
+0
+</div>
+</td>
+    <td><a name="wp160850"> </a><div class="pTableText">
+2
+</div>
+</td>
+    <td><a name="wp160852"> </a><div class="pTableText">
+xx
+</div>
+</td>
+    <td><a name="wp160854"> </a><div class="pTableText">
+xx
+</div>
+</td>
+</tr>
+<tr><td colspan="15"><hr class="pTableHr" /></td></tr>
+</table>
+</div>
+<p class="pBody">
+
+</p>
+<a name="wp160856"> </a><p class="pBody">
+On the card side, <code class="cCode">MySecurityService</code> processes the command. If the PIN is correct, then the appropriate flags are set in the security service and a confirmation response is returned to the client. Once authentication is passed, the client program receives the balance, credits the account, and again receives the balance. The program demonstrates error handling when the client attempts to debit a number of units from the account. This will cause the program to throw a <code class="cCode">UserException</code> with the code <code class="cCode">REQUEST_DENIED</code>.
+</p>
+<a name="wp53617"> </a><p class="pBody">
+As with <code class="cCode">RMIDemo</code> the client part of the <code class="cCode">SecureRMIDemo</code> can be run without parameters or with the <code class="cCode">-i</code> parameter: 
+</p>
+<ul class="pBullet1"><a name="wp53618"> </a><div class="pBullet1"><li>If the demo is run without parameters, remote references are identified using the class name of the remote object. </li></div>
+<a name="wp53619"> </a><div class="pBullet1Last"><li>If the demo is run with the <code class="cCode">-i</code> parameter, remote references are identified using the list of remote interfaces implemented by the remote object.</li></div>
+</ul>
+<a name="wp62827"> </a><p class="pBody">
+For more information on these formats, see Chapter 8 of the <em class="cEmphasis">Runtime Environment (JCRE) Specification for the Java Card&#8482; Platform, Version 2.2.1</em>.
+</p>
+<a name="wp62829"> </a><h4 class="pHeading3Proc">
+<img src="images/triangle.gif" width="13" height="11" alt="triangle pointing down" id="LongDescNotReq" />&#160; 	Running the Secure Java Card RMI Demo
+</h4>
+<a name="wp46280"> </a><p class="pBody">
+<code class="cCode">SecureRMIDemo</code> can be run on either the C-language Java Card RE or Java Card WDE. The <code class="cCode">SecureRMI</code> demo applet is installed in the EEPROM image when you run <code class="cCode">demo2</code>. 
+</p>
+<a name="wp123243"> </a><p class="pBody">
+The <code class="cCode">SecureRMIDemo</code> can be run in Java Card WDE by listing it on the first line of the applet configuration file <code class="cCode">jcwde_securermi.app</code>.
+</p>
+<a name="wp114427"> </a><p class="pBody">
+If the run is successful, the output in the file will be the same as contained in file <code class="cCode">securermidemo.scr.expected.out</code>. 
+</p>
+<a name="wp114422"> </a><h5 class="pHeading4">
+To Run SecureRMIDemo on the C-Language Java Card RE:
+</h5>
+<div class="pStep1">
+<ol class="pStep1"><a name="wp29167"> </a><li>Run <code class="cCode">cref</code> using the command:</li>
+<div class="pPreformatted"><pre class="pPreformatted">
+ cref -i demoee<a name="wp29169"> </a>
+</pre></div>
+<a name="wp29177"> </a><li>Run the Secure Java Card RMI client program with either of these commands:</li>
+
+<div class="pPreformatted"><pre class="pPreformatted">
+securermidemo &gt; securermidemo.scr.cref.out<a name="wp32172"> </a>
+securermidemo -i &gt; securermidemo.scr.cref.out<a name="wp53635"> </a>
+</pre></div>
+</ol>
+</div>
+<a name="wp114432"> </a><h5 class="pHeading4">
+To Run SecureRMIDemo on Java Card WDE:
+</h5>
+<div class="pStep1">
+<ol class="pStep1"><a name="wp114433"> </a><li>Navigate to the <code class="cCode">jcwde</code> directory (this will be <code class="cCode">$JC_HOME/samples/src/demo/jcwde</code> on the Solaris or Linux platform or <code class="cCode">$JC_HOME\samples\src\demo\jcwde</code> on the Microsoft Windows 2000 platform). Run Java Card WDE using the command:</li>
+<div class="pPreformatted"><pre class="pPreformatted">
+jcwde jcwde_securermi.app<a name="wp114436"> </a>
+</pre></div>
+<a name="wp114439"> </a><li>In a separate command window, navigate to the <code class="cCode">rmi</code> directory. This will be <code class="cCode">$JC_HOME/samples/src/demo/demo2/rmi</code> directory (on the Solaris or Linux platform) or <code class="cCode">%JC_HOME%\samples\src\demo\demo2\rmi</code> directory (on the Microsoft Windows 2000 platform). Run the Secure Java Card RMI client program with either of these commands:</li>
+
+<div class="pPreformatted"><pre class="pPreformatted">
+securermidemo &gt; securermidemo.jcwde.out<a name="wp114440"> </a>
+securermidemo -i &gt; securermidemo.jcwde.out<a name="wp114441"> </a>
+</pre></div>
+</ol>
+</div>
+<a name="wp46305"> </a><h3 class="pHeading2">
+Object Deletion Demo 1
+</h3>
+<a name="wp28417"> </a><p class="pBody">
+The Object Deletion Demo 1, <code class="cCode">odDemo1</code>, demonstrates the object deletion mechanism, applet deletion, and package deletion. The <code class="cCode">odDemo1</code> demonstration has three parts: 
+</p>
+<ul class="pBullet1"><a name="wp28373"> </a><div class="pBullet1"><li><code class="cCode">odDemo1-1.scr</code> demonstrates the object deletion mechanism and verifies that memory for objects referenced from transient memory of type <code class="cCode">CLEAR_ON_DESELECT</code> has been reclaimed after an applet is deselected. </li></div>
+<a name="wp28596"> </a><p class="pIndented1">
+<code class="cCode">odDemo1-1.scr</code> does not depend on any other demo. The final state of <code class="cCode">cref</code> memory must be saved to a file for <code class="cCode">odDemo1-2.scr</code> to use. 
+</p>
+<a name="wp28376"> </a><div class="pBullet1Plus"><li><code class="cCode">odDemo1-2.scr</code> demonstrates the object deletion mechanism and verifies that memory for objects referenced from transient memory of type <code class="cCode">CLEAR_ON_RESET</code> has been reclaimed after card reset.</li></div>
+<a name="wp28601"> </a><p class="pIndented1">
+The <code class="cCode">odDemo1-2.scr</code> demo must be run after <code class="cCode">odDemo1-1.scr</code> because the initial state of <code class="cCode">cref</code> must be the same as its final state after running <code class="cCode">odDemo1-1.scr</code>. After running <code class="cCode">odDemo1-2.scr</code>, the final state of <code class="cCode">cref</code> must be saved to a file so it can be used by <code class="cCode">odDemo1-3.scr</code>.
+</p>
+<a name="wp123208"> </a><div class="pBullet1Last"><li><code class="cCode">odDemo1-3.scr</code> performs applet deletion, package deletion, and employs the <code class="cCode">AppletEvent.uninstall</code> method to uninstall an applet. The demo verifies that all transient memory of type <code class="cCode">CLEAR_ON_RESET</code> and <code class="cCode">CLEAR_ON_DESELECT</code> has been returned to the memory manager. The demo also demonstrates the use of the <code class="cCode">AppletEvent.uninstall()</code> method.</li></div>
+
+<a name="wp28617"> </a><p class="pIndented1">
+The <code class="cCode">odDemo1-3.scr</code> demo must be run after <code class="cCode">odDemo1-2.scr</code> because the initial state of <code class="cCode">cref</code> must be the same as its final state after running <code class="cCode">odDemo1-2.scr</code>.
+</p></ul>
+<a name="wp46333"> </a><h4 class="pHeading3Proc">
+<img src="images/triangle.gif" width="13" height="11" alt="triangle pointing down" id="LongDescNotReq" />&#160; 	Running odDemo1
+</h4>
+<a name="wp46334"> </a><p class="pBody">
+<code class="cCode">odDemo1</code> runs only in the C-language Java Card RE. This is because the Java Card WDE does not support the object deletion mechanism, applet deletion, or package deletion.
+</p>
+<div class="pStep1">
+<ol class="pStep1"><a name="wp28475"> </a><li>In a command window, run <code class="cCode">cref</code> using this command:</li>
+<div class="pPreformatted"><pre class="pPreformatted">
+cref -o crefState <a name="wp28520"> </a>
+</pre></div>
+<a name="wp28477"> </a><li>In a second command window, navigate to the <code class="cCode">$JC_HOME/samples/src/demo/object_deletion</code> directory (or <code class="cCode">%JC_HOME%\samples\src\demo\object_deletion</code> on the Microsoft Windows 2000 platform) and run APDUTool, using this command:</li>
+<div class="pPreformatted"><pre class="pPreformatted">
+apdutool -nobanner -noatr odDemo1-1.scr &gt; odDemo1-1.scr.cref.out <a name="wp28525"> </a>
+</pre></div>
+<a name="wp28479"> </a><p class="pBody">
+If the run is successful, the APDUTool log, <code class="cCode">odDemo1-1.scr.cref.out</code> should be identical to the file <code class="cCode">odDemo1-1.scr.expected.out</code>. 
+</p>
+<a name="wp28482"> </a><li>In the first command window run <code class="cCode">cref</code> using this command:</li>
+<div class="pPreformatted"><pre class="pPreformatted">
+cref -i crefState -o crefState <a name="wp88785"> </a>
+</pre></div>
+<a name="wp88786"> </a><li>In the second command window, execute APDUTool using this command:</li>
+<div class="pPreformatted"><pre class="pPreformatted">
+apdutool -nobanner -noatr odDemo1-2.scr &gt; odDemo1-2.scr.cref.out <a name="wp88787"> </a>
+</pre></div>
+<a name="wp28486"> </a><p class="pBody">
+If the run is successful, the apdutool log, <code class="cCode">odDemo1-2.scr.cref.out</code> should be identical to the file <code class="cCode">odDemo1-2.scr.expected.out</code>. 
+</p>
+<a name="wp28488"> </a><li>In the first command window run <code class="cCode">cref</code> using this command:</li>
+<div class="pPreformatted"><pre class="pPreformatted">
+cref -i crefState <a name="wp28535"> </a>
+</pre></div>
+<a name="wp28490"> </a><li>In the second command window, execute APDUTool using this command:</li>
+
+<div class="pPreformatted"><pre class="pPreformatted">
+apdutool -nobanner -noatr odDemo1-3.scr &gt; odDemo1-<code class="cCode">3.scr.cref.out</code><a name="wp28533"> </a>
+</pre></div>
+<a name="wp30263"> </a><p class="pBody">
+If the run is successful, the apdutool log, <code class="cCode">odDemo1-3.scr.cref.out</code> should be identical to the file <code class="cCode">odDemo1-3.scr.expected.out</code>.
+</p>
+</ol>
+</div>
+<a name="wp46348"> </a><h3 class="pHeading2">
+Object Deletion Demo2
+</h3>
+<a name="wp28541"> </a><p class="pBody">
+The Object Deletion Demo 2, <code class="cCode">odDemo2</code>, demonstrates package deletion and checks that persistent memory has been returned to the memory manager. This demo has one script: <code class="cCode">odDemo2.scr</code>. You do not have to run <code class="cCode">odDemo1</code> to run <code class="cCode">odDemo2</code>.
+</p>
+<a name="wp46358"> </a><h4 class="pHeading3Proc">
+<img src="images/triangle.gif" width="13" height="11" alt="triangle pointing down" id="LongDescNotReq" />&#160; 	Running odDemo2
+</h4>
+<a name="wp46345"> </a><p class="pBody">
+<code class="cCode">odDemo2</code> runs only in the C-language Java Card RE. This is because the Java Card WDE does not support the object deletion mechanism, applet deletion, or package deletion.
+</p>
+<div class="pStep1">
+<ol class="pStep1"><a name="wp28544"> </a><li>In a command window, run <code class="cCode">cref</code> using this command:</li>
+<div class="pPreformatted"><pre class="pPreformatted">
+cref<a name="wp28595"> </a>
+</pre></div>
+<a name="wp28545"> </a><li>In a second window, navigate to the <code class="cCode">$JC_HOME/samples/src/demo/object_deletion</code> directory (or <code class="cCode">%JC_HOME%\samples\src\demo\object_deletion</code> on the Microsoft Windows 2000 platform) and run APDUTool with this command: </li>
+
+<div class="pPreformatted"><pre class="pPreformatted">
+apdutool -nobanner -noatr odDemo2.scr &gt; odDemo2.scr.cref.out<a name="wp28569"> </a>
+</pre></div>
+<a name="wp30262"> </a><p class="pBody">
+If the run is successful, the apdutool log, <code class="cCode">odDemo2.scr.cref.out</code> should be identical to the file <code class="cCode">odDemo2.scr.expected.out</code>. 
+</p>
+</ol>
+</div>
+<a name="wp28577"> </a><h3 class="pHeading2">
+Logical Channels Demo
+</h3>
+<a name="wp49246"> </a><p class="pBody">
+The Logical Channels Demo, <code class="cCode">lcdemo</code>, demonstrates the behavior of Java Card technology-based logical channels by showing how two applets, which interact with each other, can each be selected for use at the same time. 
+</p>
+<a name="wp49793"> </a><p class="pBody">
+The logical channels demo mimics the behavior of a wireless device connected to a network service. A connection manager tracks whether the device is connected to the service and whether the connection is local or remote. While it is connected, the user&#8217;s account is debited on a unit of time basis; the debit rate is based on whether the connection is local or remote. The demo employs two applets to simulate this situation: the <code class="cCode">ConnectionManager</code> applet manages the connection while the <code class="cCode">AccountAccessor</code> applet manages the account.
+</p>
+<a name="wp49724"> </a><p class="pBody">
+When the user turns on the device, the <code class="cCode">ConnectionManager</code> applet is selected. Every unit of time, the terminal sends a message containing the area code to the card. When the user wants to use the service, the <code class="cCode">AccountAccessor</code> applet is selected on another logical channel so that the terminal can query the balance. The <code class="cCode">AccountAccessor</code> can return the balance only if the <code class="cCode">ConnectionManager</code> is active. The <code class="cCode">ConnectionManager</code> applet sets the connection and tracks the connection status. Based on the value of an area code variable, the <code class="cCode">ConnectionManager</code> determines whether the connection is local or remote. <code class="cCode">AccountAccessor</code> uses this information to debit the account at the appropriate rate. The connection is disabled when the user completes the call or when the account is depleted.
+</p>
+<a name="wp49802"> </a><h4 class="pHeading3Proc">
+<img src="images/triangle.gif" width="13" height="11" alt="triangle pointing down" id="LongDescNotReq" />&#160; 	Running the Logical Channels Demo
+</h4>
+<a name="wp50556"> </a><p class="pBody">
+The logical channels demo runs only in the C-language Java Card RE. No sample scripts or demos are provided to demonstrate this functionality on Java Card WDE.
+</p>
+<div class="pStep1">
+<ol class="pStep1"><a name="wp49257"> </a><li>In a command window, run <code class="cCode">cref</code> using this command:</li>
+<div class="pPreformatted"><pre class="pPreformatted">
+cref <a name="wp49258"> </a>
+</pre></div>
+<a name="wp49259"> </a><li>In the second command window, navigate to the <code class="cCode">$JC_HOME/samples/src/demo/logical_channels</code> directory (or <code class="cCode">%JC_HOME%\samples\src\demo\logical_channels</code> on the Microsoft Windows 2000 platform) and execute APDUTool using this command:</li>
+
+<div class="pPreformatted"><pre class="pPreformatted">
+apdutool -nobanner -noatr channelDemo.scr &gt; channelDemo.scr.cref.out <a name="wp49261"> </a>
+</pre></div>
+<a name="wp49265"> </a><p class="pBody">
+If the run is successful, the APDUTool log, <code class="cCode">channelDemo.scr.cref.out</code> should be identical to the file <code class="cCode">channelDemo.scr.expected.out</code>. 
+</p>
+</ol>
+</div>
+<a name="wp171581"> </a>
+<a name="wp175474"> </a><h3 class="pHeading2">
+Demo 2 Cryptography Demo
+</h3>
+<a name="wp171580"> </a>
+<a name="wp175475"> </a><p class="pBody">
+The Demo 2 Cryptography Demo, <code class="cCode">demo2crypto</code>, is similar to  <code class="cCode">demo2</code>, except that it employs a version of <code class="cCode">JavaPurse</code> that uses a DES MAC algorithm. This version of <code class="cCode">JavaPurse</code> is called <code class="cCode">JavaPurseCrypto</code>. All other applets are exactly the same as were used in <code class="cCode">demo2</code>. 
+</p>
+<hr class="pHr"/><div class="note">
+<a name="wp175476"> </a>
+<b>Note &#8211;</b>  There are no cryptography versions of <code class="cCode">demo1</code> or <code class="cCode">demo3</code>.
+<hr class="pHr"/></div>
+<a name="wp175477"> </a><p class="pBody">
+A DES MAC is a cryptographic signature that uses DES encryption on all or part of a message (APDU). <code class="cCode">JavaPurseCrypto</code> uses the DES MAC to verify several of the APDUs; that is, instead of zeros in the signature currently in <code class="cCode">JavaPurse</code>, there will be a real signature that can be programmatically signed and verified. Other programs that interact with <code class="cCode">JavaPurseCrypto</code> (such as <code class="cCode">JavaLoyalty</code> and <code class="cCode">Wallet</code>) are not affected since all signing/verifying of the signature will occur only within <code class="cCode">JavaPurseCrypto</code>. 
+</p>
+<a name="wp175508"> </a><h4 class="pHeading3Proc">
+<img src="images/triangle.gif" width="13" height="11" alt="triangle pointing down" id="LongDescNotReq" />&#160; 	Running the demo2crypto Demo
+</h4>
+<a name="wp171614"> </a>
+<a name="wp175568"> </a><p class="pBody">
+<code class="cCode">demo2crypto</code> runs in the C-language Java Card RE because the Java Card WDE is not able to support the downloading of CAP files.
+</p>
+<div class="pStep1">
+<ol class="pStep1"><a name="wp175569"> </a><li>Run <code class="cCode">cref</code> using the following command:</li>
+<div class="pPreformatted"><pre class="pPreformatted">
+cref <a name="wp175576"> </a>
+</pre></div>
+<a name="wp175588"> </a><li>In a second command window, navigate to the <code class="cCode">$JC_HOME/samples/src/demo/demo2</code> directory (or <code class="cCode">%JC_HOME%\samples\src\demo\demo2</code> on Windows) and execute APDUTool using this command:</li>
+
+<div class="pPreformatted"><pre class="pPreformatted">
+apdutool -nobanner -noatr demo2crypto.scr &gt; demo2crypto.scr.cref.out<a name="wp175589"> </a>
+</pre></div>
+<a name="wp175590"> </a><p class="pBody">
+If the run is successful, the <code class="cCode">apdutool</code> log, demo2crypto<code class="cCode">.scr.cref.out</code>, should be identical to the file demo2crypto<code class="cCode">.scr.expected.out</code>.
+</p>
+</ol>
+</div>
+<a name="wp109964"> </a><h3 class="pHeading2">
+Photo Card Demo
+</h3>
+<a name="wp109966"> </a><p class="pBody">
+The Photo Card Demo, <code class="cCode">photocard</code>, illustrates how you can use the large address space available in the 32-bit version of the Java Card platform reference implementation, version 2.2.1. The demo uses the large address space of the smart card&#8217;s EEPROM memory to store up to four GIF images. The images are included with the demo.
+</p>
+<a name="wp109965"> </a><h4 class="pHeading3">
+Running the Photo Card Demo
+</h4>
+<a name="wp119490"> </a><p class="pBody">
+The Photo Card demo can be run only after <code class="cCode">demo2</code> has successfully completed. This is because the Photo Card applet is downloaded with <code class="cCode">demo2.scr</code>. 
+</p>
+<div class="pStep1">
+<ol class="pStep1"><a name="wp118974"> </a><li>Run <code class="cCode">cref</code> with the <code style="font-weight: normal" class="cCode">-z</code> option to display the memory statistics for the card:</li>
+<div class="pPreformatted"><pre class="pPreformatted">
+ cref -z -i demoee<a name="wp118975"> </a>
+</pre></div>
+<a name="wp118979"> </a><li>In a separate window, navigate to the <code class="cCode">photocard</code> directory. This will be <code class="cCode">$JC_HOME/samples/src/demo/demo2/photocard</code> directory (on the Solaris or Linux platform) or <code class="cCode">%JC_HOME%\samples\src\demo\demo2\photocard</code> directory (on the Microsoft Windows 2000 platform). Run the <code class="cCode">photocard</code> client program and specify the four supplied GIF images:</li>
+
+<div class="pPreformatted"><pre class="pPreformatted">
+photocard duke_magnify.gif duke_pencil.gif duke_wave.gif duke_thumbsup.gif &gt; photocard.scr.cref.out<a name="wp119471"> </a>
+</pre></div>
+<a name="wp130514"> </a><p class="pBody">
+If the run is successful, the output in the file <code class="cCode">photocard.scr.cref.out</code> will be the same as contained in file <code class="cCode">photocard.scr.expected.out</code>. 
+</p>
+<a name="wp119463"> </a><li>Perform a diff on the individual images to ensure that their contents have not changed.</li>
+<a name="wp116266"> </a><p class="pBody">
+
+</p>
+</ol>
+</div>
+
+    <p>&#160;</p>
+    <hr class="pHr" />
+
+    <table class="full-width" id="SummaryNotReq2">
+      <tr>
+        <td class="go-left">
+          <a accesskey="c" href="index.html">
+	    <img id="LongDescNotReq1" src="images/toc.gif" border="0"
+              alt="Contents" /></a>
+	  <a accesskey="p" href="cJDKinstall.html">
+	    <img id="LongDescNotReq2" src="images/prev.gif" border="0"
+              alt="Previous" /></a>
+	  <a accesskey="n" href="cJDKjcwde.html">
+	    <img id="LongDescNotReq3" src="images/next.gif" border="0"
+              alt="Next" /></a>
+	  <a accesskey="i" href="cJDK_b_domIX.html">
+	    <img id="LongDescNotReq4" src="images/index.gif" border="0"
+              alt="Index" /></a>
+        </td>
+        <td class="go-right">
+          <span class="copyright">Development Kit User's Guide
+for the Binary Release with Cryptography Extensions <br /> Java Card Platform, Version 2.2.1</span>
+        </td>
+      </tr>
+    </table>
+
+    <p>&#160;</p>
+    
+<p class="copyright"><a 
+       href="copyright.html">Copyright</a> &#169; 2003 Sun Microsystems, Inc. 
+  All rights reserved.</p>	
+  </body>
+</html>

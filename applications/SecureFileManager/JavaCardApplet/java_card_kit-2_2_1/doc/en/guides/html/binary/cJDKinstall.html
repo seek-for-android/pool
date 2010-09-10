@@ -1,0 +1,515 @@
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
+    <meta http-equiv="Content-Style-Type" content="text/css" />
+    <meta name="GENERATOR" content="Quadralay WebWorks Publisher Professional Edition 7.0.5.1025" />
+    <meta name="TEMPLATEBASE" content="JCUser_b_glo" />
+    <meta name="LASTUPDATED" content="10/10/03 17:24:59" />
+    <title>Installation</title>
+    <link rel="StyleSheet" href="document.css" type="text/css" />
+    <link rel="StyleSheet" href="catalog.css" type="text/css" />
+    <link rel="Table of Contents" href="index.html" />
+    <link rel="Previous" href="cJDKintro.html" />
+    <link rel="Next" href="cJDKdemo.html" />
+    <link rel="Index" href="cJDK_b_domIX.html" />
+  </head>
+
+  <body>
+
+    <table class="full-width" id="SummaryNotReq1">
+      <tr><td class="sun-darkblue">&#160;</td></tr>
+      <tr><td class="sun-lightblue">&#160;</td></tr>
+      <tr><td class="go-right">
+        <a accesskey="c" href="index.html">
+          <img id="LongDescNotReq1" src="images/toc.gif" border="0"
+            alt="Contents" /></a>
+	<a accesskey="p" href="cJDKintro.html">
+	  <img id="LongDescNotReq2" src="images/prev.gif" border="0"
+            alt="Previous" /></a>
+        <a accesskey="n" href="cJDKdemo.html">
+	  <img id="LongDescNotReq3" src="images/next.gif" border="0"
+            alt="Next" /></a>
+        <a accesskey="i" href="cJDK_b_domIX.html">
+	  <img id="LongDescNotReq4" src="images/index.gif" border="0"
+            alt="Index" /></a>
+        </td>
+      </tr>
+    </table>
+
+<a name="wp2353"> </a><h2 class="pChapNum">
+Chapter &#160; 2
+</h2>
+<a name="wp8640"> </a><h2 class="pTitle">
+Installation
+</h2>
+<hr />
+<a name="wp8641"> </a><p class="pBody">
+This release is provided for the Solaris&#8482; Operating System (OS) release 8, Red Hat Linux version 7.2, and for Microsoft Windows 2000 (with Service Pack 4) as compressed Zip archives.
+</p>
+<hr class="pHr"/><div class="note">
+<a name="wp176449"> </a>
+<b>Note &#8211;</b>  The Linux platform version of the toolkit is unsupported and has undergone only limited testing. The Linux platform version was tested only on the English language Red Hat Linux 7.2 and <code class="cCode">gcc</code> version 2.96. <br /><br />In the future, we will release new Linux platform versions of the toolkit, but we do not commit to doing so with the same frequency as, nor simultaneously with new Solaris or Microsoft Windows 2000 platform versions. We do not commit to making fully-supported Linux platform versions of the toolkit. In addition, we do not commit to addressing problems or bug reports submitted against the Linux platform version.
+<hr class="pHr"/></div>
+<a name="wp173111"> </a><p class="pBody">
+
+</p>
+<hr class="pHr"/><div class="note">
+<a name="wp2846"> </a>
+<b>Note &#8211;</b>  Do not overlay a previous release with this release. Instead perform the installation into a new directory.
+<hr class="pHr"/></div>
+<a name="wp5974"> </a><h2 class="pHeading1">
+Prerequisites for Installing the Binary Release
+</h2>
+<div class="pStep1">
+<ol class="pStep1"><a name="wp5975"> </a><li>Install the Java 2 Standard Edition Software Developer&#8217;s Kit (SDK) from:</li>
+<a name="wp153742"> </a><p class="pBody">
+<a  href="http://java.sun.com/j2se/">http://java.sun.com/j2se/</a> 
+</p>
+<a name="wp153741"> </a><p class="pBody">
+The supported SDK version is 1.4.1. If you are installing the SDK on the Solaris or Linux platform, make sure that all of the required patches are installed. To get more information, refer to the product documentation available at: 
+</p>
+<div class="pPreformatted"><pre class="pPreformatted">
+<a  href="http://www.sun.com/solaris/java">http://www.sun.com/solaris/java</a><a name="wp66100"> </a>
+</pre></div>
+<a name="wp125716"> </a><li>Install <code class="cCode">javax.comm</code>. If you are not using the Development Kit to communicate with a card reader installed on a serial port, you can skip this step. </li>
+<a name="wp116858"> </a><p class="pBody">
+The package <code class="cCode">javax.comm</code> can be found in the Java Communications API 2.0. To obtain the package, please visit Sun&#8217;s web site at: 
+</p>
+<div class="pPreformatted"><pre class="pPreformatted">
+<a  href="http://java.sun.com/products/javacomm">http://java.sun.com/products/javacomm</a> <a name="wp88943"> </a>
+</pre></div>
+<a name="wp166443"> </a><p class="pBody">
+Separate versions of the <code class="cCode">javax.comm</code> API are available for the Solaris/SPARC, Microsoft Windows 2000, and Solaris/x86 platforms. 
+</p>
+<hr class="pHr"/><div class="note">
+<a name="wp166567"> </a>
+<b>Note &#8211;</b>  If you are using the Development Kit on the Linux platform, download the Solaris/x86 release of the <code class="cCode">javax.comm</code> API and install only the jar files.
+<hr class="pHr"/></div>
+<a name="wp166446"> </a><p class="pBody">
+Follow the instructions provided in the file <code class="cCode">Readme.html</code> to install the package. Make sure that the <code class="cCode">comm.jar</code> file is added to the <code class="cCode">CLASSPATH</code>.
+</p>
+<a name="wp19625"> </a><li>Install the OpenCard Framework (OCF) Version 1.2.</li>
+
+<a name="wp19634"> </a><p class="pBody">
+Download the zipped version of the OpenCard Framework Base package from the OCF web site:
+</p>
+<div class="pPreformatted"><pre class="pPreformatted">
+<a  href="http://www.opencard.org/index-downloads.html">http://www.opencard.org/index-downloads.html</a><code class="cCode"> </code><a name="wp66093"> </a>
+</pre></div>
+<a name="wp19684"> </a><p class="pBody">
+Unzip the package into a separate directory.
+</p>
+</ol>
+</div>
+<a name="wp2515"> </a><h2 class="pHeading1">
+Installing the Development Kit Binaries
+</h2>
+<a name="wp83282"> </a><p class="pBody">
+There are three steps to install the Development Kit binaries. Separate sections cover installation for the Solaris, Linux, and Microsoft Windows 2000 platforms. 
+</p>
+<ul class="pBullet1"><a name="wp83518"> </a><div class="pBullet1"><li><b class="cBold">Installing Development Kit binary release files</b>: See the <a  href="cJDKinstall.html#wp3941"><span style="color: #3366CC">&quot;Installing on the Solaris or Linux Platform</span></a>&#8221; or the <a  href="cJDKinstall.html#wp8601"><span style="color: #3366CC">&quot;Installing on the Microsoft Windows 2000 Platform&quot; </span></a>.</li></div>
+<a name="wp83511"> </a><div class="pBullet1Plus"><li><b class="cBold">Setting Environment Variables</b>: See <a  href="cJDKinstall.html#wp4268"><span style="color: #3366CC">&quot;Setting Environment Variables for the Solaris or Linux Platform&quot; </span></a> or <a  href="cJDKinstall.html#wp3826"><span style="color: #3366CC">&quot;Setting Environment Variables for Microsoft Windows 2000 Platform&quot; </span></a>.</li></div>
+<a name="wp83539"> </a><div class="pBullet1Last"><li><b class="cBold">Copying Open Card Framework files</b> (required by Java Card RMI client-side Reference Implementation): See <a  href="cJDKinstall.html#wp83574"><span style="color: #3366CC">&quot;Copying OpenCard Framework Files&quot; </span></a>.</li></div>
+</ul>
+<a name="wp3941"> </a><h3 class="pHeading2Proc">
+<img src="images/triangle.gif" width="13" height="11" alt="triangle pointing down" id="LongDescNotReq"/>&#160; 	Installing on the Solaris or Linux Platform 
+</h3>
+<a name="wp176493"> </a><p class="pBody">
+The Java Card Development Kit provides separate download files for the binary release for the Solaris and Linux platforms. For the exact names of the download files, see the Java Card Development Kit Release Notes for the Binary Release. 
+</p>
+<div class="pStep1">
+<ol class="pStep1"><a name="wp176502"> </a><li>Save the file in a convenient installation location of your choice: for example, in the directory <code class="cCode">/javacard</code>.</li>
+<a name="wp3944"> </a><li>Navigate to the <code class="cCode">/javacard</code> directory:</li>
+<a name="wp84871"> </a><p class="pBody">
+<code class="cCode">% cd /javacard</code>
+</p>
+<a name="wp83233"> </a><li>Unzip the file provided with the release with the <code class="cCode">unzip</code> utility. </li>
+<div class="pPreformatted"><pre class="pPreformatted">
+% unzip &lt;<em class="cEmphasis">Development_Kit_binary_distribution</em>&gt;.zip<a name="wp176598"> </a>
+</pre></div>
+<a name="wp3949"> </a><p class="pBody">
+where <em style="font-style: oblique" class="cEmphasis">Development_Kit_binary_distribution</em> refers to the name of the bundle containing the binary release installation files for the Solaris or Linux platform. 
+</p>
+<a name="wp176573"> </a><p class="pBody">
+The installation creates a directory <code class="cCode">java_card_kit-2_2_1</code> under <code class="cCode">/javacard</code>. The <code class="cCode">/javacard/java_card_kit-2_2_1</code> directory is now the root of the development kit installation. 
+</p>
+<a name="wp83313"> </a><li>Follow the directions <a  href="cJDKinstall.html#wp4268"><span style="color: #3366CC; font-weight: normal">&quot;Setting Environment Variables for the Solaris or Linux Platform</span></a>&#8221; to set the environment variables required by the Development Kit. </li>
+
+<a name="wp84837"> </a><p class="pBody">
+For a description of the files that are installed under <code class="cCode">java_card_kit-2_2_1</code>, see <a  href="cJDKinstall.html#wp40520"><span style="color: #3366CC">&quot;Files Installed for the Binary Release&quot; </span></a>.
+</p>
+</ol>
+</div>
+<a name="wp4268"> </a><h4 class="pHeading3Proc">
+<img src="images/triangle.gif" width="13" height="11" alt="triangle pointing down" id="LongDescNotReq" />&#160; 	Setting Environment Variables for the Solaris or Linux Platform
+</h4>
+<div class="pStep1">
+<ol class="pStep1"><a name="wp4866"> </a><li>Set the environment variable <code class="cCode">JC_HOME</code> to the installation directory. For example (using <code class="cCode">csh</code>), if you unzipped the release in the directory <code class="cCode">/javacard</code>:</li>
+<div class="pPreformatted"><pre class="pPreformatted">
+<code class="cCode">setenv JC_HOME /javacard/java_card_kit-2_2_1</code><a name="wp4932"> </a>
+</pre></div>
+<a name="wp4869"> </a><p class="pBody">
+Or, if you unzipped the installation into a different directory, define the environment variable <code class="cCode">JC_HOME</code> accordingly. 
+</p>
+<a name="wp4870"> </a><li>Set the environment variable <code class="cCode">JAVA_HOME</code> to the directory where you installed your Java development tools. For example,</li>
+
+<div class="pPreformatted"><pre class="pPreformatted">
+<code class="cCode">setenv JAVA_HOME </code>/usr/j2sdk1.4.1<a name="wp4905"> </a>
+</pre></div>
+<a name="wp6421"> </a><p class="pBody">
+The following optional path setting will enable you to run the Development Kit tools from any directory.
+</p>
+<div class="pPreformatted"><pre class="pPreformatted">
+<code class="cCode">setenv PATH .:</code>$<code class="cCode">JC_HOME/bin:$PATH</code><a name="wp6430"> </a>
+</pre></div>
+</ol>
+</div>
+<a name="wp8477"> </a><p class="pBody">
+We suggest you automate these environment settings. Create a <code class="cCode">csh</code> script file (named, for example, <code class="cCode">javacard_env.cshrc</code>) which includes the <code class="cCode">setenv</code> statements:
+</p>
+<div class="pPreformatted"><pre class="pPreformatted">
+<code class="cCode">setenv JC_HOME /javacard/java_card_kit-2_2_1</code><a name="wp155267"> </a>
+<code class="cCode">setenv JAVA_HOME /usr/j2sdk1.4.1</code><a name="wp129699"> </a>
+<code class="cCode">setenv PATH .:$JC_HOME/bin:$JAVA_HOME/bin:$PATH:</code><a name="wp129701"> </a>
+</pre></div>
+<a name="wp8483"> </a><p class="pBody">
+Run the script file from the command prompt before running the Development Kit tools, samples, and demonstrations (refer to <a  href="cJDKdemo.html#wp2388"><span style="color: #3366CC">Chapter&#160;3, &quot;Development Kit Samples and Demonstrations</span></a>&#8221;): 
+</p>
+<div class="pPreformatted"><pre class="pPreformatted">
+<code class="cCode">% source javacard_env.cshrc </code><a name="wp8484"> </a>
+</pre></div>
+<a name="wp8601"> </a><h3 class="pHeading2Proc">
+<img src="images/triangle.gif" width="13" height="11" alt="triangle pointing down" id="LongDescNotReq"/>&#160; 	Installing on the Microsoft Windows 2000 Platform
+</h3>
+<a name="wp176511"> </a><p class="pBody">
+The Java Card Development Kit provides a separate download file for the binary release for the Microsoft Windows 2000 platform. For the exact name of the download file, see the Java Card Development Kit Release Notes for the Binary Release. 
+</p>
+<div class="pStep1">
+<ol class="pStep1"><a name="wp4476"> </a><li>Save the zip file in a convenient installation location of your choice. For example, the root of the <code class="cCode">C:</code> drive.</li>
+<a name="wp83255"> </a><li>Unzip the file provided with the release with the Winzip utility (available from <a  href="http://www.winzip.com">http://www.winzip.com</a>).</li>
+<div class="pPreformatted"><pre class="pPreformatted">
+<code class="cCode">C:\&gt; winzip32 </code>&lt;<em class="cEmphasis">Development_Kit_binary_distribution</em>&gt;.zip<a name="wp125829"> </a>
+</pre></div>
+<a name="wp176583"> </a><p class="pBody">
+where <em style="font-style: oblique" class="cEmphasis">Development_Kit_binary_distribution</em> refers to the name of the bundle containing the installation files for the Microsoft Windows 2000 platform. 
+</p>
+<a name="wp125830"> </a><p class="pBody">
+In the Winzip dialog, choose Select All and Extract from the Actions menu. Enter  <code class="cCode">C:\ </code>into the Extract To field to unzip the contents of the zip file into that directory. (For more information, refer to the Winzip documentation.)
+</p>
+<a name="wp4483"> </a><p class="pBody">
+The <code style="font-weight: normal" class="cCode">java_card_kit-2_2_1</code> directory is the root of the Development Kit installation.
+</p>
+<a name="wp83329"> </a><li>Follow the directions below to set the Microsoft Windows 2000 platform environment variables required by the Development Kit. </li>
+
+<a name="wp84889"> </a><p class="pBody">
+For a description of the files that are installed under <code class="cCode">java_card_kit-2_2_1</code>, see <a  href="cJDKinstall.html#wp40520"><span style="color: #3366CC">&quot;Files Installed for the Binary Release&quot; </span></a>.
+</p>
+</ol>
+</div>
+<a name="wp3826"> </a><h4 class="pHeading3Proc">
+<img src="images/triangle.gif" width="13" height="11" alt="triangle pointing down" id="LongDescNotReq" />&#160; 	Setting Environment Variables for Microsoft Windows 2000 Platform 
+</h4>
+<div class="pStep1">
+<ol class="pStep1"><a name="wp3815"> </a><li>Set the environment variable <code class="cCode">JC_HOME</code> to the installation directory. For example, if you unzipped the release in the root directory of the <code class="cCode">C:</code> volume:</li>
+<div class="pPreformatted"><pre class="pPreformatted">
+<code class="cCode">set JC_HOME=c:\java_card_kit-2_2_1</code><a name="wp3817"> </a>
+</pre></div>
+<a name="wp3818"> </a><p class="pBody">
+Or, if you unzipped the installation into a different directory, define the environment variable <code class="cCode">JC_HOME</code> accordingly. 
+</p>
+<a name="wp4614"> </a><li>Set the environment variable <code class="cCode">JAVA_HOME</code> to the directory where you installed your Java development tools. For example,</li>
+
+<div class="pPreformatted"><pre class="pPreformatted">
+<code class="cCode">set JAVA_HOME=c:\j2sdk1.4.1</code><a name="wp4856"> </a>
+</pre></div>
+<a name="wp7764"> </a><p class="pBody">
+The following optional path setting will enable you to run the Development Kit tools from any directory.
+</p>
+<div class="pPreformatted"><pre class="pPreformatted">
+set PATH=%JC_HOME%\bin;%JAVA_HOME%\bin;%PATH%<a name="wp7771"> </a>
+</pre></div>
+</ol>
+</div>
+<a name="wp8580"> </a><p class="pBody">
+We suggest you automate these environment settings. Create a batch file (named, for example, <code class="cCode">javacard_env.bat</code>) which includes the <code class="cCode">set</code> statements:
+</p>
+<div class="pPreformatted"><pre class="pPreformatted">
+<code class="cCode">@echo off</code><a name="wp8512"> </a>
+<code class="cCode">set JC_HOME=C:\java_card_kit-2_2_1</code><a name="wp8513"> </a>
+<code class="cCode">set JAVA_HOME=c:\j2sdk1.4.1</code><a name="wp8559"> </a>
+<code class="cCode">set PATH=.;%JC_HOME%\bin</code>;%JAVA_HOME%\bin<code class="cCode">;%PATH%</code><a name="wp9677"> </a>
+</pre></div>
+<a name="wp135218"> </a><p class="pBody">
+Run the batch file from the command prompt before running the Development Kit tools, samples, and demonstrations (refer to <a  href="cJDKdemo.html#wp2388"><span style="color: #3366CC">Chapter&#160;3, &quot;Development Kit Samples and Demonstrations</span></a>&#8221;): 
+</p>
+<a name="wp83574"> </a><h3 class="pHeading2Proc">
+<img src="images/triangle.gif" width="13" height="11" alt="triangle pointing down" id="LongDescNotReq"/>&#160; 	Copying OpenCard Framework Files
+</h3>
+<a name="wp83575"> </a><p class="pBody">
+<em class="cEmphasis">For Solaris, Linux, and Microsoft Windows 2000 Platforms:</em>
+</p>
+<a name="wp83576"> </a><p class="pBody">
+To run the Java Card RMI demos, you must copy certain OpenCard Framework (OCF) jar files into the <code class="cCode">lib</code> subdirectory of your <code class="cCode">JC_HOME</code> directory.
+</p>
+<div class="pStep1">
+<ol class="pStep1"><a name="wp83577"> </a><li>Navigate to the directory <code class="cCode">&lt;</code><em class="cEmphasis">ocf_download_home</em><code class="cCode">&gt;/OCF1.2/lib/</code> (on the Solaris and Linux platform) or <code class="cCode">&lt;</code><em class="cEmphasis">ocf_download_home</em><code class="cCode">&gt;\OCF1.2\lib\</code> (on the Microsoft Windows 2000 platform) of the OCF installation. In this path, <em style="font-style: oblique; font-weight: normal" class="cEmphasis">&lt;ocf_download_home&gt;</em> represents the directory where OpenCard Framework files were unzipped.</li>
+<a name="wp83578"> </a><li>Copy the files <code class="cCode">base-core.jar</code> and <code class="cCode">base-opt.jar</code> from this directory into the <code class="cCode">$JC_HOME/lib</code> (Solaris or Linux platform) or <code class="cCode">%JC_HOME%\lib</code> (Microsoft Windows 2000 platform) directory. </li>
+</ol>
+</div>
+<a name="wp40520"> </a><h2 class="pHeading1">
+Files Installed for the Binary Release
+</h2>
+<a name="wp83450"> </a>
+<p class="pBody"> <a  href="cJDKinstall.html#wp83389"><span style="color: #3366CC">TABLE&#160;1</span></a> 
+  describes the files and directories that the binary installation procedure installs 
+  under <code class="cCode">java_card_kit-2_2_1</code>. </p>
+<hr class="pHr"/><div class="note">
+<a name="wp155380"> </a>
+<b>Note &#8211;</b>  If you are using the Microsoft Windows 2000 platform, substitute the \ character for / in the paths.
+<hr class="pHr"/></div>
+<a name="wp155378"> </a><p class="pBody">
+</p><div align="left">
+<table border="0" cellpadding="7"   id="SummaryNotReq83387">
+  <caption><a name="wp83389"> </a><div class="pTableCaption">
+TABLE&#160;1&#160;&#160;&#8211;&#160;&#160;Directories and Files Installed for the Binary Release 
+</div>
+</caption>
+<thead>
+<tr  align="center">    <th  class="sun-verylightblue" scope="col"><a name="wp84980"> </a><div style="text-align: left" class="pTableHead">
+Directory/File
+</div>
+
+</th>
+    <th  class="sun-verylightblue" scope="col"><a name="wp84982"> </a><div style="text-align: left" class="pTableHead">
+Description
+</div>
+
+</th>
+</tr>
+</thead>
+  <tr align="left">    <td><a name="wp83393"> </a><div class="pTableText">
+<code class="cCode">api_export_files</code>
+</div>
+</td>
+    <td><a name="wp83395"> </a><div class="pTableText">
+Contains the export files for version 2.2.1 of the Java Card API packages.
+</div>
+</td>
+</tr>
+  <tr align="left">    <td><a name="wp83397"> </a><div class="pTableText">
+<code class="cCode">bin</code>
+</div>
+</td>
+    <td><a name="wp83399"> </a><div class="pTableText">
+Contains all shell scripts or batch files for running the tools (such as the <code class="cCode">apdutool</code>, <code class="cCode">capdump</code>, <code class="cCode">converter</code> and so forth), and the <code class="cCode">cref</code> binary executable.
+</div>
+</td>
+</tr>
+  <tr align="left">    <td><a name="wp83401"> </a><div class="pTableText">
+<code class="cCode">doc/en</code>
+</div>
+</td>
+    <td><a name="wp122488"> </a><div class="pTableText">
+The <code class="cCode">api</code>, <code class="cCode">devnotes</code>, and <code class="cCode">guides</code> subdirectories contain the English-language guides for this release: 
+</div>
+<div class="pTableBullet"><ul class="pTableBullet">
+<a name="wp153075"> </a><div class="pTableBullet"><li><code class="cCode">api</code>&#8212;contains the HTML files for the Java Card specification produced by the Javadoc&#8482; tool. </li></div>
+<a name="wp153074"> </a><div class="pTableBullet"><li><code class="cCode">devnotes</code>&#8212;contains the <em class="cEmphasis">Application Programming Notes for the Java Card&#8482; Platform, Version 2.2.1</em> in PDF format. The <code class="cCode">html</code> subdirectory contains the same manual in HTML format. </li></div>
+<a name="wp153086"> </a><div class="pTableBullet"><li><code class="cCode">guides</code>&#8212;contains this document: the <em class="cEmphasis">Development Kit User&#8217;s Guide for the Java Card&#8482; Platform, Version 2.2.1</em>, in PDF format, and an <code class="cCode">html</code> directory containing the document in HTML format.</li></div>
+<a name="wp158807"> </a><div class="pTableBullet"><li><code class="cCode">j2me-docs.css</code>&#8212;cascading style sheet used by the release note HTML files.</li></div>
+</ul></div>
+</td>
+</tr>
+  <tr align="left">    <td><a name="wp83408"> </a><div class="pTableText">
+<code class="cCode">lib</code>
+</div>
+</td>
+    <td><a name="wp83410"> </a><div class="pTableText">
+Contains all Java jar files required for the tools: 
+</div>
+<div class="pTableBullet"><ul class="pTableBullet">
+<a name="wp176380"> </a><div class="pTableBullet"><li><code class="cCode">apdutool.jar</code> and <code class="cCode">apduio.jar</code>&#8212;used by <code class="cCode">apdutool</code></li></div>
+<a name="wp148973"> </a><div class="pTableBullet"><li><code class="cCode">api.jar</code> (with cryptography extensions)&#8212;needed to write Java Card technology-based applets (&#8220;Java Card applets&#8221;) and libraries</li></div>
+<a name="wp176392"> </a><div class="pTableBullet"><li><code class="cCode">capdump.jar</code>&#8212;needed to produce an ASCII representation of a CAP file</li></div>
+<a name="wp176393"> </a><div class="pTableBullet"><li><code class="cCode">converter.jar</code>&#8212;needed to process Java class files and Java Card export files</li></div>
+<a name="wp148974"> </a><div class="pTableBullet"><li><code class="cCode">javacardframework.jar</code>&#8212;used by the Java RMIC compiler for generating stubs for Java Card RMI applications</li></div>
+<a name="wp148988"> </a><div class="pTableBullet"><li><code class="cCode">jcclientsamples.jar</code>&#8212;contains the client part of the Java Card RMI samples</li></div>
+<a name="wp148989"> </a><div class="pTableBullet"><li><code class="cCode">jcrmiclientframework.jar</code>&#8212;contains the classes of the Java Card RMI Client API</li></div>
+<a name="wp176387"> </a><div class="pTableBullet"><li><code class="cCode">jcwde.jar</code> (with cryptography extensions)&#8212;used by Java Card WDE</li></div>
+<a name="wp176333"> </a><div class="pTableBullet"><li><code class="cCode">installer.jar</code>&#8212;contains the installer applet</li></div>
+<a name="wp176397"> </a><div class="pTableBullet"><li><code class="cCode">offcardverifier.jar</code>&#8212;needed to evaluate CAP and export files in a desktop environment</li></div>
+<a name="wp176398"> </a><div class="pTableBullet"><li><code class="cCode">scriptgen.jar</code>&#8212;needed to convert a package in a CAP file into a script file containing a sequence of APDUs </li></div>
+</ul></div>
+</td>
+</tr>
+  <tr align="left">    <td><a name="wp83412"> </a><div class="pTableText">
+<code class="cCode">samples</code>
+</div>
+</td>
+    <td><a name="wp83414"> </a>
+        <div class="pTableText"> Contains sample applets and demonstration programs. 
+          For more information on the contents of this directory, see <a  href="cJDKinstall.html#wp9679"><span style="color: #3366CC">&quot;Sample 
+          Programs and Demonstrations&quot;</span></a>. </div>
+</td>
+</tr>
+  <tr align="left">    <td><a name="wp83420"> </a><div class="pTableText">
+<code class="cCode">COPYRIGHT</code><code class="cCode">_dom</code>
+</div>
+</td>
+    <td><a name="wp83422"> </a><div class="pTableText">
+(<code class="cCode">COPYRIGHT</code><code class="cCode">_dom</code><code class="cCode">.txt</code> on Microsoft Windows 2000) Contains the copyright notice for the product.
+</div>
+</td>
+</tr>
+  <tr align="left">    <td><a name="wp143846"> </a><div class="pTableText">
+<code class="cCode">LICENSE</code><code class="cCode">.html</code>
+</div>
+</td>
+    <td><a name="wp143848"> </a><div class="pTableText">
+Contains the text of the license agreement.
+</div>
+</td>
+</tr>
+  <tr align="left">    <td><a name="wp83428"> </a><div class="pTableText">
+<code class="cCode">RELEASENOTES</code><code class="cCode">.html</code>
+</div>
+</td>
+    <td><a name="wp83430"> </a><div class="pTableText">
+Contains important information about this release.
+</div>
+</td>
+</tr>
+<tr><td colspan="15"><hr class="pTableHr" /></td></tr>
+</table>
+</div>
+<p class="pBody">
+
+</p>
+<a name="wp9679"> </a><h3 class="pHeading2">
+Sample Programs and Demonstrations
+</h3>
+<a name="wp155334"> </a><p class="pBody">
+All samples are contained in the <code class="cCode">samples</code> directory under <code class="cCode">JC_HOME</code>. <a  href="cJDKinstall.html#wp155339"><span style="color: #3366CC">TABLE&#160;2</span></a> describes the contents of the directory.
+</p>
+<a name="wp155374"> </a><p class="pBody">
+</p><div align="left">
+<table border="0" cellpadding="7"   id="SummaryNotReq155335">
+  <caption><a name="wp155339"> </a><div class="pTableCaption">
+TABLE&#160;2&#160;&#160;&#8211;&#160;&#160;Directory Structure for Sample Programs and Demonstrations 
+</div>
+</caption>
+<thead>
+<tr  align="center">    <th  class="sun-verylightblue" scope="col"><a name="wp155343"> </a><div style="text-align: left" class="pTableHead">
+Directory/File
+</div>
+
+</th>
+    <th  class="sun-verylightblue" scope="col"><a name="wp155345"> </a><div style="text-align: left" class="pTableHead">
+Description
+</div>
+
+</th>
+</tr>
+</thead>
+  <tr align="left">    <td><a name="wp155347"> </a><div class="pTableText">
+<code class="cCode">classes</code>
+</div>
+</td>
+    <td><a name="wp155349"> </a><div class="pTableText">
+Contains pre-built sample classes.
+</div>
+</td>
+</tr>
+  <tr align="left">    <td><a name="wp155351"> </a><div class="pTableText">
+<code class="cCode">build_samples</code> or 
+</div>
+<a name="wp155352"> </a><div class="pTableText">
+<code class="cCode">build_samples.bat</code>
+</div>
+</td>
+    <td><a name="wp155354"> </a><div class="pTableText">
+A script or batch file to automate building samples.
+</div>
+</td>
+</tr>
+  <tr align="left">    <td><a name="wp155356"> </a><div class="pTableText">
+<code class="cCode">src</code>
+</div>
+</td>
+    <td><a name="wp155358"> </a><div class="pTableText">
+Contains the sources for the sample applets that belong to the packages <code class="cCode">com.sun.javacard.samples.*</code>.
+</div>
+</td>
+</tr>
+  <tr align="left">    <td><a name="wp155360"> </a><div class="pTableText">
+<code class="cCode">src/demo</code>
+</div>
+</td>
+    <td><a name="wp155362"> </a>
+        <div class="pTableText"> Contains all of the files needed to run the Java 
+          Card demonstration programs. For more information on the contents of 
+          the <code class="cCode">demo</code> directory, see <a  href="cJDKdemo.html#wp34768"><span style="color: #3366CC">&quot;Directories 
+          and Files in the demo Directory&quot;</span></a>. </div>
+</td>
+</tr>
+  <tr align="left">    <td><a name="wp155367"> </a><div class="pTableText">
+<code class="cCode">src/com/sun/javacard/samples</code>
+</div>
+</td>
+    <td><a name="wp155369"> </a><div class="pTableText">
+Contains the source code for the sample applets.
+</div>
+</td>
+</tr>
+  <tr align="left">    <td><a name="wp155371"> </a><div class="pTableText">
+<code class="cCode">src_client</code>
+</div>
+</td>
+    <td><a name="wp155373"> </a><div class="pTableText">
+Contains sample card acceptance device (CAD) client programs for the Photo Card, Java Card RMI, and secure Java Card RMI demos.
+</div>
+</td>
+</tr>
+<tr><td colspan="15"><hr class="pTableHr" /></td></tr>
+</table>
+</div>
+<p class="pBody">
+
+</p>
+<a name="wp83678"> </a><p class="pBody">
+
+</p>
+
+    <p>&#160;</p>
+    <hr class="pHr" />
+
+    <table class="full-width" id="SummaryNotReq2">
+      <tr>
+        <td class="go-left">
+          <a accesskey="c" href="index.html">
+	    <img id="LongDescNotReq1" src="images/toc.gif" border="0"
+              alt="Contents" /></a>
+	  <a accesskey="p" href="cJDKintro.html">
+	    <img id="LongDescNotReq2" src="images/prev.gif" border="0"
+              alt="Previous" /></a>
+	  <a accesskey="n" href="cJDKdemo.html">
+	    <img id="LongDescNotReq3" src="images/next.gif" border="0"
+              alt="Next" /></a>
+	  <a accesskey="i" href="cJDK_b_domIX.html">
+	    <img id="LongDescNotReq4" src="images/index.gif" border="0"
+              alt="Index" /></a>
+        </td>
+        <td class="go-right">
+          <span class="copyright">Development Kit User's Guide
+for the Binary Release with Cryptography Extensions <br /> Java Card Platform, Version 2.2.1</span>
+        </td>
+      </tr>
+    </table>
+
+    <p>&#160;</p>
+    
+<p class="copyright"><a 
+       href="copyright.html">Copyright</a> &#169; 2003 Sun Microsystems, Inc. 
+  All rights reserved.</p>	
+  </body>
+</html>

@@ -1,0 +1,210 @@
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
+    <meta http-equiv="Content-Style-Type" content="text/css" />
+    <meta name="GENERATOR" content="Quadralay WebWorks Publisher Professional Edition 7.0.5.1025" />
+    <meta name="TEMPLATEBASE" content="JCUser_b_glo" />
+    <meta name="LASTUPDATED" content="10/10/03 17:26:41" />
+    <title>Using the Large Address Space</title>
+    <link rel="StyleSheet" href="document.css" type="text/css" />
+    <link rel="StyleSheet" href="catalog.css" type="text/css" />
+    <link rel="Table of Contents" href="index.html" />
+    <link rel="Previous" href="cJDKAppManifest.html" />
+    <link rel="Next" href="cJDKappendixB.html" />
+    <link rel="Index" href="cJDK_b_domIX.html" />
+  </head>
+
+  <body>
+
+    <table class="full-width" id="SummaryNotReq1">
+      <tr><td class="sun-darkblue">&#160;</td></tr>
+      <tr><td class="sun-lightblue">&#160;</td></tr>
+      <tr><td class="go-right">
+        <a accesskey="c" href="index.html">
+          <img id="LongDescNotReq1" src="images/toc.gif" border="0"
+            alt="Contents" /></a>
+	<a accesskey="p" href="cJDKAppManifest.html">
+	  <img id="LongDescNotReq2" src="images/prev.gif" border="0"
+            alt="Previous" /></a>
+        <a accesskey="n" href="cJDKappendixB.html">
+	  <img id="LongDescNotReq3" src="images/next.gif" border="0"
+            alt="Next" /></a>
+        <a accesskey="i" href="cJDK_b_domIX.html">
+	  <img id="LongDescNotReq4" src="images/index.gif" border="0"
+            alt="Index" /></a>
+        </td>
+      </tr>
+    </table>
+
+<a name="wp997519"> </a><h2 class="pAppxNum">
+Appendix &#160; C
+</h2>
+<a name="wp997521"> </a><h2 class="pTitle">
+Using the Large Address Space
+</h2>
+<hr />
+<a name="wp998511"> </a><p class="pBody">
+Allowing your applications to take advantage of the large address capabilities of the Java Card reference implementation, version 2.2.1, requires careful planning and programming. Some size limitations still exist within the Reference Implementation. The way that you structure large applications, as well as applications that manage large amounts of data, determines how the large address space can be exploited.
+</p>
+<a name="wp998513"> </a><p class="pBody">
+The following sections describe two of the ways in which you can take advantage of large memory storage in smart cards:
+</p>
+<ul class="pBullet1"><a name="wp998671"> </a><div class="pBullet1"><li><a  href="cJDKLargeAddr.html#wp998519"><span style="color: #3366CC">Programming Large Applications and Libraries</span></a></li></div>
+<a name="wp998515"> </a><div class="pBullet1Last"><li><a  href="cJDKLargeAddr.html#wp998533"><span style="color: #3366CC">Storing Large Amounts of Data</span></a></li></div>
+</ul>
+<a name="wp998519"> </a><h3 class="pHeading2">
+Programming Large Applications and Libraries
+</h3>
+<a name="wp998521"> </a><p class="pBody">
+The key to writing large applications for the Java Card platform is to divide the code into individual package units. The most important limitation on a package is the 64KB limitation on the maximum component size. This is especially true for the Method component: if the size of an application&#8217;s Method component exceeds 64KB, then the Java Card converter will not process the package and will return an error. 
+</p>
+<a name="wp998524"> </a><p class="pBody">
+You can overcome the component size limitation by dividing the application into separate application and library components. The Java Card platform has the ability to support library packages Library packages contain code which can be linked and reused by several applications. By dividing the functionality of a given application into application and library packages, you can increase the size of the components. Keep in mind that there are important differences between library packages and applet packages: 
+</p>
+<ul class="pBullet1"><a name="wp998525"> </a><div class="pBullet1"><li>In a library package, all public fields are available to other packages for linking.</li></div>
+<a name="wp998526"> </a><div class="pBullet1Last"><li>In an applet package, only interactions through a shareable interface are allowed by the firewall. </li></div>
+</ul>
+<a name="wp998528"> </a><p class="pBody">
+Therefore, you should not place sensitive or exclusive-use code in a library package. It should be placed in an applet package, instead. 
+</p>
+<a name="wp998530"> </a><p class="pTOC5">
+
+</p>
+<a name="wp998531"> </a><p class="pBody">
+Several applications and API functionality can be installed in the smart card simultaneously by handling each package as a separate code space. This technique will let you exceed the 64KB limit, and provide full Java Card API functionality and support for complex applications requiring larger amounts of code. 
+</p>
+<a name="wp998533"> </a><h3 class="pHeading2">
+Storing Large Amounts of Data
+</h3>
+<a name="wp998535"> </a><p class="pBody">
+The most efficient way to take advantage of the large memory space is to use it to store data. Today&#39;s applications are required to securely store ever-growing amounts of information about the cardholder or network identity. This information includes certificates, images, security keys, and biometric and biographic information. 
+</p>
+<a name="wp998537"> </a><p class="pBody">
+This information sometimes requires large amounts of storage. Before 2.2.1, versions of the Java Card reference implementation had to save downloaded applications or user data in valuable persistent memory space. Sometimes, the amount of memory space required was insufficient for some applications. However, the memory access schemes introduced with version 2.2.1 allow applications to store large amounts of information, while still conforming to the Java Card specification.
+</p>
+<a name="wp998539"> </a><p class="pBody">
+The Java Card specification does not impose any requirements on object location or total object heap space used on the card. It specifies only that each object must be accessible by using a 16-bit reference. It also imposes some limitations on the amount of information an individual object is capable of storing, by using the number of fields or the count of array elements. Because of this loose association, it is possible for any given implementation to control how an object&#8217;s information is stored, and how much data these objects can collectively hold.
+</p>
+<a name="wp998541"> </a><p class="pBody">
+The Java Card reference implementation, version 2.2.1, allows you to use all of the available persistent memory space to store object information. By allowing you to separate data storage into distinct array and object types, this reference implementation allows you to store the large amounts of data demanded by today&#8217;s applications.
+</p>
+<a name="wp998545"> </a><h3 class="pHeading2">
+Example: The photocard Demo Applet
+</h3>
+<a name="wp998547"> </a><p class="pBody">
+The <code class="cCode">photocard</code> demo applet (included with the Java Card reference implementation, version 2.2.1) is an example of an application that takes advantage of the large address space capabilities. 
+</p>
+<a name="wp998549"> </a>
+<p class="pBody"> The <code class="cCode">photocard</code> applet performs a very 
+  simple task: it stores pictures inside the smart card and retrieves them by 
+  using a Java Card RMI interface. For more information on the <code class="cCode">photocard</code> 
+  demo applet and how to run it, see <a  href="cJDKdemo.html#wp109964"><span style="color: #3366CC">&quot;Photo 
+  Card Demo&quot;</span></a>. </p>
+<div class="pPreformatted"><pre class="pPreformatted">
+public interface PhotoCard extends Remote {<a name="wp998551"> </a>
+<a name="wp998552"> </a>
+&#160;&#160;&#160;&#160;public static final short NO_SPACE_AVAILABLE = (short)0x6000;<a name="wp998553"> </a>
+&#160;&#160;&#160;&#160;public static final short NO_PHOTO_STORED  = (short)0x6001;<a name="wp998554"> </a>
+&#160;&#160;&#160;&#160;public static final short INVALID_PHOTO_ID = (short)0x6002;<a name="wp998555"> </a>
+&#160;&#160;&#160;&#160;public static final short INVALID_ARGUMENT   = (short)0x6003;<a name="wp998556"> </a>
+&#160;&#160;&#160;&#160;public static final short MAX_SIZE           = (short)0x7FFF;<a name="wp998557"> </a>
+&#160;&#160;&#160;&#160;public static final short MAX_PHOTO_COUNT    = (short)4;<a name="wp998558"> </a>
+&#160;&#160;&#160;&#160;public static final short MAX_BUFFER_BYTES   = (short)96;<a name="wp998559"> </a>
+    <a name="wp998560"> </a>
+    <a name="wp998561"> </a>
+&#160;&#160;&#160;&#160;public short requestPhotoStorage(short size) <a name="wp998562"> </a>
+&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;throws RemoteException, UserException;<a name="wp998563"> </a>
+<a name="wp998564"> </a>
+&#160;&#160;&#160;&#160;public void loadPhoto(short photoID, byte[] data, <a name="wp998565"> </a>
+&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;short size, short offset, boolean more) <a name="wp998566"> </a>
+&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;throws RemoteException, UserException;<a name="wp998567"> </a>
+<a name="wp998568"> </a>
+&#160;&#160;&#160;&#160;public void deletePhoto(short photoID) <a name="wp998569"> </a>
+&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;throws RemoteException, UserException;<a name="wp998570"> </a>
+<a name="wp998571"> </a>
+&#160;&#160;&#160;&#160;public short getPhotoSize(short photoID) <a name="wp998572"> </a>
+&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;throws RemoteException, UserException;<a name="wp998573"> </a>
+        <a name="wp998574"> </a>
+&#160;&#160;&#160;&#160;public byte[] getPhoto(short photoID, short offset, short size) <a name="wp998575"> </a>
+&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;throws RemoteException, UserException;<a name="wp998576"> </a>
+}<a name="wp998942"> </a>
+</pre></div>
+<a name="wp998943"> </a><p class="pBody">
+To store the images, an array of arrays has been defined:
+</p>
+<div class="pPreformatted"><pre class="pPreformatted">
+// Array containing photo objects<a name="wp998583"> </a>
+&#160;&#160;&#160;&#160;<span class="cUserType">private Object[] photos;</span><a name="wp998584"> </a>
+</pre></div>
+<a name="wp998587"> </a><p class="pBody">
+Each image is stored inside an array, and each array can grow up to 32,767 elements in size.
+</p>
+<div class="pPreformatted"><pre class="pPreformatted">
+for (short i = (short)0; i &lt; (short)MAX_PHOTO_COUNT;i++) {<a name="wp998589"> </a>
+&#160;&#160;&#160;&#160;byte[] thePhoto = (byte[])photos[i];<a name="wp998590"> </a>
+<a name="wp998591"> </a>
+&#160;&#160;&#160;&#160;if (photos[i] == null) {<a name="wp998592"> </a>
+&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;photos[i] = new byte[size];<a name="wp998593"> </a>
+&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;return (short)(i + 1);<a name="wp998594"> </a>
+&#160;&#160;&#160;&#160;}<a name="wp998595"> </a>
+}<a name="wp998596"> </a>
+UserException.throwIt(NO_SPACE_AVAILABLE);<a name="wp998597"> </a>
+</pre></div>
+<a name="wp998599"> </a><p class="pBody">
+The array can be randomly accessed, as needed. In this implementation, the arrays are defined as byte arrays, however, they could also have been defined as integer arrays.
+</p>
+<div class="pPreformatted"><pre class="pPreformatted">
+byte[] selPhoto = (byte[])photos[(short)(photoID - (short)1)];<a name="wp998601"> </a>
+... <a name="wp998602"> </a>
+Util.arrayCopy(selPhoto, offset, buffer, (short)0, size);<a name="wp999133"> </a>
+return buffer;<a name="wp998604"> </a>
+</pre></div>
+<a name="wp998606"> </a><p class="pBody">
+The collection of arrays (more than two arrays would be required in this case) can easily hold far more than 64KB of data. Storing this amount of information should not be a problem, provided that enough mutable persistent memory is configured in the C-language Java Card RE.
+</p>
+<a name="wp998608"> </a><p class="pTOC5">
+
+</p>
+<a name="wp1027346"> </a><p class="pBody">
+The <code class="cCode">photocard</code> applet employs a collection of arrays to store large amounts of data. The arrays allow the applet to take advantage of the platform&#8217;s capabilities by transparently storing data.
+</p>
+<a name="wp998612"> </a><p class="pBody">
+The coding and design of applications that use the large address space to access memory must adhere to the target platform&#8217;s requirements.
+</p>
+<a name="wp998614"> </a><p class="pBody">
+As smart cards have limited resources, code cannot be guaranteed to behave identically on different cards. For example, if you run the <code class="cCode">photocard</code> applet on a card with less mutable persistent memory available for storage, then it might run out of memory space when it attempts to store the images. A given set of inputs might not produce the same set of outputs in a C-language Java Card RE with different characteristics. The applet code must account for any different implementation-specific behavior.
+</p>
+
+    <p>&#160;</p>
+    <hr class="pHr" />
+
+    <table class="full-width" id="SummaryNotReq2">
+      <tr>
+        <td class="go-left">
+          <a accesskey="c" href="index.html">
+	    <img id="LongDescNotReq1" src="images/toc.gif" border="0"
+              alt="Contents" /></a>
+	  <a accesskey="p" href="cJDKAppManifest.html">
+	    <img id="LongDescNotReq2" src="images/prev.gif" border="0"
+              alt="Previous" /></a>
+	  <a accesskey="n" href="cJDKappendixB.html">
+	    <img id="LongDescNotReq3" src="images/next.gif" border="0"
+              alt="Next" /></a>
+	  <a accesskey="i" href="cJDK_b_domIX.html">
+	    <img id="LongDescNotReq4" src="images/index.gif" border="0"
+              alt="Index" /></a>
+        </td>
+        <td class="go-right">
+          <span class="copyright">Development Kit User's Guide
+for the Binary Release with Cryptography Extensions <br /> Java Card Platform, Version 2.2.1</span>
+        </td>
+      </tr>
+    </table>
+
+    <p>&#160;</p>
+    
+<p class="copyright"><a 
+       href="copyright.html">Copyright</a> &#169; 2003 Sun Microsystems, Inc. 
+  All rights reserved.</p>	
+  </body>
+</html>

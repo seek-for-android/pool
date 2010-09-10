@@ -1,0 +1,236 @@
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
+    <meta http-equiv="Content-Style-Type" content="text/css" />
+    <meta name="GENERATOR" content="Quadralay WebWorks Publisher Professional Edition 7.0.5.1025" />
+    <meta name="TEMPLATEBASE" content="JCUser_b_glo" />
+    <meta name="LASTUPDATED" content="10/10/03 17:25:14" />
+    <title>Running Applets in an Emulated Card Environment</title>
+    <link rel="StyleSheet" href="document.css" type="text/css" />
+    <link rel="StyleSheet" href="catalog.css" type="text/css" />
+    <link rel="Table of Contents" href="index.html" />
+    <link rel="Previous" href="cJDKdemo.html" />
+    <link rel="Next" href="cJDKconverter.html" />
+    <link rel="Index" href="cJDK_b_domIX.html" />
+  </head>
+
+  <body>
+
+    <table class="full-width" id="SummaryNotReq1">
+      <tr><td class="sun-darkblue">&#160;</td></tr>
+      <tr><td class="sun-lightblue">&#160;</td></tr>
+      <tr><td class="go-right">
+        <a accesskey="c" href="index.html">
+          <img id="LongDescNotReq1" src="images/toc.gif" border="0"
+            alt="Contents" /></a>
+	<a accesskey="p" href="cJDKdemo.html">
+	  <img id="LongDescNotReq2" src="images/prev.gif" border="0"
+            alt="Previous" /></a>
+        <a accesskey="n" href="cJDKconverter.html">
+	  <img id="LongDescNotReq3" src="images/next.gif" border="0"
+            alt="Next" /></a>
+        <a accesskey="i" href="cJDK_b_domIX.html">
+	  <img id="LongDescNotReq4" src="images/index.gif" border="0"
+            alt="Index" /></a>
+        </td>
+      </tr>
+    </table>
+
+<a name="wp1565"> </a><h2 class="pChapNum">
+Chapter &#160; 4
+</h2>
+<a name="wp4012"> </a><h2 class="pTitle">
+Running Applets in an Emulated Card Environment
+</h2>
+<hr />
+<a name="wp4013"> </a><p class="pBody">
+The Java Card platform Workstation Development Environment (&#8220;Java Card Workstation Development Environment&#8221; or &#8220;Java Card WDE&#8221;) tool allows the simulated running of a Java Card applet as if it were masked in ROM. It emulates the card environment.
+</p>
+<a name="wp6391"> </a><p class="pBody">
+The Java Card WDE is not an implementation of the Java Card virtual machine. It uses the Java virtual machine to emulate the Java Card RE. Class files that represent masked packages must be available on the classpath for Java Card WDE.
+</p>
+<a name="wp11001"> </a><p class="pBody">
+For the 2.2.1 release of the Java Card reference implementation, Java Card WDE adds support for Java Card Remote Method Invocation (Java Card RMI).
+</p>
+<a name="wp6396"> </a><p class="pBody">
+Here are some of Java Card RE features that are <em class="cEmphasis">not</em> supported by Java Card WDE:
+</p>
+<ul class="pBullet1"><a name="wp6397"> </a><div class="pBullet1"><li>package installation</li></div>
+<a name="wp6398"> </a><div class="pBullet1Plus"><li>applet instance creation</li></div>
+<a name="wp6399"> </a><div class="pBullet1Plus"><li>persistent card state</li></div>
+<a name="wp6400"> </a><div class="pBullet1Plus"><li>firewall</li></div>
+<a name="wp6401"> </a><div class="pBullet1Plus"><li>transactions</li></div>
+<a name="wp6402"> </a><div class="pBullet1Plus"><li>transient array clearing</li></div>
+<a name="wp11602"> </a><div class="pBullet1Plus"><li>object deletion</li></div>
+<a name="wp6404"> </a><div class="pBullet1Plus"><li>applet deletion</li></div>
+<a name="wp9686"> </a><div class="pBullet1Last"><li>package deletion</li></div>
+</ul>
+<a name="wp9689"> </a><p class="pBody">
+The Java Card WDE tool uses the <code class="cCode">jcwde.jar</code>, <code class="cCode">api.jar</code> (with cryptography extensions), and <code class="cCode">apduio.jar</code> files. The main class for Java Card WDE is <code class="cCode">com.sun.javacard.jcwde.Main</code>. A sample batch and shell script are provided to start Java Card WDE.
+</p>
+<a name="wp1569"> </a><h2 class="pHeading1">
+Preparing to Run the Java Card WDE Tool
+</h2>
+<a name="wp7511"> </a><p class="pBody">
+Before you run the Java Card WDE tool, you must ensure that the environment variables are set appropriately and the applets to be configured are listed in a configuration file.
+</p>
+<a name="wp3856"> </a><h3 class="pHeading2">
+Setting Environment Variables
+</h3>
+<a name="wp7510"> </a>
+<p class="pBody"> To set the environment variables correctly, refer to <a  href="cJDKinstall.html#wp4268"><span style="color: #3366CC">&quot;Setting 
+  Environment Variables for the Solaris or Linux Platform&quot; </span></a> or 
+  <a  href="cJDKinstall.html#wp3826"><span style="color: #3366CC">&quot;Setting 
+  Environment Variables for Microsoft Windows 2000 Platform&quot;</span></a>. 
+</p>
+<a name="wp3737"> </a><h3 class="pHeading2">
+Configuring the Applets in the Java Card WDE Mask
+</h3>
+<a name="wp3738"> </a><p class="pBody">
+The applets to be configured in the mask during Java Card WDE simulation need to be listed in a configuration file that is passed to the Java Card WDE as a command line argument. Also, the <code class="cCode">CLASSPATH</code> environment variable needs to be set to reflect the location of the class files for the applets to be simulated. In this release, the sample applets are listed in a configuration file called <code class="cCode">jcwde.app</code>. Each entry in this file contains the name of the applet class, and its associated AID. 
+</p>
+<a name="wp4121"> </a><p class="pBody">
+The configuration file contains one line per installed applet. Each line is a white space(s) separated <code class="cCode">{CLASS_NAME AID}</code> pair, where <code class="cCode">CLASS NAME</code> is the fully qualified Java name of the class defining the applet, and <code class="cCode">AID</code> is an Application Identifier for the applet class used to uniquely identify the applet. <code class="cCode">AID</code> may be a string or hexadecimal representation in form: 
+</p>
+<div class="pPreformatted"><pre class="pPreformatted">
+0xXX[:0xXX]<a name="wp9327"> </a>
+</pre></div>
+<a name="wp9328"> </a><p class="pBody">
+where the construct <code class="cCode">0xXX</code> is repeated as many times as necessary.
+</p>
+<a name="wp9329"> </a><p class="pBody">
+Note that <code class="cCode">AID</code> should be 5 to 16 bytes in length.
+</p>
+<a name="wp4146"> </a><p class="pBody">
+For example:
+</p>
+<div class="pPreformatted"><pre class="pPreformatted">
+com.sun.javacard.samples.wallet.Wallet 0xa0:0x0:0x0:0x0:0x62:0x3:0x1:0xc:0x6:0x1<a name="wp4149"> </a>
+</pre></div>
+<hr class="pHr"/><div class="note">
+<a name="wp3770"> </a>
+<b>Note &#8211;</b>  The installer applet must be listed first in the Java Card WDE configuration file.
+<hr class="pHr"/></div>
+<a name="wp4042"> </a><p class="pBody">
+If you write your own applets for public distribution, you should obtain an AID for each of your packages and applets according to the directions in Section 4.2 of the <em class="cEmphasis">Virtual Machine Specification for the Java Card&#8482; Platform, Version 2.2.1</em> (Sun Microsystems, Inc., 2003), and in the <em class="cEmphasis">ISO 7816 Specification</em> Parts 1-6.
+</p>
+<a name="wp3938"> </a><h2 class="pHeading1">
+Running the Java Card WDE Tool
+</h2>
+<a name="wp3941"> </a><p class="pBody">
+The general format of the command to run the Java Card WDE and emulate the Java Card RE is:
+</p>
+<div class="pPreformatted"><pre class="pPreformatted">
+jcwde [-help] [-p port] [-version] [-nobanner] &lt;<em>config-file</em>&gt;<a name="wp3943"> </a>
+</pre></div>
+<a name="wp7669"> </a><p class="pBody">
+where:</p><div align="left">
+<table border="0" cellpadding="7"   id="SummaryNotReq6186">
+  <caption><a name="wp6188"> </a><div class="pTableCaption">
+TABLE&#160;7&#160;&#160;&#8211;&#160;&#160;Command Line Options for Java Card WDE 
+</div>
+</caption>
+<thead>
+<tr  align="center">    <th  class="sun-verylightblue" scope="col"><a name="wp6192"> </a><div style="text-align: left" class="pTableHead">
+Option 
+</div>
+
+</th>
+    <th  class="sun-verylightblue" scope="col"><a name="wp6194"> </a><div style="text-align: left" class="pTableHead">
+Description
+</div>
+
+</th>
+</tr>
+</thead>
+  <tr align="left">    <td><a name="wp6543"> </a><div class="pTableText">
+ <code class="cCode">&lt;</code><em class="cEmphasis">config-file</em><code class="cCode">&gt;</code>
+</div>
+</td>
+    <td><a name="wp6545"> </a><div class="pTableText">
+The configuration file described above.
+</div>
+</td>
+</tr>
+  <tr align="left">    <td><a name="wp6208"> </a><div class="pTableText">
+<code class="cCode">-</code><code class="cCode">help</code>
+</div>
+</td>
+    <td><a name="wp6210"> </a><div class="pTableText">
+Prints a help message.
+</div>
+</td>
+</tr>
+  <tr align="left">    <td><a name="wp6547"> </a><div class="pTableText">
+<code class="cCode">-nobanner</code> 
+</div>
+</td>
+    <td><a name="wp6549"> </a><div class="pTableText">
+Suppresses all banner messages.
+</div>
+</td>
+</tr>
+  <tr align="left">    <td><a name="wp6555"> </a><div class="pTableText">
+<code class="cCode">-p</code> 
+</div>
+</td>
+    <td><a name="wp6557"> </a><div class="pTableText">
+Allows you to specify a TCP/IP port other than the default port.
+</div>
+</td>
+</tr>
+  <tr align="left">    <td><a name="wp6551"> </a><div class="pTableText">
+<code class="cCode">-version</code> 
+</div>
+</td>
+    <td><a name="wp6553"> </a><div class="pTableText">
+Prints the Java Card WDE version number.
+</div>
+</td>
+</tr>
+<tr><td colspan="15"><hr class="pTableHr" /></td></tr>
+</table>
+</div>
+<p class="pBody">
+ 
+</p>
+<a name="wp3948"> </a><p class="pBody">
+When started, Java Card WDE starts listening to APDUs in T=0 format on the TCP/IP port specified by the <code class="cCode">&#8211;p</code> port parameter. The default port is 9025.
+</p>
+<a name="wp8352"> </a><p class="pBody">
+
+</p>
+
+    <p>&#160;</p>
+    <hr class="pHr" />
+
+    <table class="full-width" id="SummaryNotReq2">
+      <tr>
+        <td class="go-left">
+          <a accesskey="c" href="index.html">
+	    <img id="LongDescNotReq1" src="images/toc.gif" border="0"
+              alt="Contents" /></a>
+	  <a accesskey="p" href="cJDKdemo.html">
+	    <img id="LongDescNotReq2" src="images/prev.gif" border="0"
+              alt="Previous" /></a>
+	  <a accesskey="n" href="cJDKconverter.html">
+	    <img id="LongDescNotReq3" src="images/next.gif" border="0"
+              alt="Next" /></a>
+	  <a accesskey="i" href="cJDK_b_domIX.html">
+	    <img id="LongDescNotReq4" src="images/index.gif" border="0"
+              alt="Index" /></a>
+        </td>
+        <td class="go-right">
+          <span class="copyright">Development Kit User's Guide
+for the Binary Release with Cryptography Extensions <br /> Java Card Platform, Version 2.2.1</span>
+        </td>
+      </tr>
+    </table>
+
+    <p>&#160;</p>
+    
+<p class="copyright"><a 
+       href="copyright.html">Copyright</a> &#169; 2003 Sun Microsystems, Inc. 
+  All rights reserved.</p>	
+  </body>
+</html>

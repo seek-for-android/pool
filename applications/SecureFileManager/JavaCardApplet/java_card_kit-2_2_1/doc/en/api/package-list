@@ -1,0 +1,7 @@
+java.io
+java.lang
+java.rmi
+javacard.framework
+javacard.framework.service
+javacard.security
+javacardx.crypto

@@ -1,0 +1,18 @@
+CLA: 00, INS: a4, P1: 04, P2: 00, Lc: 09, a0, 00, 00, 00, 62, 03, 01, 08, 01, Le: 00, SW1: 90, SW2: 00
+CAP file download section. Output suppressed.
+OUTPUT OFF;
+OUTPUT ON;
+Applet creation and functional test section.
+CLA: 80, INS: b8, P1: 00, P2: 00, Lc: 0d, 0b, a0, 00, 00, 00, 62, 03, 01, 0c, 07, 01, 01, 00, Le: 0b, a0, 00, 00, 00, 62, 03, 01, 0c, 07, 01, 01, SW1: 90, SW2: 00
+CLA: 00, INS: a4, P1: 04, P2: 00, Lc: 0b, a0, 00, 00, 00, 62, 03, 01, 0c, 07, 01, 01, Le: 00, SW1: 90, SW2: 00
+CLA: c0, INS: 10, P1: 00, P2: 00, Lc: 00, Le: 00, SW1: 90, SW2: 00
+CLA: c0, INS: 17, P1: 00, P2: 00, Lc: 00, Le: 00, SW1: 90, SW2: 00
+CLA: 00, INS: a4, P1: 04, P2: 00, Lc: 09, a0, 00, 00, 00, 62, 03, 01, 08, 01, Le: 00, SW1: 90, SW2: 00
+CAP file download section. Output suppressed.
+OUTPUT OFF;
+OUTPUT ON;
+Functional test section.
+CLA: 00, INS: a4, P1: 04, P2: 00, Lc: 09, a0, 00, 00, 00, 62, 03, 01, 08, 01, Le: 00, SW1: 90, SW2: 00
+CLA: 80, INS: c0, P1: 00, P2: 00, Lc: 0b, 0a, a0, 00, 00, 00, 62, 03, 01, 0c, 07, 03, Le: 00, SW1: 90, SW2: 00
+CLA: 00, INS: a4, P1: 04, P2: 00, Lc: 0b, a0, 00, 00, 00, 62, 03, 01, 0c, 07, 01, 01, Le: 00, SW1: 90, SW2: 00
+CLA: c0, INS: 18, P1: 00, P2: 00, Lc: 00, Le: 00, SW1: 90, SW2: 00

@@ -1,0 +1,23 @@
+
+//+
+// Copyright © 2003 Sun Microsystems, Inc. All rights reserved.
+// SUN PROPRIETARY/CONFIDENTIAL. Use is subject to license terms.
+//-
+
+//+
+// Workfile:@(#)Header.scr	1.8
+// Version:1.8
+// Date:07/16/03
+//-
+
+powerup;
+
+// Select the installer applet
+0x00 0xA4 0x04 0x00 0x09 0xa0 0x00 0x00 0x00 0x62 0x03 0x01 0x08 0x01 0x7F;
+// 90 00 = SW_NO_ERROR
+
+// Turn output off during CAP file download
+echo "CAP file download section. Output suppressed.";
+
+output off;
+
