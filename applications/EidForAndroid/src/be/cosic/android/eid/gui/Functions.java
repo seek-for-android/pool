@@ -292,6 +292,8 @@ public class Functions extends Activity {
             		}
                 	//get the pin from the input and change it: see on activity result method
             		MainActivity.belpic.changeThisPin(old_pin, new_pin_1);
+            		//clear the pins
+            		old_pin = new_pin_1 = new_pin_2 = "";
             		
             		CharSequence text = "PIN changed";
 	    			toast = Toast.makeText(context, text, duration);
@@ -370,35 +372,22 @@ public class Functions extends Activity {
         	
             if (resultCode == RESULT_OK) {
                
-            	try{   
+            	//try{   
 	            	
 	            	//Prepare for signature
-            		MainActivity.belpic.prepareForNonRepudiationSignature(data.getStringExtra("PIN"));
+            		//MainActivity.belpic.prepareForNonRepudiationSignature();
 	    			//MainActivity.belpic.pinValidationEngine(data.getStringExtra("PIN"));
             		
+            		
+            		//STore PIN
+            		old_pin = data.getStringExtra("PIN");
 	    			
 	    			//Ask the path of the file to be signed
 	    			intent = new Intent().setClass(this, PathQuery.class);
 	    			Functions.this.startActivityForResult(intent, GET_RAW_FILE_LOCATION_REQUEST);
 	            	
 	    			
-            	} catch (InvalidPinException e) {
-	    			
-            		CharSequence text = "Invalid PIN: "+ e.getMessage() + " tries left.";
-	    			toast = Toast.makeText(context, text, duration);
-	    			toast.setGravity(Gravity.CENTER, 0, 0);
-	    			toast.show();
-            		
-	    			Log.e(MainActivity.LOG_TAG, "Exception in PIN validation: " + e.getMessage());
-	            } catch (CardException e) {
-	            	CharSequence text = "Card Exception";
-	    			toast = Toast.makeText(context, text, duration);
-	    			toast.setGravity(Gravity.CENTER, 0, 0);
-	    			toast.show();
-            		
-	    			Log.e(MainActivity.LOG_TAG, "CardException: " + e.getMessage());
-	            
-				}	
+            	//}	
             	
             	
             	
@@ -426,7 +415,7 @@ public class Functions extends Activity {
 				try {
 					
 					//TODO Make an xml signature??? and imbed reference to document/in document/...
-					//For now, just a signature is created and stored under 'filename_signature.sign'
+					//For now, just a signature is created and stored under 'filename.signature'
 					
 					//Encode the file into a byte array
 					byte[] encodedData = TextUtils.getBytesFromFile(path);
@@ -436,21 +425,22 @@ public class Functions extends Activity {
 					byte[] hashValue = hash.digest(encodedData);
 					
 					//Calculate the signature inside the eID card
-					byte[] signature = MainActivity.belpic.generateNonRepudiationSignature(hashValue);
+					byte[] signature = MainActivity.belpic.generateNonRepudiationSignature(hashValue, old_pin);
+					
+					//Clear pin:
+					old_pin = "";
+					
+					//Now we store the signature			
+					FileOutputStream fos = new FileOutputStream(path + ".signature");
+					fos.write(signature);
+	        		fos.close();
 					
 					
-//					//We make new directories where necessary
-//					new File(dir).mkdirs();
-//					
-//					//Now we store the file					
-//					//openFileOutput can not contain path separators in its name!!!!!!!
-//					//FileOutputStream fos = openFileOutput(path, Context.MODE_WORLD_READABLE);
-//					FileOutputStream fos = new FileOutputStream(path);
-//					fos.write(currentCert.getEncoded());
-//	        		fos.close();
-					
-					
-					//If everything went fine, let the user know the signature was stored under 'filename_signature.sign'
+					//If everything went fine, let the user know the signature was stored under 'filename_signature.signature'
+	        		CharSequence text = "Signature saved under: '" + path +".signature'";
+	    			toast = Toast.makeText(context, text, duration);
+	    			toast.setGravity(Gravity.CENTER, 0, 0);
+	    			toast.show();
 					
 				} catch (IOException e) {
 					CharSequence text = "IO Exception";
@@ -485,14 +475,22 @@ public class Functions extends Activity {
 	    			Log.e(MainActivity.LOG_TAG, "CardException: " + e.getMessage());
 	            
 				} catch (SignatureGenerationException e) {
-					CharSequence text = "SignatureGenerationException";
+					CharSequence text = "SignatureGenerationException: " + e.getMessage();
 	    			toast = Toast.makeText(context, text, duration);
 	    			toast.setGravity(Gravity.CENTER, 0, 0);
 	    			toast.show();
             		
 	    			Log.e(MainActivity.LOG_TAG, "SignatureGenerationException: " + e.getMessage());
 	            
-				}
+				} catch (InvalidPinException e) {
+	    			
+            		CharSequence text = "Invalid PIN: "+ e.getMessage() + " tries left.";
+	    			toast = Toast.makeText(context, text, duration);
+	    			toast.setGravity(Gravity.CENTER, 0, 0);
+	    			toast.show();
+            		
+	    			Log.e(MainActivity.LOG_TAG, "Exception in PIN validation: " + e.getMessage());
+	            }
             	
             	
             	

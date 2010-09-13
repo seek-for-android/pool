@@ -873,14 +873,14 @@ public class EidEngine implements EidCommandsInterface{
 	
 	
 	
-	public void prepareForAuthenticationSignature(String pin) throws CardException, InvalidPinException {
-		prepareForSignature(prepareForAuthenticationSignatureCommand, pin);
-	}
-	public void prepareForNonRepudiationSignature(String pin) throws CardException, InvalidPinException {
-		prepareForSignature(prepareForNonRepudiationSignatureCommand, pin);
-	}
-	
-	
+//	public void prepareForAuthenticationSignature(String pin) throws CardException, InvalidPinException {
+//		prepareForSignature(prepareForAuthenticationSignatureCommand, pin);
+//	}
+//	public void prepareForNonRepudiationSignature(String pin) throws CardException, InvalidPinException {
+//		prepareForSignature(prepareForNonRepudiationSignatureCommand, pin);
+//	}
+//	
+//	
 	
 	public void prepareForSignature(byte[] preparationCommand, String pin) throws CardException, InvalidPinException {
 		cardChannel.transmit(preparationCommand);
@@ -888,16 +888,19 @@ public class EidEngine implements EidCommandsInterface{
 	}
 
 
-	public byte[] generateAuthenticationSignature(byte[] datahash) throws InvalidResponse, NoSuchAlgorithmException, CardException, SignatureGenerationException {
-		return generateSignature(prepareForAuthenticationSignatureCommand, generateSignatureCommand, datahash);
-	}
-	public byte[] generateNonRepudiationSignature(byte[] datahash) throws InvalidResponse, NoSuchAlgorithmException, CardException, SignatureGenerationException {
-		return generateSignature(prepareForNonRepudiationSignatureCommand, generateSignatureCommand, datahash);
+	public byte[] generateAuthenticationSignature(byte[] datahash,  String pin) throws InvalidResponse, NoSuchAlgorithmException, CardException, SignatureGenerationException, InvalidPinException {
+		return generateSignature(prepareForAuthenticationSignatureCommand, generateSignatureCommand, datahash, pin);
 	}
 	
-	public byte[] generateSignature(byte[] preparationCommand, byte[] signatureGenerationCommand, byte[] datahash) throws InvalidResponse, NoSuchAlgorithmException, CardException, SignatureGenerationException
+	
+	public byte[] generateNonRepudiationSignature(byte[] datahash,  String pin) throws InvalidResponse, NoSuchAlgorithmException, CardException, SignatureGenerationException, InvalidPinException {
+		return generateSignature(prepareForNonRepudiationSignatureCommand, generateSignatureCommand, datahash, pin);
+	}
+	
+	public byte[] generateSignature(byte[] preparationCommand, byte[] signatureGenerationCommand, byte[] datahash, String pin) throws InvalidResponse, NoSuchAlgorithmException, CardException, SignatureGenerationException, InvalidPinException
 		{
 		
+		prepareForSignature(preparationCommand, pin);
 		
 		byte[] apdu = new byte[signatureGenerationCommand.length];
 		for (int i = 0; i < signatureGenerationCommand.length; i++)
@@ -907,21 +910,24 @@ public class EidEngine implements EidCommandsInterface{
 		byte[] result = cardChannel.transmit(apdu);
 	
 		if (TextUtils.hexDump(result, result.length - 2, 2).equals("9000")) {
-			HIER DUS
-			// pinPad.setStatusText("OK...");
-			//return result; 
-		
-		if (TextUtils.hexDump(result, result.length - 2, 2).equals("6180")) {
 			result = retrieveSignatureBytes();
 			if (TextUtils.hexDump(result, result.length - 2, 2).equals("9000")){
 				byte[] signature = new byte[result.length - 2];
 				System.arraycopy(result, 0, signature, 0, signature.length);
 				return signature;
 			}
-				
 		}
+		if (TextUtils.hexDump(result, result.length - 2, 2).equals("6180")) {
+				result = retrieveSignatureBytes();
+				if (TextUtils.hexDump(result, result.length - 2, 2).equals("9000")){
+					byte[] signature = new byte[result.length - 2];
+					System.arraycopy(result, 0, signature, 0, signature.length);
+					return signature;
+				}
+					
 		}
-		throw new be.cosic.android.eid.exceptions.SignatureGenerationException();
+		
+		throw new be.cosic.android.eid.exceptions.SignatureGenerationException(TextUtils.hexDump(result, result.length - 2, 2));
 	}
 
 	public byte[] retrieveSignatureBytes() throws InvalidResponse, CardException, NoSuchAlgorithmException {
