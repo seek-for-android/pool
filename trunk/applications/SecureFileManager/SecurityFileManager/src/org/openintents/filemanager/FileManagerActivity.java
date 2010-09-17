@@ -22,12 +22,6 @@
 
 package org.openintents.filemanager;
 
-//TODO Addons:
-//- don't create a (plaintext) temp file but have a mem-mapped file?
-//- block cipher for large files --> done
-//- add system intent to save encrypted files to SD card --> geht nicht, da keine eigene Aktivity
-//- autostart when SD card gets inserted --> geht durch connectionlistener
-
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -328,6 +322,7 @@ public class FileManagerActivity extends ListActivity
 
 				Log.i(TAG, "Logical channel opened to Applet " + APPLET_AID.toString());
 
+				refreshDirectoryPanel();
 				// Pinabfrage
 //				if (pinChecked == false)
 //				{
@@ -891,6 +886,11 @@ public class FileManagerActivity extends ListActivity
 	{
 		// allow screen rotations again
 		this.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED);
+		if (progressDialog != null)
+		{
+			progressDialog.dismiss();
+			progressDialog = null;
+		}
 	}
 
 	private void notifyIconChanged(IconifiedText text)
