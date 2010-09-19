@@ -11,3 +11,4 @@
   * Applications
     * [AndroidBelgiumEid]
     * [OtpAuthenticator]
+    * [SecureFileManager]
