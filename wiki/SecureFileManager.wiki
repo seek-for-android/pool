@@ -21,7 +21,7 @@ With inserted Mobile Security Card the encryption functions are available.<br/><
 <table>
 <tr>
 <td>http://seek-for-android.googlecode.com/svn/wiki/img/secureFileManager_encrypt_menu.png</td>
-<td>              </td>
+<td>{{{          }}}</td>
 <td>http://seek-for-android.googlecode.com/svn/wiki/img/secureFileManager_encrypt_file.png</td>
 </tr>
 </table>
