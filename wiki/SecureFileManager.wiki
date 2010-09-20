@@ -3,7 +3,7 @@
 = Introduction =
 
 The SecureFileManager is a filemanager for the android platform, which is making use of the G&D secure microSD card, in order to cipher files.<br/>
-To spare the user to keep numerous complicated passwords, which are being used for ciphering, in mind, a secure key is being generated and saved, by the use of the Java Card Applet, which is running on the Mobile Security Card.<br/><br/>
+To spare the user to keep numerous complicated passwords, which are being used for ciphering, in mind, a secure key is being generated and saved, by the use of the Java Card Applet, which is running on the Mobile Security Card.<br/>
 
 
 = Android Application =
@@ -16,7 +16,7 @@ For this purpose look [http://code.google.com/p/seek-for-android/wiki/BuildingTh
 Checkout the [http://code.google.com/p/seek-for-android/source/browse/#svn/trunk/applications/SecureFileManager/SecurityFileManager SecureFileManger source code] and install your own generated .apk file on your Android device.<br/>
 Run the SecureFileManager application on your Android smartphone.
 <br/><br/>
-With inserted Mobile Security Card the encryption functions are available.<br/><br/>
+With inserted Mobile Security Card the encryption functions are available.<br/>
 
 <table>
 <tr>
