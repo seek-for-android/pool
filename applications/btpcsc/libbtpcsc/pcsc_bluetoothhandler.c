@@ -5,14 +5,12 @@
 / Date   :   September 30, 2010
 / Purpose:   Provides a transparent reader bridge to a bluetooth
 /            device.
-/ License:   See file LICENSE
 /
 ******************************************************************/
 
 #include <stdio.h>
 #include <string.h>
 #include <stdint.h>
-#include "../pcscdefines.h"
 #include "../devices.h"
 #include "../btpcsc_config.h"
 #include "../pcsc_bluetooth.h"
@@ -75,6 +73,7 @@ int ensure_connection_is_active(int Lun, int Channel) {
             return BT_PCSC_ERROR_NO_SUCH_READER;
         }
         if (result >= 0 && strlen(reader->slot) > 0) {
+            // Try to set the specified slot
             int result = bt_set_slot(connection, reader->slot);
             if (result == BT_PCSC_ERROR_INVALID_SLOT)
                 printf("Specified slot %s of reader %s (ID %d) is not available, using \

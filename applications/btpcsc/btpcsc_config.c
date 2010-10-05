@@ -3,8 +3,7 @@
 / File   :   bt_pcsc_config.c
 / Author :   Manuel Eberl <manueleberl@gmx.de>
 / Date   :   October 4, 2010
-/ Purpose:   Provides functions to access the bt_pcsc config files.
-/ License:   See file LICENSE
+/ Purpose:   Provides functions to access the BTPCSC config files.
 /
 ******************************************************************/
 
