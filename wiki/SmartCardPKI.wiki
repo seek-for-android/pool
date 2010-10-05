@@ -1,66 +1,266 @@
-#summary A tool to use Android phones as smartcard readers via Bluetooth
-http://seek-for-android.googlecode.com/svn/wiki/img/btpcsc_logo.png
+#summary Add smart card based PKI functionality
 
-= Introduction =
 
-There were some requests on the mailing list about using smartcard-enabled Android phones as smartcard readers. After phones are flashed with a kernel that supports smartcards, Micro SD smartcards can be accessed from Android using PC/SC. BTPCSC uses this and combines it with an Android service and a PC/SC reader library for Linux PCs (Windows support in development) to transfer smartcard communication over a Bluetooth connection.
+= 1 Introduction =
 
-The Linux library libbtpcsc.so implements an IFD handler and is simply added to pcscd's reader.conf, which causes pcscd to treat the Android phone like a normal smartcard reader, enabling any application that supports PC/SC to communicate with the Micro SD smartcard inside an Android phone.
 
-On the Android side, BTPCSCServer is a service that is started at bootup and listens for incoming Bluetooth connections from a BTPCSC client. (the pcsc daemon) It will relay all incoming APDUs to the smartcard and send its response back.
+== 1.1 Smart Card based PKI (Public Key Infrastructure) ==
 
-So far, BTPCSC has been successfully tested with testpcsc, the HelloSmartcard applet and OpenSC in Firefox. (see [SmartCardPKI#2.4_Use_OpenSC_on_the_phone])
 
-= Prerequisites =
- * A smartcard-enabled Android phone. For further information about this, see [BuildingTheSystem]
- * The PC/SD daemon pcscd. It is in the package sources on Ubuntu, so you can install it with sudo apt-get install pcscd, on other distributions you may have to download it manually.
+PKI is the common way to authenticate a message sender or to encrypt/decrypt messages in a secure way. It is typically used by eMails (S/MIME), data encryption and secure authentication (VPN, SSL/TLS).
+It is based on public/private keys (typically RSA) and certificates, which bind a user identity to a public key.
 
-= Installing BTPCSC =
- * Download the BTPCSC code from the SVN repository (http://seek-for-android.googlecode.com/svn/trunk/applications/btpcsc)
- * x86 binaries are already included, you can, however, recompile by executing the compile script compile.sh
- * Move libbtpcsc.so from the lib directory to your /usr/lib directory. This is the library that provides the IFD handler for PC/SC.
- * Create a config file for BTPCSC. There is a setup tool for this (btpcsc_setup in the setup directory), but it is still in development and has only been tested on Ubuntu so far, therefore its use for anything other than scanning is not recommended. Instead, you should use the example config file (lib/btpcsc.conf.example) to create your own config file. It consists of a list of device sections, each of which has the following entries:
-  * A name (Which may consist of any displayable characters except quotation marks)
-  * The bluetooth address of your android phone (if you don't know it, see [#btpcsc_setup])
-  * An ID (Any positive integer)
-  * (optional) The name of the slot to be used. At the moment, the Android phones only support one slot, which is usually called "Mobile Security Card 00 00". If no slot is given, the default slot will be used.
 
-The example config looks like this:
+PKI is based on the secrecy of the private key, so the private key is often stored on a smart card, where the smart card performs the cryptographic operations to avoid the risk that the private key can become public or copied in any way.
+
+
+The most common API to access cryptographic smart card functions is the [http://www.rsa.com/rsalabs/node.asp?id=2133 PKCS#11] interface, published by [http://www.rsa.com/rsalabs/node.asp?id=2124 RSA Labs].
+It is used in Mozilla Firefox, Thunderbird and many other applications, e.g. PGP.
+Corresponding to the PKCS#11 interface, the [http://www.rsa.com/rsalabs/node.asp?id=2141 PKCS#15] specification defines a file structure and description syntax for keys and certificates on the smart card.
+
+
+== 1.2 OpenSC ==
+[http://www.opensc-project.org/opensc OpenSC] is a widely-used Open Source development, which provides a set of libraries and tools for accessing smart cards for management and cryptographic operations. 
+It provides a PKCS#11 interface and already supports smart cards from different vendors. 
+OpenSC provides smart card access according to the PKCS#15 standard.
+A good overview about OpenSC can be found [http://www.opensc-project.org/opensc/wiki/OverView here]
+
+
+== 1.3 Muscle Card Applet ==
+The Muscle Card Applet is an Open Source Java Card applet, originally developed by the [http://www.musclecard.com/musclecard/ M.U.S.C.L.E] project 
+The Muscle Card applet can be loaded on smart cards with Java Card OS and allow to securely store keys and other objects, (e.g. certificates) on the smart card and use them for cryptographic functionality, like signature generation or decryption with RSA keys. 
+The Muscle Card Applet is supported by OpenSC (http://www.opensc-project.org/opensc/wiki/MuscleApplet)<br/>
+
+
+
+
+To provide PKI functionality on the Android OS, we use OpenSC with modifications for the Android platform. To store cryptographic keys on the smart card and perform cryptographic operations, we use the Muscle Card Applet for smart cards with Java Card OS. <br/>
+
+
+= 2 Add PKI support with OpenSC to Android =
+
+
+== 2.1 Prerequisites ==
+
+
+ * Android 2.2 (froyo) sources with smart card related patches (see [http://code.google.com/p/seek-for-android/wiki/BuildingTheSystem Building the system])
+ * Secure Element with Java Card OS in microSD format (_e.g. G&D Mobile Security Card_), for using it on a real hardware device.
+ * Tool to load a Java Card applet onto the Secure Element (_e.g. G&D JLoad_ for _G&D Mobile Security Card_)
+
+
+From the download page get:
+ * OpenSC 0.11.13 package: [http://seek-for-android.googlecode.com/files/external_opensc.tar.gz external_opensc.tar.gz]
+ * Patch for OpenSC for Android: [http://seek-for-android.googlecode.com/files/opensc_android.patch opensc_android.patch]
+ * Muscle Card Applet 0.9.12: [http://seek-for-android.googlecode.com/files/MCardApplet-0912.tar.gz MCardApplet-0912.tar.gz]
+ * sample RSA key with certificate: [http://seek-for-android.googlecode.com/files/azur1024bit_password_12345678.pfx azur1024bit_password_12345678.pfx]
+
+
+<br>The system environment for porting the PKI functionality to the Android 2.2 (froyo) was an Ubuntu 10.04 with gcc 4.4.3.<br>
+As Secure Element a _G&D Mobile Security Card_ and for loading the Java card applet, the _G&D JLoad_ was used, provided within the _G&D Mobile Security Developers Kit_ [https://www.cardsolutions-shop.com/shop/gi-de/].<br>As phone, there was a HTC Magic (Sapphire) used.<br>
+
+
+
+
+== 2.2 Add OpenSC to the froyo sources ==
+
+
+To add the support for OpenSC to your froyo sources, you need to build your system with smart card support according to the description [http://code.google.com/p/seek-for-android/wiki/BuildingTheSystem Building the system] and additionally add the patches for OpenSC to your sources.
+
+
+After you performed the step "Patching the source" as described in [http://code.google.com/p/seek-for-android/wiki/BuildingTheSystem Building the system] add the patches for OpenSC.
+
+
+Apply the patches for OpenSC in the root directory of the froyo source then continue to build your system as described in [http://code.google.com/p/seek-for-android/wiki/BuildingTheSystem Building the system]
 {{{
-Section Device
-  Name "My Phone"
-  Address "12:34:56:78:9A:BC"
-  ID "42"
-  Slot "Mobile Security Card 00 00" # This is can be left out
-EndSection
+$ tar xvzf  external_opensc.tar.gz
+$ patch -p1 < <path_to_patch>/opensc_android.patch
 }}}
 
- * Let pcscd know to load the btpcsc library. First, you have to generate the necessary reader.conf entries. You can do this using btpcsc_setup, which will generate a config file from the configuration you wrote into /etc/btpcsc.conf.
-  * If you have Ubuntu, (or any other distribution that has a /etc/reader.conf.d directory and an update-readerconf.d tool) this is very simple. Just call "btpcsc_setup -u -c /etc/reader.conf.d/libbtpcsc" and "update-reader.conf" (both as root) and you're ready to go.
-  * If you want to make the changes permantent, you can generate a temporary reader.conf file by calling "btpcsc_setup -u -c /tmp/reader.conf" and copying its contents to the end of your /etc/reader.conf
-  * If you only want to test btpcsc once, you can generate a separate reader.conf by calling "btpcsc_setup -u -c <any path and filename you want>" and then starting the pcsc daemon manually by calling "pcscd -c <the config file you generated before>" as root. You may have to kill pcscd first, ("killall pcscd", as root) and you may want to specify the options -f -a -d to see its debug output.
 
- * Install the BTPCSC server on your Android phone.
-  * If you want it to run in the background, import BTPCSCServer_Service into Eclipse, run it on your phone once and it will be started as a service on bootup. Instead, you can also install the apk from BTPCSCServer/bin.
-  * If you want to start it manually and also see its output, import BTPCSCServer into Eclipse and run it from there. (or via the menu after you have installed it once) Instead, you can also install the apk from BTPCSCServer_Service/bin.
 
- * Now you can just run the server, run the PC/SC daemon and you can use your Android phone as a regular PC/SC smartcard reader.
 
-= btpcsc_setup =
+Once the system was built successfully and flashed to the phone, there will be additional components available:
+{{{
+directory: /system/bin
+ opensc-tool (command line utility for smart card operations, e.g. sending commands)
+ pkcs15-init (command line utility to initialise a smart card with the PKCS#15 structure)
+ pkcs15-tool (command line utility to explore/access PKCS#15 file structure)
+ pkcs11-tool (command line utlity to access smart cards using a PKCS#11 library, e.g. to perform a signature)
+}}}
+{{{
+directory: /system/lib
+ opensc-pkcs11.so  (PKCS#11 library)
+ pkcs11-spy.so  (dummy PKCS#11 library, when used, it logs all calls to the PKS#11 library for debugging purposes)
+}}}
+{{{
+directory: /etc
+ opensc.conf  (OpenSC config file)
+ pkcs15.profile  (.profile files contain information about the file structure to create during initialisation of the smart card)
+ jcop.profile
+ muscle.profile
+ oberthur.profile
+ cyberflex.profile
+}}}
 
-btpcsc_setup is a configuration tool for BTPCSC. It is still in development it should be considered unstable. It supports the following options:
- * -l: Lists all configured BTPCSC devices
- * -u: Updates the reader.conf
- * -c: Specifies the path of the reader.conf (default: /etc/reader.conf.d/libbtpcsc)
- * -s: Scans the given address for slots (BTPCSC server must be running on it) or scans for BTPCSC devices in range if no address is given (only works if the device is discoverable and a BTPCSC server is running on it)
- * -addr: Sets the address for -s or -a
- * -a: Adds all slots of the device with the given address to the configuration. This should work, but has not been thoroughly tested, so adding the devices to /etc/btpcsc.conf manually is recommended.
 
-= Testing BTPCSC =
-So far, BTPCSC was tested on Ubuntu 9.10 and a Nexus One with smartcard-enabled Froyo with the following applications:
- * testpcsc, which is included in pcsc-lite (<a href="http://seek-for-android.googlecode.com/svn/wiki/img/btpcsc_testpcsc.png">Screenshot</a>)
- * A JavaCard applet
- * OpenSC authentification in Firefox. This is described in detail here: [SmartCardPKI#2.4_Use_OpenSC_on_the_phone] However, do not execute the commands in an adb shell, but on a computer with a working BTPCSC installation. (<a href="http://seek-for-android.googlecode.com/svn/wiki/img/btpcsc_pkcsdump.png" title="Screenshot of a PKCS dump (contents of the SD card after the certificate was loaded on it)">Screenshot 1</a>, <a href="http://seek-for-android.googlecode.com/svn/wiki/img/btpcsc_firefox.png" title="Firefox displaying the certificate from the smartcard after it has been requested by a SSL test site">Screenshot 2</a>)
+== 2.3 Load the Muscle Java Card Applet onto the smart card ==
 
-= Comments =
-Please write any comments or testing results here.
+
+Unpack the package containing the Muscle Card Applet.
+{{{
+tar xvzf MCardApplet-0912.tar.gz
+}}}
+The package contains the Muscle Java Card Applet 0.9.12, which consist of the sources of 0.9.11 and the _Ant_ script from version 0.9.12 for easy compile and convert it.
+There is already a compiled and converted cap file added to the package, which can be directly loaded onto a smart card with Java Card OS.
+It is located in the following directory: 
+{{{
+/MCardApplet/GD/com/musclecard/CardEdge/javacard/CardEdge.cap
+}}}
+The Java card applet was converted using the  Sun Java Card Development Kit 2.2.1, so 
+there is no need to perform the compilation and conversion for the Muscle Java Card applet. Nevertheless it is possible to perform this steps, therefore a Sun JDK and the Sun Java Card Development Kit is required. 
+If you compile and convert the Muscle Java Card Applet, you need to download the Sun Java Card Development Kit 2.2.1 from the internet (due to licensing conditions it is not included) and copy it to the directory _/MCardApplet/depends/jc221_).
+Then you can perform the compile/convert process for the applet by running _Ant_:
+ant `<target>` (e.g. _"ant GD"_). The process is also described in the _INSTALL_ file included in the package.
+
+
+For loading the cap-File _CardEdge.cap_ onto the smart card you need to use an appropriate tool, which is typically provided from the manufacturer of the smart card (e.g. _G&D JLoad_ for the _G&D Mobile Security Card_).
+
+
+== 2.4 Use OpenSC on the phone ==
+
+
+Once you have flashed your phone with the modified sources and inserted the secure element (e.g. G&D Mobile Security Card) in the device, the first step is to intialise the applet and the PKCS#15 structure on the applet, which sets the initial PIN values and creates all the data structures required.
+
+
+Additionally there are further examples shown, how to use some of the functionality of the OpenSC Tools (e.g, import keys/certificates, create signature, logging of PKCS#11 calls).
+For a description of OpenSC Tools and its parameters refer to the OpenSC project [http://www.opensc-project.org/opensc]
+Calling the commandline tools without a parameter shows the parameters available.
+
+
+=== 2.4.1 Initialise Muscle Card Applet ===
+
+
+To initialise the Muscle Card Applet there is required to send a proprietary command, setting the initial PIN values.
+Therefore you need to connect your Android phone to the computer and open a connection to the device with the Android _adb_ tool.
+Then you can use the OpenSC _opensc-tool_ utility to perform the initialisation of the JavaCard Applet.
+{{{
+$ adb shell
+# cd /system/bin
+# opensc-tool -s 00:A4:04:00:06:A0:00:00:00:01:01 -s B0:2A:00:00:38:08:4D:75:73:63:6C:65:30:30:10:10:08:31:32:33:34:35:36:37:38:08:31:32:33:34:35:36:37:38:10:10:08:31:32:33:34:35:36:37:38:08:31:32:33:34:35:36:37:38:00:00:10:00:00:00:00
+}}}
+The initial values of all PINs/passwords are set to "12345678"
+
+
+A description of the initialisation command can be found here:
+http://www.opensc-project.org/opensc/wiki/MuscleApplet
+
+
+http://seek-for-android.googlecode.com/svn/wiki/img/PKI_snap1_opensc_init.png
+
+
+=== 2.4.2 Create PKCS#15 structure ===
+
+
+To create the PKCS#15 structure on the smart card use the _pkcs15-tool_
+{{{
+# pkcs15-init -r 0 -C
+}}}
+During initalisation process you will be asked to enter the values for PINs/passwords.
+Further information to the pkcs15-init tool can be found here: [http://www.opensc-project.org/opensc/wiki/CardPersonalization CardPersonalisation]
+
+
+http://seek-for-android.googlecode.com/svn/wiki/img/PKI_snap2_init_p15.png
+
+
+=== 2.4.3  Dump PKCS#15 content on the card. ===
+
+
+The _pkcs15-tool_ allows to show the PKCS#15 content stored on the smart card.
+The content of the smart card can be listet by using the following command:
+{{{
+# pkcs15-tool --dump
+}}}
+http://seek-for-android.googlecode.com/svn/wiki/img/PKI_snap3_p15_dump.png
+
+
+=== 2.4.4 Import a RSA key and certificate. ===
+
+
+One way to put a key and certificate onto the smart card, is to import it from an encrypted [http://www.rsa.com/rsalabs/node.asp?id=2138 PKCS#12] container.
+A sample PKCS#12 container file can be downloaded here: [http://seek-for-android.googlecode.com/files/azur1024bit_password_12345678.pfx azur1024bit_password_12345678.pfx] 
+It contains a 1024 bit RSA key and a corresponding certificate for a dummy user named "azur".
+To import it into the smart card, you need to copy the file to the phone by using the _adb push_ command.
+then you can import it with the _pkcs15-init_ utility. The import process requires you to enter the password of the container file, 
+which is "12345678" and the password of the smartcard you set during intialisation.
+{{{
+$ adb push azur1024bit_password_12345678.pfx /data
+$ adb shell
+# cd /system/bin
+# pkcs15-init -S /data/azur1024bit_password_12345678.pfx -f PKCS12 -a FF -i 10
+}}}
+
+
+http://seek-for-android.googlecode.com/svn/wiki/img/PKI_snap4_import_key_from_p12.png
+
+
+=== 2.4.5 Dump smart card content ===
+
+
+After successful import of the key and certificate you can see the new objects by dumping the content of the smart card
+{{{
+# pkcs15-tool --dump
+}}}
+
+
+http://seek-for-android.googlecode.com/svn/wiki/img/PKI_snap5_p15_dump_key.png
+
+
+=== 2.4.6 Perform a signature using the PKCS#11 library. ===
+
+
+With the _pkcs11-tool_ it is possible to perform cryptographic operations with the PKCS#11 library _opensc-pkcs11.so_.
+The PKCS#11 library is the standard interface typically used by applications (e.g. Firefox) to perform PKI functionality. 
+Here we use the _pkcs11-tool_ to generate a digital signature for a file. The signature is created by the smart card with the private key stored onto it.
+
+
+Here we compute the digital signature for the file _azur1024bit_password_12345678.pfx_, but we can use any other file also.
+The result is stored in the output file. The output file created has a length of 128 Bytes and contains the digital signature computed by the smart card.
+(The signature has the same length as the Private key on the smart card, which is 1024 bit).
+As signature algorithm we use the SHA1-RSA-PKCS, which performs both, a SHA-1 hash and signature according to the RSA algorithm in one step.
+{{{
+# pkcs11-tool --sign --slot 0 -m SHA1-RSA-PKCS --input-file /data/azur1024bit_password_12345678.pfx --output-file /data/signature
+}}}
+
+
+http://seek-for-android.googlecode.com/svn/wiki/img/PKI_snap6_create_signature.png
+
+
+=== 2.4.7 Logging the PKCS#11 calls ===
+
+
+To see the PKCS#11 calls sent to the PKCS#11 library it is possible to load the _pkcs11-spy.so_ libary and log the calls before forwarding it to the real PKCS#11 library _opensc-pkcs11.so_.
+
+
+In this example we call the digital signature operation as described before, but we explicitely load the _pkcs11-spy.so_ library to log the PKCS#11 calls.
+With the environment variable `PKCS11SPY` we advise the _pkcs11-spy.so_ library to forward the calls to the real PKCS#11 library _opensc-pkcs11.so_.
+This will display all the PKCS#11 calls including sensitive information like PIN values entered. This is useful for debugging with applications using the PKCS#11 interface.
+{{{
+# PKCS11SPY=/system/lib/opensc-pkcs11.so ./pkcs11-tool --module /system/lib/pkcs11-spy.so ./pkcs11-tool --sign --slot 0 -m SHA1-RSA-PKCS --input-file /data/azur1024bit_password_12345678.pfx --output-file /data/signature
+}}}
+
+
+http://seek-for-android.googlecode.com/svn/wiki/img/PKI_snap7_p11spy.png
+
+
+
+
+= 3 Future Perspective =
+
+
+Standard PKCS#11 interface with smart card access is one step to standard PKI infrastructure on Android.
+It requires also standard applications, e.g. Browsers, eMail-Clients supporting this interface on Android.
+
+
+Other PKI Open Source projects/developments that should be investigated:
+ * Firefox Browser for Android / "fennec" Project. Is there PKCS#11 Support like in Firefox available ?
+ * Java Interface/Wrapper for access of PKI functionality from Java Applications (e.g IAIK PKC#11 Wrapper).
