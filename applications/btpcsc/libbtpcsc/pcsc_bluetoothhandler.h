@@ -16,7 +16,7 @@
 extern "C" {
 #endif 
 
-#include "pcscdefines.h"
+#include "../pcscdefines.h"
 
   typedef struct _DEVICE_CAPABILITIES {
     

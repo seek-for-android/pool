@@ -1,9 +1,9 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include "pcsc_bluetooth.h"
-#include "devices.h"
-#include "btpcsc_config.h"
+#include "../pcsc_bluetooth.h"
+#include "../devices.h"
+#include "../btpcsc_config.h"
 
 int arg_index, mode = -1;
 char *config_file = "/etc/btpcsc/btpcsc.conf", *addr = NULL;
