@@ -5,7 +5,6 @@
 / Date   :   September 30, 2010
 / Purpose:   Provides a transparent reader bridge to a bluetooth
 /            device.
-/ License:   See file LICENSE
 /
 ******************************************************************/
 
@@ -16,8 +15,15 @@
 extern "C" {
 #endif 
 
-#include "../pcscdefines.h"
+  #define MAX_ATR_SIZE 33
 
+  typedef unsigned long      DWORD;
+  typedef unsigned long*     PDWORD;
+  typedef unsigned char      UCHAR;
+  typedef unsigned char*     PUCHAR;
+  typedef char*              LPSTR;
+  typedef long               RESPONSECODE;
+  typedef void               VOID;
   typedef struct _DEVICE_CAPABILITIES {
     
     LPSTR Vendor_Name;          /* Tag 0x0100        */

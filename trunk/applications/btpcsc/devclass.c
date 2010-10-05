@@ -1,3 +1,13 @@
+/*****************************************************************
+/
+/ File   :   bt_pcsc_config.h
+/ Author :   Manuel Eberl <manueleberl@gmx.de>
+/ Date   :   October 5, 2010
+/ Purpose:   Provides functions to convert device class information
+/            into human-readable text.
+/
+******************************************************************/
+
 #include "devclass.h"
 
 #include <string.h>

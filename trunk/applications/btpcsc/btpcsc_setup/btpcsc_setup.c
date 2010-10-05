@@ -1,3 +1,12 @@
+/*****************************************************************
+/
+/ File   :   btpcsp_setup.c
+/ Author :   Manuel Eberl <manueleberl@gmx.de>
+/ Date   :   October 5, 2010
+/ Purpose:   A configuration tool for BTPCSC
+/
+******************************************************************/
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -6,7 +15,7 @@
 #include "../btpcsc_config.h"
 
 int arg_index, mode = -1;
-char *config_file = "/etc/btpcsc/btpcsc.conf", *addr = NULL;
+char *config_file = "/etc/btpcsc/btpcsc.conf", *pcsc_config_file = "/etc/reader.conf.d/libbtpcsc", *addr = NULL;
 
 void check_mode_not_set() {
     if (mode != -1) {
@@ -18,7 +27,7 @@ void check_mode_not_set() {
 void process_argument(int argc, char *argv[]) {
     
     if (strcmp(argv[arg_index], "-c") == 0) {
-        config_file = argv[++arg_index];
+        pcsc_config_file = argv[++arg_index];
 
     } else if (strcmp(argv[arg_index], "-h") == 0) {
         print_help();
@@ -190,10 +199,6 @@ int update_devices() {
         return result;
     printf("Wrote config file %s\n", config_file);
     
-    int length = strlen(config_file);
-    char pcsc_config_file[length + 5];
-    memcpy(pcsc_config_file, config_file, length);
-    memcpy(pcsc_config_file + length, "_pcsc", 6);
     result = write_pcsc_config(pcsc_config_file);
     if (result < 0)
         return result;

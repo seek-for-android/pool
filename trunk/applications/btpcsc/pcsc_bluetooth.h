@@ -5,7 +5,6 @@
 / Date   :   September 30, 2010
 / Purpose:   Provides functions to establish and control a
 /            Bluetooth connection for the PCSC Bluetooth bridge
-/ License:   See file LICENSE
 /
 ******************************************************************/
 
