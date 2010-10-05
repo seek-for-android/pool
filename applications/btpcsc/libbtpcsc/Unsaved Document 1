@@ -1,0 +1,14 @@
+int main() {
+
+    SCARD_IO_HEADER dummy;
+
+    UCHAR TxBuffer[] = {0, 17, 23, 42, 255}, RxBuffer[255];
+    DWORD TxLength = 5, RxLength;
+
+    IFDHPowerICC(0, IFD_POWER_UP, NULL, NULL);
+    IFDHTransmitToICC (0, dummy, (PUCHAR) TxBuffer, TxLength, (PUCHAR) RxBuffer, (PDWORD) &RxLength, NULL);
+    IFDHPowerICC(0, IFD_POWER_DOWN, NULL, NULL);
+
+    printf("%s\n", RxBuffer);
+
+}
