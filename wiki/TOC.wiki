@@ -12,3 +12,4 @@
     * [AndroidBelgiumEid]
     * [OtpAuthenticator]
     * [SecureFileManager]
+    * [BTPCSC]
