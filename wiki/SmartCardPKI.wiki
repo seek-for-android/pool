@@ -61,6 +61,8 @@ So far, BTPCSC was tested on Ubuntu 9.10 and a Nexus One with smartcard-enabled 
  * testpcsc, which is included in pcsc-lite (<a href="http://seek-for-android.googlecode.com/svn/wiki/img/btpcsc_testpcsc.png">Screenshot</a>)
  * A JavaCard applet
  * OpenSC authentification in Firefox. This is described in detail here: [SmartCardPKI#2.4_Use_OpenSC_on_the_phone] However, do not execute the commands in an adb shell, but on a computer with a working BTPCSC installation.
+<a href="http://seek-for-android.googlecode.com/svn/wiki/img/btpcsc_pkcsdump.png">Screenshot of a PKCS dump (contents of the SD card after the certificate was loaded on it)</a>
+<a href="http://seek-for-android.googlecode.com/svn/wiki/img/btpcsc_firefox.png">Firefox displaying the certificate from the smartcard after it has been requested by a SSL test site</a>
 
 = Comments =
 Please write any comments or testing results here.
