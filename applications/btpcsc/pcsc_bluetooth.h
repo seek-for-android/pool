@@ -71,10 +71,10 @@ bt_pcsc_connection *get_connection(int lun);
 int bt_connect(bt_pcsc_connection *connection);
 
 // Transmits an APDU over the specified connection
-int bt_send_apdu(bt_pcsc_connection *connection, uint8_t apdu_length, void *apdu);
+int bt_recv_apdu(bt_pcsc_connection *connection, uint16_t *apdu_length, void *apdu);
 
 // Receives an APDU over the specified connection
-int bt_recv_apdu(bt_pcsc_connection *connection, uint8_t *apdu_length, void *apdu);
+int bt_recv_apdu(bt_pcsc_connection *connection, uint16_t *apdu_length, void *apdu);
 
 // Asks the server how many readers it has and what their names are
 int bt_get_slots(bt_pcsc_connection *connection, char *slots[], int maxslots);

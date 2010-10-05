@@ -19,7 +19,7 @@
 #include "pcsc_bluetoothhandler.h"
 
 virtual_reader *get_virtual_reader(DWORD Channel) {
-    parse_config("/etc/btpcsc/btpcsc.conf");
+    parse_config("/etc/btpcsc.conf");
 
     virtual_reader *reader;
     for (reader = first_reader; reader; reader = reader->next) {
@@ -384,7 +384,7 @@ RESPONSECODE IFDHTransmitToICC ( DWORD Lun, SCARD_IO_HEADER SendPci,
     if (status < 0) return IFD_ICC_NOT_PRESENT;
 
     // Try to receive the reply from the server.
-    uint8_t _RxLength;
+    uint16_t _RxLength;
     status = bt_recv_apdu(connection, &_RxLength, RxBuffer);
     *RxLength = _RxLength;
     if (status < 0) return IFD_ICC_NOT_PRESENT;
@@ -437,6 +437,8 @@ RESPONSECODE IFDHICCPresence( DWORD Lun ) {
     if (status < 0) return IFD_ICC_NOT_PRESENT;
     bt_pcsc_connection *connection = get_connection(Lun);
     int result = bt_is_card_present(connection);
+//        if (result < 0)
+//            printf("\33[31m[bt_pcsc] Error %d\33[0m\n", result);
 
     return (result > 0) ? IFD_ICC_PRESENT : IFD_ICC_NOT_PRESENT;
 

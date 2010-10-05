@@ -305,17 +305,17 @@ int bt_read_cmds(bt_pcsc_connection *connection, int n_requested_commands, uint8
 
 
 // Transmits an APDU over the specified connection
-int bt_send_apdu(bt_pcsc_connection *connection, uint8_t apdu_length, void *apdu) {
+int bt_send_apdu(bt_pcsc_connection *connection, uint16_t apdu_length, void *apdu) {
 
     if (connection->socket == 0)
         return BT_PCSC_ERROR_DISCONNECTED;
-
-    uint8_t buffer[apdu_length + 2];
+    uint8_t buffer[apdu_length + 3];
     buffer[0] = BT_PCSC_CMD_SEND_APDU;
-    buffer[1] = apdu_length;
-    memcpy(buffer + 2, apdu, apdu_length);
+    buffer[1] = (apdu_length >> 8) & 0xFF;
+    buffer[2] = apdu_length & 0xFF;
+    memcpy(buffer + 3, apdu, apdu_length);
     
-    int status = write(connection->socket, buffer, apdu_length + 2);
+    int status = write(connection->socket, buffer, apdu_length + 3);
 
     if (status < 0) {
         connection->socket = 0;
@@ -329,13 +329,14 @@ int bt_send_apdu(bt_pcsc_connection *connection, uint8_t apdu_length, void *apdu
 
 
 // Receives an APDU over the specified connection
-int bt_recv_apdu(bt_pcsc_connection *connection, uint8_t *apdu_length, void *apdu) {
+int bt_recv_apdu(bt_pcsc_connection *connection, uint16_t *apdu_length, void *apdu) {
 
     if (connection->socket == 0)
         return BT_PCSC_ERROR_DISCONNECTED;
 
     int status;
-    uint8_t length;
+    uint8_t _length[2];
+    uint16_t length;
     *apdu_length = 0;
 
     status = bt_read_cmd(connection, BT_PCSC_CMD_RECV_APDU);
@@ -344,11 +345,13 @@ int bt_recv_apdu(bt_pcsc_connection *connection, uint8_t *apdu_length, void *apd
         return BT_PCSC_ERROR_DISCONNECTED;
     }
 
-    status = read(connection->socket, &length, 1);
+    status = read(connection->socket, _length, 2);
     if (status < 0) {
         connection->socket = 0;
         return BT_PCSC_ERROR_DISCONNECTED;
     }
+
+    length = (_length[0] << 8) | _length[1];
 
     if (length > 0) {
         status = read(connection->socket, apdu, length);

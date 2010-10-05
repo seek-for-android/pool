@@ -5,25 +5,20 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.UUID;
 
-import android.app.Activity;
+import android.app.Service;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothServerSocket;
 import android.bluetooth.BluetoothSocket;
 import android.content.Intent;
-import android.os.Bundle;
-import android.os.Handler;
-import android.os.Message;
+import android.os.IBinder;
 import android.smartcard.CardException;
 import android.smartcard.ICardChannel;
 import android.smartcard.SmartcardClient;
 import android.smartcard.SmartcardClient.ISmartcardConnectionListener;
 import android.util.Log;
-import android.widget.TextView;
 
-public class BtpcscServer extends Activity {
+public class BtpcscServer extends Service {
 
-	private static final int REQUEST_ENABLE_BT = 227339847;
-	private static final int HANDLER_REFRESH_LOG = 706713485;
 	private static final String appName = "btpcsc_server";
 
 	private static final UUID appUuid = new UUID(0x42219abb16154486l,
@@ -44,33 +39,33 @@ public class BtpcscServer extends Activity {
 	private static final int BT_PCSC_CMD_ERROR = 255;
 
 	private BluetoothAdapter adapter;
-	private StringBuffer log = new StringBuffer();
 	private AcceptThread acceptThread;
 	private ClientCommunicationThread clientThread;
-	private Handler handler;
-	private boolean pausedForBluetoothEnabling, enablingBluetooth,
-			smartcardServiceConnected;
 	private SmartcardClient smartcardClient;
 	private ISmartcardConnectionListener smartcardListener;
-	private String smartcardReader;
+	private String smartcardSlot;
+	private String[] slots;
+	
+	private final IBtpcscServer.Stub binder = new IBtpcscServer.Stub() {
+	};
+	
 
 	private class SmartcardListener implements
 			SmartcardClient.ISmartcardConnectionListener {
 
 		@Override
 		public void serviceConnected() {
-			smartcardServiceConnected = true;
 			log("Connected to smartcard service.");
 			try {
-				String[] readers = smartcardClient.getReaders();
+				slots = smartcardClient.getReaders();
 
-				if (readers == null || readers.length < 1) {
+				if (slots == null || slots.length < 1) {
 					log("No readers available.");
 					return;
 				}
 
-				smartcardReader = readers[0];
-				log("Using default slot: " + smartcardReader + ".");
+				smartcardSlot = slots[0];
+				log("Using default slot: " + smartcardSlot + ".");
 			} catch (Exception e) {
 				log("Could not get list of readers: " + e);
 				return;
@@ -80,8 +75,7 @@ public class BtpcscServer extends Activity {
 		@Override
 		public void serviceDisconnected() {
 			log("Disconnected from smartcard service.");
-			smartcardServiceConnected = false;
-			smartcardReader = null;
+			smartcardSlot = null;
 		}
 
 	}
@@ -116,7 +110,7 @@ public class BtpcscServer extends Activity {
 
 		public void cancel() {
 			cancel = true;
-			stopListening();
+			acceptThread = null;
 		}
 	}
 
@@ -249,15 +243,11 @@ public class BtpcscServer extends Activity {
 			is.read(buffer);
 
 			String slot = new String(buffer);
-			String[] slots = null;
-			try {
-				slots = smartcardClient.getReaders();
-			} catch (CardException e) {
+
+			if (slots == null) {
 				os.write(BT_PCSC_CMD_ERROR);
 				return;
 			}
-			if (slots == null)
-				return;
 
 			boolean contained = false;
 			for (int i = 0; i < slots.length; i++) {
@@ -269,14 +259,14 @@ public class BtpcscServer extends Activity {
 
 			if (!contained) {
 				os.write(BT_PCSC_CMD_ERROR);
-				log("Client requested nonexistent slot "+slot+".");
+				log("Client requested nonexistent slot " + slot + ".");
 				return;
 			}
 
 			log("Setting slot to " + slot + ".");
 
 			try {
-				smartcardReader = slot;
+				smartcardSlot = slot;
 				if (channel != null)
 					channel.close();
 				openChannel();
@@ -292,8 +282,8 @@ public class BtpcscServer extends Activity {
 		private void getCardPresentAndReply() throws CardException, IOException {
 
 			byte state;
-			if (smartcardReader != null) {
-				state = (smartcardClient.isCardPresent(smartcardReader)) ? (byte) 1
+			if (smartcardSlot != null) {
+				state = (smartcardClient.isCardPresent(smartcardSlot)) ? (byte) 1
 						: (byte) 0;
 			} else {
 				state = 0;
@@ -306,7 +296,7 @@ public class BtpcscServer extends Activity {
 
 		private void openChannel() throws CardException {
 			try {
-				channel = smartcardClient.openBasicChannel(smartcardReader);
+				channel = smartcardClient.openBasicChannel(smartcardSlot);
 			} catch (Exception e) {
 				throw new CardException(e);
 			}
@@ -341,7 +331,7 @@ public class BtpcscServer extends Activity {
 			byte[] buffer = new byte[apduLength];
 			is.read(buffer);
 
-			log("Client transmitted APDU: " + apduToString(buffer));
+//			log("Client transmitted APDU: " + apduToString(buffer));
 
 			if (catchSpecialApdu(buffer))
 				// This is not a regular APDU to be sent to the card. The handler
@@ -358,8 +348,8 @@ public class BtpcscServer extends Activity {
 				e.printStackTrace();
 			}
 
-			if (receivedApdu != null)
-				log("Card returned APDU: " + apduToString(receivedApdu));
+//			if (receivedApdu != null)
+//				log("Card returned APDU: " + apduToString(receivedApdu));
 
 			sendApdu(receivedApdu);
 
@@ -437,9 +427,9 @@ public class BtpcscServer extends Activity {
 
 	/** Called when the activity is first created. */
 	@Override
-	public void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
-		setContentView(R.layout.main);
+	public void onCreate() {
+		log("onCreate");
+		super.onCreate();
 
 		smartcardListener = new SmartcardListener();
 		try {
@@ -449,51 +439,41 @@ public class BtpcscServer extends Activity {
 			return;
 		}
 
-		handler = new Handler() {
-
-			@Override
-			public void handleMessage(Message msg) {
-				switch (msg.what) {
-				case HANDLER_REFRESH_LOG:
-					doRefreshLog();
-					break;
-				}
-			}
-
-		};
-
-	}
-
-	@Override
-	protected void onResume() {
-		super.onResume();
-
-		clearLog();
 		log("Application started. Launching Server.");
-		if (smartcardReader != null)
-			log("Using reader " + smartcardReader + ".");
+		if (smartcardSlot != null)
+			log("Using reader " + smartcardSlot + ".");
 
 		BluetoothAdapter adapter = BluetoothAdapter.getDefaultAdapter();
 
 		if (adapter == null) {
-			log("No bluetooth device detected.");
+			log("No bluetooth adapter detected.");
 		} else {
 			this.adapter = adapter;
 			if (!adapter.isEnabled()) {
-				if (!pausedForBluetoothEnabling) {
-					Intent enableBtIntent = new Intent(
-							BluetoothAdapter.ACTION_REQUEST_ENABLE);
-					pausedForBluetoothEnabling = enablingBluetooth = true;
-					startActivityForResult(enableBtIntent, REQUEST_ENABLE_BT);
-				}
+				log("Bluetooth adapter is disabled.");
 			} else {
 				startListening();
 			}
 		}
 
 	}
+	
+    @Override
+    public int onStartCommand(Intent intent, int flags, int startId) 
+    {
+    	Log.v("BtpcscServer", "onStartCommand");	        
+        return START_STICKY;
+    }
 
-	protected void onDestroy() {
+	public void onDestroy() {
+		if (acceptThread != null) {
+			acceptThread.cancel();
+			acceptThread = null;
+		}
+		if (clientThread != null) {
+			clientThread.cancel();
+			clientThread = null;
+		}
 		if (smartcardClient != null)
 			smartcardClient.shutdown();
 		super.onDestroy();
@@ -506,84 +486,13 @@ public class BtpcscServer extends Activity {
 		acceptThread.start();
 	}
 
-	protected void stopListening() {
-		if (acceptThread == null)
-			return;
-		try {
-			acceptThread.serverSocket.close();
-		} catch (IOException e) {
-		}
-		acceptThread = null;
-	}
-
-	protected void killConnections() {
-		if (acceptThread != null) {
-			acceptThread.cancel();
-			acceptThread = null;
-		}
-		if (clientThread != null) {
-			clientThread.cancel();
-			clientThread = null;
-		}
+	protected void log(String s) {
+		Log.v("btpcsc_server", s);
 	}
 
 	@Override
-	protected void onPause() {
-		pausedForBluetoothEnabling = enablingBluetooth;
-		super.onPause();
-		killConnections();
-	}
-
-	protected void clearLog() {
-		log = new StringBuffer();
-		fireRefreshLog();
-	}
-
-	protected void log(String s) {
-		log(s, true);
-	}
-
-	protected void log(String s, boolean addNewLine) {
-		log.append(s);
-		Log.v("btpcsc", s);
-		if (addNewLine)
-			log.append("\n");
-		fireRefreshLog();
-	}
-
-	protected void doRefreshLog() {
-		try {
-			((TextView) findViewById(R.id.text)).setText(log);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-	}
-
-	protected void fireRefreshLog() {
-		handler.sendEmptyMessage(HANDLER_REFRESH_LOG);
-	}
-
-	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-		super.onActivityResult(requestCode, resultCode, data);
-
-		enablingBluetooth = false;
-
-		if (requestCode == REQUEST_ENABLE_BT) {
-			if (resultCode == RESULT_OK) {
-				startListening();
-			} else {
-				log("Cannot start server - Bluetooth is disabled.");
-			}
-		}
-
-	}
-
-	protected void onStop() {
-		if (acceptThread != null) {
-			acceptThread.cancel();
-			acceptThread = null;
-		}
-		super.onStop();
+	public IBinder onBind(Intent intent) {
+		return binder;
 	}
 
 }
