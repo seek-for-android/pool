@@ -18,7 +18,6 @@
 #include <bluetooth/rfcomm.h>
 #include <bluetooth/sdp.h>
 #include <bluetooth/sdp_lib.h>
-#include "pcscdefines.h"
 #include "devices.h"
 
 #include "pcsc_bluetooth.h"

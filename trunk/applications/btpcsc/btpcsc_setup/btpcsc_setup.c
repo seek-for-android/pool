@@ -15,7 +15,7 @@
 #include "../btpcsc_config.h"
 
 int arg_index, mode = -1;
-char *config_file = "/etc/btpcsc/btpcsc.conf", *pcsc_config_file = "/etc/reader.conf.d/libbtpcsc", *addr = NULL;
+char *config_file = "/etc/btpcsc.conf", *pcsc_config_file = "/etc/reader.conf.d/libbtpcsc", *addr = NULL;
 
 void check_mode_not_set() {
     if (mode != -1) {
