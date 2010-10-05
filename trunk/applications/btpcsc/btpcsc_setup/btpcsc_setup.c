@@ -192,18 +192,19 @@ int remove_device() {
 
 }
 
-int update_devices() {
-    
+int update_config() {
     int result = write_config(config_file);
     if (result < 0)
         return result;
     printf("Wrote config file %s\n", config_file);
-    
-    result = write_pcsc_config(pcsc_config_file);
+   return 0;
+}
+
+int update_pcsc_config() {
+    int result = write_pcsc_config(pcsc_config_file);
     if (result < 0)
         return result;
     printf("Wrote PCSC config file %s\n", pcsc_config_file);
-
     return 0;
     
 }
@@ -319,17 +320,17 @@ int main(int argc, char *argv[]) {
     case 2:
         return_value = add_device();
         if (return_value >= 0)
-            return_value = update_devices();
+            return_value = update_config();
         break;
 
     case 3:
         return_value = remove_device();
         if (return_value >= 0)
-            return_value = update_devices();
+            return_value = update_config();
         break;
 
     case 4:
-        return_value = update_devices();
+        return_value = update_pcsc_config();
         break;
 
     case 5:
