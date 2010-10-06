@@ -110,3 +110,7 @@ So far, BTPCSC was tested on Ubuntu 9.10 and a Nexus One with smartcard-enabled 
 
 = Comments =
 Please write any comments or testing results here.
+
+
+= Links =
+A similar project for Nokia phones: http://code.google.com/p/nfcbtpcsc/
