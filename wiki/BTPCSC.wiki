@@ -37,11 +37,11 @@ EndSection
 
  * Let pcscd know to load the btpcsc library. First, you have to generate the necessary reader.conf entries. You can do this using btpcsc_setup, which will generate a config file from the configuration you wrote into /etc/btpcsc.conf.
   * If you have Ubuntu, (or any other distribution that has a /etc/reader.conf.d directory and an update-readerconf.d tool) this is very simple. Just call "btpcsc_setup -u -c /etc/reader.conf.d/libbtpcsc" and "update-reader.conf" (both as root) and you're ready to go.
-  * If you want to make the changes permantent, you can generate a temporary reader.conf file by calling "btpcsc_setup -u -c /tmp/reader.conf" and copying its contents to the end of your /etc/reader.conf
+  * If you want to make the changes permanent, you can generate a temporary reader.conf file by calling "btpcsc_setup -u -c /tmp/reader.conf" and copying its contents to the end of your /etc/reader.conf
   * If you only want to test btpcsc once, you can generate a separate reader.conf by calling "btpcsc_setup -u -c <any path and filename you want>" and then starting the pcsc daemon manually by calling "pcscd -c <the config file you generated before>" as root. You may have to kill pcscd first, ("killall pcscd", as root) and you may want to specify the options -f -a -d to see its debug output.
 
  * Install the BTPCSC server on your Android phone.
-  * If you want it to run in the background, import BTPCSCServer_Service into Eclipse, run it on your phone once and it will be started as a service on bootup. Instead, you can also install the apk from BTPCSCServer/bin.
+  * If you want it to run in the background, import BTPCSCServer_Service into Eclipse, run it on your phone once and it will be started as a service on bootup. Instead, you can also install the apk from BTPCSCServer/bin. However, at the moment, it is probably easier not to use the service, as there still seem to be some minor problems with it.
   * If you want to start it manually and also see its output, import BTPCSCServer into Eclipse and run it from there. (or via the menu after you have installed it once) Instead, you can also install the apk from BTPCSCServer_Service/bin.
 
  * Now you can just run the server, run the PC/SC daemon and you can use your Android phone as a regular PC/SC smartcard reader.
