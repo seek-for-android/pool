@@ -16,7 +16,7 @@ So far, BTPCSC has been successfully tested with testpcsc, the HelloSmartcard ap
  * The PC/SD daemon pcscd. It is in the package sources on Ubuntu, so you can install it with sudo apt-get install pcscd, on other distributions you may have to download it manually.
 
 = Installing BTPCSC =
- * Download the BTPCSC code from the SVN repository (http://seek-for-android.googlecode.com/svn/trunk/applications/btpcsc)
+ * Download the BTPCSC code either from the SVN repository (http://seek-for-android.googlecode.com/svn/trunk/applications/btpcsc) or as a Tarball <a href="http://seek-for-android.googlecode.com/files/btpcsc.tar.gz">here</a> and build it. (The Tarball already includes binaries for x86 Linux and Android 2.2, respectively)
  * x86 binaries are already included, you can, however, recompile by executing the compile script compile.sh
  * Move libbtpcsc.so from the libbtpcsc directory to your /usr/lib directory. This is the library that provides the IFD handler for PC/SC.
  * Create a config file for BTPCSC. There is a setup tool for this (btpcsc_setup in the setup directory), but it is still in development and has only been tested on Ubuntu so far, therefore its use for anything other than scanning is not recommended. Instead, you should use the example config file (libbtpcsc/btpcsc.conf.example) to create your own config file. It consists of a list of device sections, each of which has the following entries:
