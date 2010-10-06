@@ -60,11 +60,13 @@ extern "C" {
 #define BT_PCSC_CMD_ERROR 255
 
 #include <stdint.h>
+#include <pthread.h>
 
 typedef struct bt_pcsc_connection {
     int lun, channel;
     char remote_addr[18];
     int socket;
+    pthread_mutex_t mutex;
     struct bt_pcsc_connection *next;
 } bt_pcsc_connection;
 

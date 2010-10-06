@@ -26,13 +26,20 @@
 #include <stdio.h>
 #include <string.h>
 #include <stdint.h>
+#include <pthread.h>
 #include "../btpcsc_devices.h"
 #include "../btpcsc_config.h"
 #include "../btpcsc_bluetooth.h"
 #include "btpcsc_bluetoothhandler.h"
 
+pthread_mutex_t mutex_config = PTHREAD_MUTEX_INITIALIZER;
+
 virtual_reader *get_virtual_reader(DWORD Channel) {
-    parse_config("/etc/btpcsc.conf");
+
+    pthread_mutex_lock(&mutex_config);
+    if (!first_reader)
+        parse_config("/etc/btpcsc.conf");
+    pthread_mutex_unlock(&mutex_config);
 
     virtual_reader *reader;
     for (reader = first_reader; reader; reader = reader->next) {
@@ -197,6 +204,21 @@ RESPONSECODE IFDHGetCapabilities ( DWORD Lun, DWORD Tag,
 
         // Return 1 slot for now.
 	case TAG_IFD_SLOTS_NUMBER:
+            *Length = 1;
+            *Value = 1;
+            ret = IFD_SUCCESS;
+            break;
+
+        // We can work with as many readers simultaneous as we have to.
+        case TAG_IFD_SIMULTANEOUS_ACCESS:
+            *Length = 1;
+            *Value = 255;
+            ret = IFD_SUCCESS;
+            break;
+
+        // Everything is protected with mutexes, so we can safely say it's thread-safe.
+        case TAG_IFD_THREAD_SAFE:
+        case TAG_IFD_SLOT_THREAD_SAFE:
             *Length = 1;
             *Value = 1;
             ret = IFD_SUCCESS;
