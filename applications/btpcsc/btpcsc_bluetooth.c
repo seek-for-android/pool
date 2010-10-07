@@ -53,7 +53,8 @@ bt_pcsc_connection *add_connection(int lun, int channel, char *remote_addr) {
     connection->lun = lun;
     connection->channel = channel;
     connection->socket = 0;
-    strncpy(connection->remote_addr, remote_addr, 18);
+    connection->remote_addr[0] = 0;
+    strncat(connection->remote_addr, remote_addr, 17);
 
     // Append new connection to linked list or create list if no
     // connections exist.
@@ -67,7 +68,6 @@ bt_pcsc_connection *add_connection(int lun, int channel, char *remote_addr) {
     }
 
     pthread_mutex_unlock(&mutex_connections_modification);
-
     return connection;
 }
 
@@ -112,6 +112,7 @@ void remove_connection(int lun) {
 // is no such connection.
 bt_pcsc_connection *get_connection(int lun) {
     bt_pcsc_connection *connection = NULL;
+    pthread_mutex_lock(&mutex_connections_modification);
     
     // Find connection with the right lun
     connection = first_connection;
@@ -119,6 +120,7 @@ bt_pcsc_connection *get_connection(int lun) {
         connection = connection->next;
 
     // Return the pointer to the right connection (NULL if none exists)
+    pthread_mutex_unlock(&mutex_connections_modification);
     return connection;
 }
 
@@ -329,8 +331,7 @@ int bt_read_cmds(bt_pcsc_connection *connection, int n_requested_commands, uint8
 
     } while (connection->socket != 0);
 
-    if (!connection->socket)
-        return BT_PCSC_ERROR_DISCONNECTED;
+    return BT_PCSC_ERROR_DISCONNECTED;
 }
 
 
@@ -338,10 +339,11 @@ int bt_read_cmds(bt_pcsc_connection *connection, int n_requested_commands, uint8
 // Transmits an APDU over the specified connection
 int bt_send_apdu(bt_pcsc_connection *connection, uint16_t apdu_length, void *apdu) {
 
-    pthread_mutex_lock(&connection->mutex);
-
     if (connection->socket == 0)
         return BT_PCSC_ERROR_DISCONNECTED;
+
+    pthread_mutex_lock(&connection->mutex);
+
     uint8_t buffer[apdu_length + 3];
     buffer[0] = BT_PCSC_CMD_SEND_APDU;
     buffer[1] = (apdu_length >> 8) & 0xFF;
@@ -352,6 +354,7 @@ int bt_send_apdu(bt_pcsc_connection *connection, uint16_t apdu_length, void *apd
 
     if (status < 0) {
         connection->socket = 0;
+        pthread_mutex_unlock(&connection->mutex);
         return BT_PCSC_ERROR_DISCONNECTED;
     }
 
@@ -437,6 +440,7 @@ int bt_is_card_present(bt_pcsc_connection *connection) {
         return BT_PCSC_ERROR_DISCONNECTED;
     }
 
+    pthread_mutex_unlock(&connection->mutex);
     return (present_result != 0) ? 1 : 0;
 }
 
