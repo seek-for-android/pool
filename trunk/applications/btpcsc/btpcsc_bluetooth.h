@@ -92,6 +92,10 @@ int bt_recv_apdu(bt_pcsc_connection *connection, uint16_t *apdu_length, void *ap
 // Receives an APDU over the specified connection
 int bt_recv_apdu(bt_pcsc_connection *connection, uint16_t *apdu_length, void *apdu);
 
+// Determines whether the device is connected and a card is 
+// present in the selected slot
+int bt_is_card_present(bt_pcsc_connection *connection);
+
 // Asks the server how many readers it has and what their names are
 int bt_get_slots(bt_pcsc_connection *connection, char *slots[], int maxslots);
 
