@@ -18,6 +18,7 @@ With a normal PC/SC device, the PC/SC daemon pcscd calls an IFD handler which do
 
 <a href="http://seek-for-android.googlecode.com/svn/wiki/img/btpcsc_concept.png"><img src="http://seek-for-android.googlecode.com/svn/wiki/img/btpcsc_concept.png" width="600" height="800" /></a>
 
+
 = Prerequisites =
  * A smartcard-enabled Android phone. For further information about this, see [BuildingTheSystem]
  * The PC/SD daemon pcscd. It is in the package sources on Ubuntu, so you can install it with sudo apt-get install pcscd, on other distributions you may have to download it manually.
