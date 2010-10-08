@@ -14,7 +14,6 @@
  
 ====Applications====
    * [AndroidBelgiumEid]<br>The COSIC Research Group within the Katholieke Universiteit Leuven, Belgium, developed a reference implementation for the Belgium eID card on the Android platform with the Mobile Security Card. ([http://www.esat.kuleuven.be/cosic/ K.U.Leuven, ESAT/COSIC])<br><br>
+   * [BTPCSC]<br>Enables Android phones to be used as regular PC/SC smartcard readers vis Bluetooth.<br><br>
    * [OtpAuthenticator]<br>See an example with a OATH application running on the Mobile Security Card and the Android application is displaying the OTP calculated by the card<br><br>
    * [SecureFileManager]<br>A filemanager for the android platform, which is making use of a java card applet running on the Mobile Security Card, in order to cipher files.<br><br>
-   * [BTPCSC]<br>Enables Android phones to be used as regular PC/SC smartcard readers vis Bluetooth.
-<br><br>
