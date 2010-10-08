@@ -69,7 +69,6 @@ int ensure_connection_is_active(int Lun, int Channel) {
                 printf("No BT_PCSC reader with ID %d.\n", Channel);
                 return BT_PCSC_ERROR_NO_SUCH_READER;
             }
-
             connection = add_connection(Lun, Channel, reader->address);   
 
         } else {
@@ -87,7 +86,6 @@ int ensure_connection_is_active(int Lun, int Channel) {
     if (connection->socket == 0) {
         // No, try to connect.
         int result = bt_connect(connection);
-
         // Try to set the correct slot
         virtual_reader *reader = get_virtual_reader(Channel);
         if (!reader) {
@@ -147,7 +145,6 @@ RESPONSECODE IFDHCreateChannel ( DWORD Lun, DWORD Channel ) {
 
     // We'll try to establish a connection, but return success even if there is no
     // bt_pcsc server available. Otherwise, pcscd would refuse to use the device.
-
     ensure_connection_is_active(Lun, Channel);
 
     return IFD_SUCCESS;
