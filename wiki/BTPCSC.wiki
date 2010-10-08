@@ -11,6 +11,13 @@ On the Android side, BTPCSCServer is a service that is started at bootup and lis
 
 So far, BTPCSC has been successfully tested with testpcsc, the HelloSmartcard applet and OpenSC in Firefox. (see [SmartCardPKI#2.4_Use_OpenSC_on_the_phone])
 
+
+= Structure =
+
+With a normal PC/SC device, the PC/SC daemon pcscd calls an IFD handler which does all communication with the device. BTPCSC acts as a custom IFD handler (libbtpcsc.so) which directs all communication through a Bluetooth connection to a BTPCSC server on an Android device, which in turn hands it to Android's PC/SC daemon.
+
+<a href="http://seek-for-android.googlecode.com/svn/wiki/img/btpcsc_concept.png"><img src="http://seek-for-android.googlecode.com/svn/wiki/img/btpcsc_concept.png" width="600" height="800" /></a>
+
 = Prerequisites =
  * A smartcard-enabled Android phone. For further information about this, see [BuildingTheSystem]
  * The PC/SD daemon pcscd. It is in the package sources on Ubuntu, so you can install it with sudo apt-get install pcscd, on other distributions you may have to download it manually.
