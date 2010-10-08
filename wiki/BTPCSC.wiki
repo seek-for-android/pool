@@ -21,7 +21,7 @@ With a normal PC/SC device, the PC/SC daemon pcscd calls an IFD handler which do
 
 = Prerequisites =
  * A smartcard-enabled Android phone. For further information about this, see [BuildingTheSystem]
- * The PC/SD daemon pcscd. It is in the package sources on Ubuntu, so you can install it with sudo apt-get install pcscd, on other distributions you may have to download it manually.
+ * The PC/SD daemon pcscd, pcsc-lite and libbluetooth. They are all in the package sources on Ubuntu, so you can install them with sudo apt-get install pcscd libpcsclite1 libpcsclite-dev libbluetooth3 libbluetooth-dev, on other distributions you may have to download it manually.
 
 = Installing BTPCSC =
  * Download the BTPCSC code either from the SVN repository (http://seek-for-android.googlecode.com/svn/trunk/applications/btpcsc) or as a Tarball <a href="http://seek-for-android.googlecode.com/files/btpcsc1.tar.gz">here</a> and build it. (The Tarball already includes binaries for x86 Linux and Android 2.2, respectively)
