@@ -1,15 +1,16 @@
 #summary Table of Content
 
   * [Index Introduction]
+    * [SmartcardAPI SmartCard API]
     * [Devices]
-    * [SecurityConcept]
+    * [SecurityConcept Security Concept]
+    * [PCSCLite PCSC-Lite]
   * How To
-    * [BuildingTheSystem]
-    * [SmartcardAPI]
-    * [EmulatorExtension]
+    * [BuildingTheSystem Building The System]
+    * [EmulatorExtension Emulator Extension]
     * [SmartCardPKI]
   * Applications
     * [AndroidBelgiumEid]
+    * [BTPCSC Bluetooth PC/SC interface]
     * [OtpAuthenticator]
     * [SecureFileManager]
-    * [BTPCSC]
