@@ -2,15 +2,15 @@
 #sidebar TOC
 
 ====Introduction====
- * [SecurityConcept]<br>Read about the system security of the SmartCard API integration in the Android Platform
+   * [SmartcardAPI]<br>An introduction how to use the SmartCard API in the Android platform. (samples are available in svn)<br><br>
+   * [SecurityConcept]<br>Read about the system security of the SmartCard API integration in the Android Platform<br><br>
+   * [PCSCLite PCSC-Lite]<br>Discussion about the integration of the PC/SC interface<br><br>
 
 ====How To====
    * [BuildingTheSystem]<br>For details on how to compile the Android sources with SmartCard API support. ([Devices List of tested devices])<br><br>
-   * [SmartcardAPI]<br>An introduction how to use the SmartCard API in the Android platform. (samples are available in svn)<br><br>
-   * [SmartCardPKI]<br>Integration of a smart card based, standard PKI interface into  Android.<br> 
- 
-====UICC Support====
-   * [EmulatorExtension]<br>Extend the Android emulator with a PC/SC interface that enables the emulation environment to access a physical connected UICC instead of the built in (SIM) simulation<br>
+   * [SmartCardPKI]<br>Integration of a smart card based, standard PKI interface into  Android.<br><br>
+   * UICC Support<br>
+     * [EmulatorExtension]<br>Extend the Android emulator with a PC/SC interface that enables the emulation environment to access a physical connected UICC instead of the built in (SIM) simulation<br><br>
  
 ====Applications====
    * [AndroidBelgiumEid]<br>The COSIC Research Group within the Katholieke Universiteit Leuven, Belgium, developed a reference implementation for the Belgium eID card on the Android platform with the Mobile Security Card. ([http://www.esat.kuleuven.be/cosic/ K.U.Leuven, ESAT/COSIC])<br><br>
