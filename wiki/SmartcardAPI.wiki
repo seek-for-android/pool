@@ -1,20 +1,86 @@
-#summary How to use the Smartcard API in Android
+#summary How to use the !SmartCard API in Android
 
 = Introduction =
 
-The Smartcard API is a proposal for an implementation of a library that will enable Android applications to connect a Secure Element, e.g. USIM card or Mobile Security Card or others.<br/><br/>
-The interface of the library should be considered as stable and independent of the underlying transport mechanism as the developer using the library is only interested in the interface.<br/><br/>
+The !SmartCard API is a reference implementation for a set of platform extensions that will enable Android applications to connect Secure Elements, e.g. USIM card, Mobile Security Card or others.<br/><br/>
+The interface of the library should be considered as stable and independent of the underlying transport mechanism. Application developers usually care about the (stable) !SmartCard API interface whereas system integrators need to know the internals.<br/><br/>
 
 
-== smartcard-api modules ==
+== !SmartCard API modules ==
+The !SmartCard API consists of several software layers
+  * *!SmartcardService* Android remote service as the core of the smart card access<br/>Integration in `frameworks/base/packages/SmartcardService`
+  * *!SmartcardClient* Wrapper classes to hide the service binding specifics and deal as the main interface for the application developer<br/>Integration in `frameworks/base/core/java/android/smartcard`
+  * *xxxTerminal* Implementation of a Secure Element specific terminal, e.g. `UiccTerminal` or `MscTerminal`, ...<br/>Integration in `frameworks/base/packages/SmartcardService`<br/><br/>
 
-The smartcard-api consists of several modules
-  * *SmartcardService* Android remote service as the core of the smart card access<br/>Integration in `frameworks/base/packages/SmartcardService`
-  * *SmartcardClient* Wrapper classes to hide the service binding specifics and deal as the main interface for the application developer<br/>Integration in `frameworks/base/core/java/android/smartcard`
-  * *PcscJni* JNI interface for the service to connect to the pcsc-lite daemon<br/>Integration in `frameworks/base/libs/pcsc`
+== Architecture ==
+The core of the !SmartCard API is encapsulated in a remote Android service. Having a single service instance instead of a pure framework library ensure that security checks (who is accessing the service) and resource management (free a logical channel if a client dies) can be guaranteed.<br/><br/>
+However, using an Android service for an API interface is not typical for smart card applications thus additional framework classes wrap the service specifics, e.g. `SmartcardError` exception marshaling. No further logic is kept in the framework classes, clients are permitted to access the service interface directly (but need to deal with marshaling by themselves).<br/>
+The framework classes - mainly `SmartcardClient` - are just wrapping the service specifics.<br/><br/>
+After binding to the !SmartCard service instance an `ISmartCardService` handle is accessible to retrieve a card channel object with a specific terminal, e.g. UICC or MSC.<br/>
+The card channel is used for actual card communication by transferring APDUs. All channel management for logical card channels is encapsulated by the `ICardChannel` object.<br/><br/>
 
-== Using the smartcard-api ==
-Download and apply the `smartcard-api.patch` according to [http://code.google.com/p/seek-for-android/wiki/BuildingTheSystem Building building the system]<br/>
-When using Eclipse as the development environment update the SDK location to point to the correct SDK.<br/>
-Open the samples and run them on the phone. They provide a good starting point about how the smart card library can be used.<br/>
+== API interface ==
+The !SmartCard API deals with two interfaces, `ISmartCardService` and `ICardChannel`. Helper classes are not discussed here but are documented in the API.
+
+==== ISmartCardService ====
+{{{
+    /**
+     * Returns the friendly names of available smart card readers.
+     */
+    public String[] getReaders() throws CardException;
+
+    /**
+     * Returns true if a card is present in the specified reader.
+     * Returns false if a card is not present in the specified reader.
+     */
+    public boolean isCardPresent(String reader) throws CardException;
+
+    /**
+     * Opens a connection using the basic channel of the card in the
+     * specified reader and returns a channel handle.
+     * Logical channels cannot be opened with this connection.
+     * Use interface method openLogicalChannel() to open a logical channel.
+     */
+    public ICardChannel openBasicChannel(String reader) throws CardException;
+
+    /**
+     * Opens a connection using the next free logical channel of the card in the
+     * specified reader. Selects the specified applet.
+     * Selection of other applets with this connection is not supported.
+     */
+    public ICardChannel openLogicalChannel(String reader, byte[] aid) throws CardException;
+}}}
+
+==== ICardChannel ====
+{{{
+    /**
+     * Closes the specified connection and frees internal resources.
+     * A card channel will be closed.
+     */
+    void close() throws CardException;
+
+    /**
+     * Returns true> if this channel is closed, false if this is open.
+     */
+    boolean isClosed();
+
+    /**
+     * Returns true if this is a logical channel, false if this is a basic channel.
+    boolean isLogicalChannel();
+
+    /**
+     * Transmits the specified command APDU and returns the response APDU.
+     * MANAGE channel commands are not supported.
+     * Selection of applets is not supported in logical channels.
+     */
+    byte[] transmit(byte[] command) throws CardException;
+}
+}}}
+<br/><br/>
+
+== Using the !SmartCard API ==
+Download and apply the patch files according to [http://code.google.com/p/seek-for-android/wiki/BuildingTheSystem Building building the system]<br/> 
+Compile the Android platform, build the SDK and flash a [Devices device] or start a new emulator instance with !SmartCard API support.
+To develop smart card application, using Eclipse is recommended where the Android SDK location needs to point to the self compiled SDK.<br/>
+Import the samples and run them on the phone or in the emulator. They provide a good starting point about how the !SmartCard API can be used.<br/>
 <br/>
