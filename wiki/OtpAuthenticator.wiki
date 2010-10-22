@@ -100,6 +100,7 @@ data: n/a
 APDU: 00 15 00 00 00
 RESPONSE: 00 90 00 (if TOTP is used, which is default)
           01 90 00 (if HOTP is used)
+}}}
 <br/><br/><br/>
 
 = Android Application =
