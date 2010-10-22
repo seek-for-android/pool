@@ -4,6 +4,7 @@
     * [SmartcardAPI SmartCard API]
     * [SecurityConcept Security Concept]
     * [PCSCLite PCSC-Lite]
+    * [VersionHistory Version History]
   * How To
     * [BuildingTheSystem Building The System]
     * [EmulatorExtension Emulator Extension]
@@ -14,3 +15,4 @@
     * [BTPCSC Bluetooth PC/SC interface]
     * [OtpAuthenticator]
     * [SecureFileManager]
+  * [Faq FAQs]
