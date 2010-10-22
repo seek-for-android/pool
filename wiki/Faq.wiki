@@ -1,7 +1,8 @@
 #summary (In)Frequently [Answered|Asked] Question/s
-
+<br/>
 The following summary is a list of (frequent) questions that we received through Google Groups, Email and/or direct contacts over the time.
- 
+<br/><br/>
+
 <table>
 <tr><td valign='top'>*Q*</td><td>Do you plan to submit the !SmartCard API into the Android platform and when?</td></tr>
 <tr><td valign='top'>*A*</td><td>Yes - that's the overall goal of this project.</td></tr>
@@ -27,9 +28,9 @@ The following summary is a list of (frequent) questions that we received through
 <tr><td valign='top'></td><td>...we do not see PC/SC as a suitable interface for mobile phones, however we need a PC/SC link for native applications.</td></tr>
 <tr><td><br/></td><td></td></tr>
 
-<tr><td valign='top'>*Q*</td><td>Why is the !SmartCard API not exporting _ATR_, _Reset_, _PowerOn_ or _PowerOff_ methods?</td></tr>
+<tr><td valign='top'>*Q*</td><td>Why is the !SmartCard API not exporting _ATR_, _Reset_, _!PowerOn_ or _!PowerOff_ methods?</td></tr>
 <tr><td valign='top'>*A*</td><td>In short: because the Secure Elements are under control of the phone, not the user in opposite to a PC.</td></tr>
-<tr><td valign='top'></td><td>...think about a _Reset_ for the UICC where the phone goes offline before the user enters the PIN again or a _PowerOff_ on the MSC while the Email client tries to sign the mail.</td></tr>
+<tr><td valign='top'></td><td>...think about a _Reset_ for the UICC where the phone goes offline before the user enters the PIN again or a _!PowerOff_ on the MSC while the Email client tries to sign the mail.</td></tr>
 <tr><td><br/></td><td></td></tr>
 
 <tr><td valign='top'>*Q*</td><td>I have an interesting project with Android and Secure Elements, can you help me?</td></tr>
