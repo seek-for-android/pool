@@ -2,7 +2,6 @@
 
   * [Index Introduction]
     * [SmartcardAPI SmartCard API]
-    * [Devices]
     * [SecurityConcept Security Concept]
     * [PCSCLite PCSC-Lite]
   * How To
