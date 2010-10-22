@@ -24,16 +24,19 @@ import android.util.Log;
 /**
  * Smartcard service base class for channel resources.
  */
-abstract class Channel implements IChannel, IBinder.DeathRecipient  {
+class Channel implements IChannel, IBinder.DeathRecipient  {
 
 	protected final int channelNumber;
 
 	protected long handle;
 	
+	protected Terminal terminal;
+	
 	protected final IBinder binder;
 	
-	Channel(int channelNumber, ISmartcardServiceCallback callback) {
+	Channel(Terminal terminal, int channelNumber, ISmartcardServiceCallback callback) {
 		this.channelNumber = channelNumber;
+		this.terminal = terminal;
 		this.binder = callback.asBinder();
 		try {
 			binder.linkToDeath(this, 0);
@@ -75,7 +78,9 @@ abstract class Channel implements IChannel, IBinder.DeathRecipient  {
 	 * Returns the associated terminal.
 	 * @return the associated terminal.
 	 */
-	abstract Terminal getTerminal();
+	Terminal getTerminal() {
+		return terminal;
+	}
 	
 	/**
 	 * Assigns the channel handle.

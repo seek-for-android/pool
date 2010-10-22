@@ -26,8 +26,6 @@ import android.os.IBinder;
 import android.os.RemoteException;
 import android.smartcard.ISmartcardService;
 import android.smartcard.ISmartcardServiceCallback;
-import android.smartcard.pcsc.PcscException;
-import android.smartcard.pcsc.PcscJni;
 import android.util.Log;
 
 /**
@@ -35,7 +33,7 @@ import android.util.Log;
  * The service enforces the permission 'android.smartcard.service.permission.BIND'.
  */
 public final class SmartcardService extends Service {
-
+	
 	public static final String SMARTCARD_SERVICE_TAG = "SmartcardService";
 	
 	private static void clearError(SmartcardError error) {
@@ -51,10 +49,6 @@ public final class SmartcardService extends Service {
 		if (error != null) error.setError(e.getClass(), e.getMessage());
 	}
 
-	/**
-	 * Keeps the PC/SC resource manager context
-	 */
-	private long pcscContext = 0;
 
 	/**
 	 * For now this list is setup in onCreate(), not changed later and therefore not synchronized.
@@ -76,22 +70,6 @@ public final class SmartcardService extends Service {
 				channel.close();
 			} catch (Exception e) {
 				setError(error, e);
-			}
-		}
-
-		public byte[] getAtr(long hChannel, SmartcardError error) throws RemoteException {
-			clearError(error);
-			IChannel channel = getChannel(hChannel, error);
-			if (channel == null) {
-				return null;
-			}
-			
-			try {
-				byte[] atr = channel.getAtr();
-				return atr;
-			} catch (Exception e) {
-				setError(error, e);
-				return null;
 			}
 		}
 
@@ -208,25 +186,17 @@ public final class SmartcardService extends Service {
     public void onCreate() {
 		Log.v(SMARTCARD_SERVICE_TAG, Thread.currentThread().getName() + " smartcard service onCreate");
 
-		// fill the PC/SC reader list from the daemon
 		try {
-			pcscContext = PcscJni.establishContext(PcscJni.Scope.User);
-		} catch (PcscException e) {
-			Log.e(SMARTCARD_SERVICE_TAG, Thread.currentThread().getName() + " cannot initialize PC/SC resource manager");
-		}
-		if (pcscContext > 0) {
-			String[] readers = null;
-			try {
-				readers = PcscJni.listReaders(pcscContext, null);
-			} catch (PcscException e) {
-				Log.e(SMARTCARD_SERVICE_TAG, Thread.currentThread().getName() + " cannot list PC/SC readers");
-			}
-			
-			for (String reader: readers) {
-				terminals.put(reader, new PcscTerminal(reader, pcscContext));				
-				Log.v(SMARTCARD_SERVICE_TAG, Thread.currentThread().getName() + " adding PC/SC reader " + reader);
-			}
-		}
+			UiccTerminal uiccTerminal = new UiccTerminal(this);
+			terminals.put(uiccTerminal.getName(), uiccTerminal);				
+			Log.v(SMARTCARD_SERVICE_TAG, Thread.currentThread().getName() + " adding " + uiccTerminal.getName());
+		} catch (Throwable e) {}
+		
+		try {
+			MscTerminal mscTerminal = new MscTerminal(this);
+			terminals.put(mscTerminal.getName(), mscTerminal);				
+			Log.v(SMARTCARD_SERVICE_TAG, Thread.currentThread().getName() + " adding " + mscTerminal.getName());
+		} catch (Throwable e) {}
     }
 
     @Override
@@ -236,13 +206,6 @@ public final class SmartcardService extends Service {
 			terminal.closeChannels();
     	}
 		
-		if (pcscContext != 0) {
-			try {
-				PcscJni.releaseContext(pcscContext);
-			} catch (PcscException ignore) {
-			}
-			pcscContext = 0;
-		}
 		Log.v(SMARTCARD_SERVICE_TAG, Thread.currentThread().getName() + " ... smartcard service onDestroy");
     }
     

@@ -64,25 +64,6 @@ final class CardChannel implements ICardChannel {
 	}
 
 	/**
-	 * Returns the ATR of the card connected with this channel.
-	 * @return the ATR of the card connected with this channel.
-     * @throws IllegalStateException
-     *           if the smartcard service is not connected.
-     * @throws IllegalArgumentException
-     *           if the channel handle is unknown.
-	 * @throws CardException
-	 *           if a smartcard service communication error occurred.
-	 */
-	public byte[] getAtr() throws CardException {
-		assertOpen();
-		try {
-			return client.getAtr(hChannel);
-		} catch (IllegalArgumentException e) {
-			throw new IllegalStateException("channel is closed");
-		}
-	}
-
-	/**
      * Returns <code>true</code> if the card channel was closed previously.
      * @return <code>true</code> if the card channel was closed previously.
      *           <code>false</code> if the card channel is still valid.
