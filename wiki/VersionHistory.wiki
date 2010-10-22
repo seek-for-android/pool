@@ -1,0 +1,28 @@
+#summary Summary of the release notes of all SmartCard API versions
+
+= !SmartCard API =
+
+=== v1.1 - 22.10.2010 ===
+ * getAtr() removed from ISmartcardService
+ * major internal redesign
+   * PC/SC transport system replaced by Terminal implementations on the Java layer
+   * PC/SC moved to a separate package that accesses the !SmartCard API with a single IFD Handler
+ * UICC handler added with reference implementation for OEMs and emulator support
+   * AT commands AT+CCHO, AT+CGLA, AT+CCHC and AT+CSIM supported
+ * new sample application _!ApduTester_ available
+<br/><br/>
+
+=== v1.0 - 09.07.2010 ===
+ * !SmartCardService as the final architecture for a smart card library for Android
+ * minor bugfixes
+   * mapping of logical channels to CLA bytes
+   * compilation issues
+ * renaming of seek service to !SmartcardService
+ * shutdown() function added
+ * integrated in Android build system
+ * Channel management not ISO conform to allow non ISO CLA bytes to be used for channel management
+<br/><br/>
+
+=== v0.1 - 18.01.2010 ===
+ * initial *alpha* release
+ * first release of a _Service-based_ approach for the main instance of the library instead of plain framework extensions
