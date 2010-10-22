@@ -2,12 +2,12 @@
 #sidebar TOC
 
 ====Introduction====
-   * [SmartcardAPI]<br>An introduction how to use the SmartCard API in the Android platform. (samples are available in svn)<br><br>
-   * [SecurityConcept]<br>Read about the system security of the SmartCard API integration in the Android Platform<br><br>
-   * [PCSCLite PCSC-Lite]<br>Discussion about the integration of the PC/SC interface<br><br>
+   * [SmartcardAPI SmartCard API]<br>An introduction how to use the !SmartCard API in the Android platform. (samples are available in svn)<br><br>
+   * [SecurityConcept Security Concept]<br>Read about the system security of the !SmartCard API integration in the Android platform<br><br>
+   * [PCSCLite PCSC-Lite]<br>Discussion about the integration of the PC/SC interface in the !SmartCard API stack for native code<br><br>
 
 ====How To====
-   * [BuildingTheSystem]<br>For details on how to compile the Android sources with SmartCard API support. ([Devices List of tested devices])<br><br>
+   * [BuildingTheSystem]<br>For details on how to compile the Android sources with !SmartCard API support. ([Devices List of tested devices])<br><br>
    * [SmartCardPKI]<br>Integration of a smart card based, standard PKI interface into  Android.<br><br>
    * UICC Support<br>
      * [EmulatorExtension]<br>Extend the Android emulator with a PC/SC interface that enables the emulation environment to access a physical connected UICC instead of the built in (SIM) simulation<br><br>
@@ -17,4 +17,4 @@
    * [AndroidBelgiumEid]<br>The COSIC Research Group within the Katholieke Universiteit Leuven, Belgium, developed a reference implementation for the Belgium eID card on the Android platform with the Mobile Security Card. ([http://www.esat.kuleuven.be/cosic/ K.U.Leuven, ESAT/COSIC])<br><br>
    * [BTPCSC]<br>Enables Android phones to be used as regular PC/SC smartcard readers vis Bluetooth.<br><br>
    * [OtpAuthenticator]<br>See an example with a OATH application running on the Mobile Security Card and the Android application is displaying the OTP calculated by the card<br><br>
-   * [SecureFileManager]<br>A filemanager for the android platform, which is making use of a java card applet running on the Mobile Security Card, in order to cipher files.<br><br>
+   * [SecureFileManager]<br>A filemanager for the Android platform to cipher files on the Mobile Security Card with a smart card applet.<br><br>
