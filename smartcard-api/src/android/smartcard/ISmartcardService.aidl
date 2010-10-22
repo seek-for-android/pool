@@ -31,11 +31,6 @@ interface ISmartcardService {
     void closeChannel(long hChannel, out SmartcardError error);
     
     /**
-     * Returns the ATR of the smart card connected with the specified channel.
-     */
-    byte[] getAtr(long hChannel, out SmartcardError error);
-    
-    /**
      * Returns the friendly names of available smart card readers.
      */
     String[] getReaders(out SmartcardError error);

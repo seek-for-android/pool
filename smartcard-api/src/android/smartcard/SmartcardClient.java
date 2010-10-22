@@ -312,25 +312,6 @@ public class SmartcardClient {
 	}
 	
 	/**
-	 * Returns the ATR of the card connected with this channel.
-	 */
-	byte[] getAtr(long hChannel) throws CardException {
-		if (smartcardService == null)
-			throw new IllegalStateException("smartcard service not connected");
-		
-		SmartcardError error = new SmartcardError();
-		byte[] atr;
-		try {
-			atr = smartcardService.getAtr(hChannel, error);
-		} catch (Exception e) {
-			throw new CardException(e);
-		}
-		error.throwException();
-		
-		return atr;
-	}
-	
-	/**
 	 * Transmits the specified command APDU and returns the response APDU.
 	 * MANAGE channel commands are not allowed.
 	 * Applet selection commands are not allowed if this is a logical channel. 

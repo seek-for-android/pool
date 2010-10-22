@@ -21,7 +21,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Random;
 
-import android.smartcard.ISmartcardServiceCallback;
+import android.content.Context;
 
 /**
  * Smartcard service base class for terminal resources.
@@ -31,6 +31,8 @@ abstract class Terminal implements ITerminal {
 	/** Random number generator used for handle creation. */
 	static Random random = new Random();
 
+	protected Context context;
+	
 	/**
 	 * Returns a concatenated response.
 	 * @param r1
@@ -96,11 +98,10 @@ abstract class Terminal implements ITerminal {
     
 	protected final String name;
 	
-	protected volatile byte[] atr;
-	
 	protected volatile boolean isConnected;
 	
-	Terminal(String name) {
+	Terminal(String name, Context context) {
+		this.context = context;
 		this.name = name;
 	}
 	
@@ -127,7 +128,7 @@ abstract class Terminal implements ITerminal {
 	void closeChannel(Channel channel) throws CardException {
 		synchronized (channels) {
 			try {
-				closeLogicalChannel(channel.getChannelNumber());
+				internalCloseLogicalChannel(channel.getChannelNumber());
 			} finally {
 				channels.remove(channel.getHandle());
 				if (isConnected && channels.isEmpty()) {
@@ -139,35 +140,17 @@ abstract class Terminal implements ITerminal {
 			}
 		}
 	}
-	
+		
 	/**
-	 * Implementation of the MANAGE CHANNEL close command.
-	 * @param channelNumber
-	 * @throws CardException
-	 */
-	protected void closeLogicalChannel(int channelNumber) throws CardException {
-		if (channelNumber > 0) {
-			byte cla = (byte) channelNumber;
-			if (channelNumber > 3) {
-				cla |= 0x40;
-			}
-			byte[] manageChannelClose = new byte[] { cla, 0x70, (byte) 0x80, (byte) channelNumber };
-			transmit(manageChannelClose, 2, 0x9000, 0xFFFF, "MANAGE CHANNEL");
-		}
-	}
-	
-	/**
-	 * Creates a terminal specific channel instance.
+	 * Creates a channel instance.
 	 * @param channelNumber
 	 *           the channel number according to ISO 7816-4.
 	 * @param callback
 	 *           the callback used to detect the death of the client.
-	 * @return a terminal specific channel instance.
+	 * @return a channel instance.
 	 */
-	protected abstract Channel createChannel(int channelNumber, ISmartcardServiceCallback callback);
-	
-	byte[] getAtr() {
-		return atr;
+	protected Channel createChannel(int channelNumber, ISmartcardServiceCallback callback) {
+		return new Channel(this, channelNumber, callback);
 	}
 	
 	private IChannel getBasicChannel() {
@@ -203,6 +186,20 @@ abstract class Terminal implements ITerminal {
 	protected abstract void internalDisconnect() throws CardException;
 	
 	/**
+	 * Implementation of the MANAGE CHANNEL open command.
+	 * @return the number of the logical channel according to ISO 7816-4.
+	 * @throws CardException
+	 */
+	abstract protected int internalOpenLogicalChannel(byte[] aid) throws CardException;
+	
+	/**
+	 * Implementation of the MANAGE CHANNEL close command.
+	 * @param channelNumber
+	 * @throws CardException
+	 */
+	abstract protected void internalCloseLogicalChannel(int channelNumber) throws CardException;
+
+	/**
 	 * Implements the terminal specific transmit operation.
 	 * @param command
 	 *            the command APDU to be transmitted.
@@ -211,6 +208,7 @@ abstract class Terminal implements ITerminal {
 	 *           if the transmit operation failed.
 	 */
 	protected abstract byte[] internalTransmit(byte[] command) throws CardException;
+
 	
 	public long openBasicChannel(ISmartcardServiceCallback callback) throws CardException {
 		if (callback == null)
@@ -229,23 +227,7 @@ abstract class Terminal implements ITerminal {
 			return hChannel;
 		}
 	}
-	
-	/**
-	 * Implementation of the MANAGE CHANNEL open command.
-	 * @return the number of the logical channel according to ISO 7816-4.
-	 * @throws CardException
-	 */
-	protected int openLogicalChannel() throws CardException {
-		byte[] manageChannelCommand = new byte[] { 0x00, 0x70, 0x00, 0x00, 0x01 };
-		byte[] rsp = transmit(manageChannelCommand, 3, 0x9000, 0xFFFF, "MANAGE CHANNEL");
-		if (rsp.length != 3)
-			throw new CardException("unsupported MANAGE CHANNEL response data");
-		int channelNumber = rsp[0] & 0xFF;
-		if (channelNumber == 0 || channelNumber > 19)
-			throw new CardException("invalid logical channel number returned");
-		return channelNumber;
-	}
-	
+		
 	public long openLogicalChannel(byte[] aid, ISmartcardServiceCallback callback) throws CardException {
 		if (callback == null)
 			throw new NullPointerException("callback must not be null");
@@ -257,27 +239,14 @@ abstract class Terminal implements ITerminal {
 			
 			int channelNumber;
 			try {
-				channelNumber = openLogicalChannel();
+				channelNumber = internalOpenLogicalChannel(aid);
 			} catch (CardException e) {
 				if (isConnected && channels.isEmpty()) {
 					internalDisconnect();
 				}
 				throw e;
 			}
-				
-			try {
-				selectApplet(channelNumber, aid);
-			} catch (CardException e) {
-				try {
-					closeLogicalChannel(channelNumber);
-				} catch (Exception ignore) {
-				}
-				if (channels.isEmpty()) {
-					internalDisconnect();
-				}
-				throw e;
-			}
-				
+								
 			Channel logicalChannel = createChannel(channelNumber, callback);
 			long hChannel = registerChannel(logicalChannel);	
 			return hChannel;				
@@ -341,26 +310,6 @@ abstract class Terminal implements ITerminal {
 		return hChannel;
 	}
 
-	/**
-	 * Implementation of the SELECT applet by AID command.
-	 * @param channelNumber
-	 *            the number of the logical channel to be used.
-	 * @param aid
-	 *            the AID of the applet to be selected.
-	 * @throws CardException
-	 */
-	protected void selectApplet(int channelNumber, byte[] aid) throws CardException {
-		byte[] selectCommand = new byte[aid.length + 6];
-		selectCommand[0] = (byte) channelNumber;
-		if (channelNumber > 3)
-			selectCommand[0] |= 0x40;
-		selectCommand[1] = (byte) 0xA4;
-		selectCommand[2] = 0x04;
-		selectCommand[4] = (byte) aid.length;
-		System.arraycopy(aid, 0, selectCommand, 5, aid.length);
-		transmit(selectCommand, 2, 0x9000, 0xFFFF, "SELECT");
-	}
-	
 	/**
 	 * Transmits the specified command and returns the response.
 	 * Optionally checks the response length and the response status word.

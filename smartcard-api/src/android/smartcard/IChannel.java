@@ -29,12 +29,6 @@ interface IChannel {
 	void close() throws CardException;
 	
 	/**
-	 * Returns the ATR of the card connected with this channel.
-	 * @return the ATR of the card connected with this channel.
-	 */
-	byte[] getAtr();
-	
-	/**
 	 * Returns the channel number according to ISO 7816-4.
 	 * @return the channel number according to ISO 7816-4.
 	 */

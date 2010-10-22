@@ -14,26 +14,21 @@
  * limitations under the License.
  */
 
-package android.smartcard;
+package android.smartcard.msc;
 
 /**
- * PC/SC daemon channel implementation.
+ * A <code>MscNotPresentException</code> is thrown when the card has been
+ * removed.
  */
-final class PcscChannel extends Channel {
+public class MscNotPresentException extends MscException {
+	private static final long serialVersionUID = -4439753011927809814L;
 
-	private final PcscTerminal terminal;
-	
-	PcscChannel(PcscTerminal terminal, int channelNumber, ISmartcardServiceCallback callback) {
-		super(channelNumber, callback);
-		this.terminal = terminal;
+	/**
+	 * Constructs a new MSC not present exception with <code>null</code> as its
+	 * detail message and undefined error code.
+	 */
+	public MscNotPresentException() {
+		super();
 	}
 
-	public byte[] getAtr() {
-		return terminal.getAtr();
-	}
-	
-	@Override
-	public Terminal getTerminal() {
-		return terminal;
-	}
 }

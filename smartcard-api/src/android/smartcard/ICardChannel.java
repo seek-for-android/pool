@@ -30,14 +30,6 @@ public interface ICardChannel {
 	void close() throws CardException;
 
 	/**
-	 * Returns the ATR of the card connected with this channel.
-	 * @return the ATR of the card connected with this channel.
-	 * @throws CardException
-	 *           if a smartcard service communication error occurred.
-	 */
-	byte[] getAtr() throws CardException;
-	
-	/**
 	 * Returns <code>true</code> if this channel is closed, <code>false</code> if this is open.
 	 * @return <code>true</code> if this channel is closed, <code>false</code> if this is open.
 	 */
