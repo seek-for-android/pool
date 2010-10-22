@@ -5,6 +5,7 @@
    * [SmartcardAPI SmartCard API]<br>An introduction how to use the !SmartCard API in the Android platform. (samples are available in svn)<br><br>
    * [SecurityConcept Security Concept]<br>Read about the system security of the !SmartCard API integration in the Android platform<br><br>
    * [PCSCLite PCSC-Lite]<br>Discussion about the integration of the PC/SC interface in the !SmartCard API stack for native code<br><br>
+   * [VersionHistory Version History]<br>Summary of the release notes of all !SmartCard API versions<br><br>
 
 ====How To====
    * [BuildingTheSystem]<br>For details on how to compile the Android sources with !SmartCard API support. ([Devices List of tested devices])<br><br>
@@ -18,3 +19,6 @@
    * [BTPCSC]<br>Enables Android phones to be used as regular PC/SC smartcard readers vis Bluetooth.<br><br>
    * [OtpAuthenticator]<br>See an example with a OATH application running on the Mobile Security Card and the Android application is displaying the OTP calculated by the card<br><br>
    * [SecureFileManager]<br>A filemanager for the Android platform to cipher files on the Mobile Security Card with a smart card applet.<br><br>
+
+
+==== [Faq FAQs] ====
