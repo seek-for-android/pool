@@ -58,7 +58,7 @@ RESPONSE: 00 00 00 00 00 00 00 01 90 00
 CLA:  00
 INS:  12
 P1:   <number of digits>
-P2:   00
+P2:   00 (if TOTP is used), 01 (if HOTP is used)
 P3:   14
 data: <20 hex bytes seed>
 
@@ -77,6 +77,29 @@ data: n/a
 APDU: 00 13 00 00 00
 RESPONSE: 37 35 35 32 32 34 90 00
 }}}
+=== RESET ===
+{{{
+CLA:  00
+INS:  14
+P1:   00
+P2:   00
+P3:   00
+data: n/a
+
+APDU: 00 14 00 00 00
+RESPONSE: 90 00
+}}}
+=== GET HOTP STATUS ===
+{{{
+CLA:  00
+INS:  15
+P1:   00
+P2:   00
+P3:   00
+data: n/a
+APDU: 00 15 00 00 00
+RESPONSE: 00 90 00 (if TOTP is used, which is default)
+          01 90 00 (if HOTP is used)
 <br/><br/><br/>
 
 = Android Application =
