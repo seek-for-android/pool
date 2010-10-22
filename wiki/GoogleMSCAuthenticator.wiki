@@ -24,7 +24,7 @@ If you wish to test the Google MSC Authenticator, you will require:
 
 *The Android application is for demonstration and test purposes only. Do not use in production environments!*
 
- * Download the installation files from the [http://seek-for-android.googlecode.com/files/OtpAuthenticator.tgz Download page]
+ * Download the installation files from the [http://seek-for-android.googlecode.com/files/otpauth.tar.gz Download page]
  * Install the `oath.cap` file on the Mobile Security Card with JLoad or other Java Card compliant Global Platform loader tools.<br>
 *Note*: JLoad is included in the [https://www.cardsolutions-shop.com/shop/gi-de/ Mobile Security Developer's Kit]
  * Install with `OtpAuthenticator.apk` on your Android device equipped with a Mobile Security Card and {{{MSC_SmartcardService}}} installed.<br>
