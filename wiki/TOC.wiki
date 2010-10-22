@@ -10,6 +10,7 @@
     * [EmulatorExtension Emulator Extension]
     * [SmartCardPKI]
   * Applications
+    * [GoogleMSCAuthenticator]
     * [AndroidBelgiumEid]
     * [BTPCSC Bluetooth PC/SC interface]
     * [OtpAuthenticator]
