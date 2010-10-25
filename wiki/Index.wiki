@@ -12,6 +12,7 @@
    * [SmartCardPKI]<br>Integration of a smart card based, standard PKI interface into  Android.<br><br>
    * [UICCSupport]<br>
      * [EmulatorExtension]<br>Extend the Android emulator with a PC/SC interface that enables the emulation environment to access a physical connected UICC instead of the built in (SIM) simulation<br><br>
+   * [SmartcardWebserver Smart Card Web Server]<br>Browse data located on the UICC.<br><br>
  
 ====Applications====
    * [GoogleMSCAuthenticator]<br>Smartcard-based two-step authentication for Gmail on Android phones<br><br>
