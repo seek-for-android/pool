@@ -9,3 +9,5 @@ Modern SIM cards have been enhanced by many more functionalities than simple use
 
 The [http://seek-for-android.googlecode.com/files/smartcard-webserver_1.0.tgz smart card web server patch] adds support for SCWS to the Android framework. Once the patches have been applied, web pages on an SCWS enabled SIM card can be accessed under the URL _http://localhost:3516_. Additionally, the radio interface layer (RIL) must support the bearer independent protocol (BIP). On current Android phones, the RIL does not support BIP. 
 For this reason the smart card web server patch includes an emulator extension (emulator.patch), which adds BIP support to the emulator's RIL (reference-ril). See EmulatorExtension for how to build the emulator with extensions.
+
+http://seek-for-android.googlecode.com/svn/wiki/img/SmartcardWebserverScreenshot.png
