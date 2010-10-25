@@ -1,4 +1,4 @@
-#summary How to use the !SmartCard API in Android
+#summary How to use the SmartCard API in Android
 
 = Introduction =
 
@@ -7,10 +7,26 @@ The interface of the library should be considered as stable and independent of t
 
 
 == !SmartCard API modules ==
+<table>
+<tr>
+<td valign="top" width=35%>
 The !SmartCard API consists of several software layers
   * *!SmartcardService* Android remote service as the core of the smart card access<br/>Integration in `frameworks/base/packages/SmartcardService`
   * *!SmartcardClient* Wrapper classes to hide the service binding specifics and deal as the main interface for the application developer<br/>Integration in `frameworks/base/core/java/android/smartcard`
-  * *xxxTerminal* Implementation of a Secure Element specific terminal, e.g. `UiccTerminal` or `MscTerminal`, ...<br/>Integration in `frameworks/base/packages/SmartcardService`<br/><br/>
+  * *xxxTerminal* Implementation of a Secure Element specific terminal, e.g. `UiccTerminal` or `MscTerminal`, ...<br/>Integration in `frameworks/base/packages/SmartcardService`
+</td>
+<td width=5%>
+</td>
+<td width=60%>
+<a alt="view large image" href=http://seek-for-android.googlecode.com/svn/wiki/img/SCAPI_modules.png>
+<img src=http://seek-for-android.googlecode.com/svn/wiki/img/SCAPI_modules.png width=250 height=235/>
+</a>
+<br/>
+Click to enlarge
+</td>
+</tr>
+</table>
+<br/><br/>
 
 == Architecture ==
 The core of the !SmartCard API is encapsulated in a remote Android service. Having a single service instance instead of a pure framework library ensure that security checks (who is accessing the service) and resource management (free a logical channel if a client dies) can be guaranteed.<br/><br/>
