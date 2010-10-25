@@ -10,9 +10,9 @@
 ====How To====
    * [BuildingTheSystem]<br>For details on how to compile the Android sources with !SmartCard API support. ([Devices List of tested devices])<br><br>
    * [SmartCardPKI]<br>Integration of a smart card based, standard PKI interface into  Android.<br><br>
-   * [UICCSupport]<br>
+   * [UICCSupport]<br><br>
      * [EmulatorExtension]<br>Extend the Android emulator with a PC/SC interface that enables the emulation environment to access a physical connected UICC instead of the built in (SIM) simulation<br><br>
-   * [SmartcardWebserver Smart Card Web Server]<br>Browse data located on the UICC.<br><br>
+     * [SmartcardWebserver Smart Card Web Server]<br>Browse data located on the UICC with BIP extensions in the Android SIM Toolkit framework.<br><br>
  
 ====Applications====
    * [GoogleMSCAuthenticator]<br>Smartcard-based two-step authentication for Gmail on Android phones<br><br>
