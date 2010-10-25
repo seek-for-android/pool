@@ -1,0 +1,31 @@
+#summary UICC access from outside the baseband processor.
+
+= Introduction =
+
+The UICC (SIM card) is connected to the baseband processor, but not to the application processor. The Android system runs on the application processor, and so has limited access to the SIM card only. Access to the SIM card is provided by the baseband processor over AT commands (e.g. AT+CPIN, AT+CRSM). For example, the AT+CRSM command allows file access for files located on the SIM card.
+
+
+= Details =
+
+In order to access card applications on the SIM card using the [SmartcardAPI] like on any other secure element (e.g. the Mobile Security Card), the baseband processor must provide some additional AT commands to enable transparent APDU exchange. For security reasons the APDU exchange must be limited to logical channels between the Android world and the card applications. The basic channel of the UICC must be reserved to the baseband processor.
+
+The 3GPP TS 27.007 Technical Specification describes all the AT commands needed.
+ * AT+CSIM (Generic SIM access)
+ <code>+CSIM=<length>,<command>
++CSIM: <length>,<response></code>
+ The AT+CSIM command transmits the _command_ APDU to the SIM card, and returns the _response_ APDU to the caller. This command allows exchange of any APDU, and should be handled with great care. The baseband must limit the range of _command_ APDUs to the essential needs.
+ * AT+CCHO (Open Logical Channel)
+ <code>+CCHO=<dfname>
+<sessionid></code>
+ The AT+CCHO commands opens a logical channel to the card application _dfname_, and returns a _sessionid_. The _sessionid_ is to be used when sending commands with the AT+CGLA command. 
+ * AT+CCHC (Close Logical Channel)
+ <code>+CCHC=<sessionid></code>
+ This command asks the baseband processor to close a communication session with the UICC.
+ * AT+CGLA (Generic UICC Logical Channel Access)
+ <code>+CGLA=<sessionid>,<length>,<command>
++CGLA: <length>,<response></code>
+ The AT+CGLA command transmits the _command_ APDU to the selected card application, and returns the _response_ APDU to the caller.
+
+The [http://seek-for-android.googlecode.com/files/uicc_1.0.tgz UICC patch] adds support for SIM card access to the telephony framework. The additional telephony framework methods shall be available for the [SmartcardAPI] exclusively.
+
+One the baseband processor supports the required AT commands, and the UICC patch has been applied, the [SmartcardAPI] supports access to the SIM card with mentioned limitations. Current Android mobile phones' RIL implementations do not support the required AT commands. For this reason the UICC patch includes an emulator extension (emulator.patch), which adds support for the required AT commands to the emulator's RIL implementation (reference-ril). 
