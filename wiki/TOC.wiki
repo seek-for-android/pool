@@ -7,10 +7,10 @@
     * [VersionHistory Version History]
   * How To
     * [BuildingTheSystem Building The System]
-    * [EmulatorExtension Emulator Extension]
     * [SmartCardPKI]
-    * [SmartcardWebserver Smart Card Web Server]
     * [UICCSupport UICC Support]
+      * [EmulatorExtension Emulator Extension]
+      * [SmartcardWebserver Smart Card Web Server]
   * Applications
     * [GoogleMSCAuthenticator]
     * [AndroidBelgiumEid]
