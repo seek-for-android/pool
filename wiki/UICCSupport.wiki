@@ -26,6 +26,6 @@ The 3GPP TS 27.007 Technical Specification describes all the AT commands needed.
 +CGLA: <length>,<response></code>
  The AT+CGLA command transmits the _command_ APDU to the selected card application, and returns the _response_ APDU to the caller.
 
-The [http://seek-for-android.googlecode.com/files/uicc_1.0.tgz UICC patch] adds support for SIM card access to the telephony framework. The additional telephony framework methods shall be available for the [SmartcardAPI] exclusively.
+The [http://seek-for-android.googlecode.com/files/smartcard-api_1.1.tgz UICC patch] (uicc.patch) adds support for SIM card access to the telephony framework. The additional telephony framework methods shall be available for the [SmartcardAPI] exclusively.
 
 One the baseband processor supports the required AT commands, and the UICC patch has been applied, the [SmartcardAPI] supports access to the SIM card with mentioned limitations. Current Android mobile phones' RIL implementations do not support the required AT commands. For this reason the UICC patch includes an [EmulatorExtension emulator extension] (emulator.patch), which adds support for the required AT commands to the emulator's RIL implementation (reference-ril). 
