@@ -3,15 +3,15 @@
 = Introduction =
 
 The Android emulator is only supporting a primitive 'fake' SIM card which cannot be used to extend the Sim Toolkit framework. On real devices, the RIL library is very restrictive in terms of STK support.<br/>
-This patch enables the Android emulator to forward any APDU traffic (AT+CRSM commands) to a real SIM card that is connected through a PC/SC card reader and accessible with pcsc-lite running on the host.
+This patch enables the Android emulator to forward any APDU traffic (AT+CRSM, AT+CPIN, etc. commands) to a real SIM card that is connected through a PC/SC card reader and accessible with pcsc-lite running on the host. Additionally, this patch adds the missing support for the Sim Toolkit framework to the emulator's RIL implementation (reference-ril).
 <br/><br/>
 
 
 == Applying the patch to the emulator sources ==
 
-  * Download the [http://seek-for-android.googlecode.com/files/emulator_extensions.tar.gz patch archive]
-  * Unpack the patch archive: <code>tar xfvz emulator_extensions.tar.gz</code>
-  * Apply the patches in the root folder of the Android source tree: <code>patch -p1 < hardware_ril.patch; patch -p1 < external_qemu.patch</code>
+  * Download the [http://seek-for-android.googlecode.com/files/smartcard-webserver_1.0.tgz patch archive]
+  * Unpack the patch archive: <code>tar xfvz smartcard-webserver_1.0.tgz</code>
+  * Apply the patch(es) in the root folder of the Android source tree: <code>patch -p1 < emulator.patch</code>Note: the emulator extensions are no longer provided as a separate download file, but only together with e.g. the SCWS patches. However, the emulator extension patches (emulator.patch) still work without any additional patches.
   * Download and build pcsc-lite:
 {{{
 tar xfvj pcsc-lite-<version>.tar.bz2
