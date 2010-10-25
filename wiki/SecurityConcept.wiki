@@ -1,5 +1,44 @@
-#summary One-sentence summary of this page.
+#summary Security considerations for the !SmartCard API
 
-===Security Considerations===
-The Android platform provides a permission scheme (see http://developer.android.com/guide/topics/security/security.html) to control access to several extended framework functions. This scheme is transferred to the Smartcard API (android.permission.smartcard) to ensure that the user knows if an application is accessing the smart card. Additionally an APDU filtering scheme within the IFD Handlers can block malicious commands to the card. 
-Access to the lower layer components such as PC/SC lite will be protected with the standard Android mechanisms. 
+===Introduction===
+Introducing a !SmartCard API in the Android platform enables security related services for application developers. Access to secure elements should be as open as possible - _the Android way_ - and not protected per default with certificate checks as in other mobile platforms.<br/>
+However, it needs to be ensured that access to sensitive services can still be controlled and/or protected to hinder malicious applications to interfere with the system.<br/><br/>
+
+===Android Security===
+Android is a multi-process system, where each application (and parts of the system) runs in its own process. Most security between applications and the system is enforced at the process level via standard Linux facilities, such as user and group IDs that are assigned to applications. Additional finer-grained security features are provided via a _permission_ mechanism.<br/>
+This mechanism enforces restrictions on the specific operations which a particular process can perform, and per-URI permissions for granting ad-hoc access to specific pieces of data.
+<br/>For more details, see http://developer.android.com/guide/topics/security/security.html.<br/>
+
+=====Permissions=====
+The !SmartCard API uses the Android permission scheme to protect access to secure elements. Therefore it defines a permission `android.permission.SMARTCARD` that a client application must request in its manifest in order to obtain access to the API.<br/>
+At install time, the user is asked whether or not the application should receive access to his or her secure element.<br/>
+Access to the lower layer components such as the secure element specific terminal implementation will be protected with the standard Android mechanisms.
+
+=====Root Access=====
+The whole Android security scheme is based on standard UID/GID checks, therefore _root access_ to the phone will overcome all security mechanism.<br/>
+For example, it is possible that a _root_ user replaces APKs or native system services with modified versions that contain tracers or or hooks for other applications.<br/><br/>
+The !SmartCard API relies on a *non-rooted phone* in order to ensure the security scheme like all other Android services!<br/><br/>
+
+===!SmartCard API System Security===
+<table>
+<tr>
+<td valign="top" width=35%>
+The !SmartCard API system security discussion addresses the mechanism that needs to be in place that client applications cannot overcome the !SmartCard API interface by using the lower level components directly.<br/><br/>
+In order to protect the low level components, the !SmartCard API remote process is installed and registered with a unique UID/GID: *smartcard*<br/><br/>
+All low level components and methods check for the caller UID and - if not `smartcard` - throw an exception.<br/><br/>
+</td>
+<td width=5%>
+</td>
+<td width=60%>
+<a alt="view large image" href=http://seek-for-android.googlecode.com/svn/wiki/img/SCAPI_hacking.png>
+<img src=http://seek-for-android.googlecode.com/svn/wiki/img/SCAPI_hacking.png width=250 height=235/>
+</a>
+<br/>
+Click to enlarge
+</td>
+</tr>
+</table>
+
+===!SmartCard API Access Control Scheme===
+The access control scheme is the discussion about the protection mechanism that only allowed Android applications are allowed to access specific Java Card applets depending on their certificate.<br/>
+In combination with access control, an APDU filter scheme (based on APDU whitelists) is established to have a more details controls over the access mechanism 
