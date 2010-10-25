@@ -1,4 +1,4 @@
-#summary Security considerations for the !SmartCard API
+#summary Security considerations for the SmartCard API
 
 ===Introduction===
 Introducing a !SmartCard API in the Android platform enables security related services for application developers. Access to secure elements should be as open as possible - _the Android way_ - and not protected per default with certificate checks as in other mobile platforms.<br/>
