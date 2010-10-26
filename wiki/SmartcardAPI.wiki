@@ -18,7 +18,7 @@ The !SmartCard API consists of several software layers
 <td width=5%>
 </td>
 <td width=60%>
-<a alt="view large image" href=http://seek-for-android.googlecode.com/svn/wiki/SCAPI_modules.png>
+<a alt="view large image" href=http://code.google.com/p/seek-for-android/wiki/SCAPI_modules_png>
 <img src=http://seek-for-android.googlecode.com/svn/wiki/img/SCAPI_modules.png width=250 height=235/>
 </a>
 <br/>
