@@ -2,17 +2,20 @@
 #sidebar TOC
 
 ====Introduction====
-   * [SmartcardAPI SmartCard API]<br>An introduction how to use the !SmartCard API in the Android platform. (samples are available in svn)<br><br>
+   * [SmartcardAPI SmartCard API]<br>An introduction about the architecture and concept of the !SmartCard API for the Android platform.<br><br>
    * [SecurityConcept Security Concept]<br>Read about the system security of the !SmartCard API integration in the Android platform<br><br>
-   * [PCSCLite PCSC-Lite]<br>Discussion about the integration of the PC/SC interface in the !SmartCard API stack for native code<br><br>
+   * [PCSCLite PCSC-Lite Discussion]<br>Discussion about the integration of the PC/SC interface in the !SmartCard API stack for native code<br><br>
    * [VersionHistory Version History]<br>Summary of the release notes of all !SmartCard API versions<br><br>
 
 ====How To====
    * [BuildingTheSystem]<br>For details on how to compile the Android sources with !SmartCard API support. ([Devices List of tested devices])<br><br>
-   * [SmartCardPKI]<br>Integration of a smart card based, standard PKI interface into  Android.<br><br>
-   * [UICCSupport]<br><br>
-     * [EmulatorExtension]<br>Extend the Android emulator with a PC/SC interface that enables the emulation environment to access a physical connected UICC instead of the built in (SIM) simulation<br><br>
-     * [SmartcardWebserver Smart Card Web Server]<br>Browse data located on the UICC with BIP extensions in the Android SIM Toolkit framework.<br><br>
+   * [UsingSmartCardAPI Using the SmartCard API]<br>Writing Android applications with access to Secure Elements using the !SmartCard API<br><br>
+   * [SmartCardPKI PKI Support on Android]<br>Integration of a smart card based, standard PKI interface into  Android.<br><br>
+
+====UICC Support====
+   * [UICCSupport AT Command Extensions]<br>Specification of the AT Command Interface required for the !SmartCard API support on real devices<br><br>
+   * [EmulatorExtension]<br>Extend the Android emulator with a PC/SC interface that enables the emulation environment to access a physical connected UICC instead of the built in (SIM) simulation<br><br>
+   * [SmartcardWebserver Smart Card Web Server]<br>Browse data located on the UICC with BIP extensions in the Android SIM Toolkit framework.<br><br>
  
 ====Applications====
    * [GoogleMSCAuthenticator]<br>Smartcard-based two-step authentication for Gmail on Android phones<br><br>
