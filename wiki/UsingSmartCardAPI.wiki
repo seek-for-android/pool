@@ -1,0 +1,3 @@
+#summary Writing Android applications with access to Secure Elements using the SmartCard API
+
+_TODO_
