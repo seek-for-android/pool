@@ -15,18 +15,18 @@ On a mobile phone, the baseband processor (exclusively) occupies the basic chann
 A Secure Element based on [http://java.sun.com/javacard/ Java Card technology] can have multiple applications installed but only a single application (=Java Card Applet) can be active in a logical channel<br/>
 Having two Android applications running simultaneously, both requiring different Java Card Applets for secure operations might cause trouble as only one Applet is currently selected when both applications share the same channel.<br/><br/>
 The concept of *logical channels* is supported by (most) Secure Elements where each offline application can have its own independent communication channel with one dedicated card application. APDU communication has to be filtered (CLA byte with channel information) which is not in the scope of PC/SC today.<br/>
-The SmartCard API encapsulates the logical channel management and only provides a filtered APDU API in contract to PC/SC.<br/><br/>
+The !SmartCard API encapsulates the logical channel management and only provides a filtered APDU API in contract to PC/SC.<br/><br/>
 
 ===PC/SC daemon background task===
 The PC/SC resource manager is a daemon that is running in the background that handles client requests (e.g. connect, transmit, ...) and synchronizes parallel access from multiple applications.<br/><br/>
 Having this daemon running all the time on a mobile phone requires resources even if no smartcard-aware application is active. Changes within the existing PC/SC lite implementation will create an Android specific branch from the very well maintained code by the PCSC lite developer(s).<br/><br/>
 
 ===Why is a PC/SC interface required?===
-PC/SC is - as discussed - a widely used standard and a lot of existing native Linux applications have build-in support. WiFi access through *wpa_supplicant* is an example or OpenSC, ...
-When native Android components (wpa_supplicant, ...) need smart card access the PC/SC standard defines a well known interface so we integrate an PC/SC IFDHandler for Android that connects to the Java-based SmartCard API, thus providing access for native smart card clients.<br/><br/>
+PC/SC is - as discussed - a widely used standard and a lot of existing native Linux applications have build-in support. !WiFi access through *wpa_supplicant* is an example or OpenSC, ...
+When native Android components (wpa_supplicant, ...) need smart card access the PC/SC standard defines a well known interface so we integrate an PC/SC IFDHandler for Android that connects to the Java-based !SmartCard API, thus providing access for native smart card clients.<br/><br/>
 
 =Conclusion=
-A PC/SC IFDHandler for Android that connects to the Java-based SmartCard API will be integrated in the overall concept, thus providing access for native smart card clients.
+A PC/SC IFDHandler for Android that connects to the Java-based !SmartCard API will be integrated in the overall concept, thus providing access for native smart card clients.
 Due to security considerations, it needs to be ensured that only system modules can access the PC/SC daemon but is not accessible through third-party Android applications.
 
 
