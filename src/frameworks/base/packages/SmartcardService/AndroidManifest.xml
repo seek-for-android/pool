@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+      package="android.smartcard">
+    
+    <permission android:label="SmartcardServicePermission label"
+                android:protectionLevel="dangerous"
+                android:name="android.permission.SMARTCARD">
+    </permission>
+    
+    <application android:label="SmartcardService">
+        <service android:enabled="true"
+                 android:name="android.smartcard.SmartcardService"
+                 android:process=":remote"
+                 android:permission="android.permission.SMARTCARD">
+            <intent-filter>
+                <action android:name="android.smartcard.ISmartcardService" />
+            </intent-filter>
+        </service>
+    </application>
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+</manifest> 
+
