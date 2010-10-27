@@ -37,4 +37,9 @@ The following summary is a list of (frequent) questions that we received through
 <tr><td valign='top'>*A*</td><td>Please make your idea public! If interesting we might be able to support you with hardware, at least support.</td></tr>
 <tr><td><br/></td><td></td></tr>
 
+<tr><td valign='top'>*Q*</td><td>When I include the self compiled android.jar in Eclipse I get error messages like _Unable to get buffer of resource asset file_?</td></tr>
+<tr><td valign='top'>*A*</td><td>The issue of this is that `resources.arsc` is larger than the `aapt` tool allows. Edit the file _frameworks/base/include/utils/Asset.h_:<br/>
+Change `UNCOMPRESS_DATA_MAX = 1 * 1024 * 1024` to `3 * 1024 * 1024` and rebuild the SDK.</td></tr>
+<tr><td><br/></td><td></td></tr>
+
 </table>
