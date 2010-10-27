@@ -40,5 +40,6 @@ Click to enlarge
 </table>
 
 ===!SmartCard API Access Control Scheme===
-The access control scheme is the discussion about the protection mechanism that only allowed Android applications are allowed to access specific Java Card applets depending on their certificate.<br/>
-In combination with access control, an APDU filter scheme (based on APDU whitelists) is established to have a more details controls over the access mechanism 
+The access control scheme is the discussion about a protection mechanism that only allowed (or certified) Android applications are able to access specific Java Card applets depending on the APK certificate from the issuer.<br/>
+In combination with pure access control, an APDU filter scheme (based on an APDU whitelist) is established to have a more detailed control over the access mechanism of an application.<br><br>
+Please contact G&D directly for more information regarding a signature based security scheme. 
