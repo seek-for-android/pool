@@ -1,4 +1,4 @@
-#summary How to compile the Android sources with !SmartCard API and SCWS support
+#summary How to compile the Android sources with SmartCard API and SCWS support
 
 = Introduction =
 
@@ -21,7 +21,7 @@ Please make sure what patches should be applied. We separated the different use 
 ===== !SmartCard API support =====
 Download the [http://seek-for-android.googlecode.com/files/smartcard-api_1.1.tgz smartcard-api_1.1.tgz] patch and extract the content:
  * `smartcard-api.patch` - patches the Java sources for !SmartCard API support
- * `uicc.patch` - patches the Android Telephony framework with the required UICC methods for the !SmartCard API UiccTerminal support
+ * `uicc.patch` - patches the Android Telephony framework with the required UICC methods for the !SmartCard API !UiccTerminal support
  * `emulator.patch` - patches the qemu module to support the PC/SC UICC from the host system instead of the (standard) SIM simulator
 
 ===== Smart Card Web Server support =====
