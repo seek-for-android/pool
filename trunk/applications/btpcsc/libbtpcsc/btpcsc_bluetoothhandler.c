@@ -146,7 +146,6 @@ RESPONSECODE IFDHCreateChannel ( DWORD Lun, DWORD Channel ) {
     // We'll try to establish a connection, but return success even if there is no
     // bt_pcsc server available. Otherwise, pcscd would refuse to use the device.
     ensure_connection_is_active(Lun, Channel);
-
     return IFD_SUCCESS;
 
 }
@@ -401,26 +400,35 @@ RESPONSECODE IFDHTransmitToICC ( DWORD Lun, SCARD_IO_HEADER SendPci,
   */
 
     int status;
-
-    *RxLength = 0;
-
     // Make sure we have a connection
     status = ensure_connection_is_active(Lun, -1);
-    if (status < 0) return IFD_ICC_NOT_PRESENT;
+    if (status < 0) {
+        *RxLength = 0;
+        return IFD_ICC_NOT_PRESENT;
+    }
 
     // This shouldn't fail, we have just made sure there is one.
     bt_pcsc_connection *connection = get_connection(Lun);
-    if (!connection) return IFD_ICC_NOT_PRESENT;
-
+    if (!connection) {
+        *RxLength = 0;
+        return IFD_ICC_NOT_PRESENT;
+    }
+    
     // Try to send the APDU to the server
     status = bt_send_apdu(connection, TxLength, TxBuffer);
-    if (status < 0) return IFD_ICC_NOT_PRESENT;
+    if (status < 0) {
+        *RxLength = 0;
+        return IFD_ICC_NOT_PRESENT;
+    }
 
     // Try to receive the reply from the server.
-    uint16_t _RxLength;
+    uint16_t _RxLength = *RxLength;
     status = bt_recv_apdu(connection, &_RxLength, RxBuffer);
     *RxLength = _RxLength;
-    if (status < 0) return IFD_ICC_NOT_PRESENT;
+    if (status < 0) {
+        *RxLength = 0;
+        return IFD_ICC_NOT_PRESENT;
+    }
 
     return IFD_SUCCESS;
   
