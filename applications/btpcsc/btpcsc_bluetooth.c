@@ -390,34 +390,51 @@ int bt_recv_apdu(bt_pcsc_connection *connection, uint16_t *apdu_length, void *ap
 
     if (connection->socket == 0)
         return BT_PCSC_ERROR_DISCONNECTED;
-
     pthread_mutex_lock(&connection->mutex);
-
     int status;
     uint8_t _length[2];
     uint16_t length;
-    *apdu_length = 0;
 
+    // Handle all other commands until we get the RECV_APDU command
     status = bt_read_cmd(connection, BT_PCSC_CMD_RECV_APDU);
     if (status < 0) {
         connection->socket = 0;
+        *apdu_length = 0;
         pthread_mutex_unlock(&connection->mutex);
         return BT_PCSC_ERROR_DISCONNECTED;
     }
 
+    // Read the reply APDU length as an unsigned 2 byte network order integer
     status = read(connection->socket, _length, 2);
     if (status < 0) {
         connection->socket = 0;
+        *apdu_length = 0;        
         pthread_mutex_unlock(&connection->mutex);
         return BT_PCSC_ERROR_DISCONNECTED;
     }
 
     length = (_length[0] << 8) | _length[1];
 
-    if (length > 0) {
+    // Check if the supplied buffer is big enough
+    if (length > *apdu_length) {
+        // No. Throw away the reply and return an error.
+        *apdu_length = 0;
+        uint8_t emergency_buffer[length];
+        status = read(connection->socket, emergency_buffer, length);
+        if (status < 0) {
+            connection->socket = 0;
+            pthread_mutex_unlock(&connection->mutex);
+            return BT_PCSC_ERROR_DISCONNECTED;
+        }
+        
+        return BT_PCSC_ERROR_INSUFFICIENT_BUFFER;
+        
+    } else if (length > 0) {
+        // Read the reply APDU
         status = read(connection->socket, apdu, length);
         if (status < 0) {
             connection->socket = 0;
+            *apdu_length = 0;
             pthread_mutex_unlock(&connection->mutex);
             return BT_PCSC_ERROR_DISCONNECTED;
         }
