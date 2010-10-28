@@ -127,6 +127,19 @@ extern "C" {
 #define TAG_IFD_POLLING_THREAD          0x0FB0
 #define TAG_IFD_POLLING_THREAD_KILLABLE 0x0FB1
 
+#define DBG_CRITICAL 1
+#define DBG_ERROR 2
+#define DBG_WARNING 3
+#define DBG_VERBOSE 4
+#define DBG_APDU 5
+#define DBG_DETAILED 6
+
+#define COLOR_BLUE "\33[34m"
+#define COLOR_RED "\33[31m"
+#define COLOR_BRIGHT_RED "\33[01;31m"
+#define COLOR_GREEN "\33[32m"
+#define COLOR_NORMAL "\33[0m"
+
   RESPONSECODE IFDHCreateChannel ( DWORD, DWORD );
   RESPONSECODE IFDHCloseChannel ( DWORD );
   RESPONSECODE IFDHGetCapabilities ( DWORD, DWORD, PDWORD, 

@@ -24,13 +24,18 @@
 ******************************************************************/
 
 #include <stdio.h>
+#include <stdlib.h>
 #include <string.h>
 #include <stdint.h>
 #include <pthread.h>
+#include <errno.h>
+#include <stdarg.h>
 #include "../btpcsc_devices.h"
 #include "../btpcsc_config.h"
 #include "../btpcsc_bluetooth.h"
 #include "btpcsc_bluetoothhandler.h"
+
+#define BTPCSC_DEBUG_LEVEL DBG_VERBOSE
 
 pthread_mutex_t mutex_config = PTHREAD_MUTEX_INITIALIZER;
 
@@ -52,52 +57,119 @@ virtual_reader *get_virtual_reader(DWORD Channel) {
     return NULL;
 }
 
-// Reestablishes the given connection if it is closed
-int ensure_connection_is_active(int Lun, int Channel) {
+void dbg_print(int level, const char *format, ...) {
+    #ifdef BTPCSC_DEBUG_LEVEL
+    #if BTPCSC_DEBUG_LEVEL > 0
+    if (BTPCSC_DEBUG_LEVEL >= level) {
+        va_list ap;
+        char buffer[1024];
+        va_start(ap, format);
+        vsprintf(buffer, format, ap);
+        va_end(ap);
+        printf("%s[btpcsc #%x] %s%s\n", COLOR_RED, (int) pthread_self(), buffer, COLOR_NORMAL);
+    }
+    #endif
+    #endif
+}
 
+void dbg_print_hex(int level, const char *message, int length, void *data) {
+    #ifdef BTPCSC_DEBUG_LEVEL
+    #if BTPCSC_DEBUG_LEVEL > 0
+    if (BTPCSC_DEBUG_LEVEL >= level) {
+        char *data_hex = (char*) malloc((length*3 + 1) * sizeof(char));
+        char *c = data_hex, *b = (char*) data;
+        
+        int i;
+        for (i = 0; i < length; i++) {
+            sprintf(c, " %.2x", *b++);
+            c += 3;
+        }
+    
+        printf("%s[btpcsc #%x] %s%s%s\n", COLOR_RED, (int) pthread_self(), message, data_hex, COLOR_NORMAL);
+    }
+    #endif
+    #endif
+}
+
+// Ensures that the connection data to the given Lun and channel is in the list
+int ensure_connection_exists(int Lun, int Channel) {
+    
     bt_pcsc_connection *connection = get_connection(Lun);
 
     // Do we have any connection data?
     if (connection == NULL) {
+    
         if (Channel >= -1) {
             // There is no connection data, but the channel is still open.
             // (Or has just been opened by CreateChannel)
 
             // Try to find the reader matching the given channel in the config file
             virtual_reader *reader = get_virtual_reader(Channel);
-            if (!reader) {
-                printf("No BT_PCSC reader with ID %d.\n", Channel);
-                return BT_PCSC_ERROR_NO_SUCH_READER;
+            char *address = 0;
+            if (reader) {
+                address = reader->address;
+                connection = add_connection(Lun, Channel, address, 1);
+            } else {
+                dbg_print(DBG_ERROR, "No BT_PCSC reader with ID %d configured.", Channel);
+                connection = add_connection(Lun, Channel, address, 0);
             }
-            connection = add_connection(Lun, Channel, reader->address);   
 
         } else {
             // The channel was already closed. pcscd should know this.
+            dbg_print(DBG_WARNING, "Channel already closed.");
             return BT_PCSC_ERROR_CONNECTION_CHANNEL_CLOSED;
         }
     }
+    
+    return BT_PCSC_SUCCESS;
 
-    if (!connection)
+}
+
+// Reestablishes the given connection if it is closed
+int ensure_connection_is_active(int Lun, int Channel) {
+
+    dbg_print(DBG_DETAILED, "ensure_connection_is_active(%d, %d)", Lun, Channel);
+
+    int result;
+    result = ensure_connection_exists(Lun, Channel);
+    if (result < 0)
+        return result;
+        
+    bt_pcsc_connection *connection = get_connection(Lun);
+    
+    if (!connection) {
+        dbg_print(DBG_ERROR, "No connection info stored.");
         return BT_PCSC_ERROR_DISCONNECTED;
+    }
+    
+    if (!connection->valid) {
+        return BT_PCSC_ERROR_NO_SUCH_READER;
+    }
 
     Channel = connection->channel;
 
     // Is the bluetooth connection still active?
     if (connection->socket == 0) {
         // No, try to connect.
-        int result = bt_connect(connection);
+        result = bt_connect(connection);
+
+        if (result < 0) {
+            dbg_print(DBG_VERBOSE, "Could not connect: %d %s", result, strerror(errno));
+            return result;
+        }
+        
         // Try to set the correct slot
         virtual_reader *reader = get_virtual_reader(Channel);
         if (!reader) {
-            printf("No BT_PCSC reader with ID %d.\n", Channel);
+            dbg_print(DBG_WARNING, "No BTPCSC reader with ID %d configured.", Channel);
             return BT_PCSC_ERROR_NO_SUCH_READER;
         }
         if (result >= 0 && strlen(reader->slot) > 0) {
             // Try to set the specified slot
-            int result = bt_set_slot(connection, reader->slot);
+            result = bt_set_slot(connection, reader->slot);
             if (result == BT_PCSC_ERROR_INVALID_SLOT)
-                printf("Specified slot %s of reader %s (ID %d) is not available, using \
-                    default slot instead.\n", reader->slot, reader->name, Channel);
+                dbg_print(DBG_VERBOSE, "Specified slot %s of reader %s (ID %d) is not available, using \
+                    default slot instead.", reader->slot, reader->name, Channel);
             else
                 return result;
         }
@@ -145,7 +217,8 @@ RESPONSECODE IFDHCreateChannel ( DWORD Lun, DWORD Channel ) {
 
     // We'll try to establish a connection, but return success even if there is no
     // bt_pcsc server available. Otherwise, pcscd would refuse to use the device.
-    ensure_connection_is_active(Lun, Channel);
+    dbg_print(DBG_VERBOSE, "CreateChannel(%d, %d)", Lun, Channel);
+    ensure_connection_exists(Lun, Channel);
     return IFD_SUCCESS;
 
 }
@@ -163,6 +236,7 @@ RESPONSECODE IFDHCloseChannel ( DWORD Lun ) {
      IFD_COMMUNICATION_ERROR     
   */
   
+    dbg_print(DBG_VERBOSE, "CloseChannel(%d)", Lun);
     bt_pcsc_connection *connection = get_connection(Lun);
 
     if (connection) {
@@ -193,6 +267,8 @@ RESPONSECODE IFDHGetCapabilities ( DWORD Lun, DWORD Tag,
      IFD_SUCCESS
      IFD_ERROR_TAG
   */
+
+    dbg_print(DBG_VERBOSE, "GetCapabilities(%d, %d)", Lun, Tag);
 
     RESPONSECODE ret = IFD_ERROR_TAG;
 
@@ -255,6 +331,8 @@ RESPONSECODE IFDHSetCapabilities ( DWORD Lun, DWORD Tag,
      IFD_ERROR_SET_FAILURE
      IFD_ERROR_VALUE_READ_ONLY
   */
+  
+    dbg_print(DBG_VERBOSE, "SetCapabilities(%d, %d)", Lun, Tag);
 
     // TODO: Actually implement this, if needed.
     return IFD_SUCCESS;
@@ -281,6 +359,8 @@ RESPONSECODE IFDHSetProtocolParameters ( DWORD Lun, DWORD Protocol,
      IFD_COMMUNICATION_ERROR
      IFD_PROTOCOL_NOT_SUPPORTED
   */
+  
+    dbg_print(DBG_VERBOSE, "SetProtocolParameters(%d, %d)", Lun, Protocol);
 
     // We don't really need any of this - we don't care about protocols.
     return IFD_SUCCESS;
@@ -327,7 +407,7 @@ RESPONSECODE IFDHPowerICC ( DWORD Lun, DWORD Action,
      IFD_COMMUNICATION_ERROR
      IFD_NOT_SUPPORTED
   */
-
+  
     int result;
 
     bt_pcsc_connection *connection;
@@ -336,13 +416,18 @@ RESPONSECODE IFDHPowerICC ( DWORD Lun, DWORD Action,
 
     // Cannot reset on the smartphone, just do the same thing as in power up.
     case IFD_RESET:
+        dbg_print(DBG_VERBOSE, "PowerICC(%d) Reset", Lun);    
+    
     case IFD_POWER_UP:
+        if (Action == IFD_POWER_UP)
+            dbg_print(DBG_VERBOSE, "PowerICC(%d) Power up", Lun);    
         *AtrLength = 2;
         memcpy(Atr, "\x3B\x00", 2);
         break;
 
     // Just disconnect, if it hasn't happened already.
     case IFD_POWER_DOWN:
+        dbg_print(DBG_VERBOSE, "PowerICC(%d) Power down", Lun);    
         *AtrLength = 0;
         Atr = NULL;
         result = 0;
@@ -399,6 +484,9 @@ RESPONSECODE IFDHTransmitToICC ( DWORD Lun, SCARD_IO_HEADER SendPci,
      IFD_PROTOCOL_NOT_SUPPORTED
   */
 
+    dbg_print(DBG_VERBOSE, "Transmit(%d)", Lun);
+    dbg_print_hex(DBG_APDU, "Transmitted APDU:", TxLength, TxBuffer);        
+
     int status;
     // Make sure we have a connection
     status = ensure_connection_is_active(Lun, -1);
@@ -411,6 +499,7 @@ RESPONSECODE IFDHTransmitToICC ( DWORD Lun, SCARD_IO_HEADER SendPci,
     bt_pcsc_connection *connection = get_connection(Lun);
     if (!connection) {
         *RxLength = 0;
+        dbg_print(DBG_ERROR, "Strange: Connection is null in transmit");
         return IFD_ICC_NOT_PRESENT;
     }
     
@@ -418,6 +507,7 @@ RESPONSECODE IFDHTransmitToICC ( DWORD Lun, SCARD_IO_HEADER SendPci,
     status = bt_send_apdu(connection, TxLength, TxBuffer);
     if (status < 0) {
         *RxLength = 0;
+        dbg_print(DBG_ERROR, "Transmit failed with status %d", status);
         return IFD_ICC_NOT_PRESENT;
     }
 
@@ -427,8 +517,11 @@ RESPONSECODE IFDHTransmitToICC ( DWORD Lun, SCARD_IO_HEADER SendPci,
     *RxLength = _RxLength;
     if (status < 0) {
         *RxLength = 0;
+        dbg_print(DBG_ERROR, "Receive failed with status %d", status);        
         return IFD_ICC_NOT_PRESENT;
     }
+
+    dbg_print_hex(DBG_APDU, "Transmitted APDU:", *RxLength, RxBuffer);     
 
     return IFD_SUCCESS;
   
@@ -457,6 +550,9 @@ RESPONSECODE IFDHControl ( DWORD Lun, PUCHAR TxBuffer,
 
     // TODO: Figure out what this is supposed to do in the first place.
 
+    dbg_print(DBG_VERBOSE, "Control(%d)", Lun);
+    dbg_print_hex(DBG_VERBOSE, "Control command:", TxLength, TxBuffer);
+    
     return IFD_SUCCESS;
 
 }
@@ -473,14 +569,21 @@ RESPONSECODE IFDHICCPresence( DWORD Lun ) {
   */
 
     int status;
-
     status = ensure_connection_is_active(Lun, -1);
-    if (status < 0) return IFD_ICC_NOT_PRESENT;
+    
+    if (status < 0) {
+        dbg_print(DBG_VERBOSE, "Presence(%d) - Connection error %d", Lun, status);
+        return IFD_ICC_NOT_PRESENT;
+    }
+    
     bt_pcsc_connection *connection = get_connection(Lun);
     int result = bt_is_card_present(connection);
-//        if (result < 0)
-//            printf("\33[31m[bt_pcsc] Error %d\33[0m\n", result);
+    if (result < 0)
+        dbg_print(DBG_VERBOSE, "Presence(%d) - Connection error %d", Lun, result);    
+    else
+        dbg_print(DBG_VERBOSE, "Presence(%d) - Card is %spresent", Lun, (result == 0) ? "NOT " : "");
 
     return (result > 0) ? IFD_ICC_PRESENT : IFD_ICC_NOT_PRESENT;
 
 }
+
