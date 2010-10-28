@@ -70,6 +70,7 @@ extern "C" {
 typedef struct bt_pcsc_connection {
     int lun, channel;
     char remote_addr[18];
+    char valid;
     int socket;
     pthread_mutex_t mutex;
     struct bt_pcsc_connection *next;
@@ -78,7 +79,7 @@ typedef struct bt_pcsc_connection {
 
 
 // Creates a new connection, adds it to the list and returns a pointer to it.
-bt_pcsc_connection *add_connection(int lun, int channel, char *remote_addr);
+bt_pcsc_connection *add_connection(int lun, int channel, char *remote_addr, char valid);
 
 // Removes a connection, but does NOT close it.
 void remove_connection(int lun);

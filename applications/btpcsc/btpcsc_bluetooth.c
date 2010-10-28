@@ -45,8 +45,7 @@ pthread_mutex_t mutex_connections_modification = PTHREAD_MUTEX_INITIALIZER;
 
 // Creates a new connection, adds it to the list and returns a pointer
 // to it.
-bt_pcsc_connection *add_connection(int lun, int channel, char *remote_addr) {
-
+bt_pcsc_connection *add_connection(int lun, int channel, char *remote_addr, char valid) {
     pthread_mutex_lock(&mutex_connections_modification);
 
     // Initialise connection
@@ -55,10 +54,14 @@ bt_pcsc_connection *add_connection(int lun, int channel, char *remote_addr) {
     connection->channel = channel;
     connection->socket = 0;
     connection->remote_addr[0] = 0;
-    strncat(connection->remote_addr, remote_addr, 17);
+    connection->valid = valid;
+    connection->next = 0;
+    if (valid)
+        strncat(connection->remote_addr, remote_addr, 17);
 
     // Append new connection to linked list or create list if no
     // connections exist.
+
     if (first_connection) {
         bt_pcsc_connection *last_connection = first_connection;
         while (last_connection->next)
@@ -114,14 +117,15 @@ void remove_connection(int lun) {
 bt_pcsc_connection *get_connection(int lun) {
     bt_pcsc_connection *connection = NULL;
     pthread_mutex_lock(&mutex_connections_modification);
-    
+
     // Find connection with the right lun
-    connection = first_connection;
+    connection = first_connection;    
     while (connection && connection->lun != lun)
-        connection = connection->next;
+            connection = connection->next;
 
     // Return the pointer to the right connection (NULL if none exists)
     pthread_mutex_unlock(&mutex_connections_modification);
+
     return connection;
 }
 
@@ -231,6 +235,7 @@ int bt_connect(bt_pcsc_connection *connection) {
 
     uint8_t uuid[] = BT_PCSC_UUID;
     connection->socket = 0;
+    
     int channel = find_channel_by_uuid(connection->remote_addr, uuid);
 
     if (channel < 0) {
@@ -256,6 +261,7 @@ int bt_connect(bt_pcsc_connection *connection) {
     // Try to establish a connection
     status = connect(s, (struct sockaddr *) &addr, sizeof(addr));
     if (status < 0) {
+        close(s);    
         pthread_mutex_unlock(&connection->mutex);
         return BT_PCSC_ERROR_CONNECTION_CONNECT;
     }
@@ -266,11 +272,13 @@ int bt_connect(bt_pcsc_connection *connection) {
 
     if (status < 0) {
         connection->socket = 0;
+        close(s);        
         pthread_mutex_unlock(&connection->mutex);
         return BT_PCSC_ERROR_DISCONNECTED;
     }
 
     if (memcmp(buffer, ack_code, 4) != 0) {
+        close(s);    
         pthread_mutex_unlock(&connection->mutex);
         return BT_PCSC_ERROR_INVALID_ACK;
     }
@@ -286,6 +294,7 @@ int handle_error_command(bt_pcsc_connection *connection) {
     uint8_t error;
     int status = read(connection->socket, &error, 1);
     if (status < 0) {
+        close(connection->socket);    
         connection->socket = 0;
         return BT_PCSC_ERROR_DISCONNECTED;
     }
@@ -307,6 +316,7 @@ int handle_command(bt_pcsc_connection *connection, uint8_t cmd) {
 
     switch (cmd) {
     case BT_PCSC_CMD_DISCONNECT:
+        close(connection->socket);    
         connection->socket = 0;
         break;
     case BT_PCSC_CMD_NOT_SUPPORTED:
@@ -336,6 +346,7 @@ int bt_read_cmds(bt_pcsc_connection *connection, int n_requested_commands, uint8
 
         int status = read(connection->socket, &cmd, 1);
         if (status < 0) {
+        close(connection->socket);    
             connection->socket = 0;
             return BT_PCSC_ERROR_DISCONNECTED;
         }
@@ -373,6 +384,7 @@ int bt_send_apdu(bt_pcsc_connection *connection, uint16_t apdu_length, void *apd
     int status = write(connection->socket, buffer, apdu_length + 3);
 
     if (status < 0) {
+        close(connection->socket);    
         connection->socket = 0;
         pthread_mutex_unlock(&connection->mutex);
         return BT_PCSC_ERROR_DISCONNECTED;
@@ -398,6 +410,7 @@ int bt_recv_apdu(bt_pcsc_connection *connection, uint16_t *apdu_length, void *ap
     // Handle all other commands until we get the RECV_APDU command
     status = bt_read_cmd(connection, BT_PCSC_CMD_RECV_APDU);
     if (status < 0) {
+        close(connection->socket);    
         connection->socket = 0;
         *apdu_length = 0;
         pthread_mutex_unlock(&connection->mutex);
@@ -407,6 +420,7 @@ int bt_recv_apdu(bt_pcsc_connection *connection, uint16_t *apdu_length, void *ap
     // Read the reply APDU length as an unsigned 2 byte network order integer
     status = read(connection->socket, _length, 2);
     if (status < 0) {
+        close(connection->socket);    
         connection->socket = 0;
         *apdu_length = 0;        
         pthread_mutex_unlock(&connection->mutex);
@@ -422,6 +436,7 @@ int bt_recv_apdu(bt_pcsc_connection *connection, uint16_t *apdu_length, void *ap
         uint8_t emergency_buffer[length];
         status = read(connection->socket, emergency_buffer, length);
         if (status < 0) {
+            close(connection->socket);            
             connection->socket = 0;
             pthread_mutex_unlock(&connection->mutex);
             return BT_PCSC_ERROR_DISCONNECTED;
@@ -433,6 +448,7 @@ int bt_recv_apdu(bt_pcsc_connection *connection, uint16_t *apdu_length, void *ap
         // Read the reply APDU
         status = read(connection->socket, apdu, length);
         if (status < 0) {
+            close(connection->socket);            
             connection->socket = 0;
             *apdu_length = 0;
             pthread_mutex_unlock(&connection->mutex);
@@ -458,6 +474,7 @@ int bt_is_card_present(bt_pcsc_connection *connection) {
     uint8_t cmd = BT_PCSC_CMD_GET_PRESENT;
     status = write(connection->socket, &cmd, 1);
     if (status < 0) {
+        close(connection->socket);        
         connection->socket = 0;
         pthread_mutex_unlock(&connection->mutex);
         return BT_PCSC_ERROR_DISCONNECTED;
@@ -465,6 +482,7 @@ int bt_is_card_present(bt_pcsc_connection *connection) {
 
     status = bt_read_cmd(connection, BT_PCSC_CMD_GET_PRESENT_RESULT);
     if (status < 0) {
+        close(connection->socket);        
         connection->socket = 0;
         pthread_mutex_unlock(&connection->mutex);
         return status;
@@ -473,6 +491,7 @@ int bt_is_card_present(bt_pcsc_connection *connection) {
     uint8_t present_result;
     status = read(connection->socket, &present_result, 1);
     if (status < 0) {
+        close(connection->socket);        
         connection->socket = 0;
         pthread_mutex_unlock(&connection->mutex);
         return BT_PCSC_ERROR_DISCONNECTED;
@@ -492,6 +511,7 @@ int bt_get_slots(bt_pcsc_connection *connection, char *slots[], int maxslots) {
     int status;
     status = write(connection->socket, buffer, 2);
     if (status < 0) {
+        close(connection->socket);        
         connection->socket = 0;
         pthread_mutex_unlock(&connection->mutex);
         return BT_PCSC_ERROR_DISCONNECTED;
@@ -499,6 +519,7 @@ int bt_get_slots(bt_pcsc_connection *connection, char *slots[], int maxslots) {
 
     status = bt_read_cmd(connection, BT_PCSC_CMD_GET_SLOTS_RESULT);
     if (status < 0) {
+        close(connection->socket);        
         connection->socket = 0;
         pthread_mutex_unlock(&connection->mutex);
         return BT_PCSC_ERROR_DISCONNECTED;
@@ -507,6 +528,7 @@ int bt_get_slots(bt_pcsc_connection *connection, char *slots[], int maxslots) {
     uint8_t nslots = 0;
     status = read(connection->socket, &nslots, 1);
     if (status < 0) {
+        close(connection->socket);        
         connection->socket = 0;
         pthread_mutex_unlock(&connection->mutex);
         return BT_PCSC_ERROR_DISCONNECTED;
@@ -519,6 +541,7 @@ int bt_get_slots(bt_pcsc_connection *connection, char *slots[], int maxslots) {
         uint8_t length = 0;
         status = read(connection->socket, &length, 1);
         if (status < 0) {
+            close(connection->socket);            
             connection->socket = 0;
             pthread_mutex_unlock(&connection->mutex);
             return BT_PCSC_ERROR_DISCONNECTED;
@@ -528,6 +551,7 @@ int bt_get_slots(bt_pcsc_connection *connection, char *slots[], int maxslots) {
         status = read(connection->socket, slots[i], length);
         slots[i][length] = 0;
         if (status < 0) {
+            close(connection->socket);            
             connection->socket = 0;
             pthread_mutex_unlock(&connection->mutex);
             return BT_PCSC_ERROR_DISCONNECTED;
@@ -553,6 +577,7 @@ int bt_set_slot(bt_pcsc_connection *connection, char *slot) {
     int status;
     status = write(connection->socket, buffer, length + 2);
     if (status < 0) {
+        close(connection->socket);        
         connection->socket = 0;
         pthread_mutex_unlock(&connection->mutex);
         return BT_PCSC_ERROR_DISCONNECTED;
