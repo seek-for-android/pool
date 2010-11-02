@@ -8,6 +8,7 @@
   * How To
     * [BuildingTheSystem Building the System]
     * [UsingSmartCardAPI Using the SmartCard API]
+    * [MscSmartcardService MSC_SmartcardService]
     * [SmartCardPKI PKI Support on Android]
   * UICC Support
     * [UICCSupport AT Command Extensions]
