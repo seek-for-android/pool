@@ -4,7 +4,7 @@
 
 Flashing the system is not supported on every system, thus using the !SmartCard API is limited to development devices.<br/>
 However, not all functionality to enable smart card support on Android is required to be patched in the system image. Also, flashing the system is not suitable for end users who just want to use an application with smart card support.<br/>
-[http://seek-for-android.googlecode.com/files/MSC_SmartcardService-1_4.tgz MSC_SmartcardService] enables (any) Android phone with SD card slot with !SmartCard API support without flashing the system or rooting the phone.<br/>
+_MSC !SmartcardService_ enables (any) Android phone with SD card slot with !SmartCard API support without flashing the system or rooting the phone.<br/>
 The _APK_ inside the archive can be installed on the device like any other Android application.
 <hr/>
 *Note*<br>
@@ -28,7 +28,7 @@ To test the _MSC !SmartcardService_ please
 
  * ensure a [https://www.cardsolutions-shop.com/shop/gi-de/ Mobile Security Card] is inserted in the phone
 
- * on the phone, run the SmartcardSample application and see the APDU communication
+ * on the phone, run the !SmartcardSample application and see the APDU communication
 </td>
 <td width=5%>
 </td>
