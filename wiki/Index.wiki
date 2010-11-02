@@ -2,7 +2,7 @@
 #sidebar TOC
 
 ====Introduction====
-   * [SmartcardAPI SmartCard API]<br>An introduction about the architecture and concept of the !SmartCard API for the Android platform.<br><br>
+   * [SmartcardAPI SmartCard API]<br>An introduction about the architecture and concept of the !SmartCard API for the Android platform<br><br>
    * [SecurityConcept Security Concept]<br>Read about the system security of the !SmartCard API integration in the Android platform<br><br>
    * [PCSCLite PCSC-Lite Discussion]<br>Discussion about the integration of the PC/SC interface in the !SmartCard API stack for native code<br><br>
    * [VersionHistory Version History]<br>Summary of the release notes of all !SmartCard API versions<br><br>
@@ -10,7 +10,8 @@
 ====How To====
    * [BuildingTheSystem]<br>For details on how to compile the Android sources with !SmartCard API support. ([Devices List of tested devices])<br><br>
    * [UsingSmartCardAPI Using the SmartCard API]<br>Writing Android applications with access to Secure Elements using the !SmartCard API<br><br>
-   * [SmartCardPKI PKI Support on Android]<br>Integration of a smart card based, standard PKI interface into  Android.<br><br>
+   * [MscSmartcardService MSC_SmartcardService]<br>Installable MSC !SmartcardService for Android phones that are not flashed. ([Devices List of tested devices])<br><br>
+   * [SmartCardPKI PKI Support on Android]<br>Integration of a smart card based, standard PKI interface into  Android<br><br>
 
 ====UICC Support====
    * [UICCSupport AT Command Extensions]<br>Specification of the AT Command Interface required for the !SmartCard API support on real devices<br><br>
