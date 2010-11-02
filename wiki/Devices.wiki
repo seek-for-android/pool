@@ -1,10 +1,30 @@
-#summary List of devices that were tested with smartcard-api support
+#summary List of devices that were tested with SmartCard API support
 
-= Introduction =
+Android is running on different devices from different manufacturers. This overview should list the devices and configuration that was tested successfully with !SmartCard API support.<br/>
 
-Android is running on different devices from different manufacturers. This overview should list the devices and configuration that was tested successfully with Smartcard API support.<br/>
+====System image patch====
+The following devices were tested with _smartcard-api.patch_ according to [BuildingTheSystem Building the System]
 
 ||  || *Android 1.6 (donut)* || *Android 2.2 (froyo)* ||
 || ADP1 / Dream || + || - ||
 || ADP2 / Sapphire || + || + ||
 || Google Nexus One || - || + ||
+
+
+<br><br>
+====Installable MSC !SmartcardService====
+The following devices were tested with the installable _MSC !SmartcardService.apk_ according to [MscSmartcardService MSC_SmartcardService]
+
+|| *Device* || *Model* || *Version* || *Result* ||
+|| HTC Dream || drea100 || cupcake || + ||
+|| HTC Magic || sapp100 || donut || + ||
+|| HTC Tatoo || clic100 || donut || + ||
+|| HTC Evo 4G || pc36100 || eclair || + ||
+|| Google Nexus One || passion || eclair & froyo || + ||
+|| Samsung Galaxy || GT-I7500 || cupcake & donut || + ||
+|| Samsung Spica || GT-I5700 || cupcake || + ||
+|| Motorola Milestone || A853 || 2.0.1 || + ||
+|| Sony Ericsson Xperia X10 || X10i || donut || + ||
+|| Huawei Pulse || U8220 || cupcake || + ||
+
+Please help by providing feedback regarding the installable _MSC !SmartcardService.apk_ on different devices we could not test!
