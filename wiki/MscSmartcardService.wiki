@@ -1,0 +1,58 @@
+#summary Installable MSC_SmartcardService for Android phones that are not flashed
+
+= Introduction =
+
+Flashing the system is not supported on every system, thus using the !SmartCard API is limited to development devices.<br/>
+However, not all functionality to enable smart card support on Android is required to be patched in the system image. Also, flashing the system is not suitable for end users who just want to use an application with smart card support.<br/>
+[http://seek-for-android.googlecode.com/files/MSC_SmartcardService-1_4.tgz MSC_SmartcardService] enables (any) Android phone with SD card slot with !SmartCard API support without flashing the system or rooting the phone.<br/>
+The _APK_ inside the archive can be installed on the device like any other Android application.
+<hr/>
+*Note*<br>
+ * The _MSC !SmartcardService_ will only support the [https://www.cardsolutions-shop.com/shop/gi-de/ G&D Mobile Security Card]
+ * Please check [Devices] for a list of tested devices (current Google Dev Phone is reference implementation)
+<br/><br/>
+
+<table>
+<tr>
+<td valign="top" width=55%>
+= Details =
+To test the _MSC !SmartcardService_ please
+ * Download the [http://seek-for-android.googlecode.com/files/MSC_SmartcardService-1_4.tgz MSC_SmartcardService-1_4.tgz] and extract the card content
+
+ * ensure that _USB debugging_ is enabled on the phone
+ (_Settings_ - _Applications_ - _Development_ - _USB debugging_)
+
+ * execute `adb install MSC_SmartcardService.apk`
+
+ * execute `adb install SmartcardSample.apk`
+
+ * ensure a [https://www.cardsolutions-shop.com/shop/gi-de/ Mobile Security Card] is inserted in the phone
+
+ * on the phone, run the SmartcardSample application and see the APDU communication
+</td>
+<td width=5%>
+</td>
+<td width=40%>
+<img src=http://seek-for-android.googlecode.com/svn/wiki/img/MscSmartcardService_screenshot.png width=250/>
+</td>
+</tr>
+</table>
+
+= Development =
+The _MSC !SmartcardService_ provides the *same* interface like the !SmartCard API so application developers can write and test their applications with the installable version and have later on migration issues when the !SmartCard API is part of the Android platform!<br/>
+When using Eclipse to develop smart card aware applications, do not use the self compiled SDK as described in [UsingSmartCardAPI Using the SmartCard API] but the plain unmodified Google SDK as usual. When creating a project, add the `android.smartcard.jar` file to the build path of the project to provide the same interface as the !SmartCard API does.
+
+[http://seek-for-android.googlecode.com/svn/wiki/img/MscSmartcardService_eclipse.png]
+<br/><br/>
+
+= Version history =
+==== v1.4 - 02.11.2010 ====
+ * Aligned _ISmartcardService_ interface to !SmartCard API
+ * Detection of MSC card versus standard SD card
+ * Detection of mount path
+ * APDU command and response size fix (for APDUs with more than 250 data bytes)
+ * simplified JNI interface
+ * Sample application & android.smartcard.jar in download file
+
+==== v1.0 - v1.3 ====
+ * no public release of the first implementations
