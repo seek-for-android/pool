@@ -2,7 +2,7 @@
 
 = Introduction =
 
-PC/SC is a widely used industry standard for accessing smart cards in a computing environment. A fee implementation - called PCSC-Lite - supports various platforms so it can easily be ported to Android.
+PC/SC is a widely used industry standard for accessing smart cards in a computing environment. A free implementation - called PCSC-Lite - supports various platforms so it can easily be ported to Android.
 However, PC/SC has disadvantages on mobile phones that will be discussed here.<br/><br/>
 
 
@@ -11,11 +11,11 @@ However, PC/SC has disadvantages on mobile phones that will be discussed here.<b
 ===Plain APDU access for a SE===
 The PC/SC API interface allows sending plain and unfiltered APDU commands to the underlying Secure Element.<br/>
 Providing such an interface allows the client application to control anything on the Secure Element. This might not be a problem as long as no concurrent access is in place or a malicious application is interfering with the communication channel of another application.
-On a mobile phone, the baseband processor (exclusively) occupies the basic channel on the UICC (=channel 0). With the PC/SC interface, it's no problem to mess up with the baseband communication to the GSM context which results in a USIM error until the next reboot.<br/><br/>
+On a mobile phone, the baseband processor (exclusively) occupies the basic channel to the SIM (=channel 0). With the PC/SC interface, it's no problem to mess up with the baseband communication to the GSM context which results in a USIM error until the next reboot.<br/><br/>
 A Secure Element based on [http://java.sun.com/javacard/ Java Card technology] can have multiple applications installed but only a single application (=Java Card Applet) can be active in a logical channel<br/>
 Having two Android applications running simultaneously, both requiring different Java Card Applets for secure operations might cause trouble as only one Applet is currently selected when both applications share the same channel.<br/><br/>
 The concept of *logical channels* is supported by (most) Secure Elements where each offline application can have its own independent communication channel with one dedicated card application. APDU communication has to be filtered (CLA byte with channel information) which is not in the scope of PC/SC today.<br/>
-The !SmartCard API encapsulates the logical channel management and only provides a filtered APDU API in contract to PC/SC.<br/><br/>
+The !SmartCard API encapsulates the logical channel management and provides a filtered APDU API in contrast to PC/SC.<br/><br/>
 
 ===PC/SC daemon background task===
 The PC/SC resource manager is a daemon that is running in the background that handles client requests (e.g. connect, transmit, ...) and synchronizes parallel access from multiple applications.<br/><br/>
@@ -27,7 +27,7 @@ When native Android components (wpa_supplicant, ...) need smart card access the 
 
 =Conclusion=
 A PC/SC IFDHandler for Android that connects to the Java-based !SmartCard API will be integrated in the overall concept, thus providing access for native smart card clients.
-Due to security considerations, it needs to be ensured that only system modules can access the PC/SC daemon but is not accessible through third-party Android applications.
+Due to security considerations, it needs to be ensured that only system modules can access the PC/SC daemon.
 
 
 http://seek-for-android.googlecode.com/svn/wiki/img/PCSC_Concept.png
