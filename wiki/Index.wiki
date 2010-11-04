@@ -10,7 +10,7 @@
 ====How To====
    * [BuildingTheSystem]<br>For details on how to compile the Android sources with !SmartCard API support. ([Devices List of tested devices])<br><br>
    * [UsingSmartCardAPI Using the SmartCard API]<br>Writing Android applications with access to Secure Elements using the !SmartCard API<br><br>
-   * [MscSmartcardService MSC_SmartcardService]<br>Installable MSC !SmartcardService for Android phones that are not flashed. ([Devices List of tested devices])<br><br>
+   * [MscSmartcardService MSC_SmartcardService]<br>Installable MSC !SmartcardService for Android phones which don't allow to flash a new system image. ([Devices List of tested devices])<br><br>
    * [SmartCardPKI PKI Support on Android]<br>Integration of a smart card based, standard PKI interface into  Android<br><br>
 
 ====UICC Support====
