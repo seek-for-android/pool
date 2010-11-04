@@ -15,15 +15,14 @@ At install time, the user is asked whether or not the application should receive
 Access to the lower layer components such as the secure element specific terminal implementation will be protected with the standard Android mechanisms.
 
 =====Root Access=====
-The whole Android security scheme is based on standard UID/GID checks, therefore _root access_ to the phone will overcome all security mechanism.<br/>
+The whole Android security scheme is based on standard UID/GID checks, therefore applocations with _root access_ can overcome the security mechanism.<br/>
 For example, it is possible that a _root_ user replaces APKs or native system services with modified versions that contain tracers or or hooks for other applications.<br/><br/>
-The !SmartCard API relies on a *non-rooted phone* in order to ensure the security scheme like all other Android services!<br/><br/>
 
 ===!SmartCard API System Security===
 <table>
 <tr>
 <td valign="top" width=35%>
-The !SmartCard API system security discussion addresses the mechanism that needs to be in place that client applications cannot overcome the !SmartCard API interface by using the lower level components directly.<br/><br/>
+The !SmartCard API system security discussion explains the mechanism needed so client applications cannot overcome the !SmartCard API interface by using the lower level components directly.<br/><br/>
 In order to protect the low level components, the !SmartCard API remote process is installed and registered with a unique UID/GID: *smartcard*<br/><br/>
 All low level components and methods check for the caller UID and - if not `smartcard` - throw an exception.<br/><br/>
 </td>
@@ -40,6 +39,5 @@ Click to enlarge
 </table>
 
 ===!SmartCard API Access Control Scheme===
-The access control scheme is the discussion about a protection mechanism that only allowed (or certified) Android applications are able to access specific Java Card applets depending on the APK certificate from the issuer.<br/>
-In combination with pure access control, an APDU filter scheme (based on an APDU whitelist) is established to have a more detailed control over the access mechanism of an application.<br><br>
-Please contact G&D directly for more information regarding a signature based security scheme. 
+The access control scheme is a protection mechanism that makes sure that only allowed (or certified) Android applications are able to access specific Java Card applets depending on the APK certificate. An additional APDU filter scheme (based on an APDU whitelist) is established to have a more detailed control over the access mechanism of an application.<br><br>
+Please contact us for more information. 
