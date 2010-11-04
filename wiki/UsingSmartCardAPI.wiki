@@ -7,7 +7,6 @@ develop and test applications which communicate with connected Secure Elements a
 
 =====Notice=====
 Currently, real devices do not support UICC access as the corresponding changes in the baseband are not implemented yet. See [UICCSupport] for more information.
-The Mobile Security Card is only supported on real devices, not in the emulator.
 
 
 ===Prerequisites===
@@ -156,7 +155,5 @@ To debug the application, you need to
  * Add additional `Log.e()` messages
  * Run `$ logcat *:v` in a terminal to show all log messages
  * Use Eclipse to set breakpoints and step through the code
-
-
 
 
