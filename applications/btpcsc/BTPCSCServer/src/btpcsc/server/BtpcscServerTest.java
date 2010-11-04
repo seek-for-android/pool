@@ -17,10 +17,11 @@ import android.smartcard.CardException;
 import android.smartcard.ICardChannel;
 import android.smartcard.SmartcardClient;
 import android.smartcard.SmartcardClient.ISmartcardConnectionListener;
+import android.text.method.ScrollingMovementMethod;
 import android.util.Log;
 import android.widget.TextView;
 
-public class BtpcscServer extends Activity {
+public class BtpcscServerTest extends Activity {
 
 	private static final int REQUEST_ENABLE_BT = 227339847;
 	private static final int HANDLER_REFRESH_LOG = 706713485;
@@ -28,8 +29,8 @@ public class BtpcscServer extends Activity {
 
 	private static final UUID appUuid = new UUID(0x42219abb16154486l,
 			0xbd50496bd50496d8l);
-	private static final byte[] BT_PCSC_ACK_CONNECTION = new byte[] { 0x00,
-			0x00, 0x30, (byte) 0xF8 };
+	private static final byte[] BT_PCSC_ACK_CONNECTION = new byte[] { 0x13,
+			0x37, 0x30, (byte) 0xF8 };
 
 	private static final int BT_PCSC_CMD_ACK = 1;
 	private static final int BT_PCSC_CMD_DISCONNECT = 2;
@@ -42,6 +43,8 @@ public class BtpcscServer extends Activity {
 	private static final int BT_PCSC_CMD_SET_SLOT = 34;
 	private static final int BT_PCSC_CMD_NOT_SUPPORTED = 254;
 	private static final int BT_PCSC_CMD_ERROR = 255;
+	
+	private static final int BT_PCSC_CMD_ERROR_NO_READERS = 32;
 
 	private BluetoothAdapter adapter;
 	private StringBuffer log = new StringBuffer();
@@ -148,8 +151,17 @@ public class BtpcscServer extends Activity {
 				active = true;
 
 				os.write(BT_PCSC_ACK_CONNECTION);
+				
+				if (!smartcardServiceConnected || smartcardClient.getReaders().length == 0) {
+					byte[] buffer = new byte[] {(byte) BT_PCSC_CMD_ERROR, (byte) BT_PCSC_CMD_ERROR_NO_READERS,
+							(byte) BT_PCSC_CMD_DISCONNECT};
+					os.write(buffer);
+					os.flush();
+					cancel();
+				}
+				
 				os.flush();
-
+				
 				while (!cancel) {
 					int cmd = is.read();
 
@@ -201,6 +213,12 @@ public class BtpcscServer extends Activity {
 					this.socket.close();
 				} catch (IOException e1) {
 				}
+			} catch (Exception e) {
+				log("Error: " + e);
+				try {
+					this.socket.close();
+				} catch (IOException e1) {
+				}	
 			}
 
 			if (channel != null)
@@ -360,6 +378,8 @@ public class BtpcscServer extends Activity {
 
 			if (receivedApdu != null)
 				log("Card returned APDU: " + apduToString(receivedApdu));
+			else
+				log("Error: Card returned nothing.");
 
 			sendApdu(receivedApdu);
 
@@ -440,7 +460,7 @@ public class BtpcscServer extends Activity {
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.main);
-
+		
 		smartcardListener = new SmartcardListener();
 		try {
 			smartcardClient = new SmartcardClient(this, smartcardListener);
