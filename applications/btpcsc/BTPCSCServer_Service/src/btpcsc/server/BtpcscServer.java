@@ -9,7 +9,10 @@ import android.app.Service;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothServerSocket;
 import android.bluetooth.BluetoothSocket;
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.IBinder;
 import android.smartcard.CardException;
 import android.smartcard.ICardChannel;
@@ -23,8 +26,8 @@ public class BtpcscServer extends Service {
 
 	private static final UUID appUuid = new UUID(0x42219abb16154486l,
 			0xbd50496bd50496d8l);
-	private static final byte[] BT_PCSC_ACK_CONNECTION = new byte[] { 0x00,
-			0x00, 0x30, (byte) 0xF8 };
+	private static final byte[] BT_PCSC_ACK_CONNECTION = new byte[] { 0x13,
+			0x37, 0x30, (byte) 0xF8 };
 
 	private static final int BT_PCSC_CMD_ACK = 1;
 	private static final int BT_PCSC_CMD_DISCONNECT = 2;
@@ -37,6 +40,8 @@ public class BtpcscServer extends Service {
 	private static final int BT_PCSC_CMD_SET_SLOT = 34;
 	private static final int BT_PCSC_CMD_NOT_SUPPORTED = 254;
 	private static final int BT_PCSC_CMD_ERROR = 255;
+	
+	private static final int BT_PCSC_CMD_ERROR_NO_READERS = 32;
 
 	private BluetoothAdapter adapter;
 	private AcceptThread acceptThread;
@@ -48,6 +53,8 @@ public class BtpcscServer extends Service {
 	
 	private final IBtpcscServer.Stub binder = new IBtpcscServer.Stub() {
 	};
+
+	private BroadcastReceiver bluetoothStateChangeReceiver;
 	
 
 	private class SmartcardListener implements
@@ -142,8 +149,17 @@ public class BtpcscServer extends Service {
 				active = true;
 
 				os.write(BT_PCSC_ACK_CONNECTION);
+				
+				if (smartcardSlot == null || smartcardClient.getReaders().length == 0) {
+					byte[] buffer = new byte[] {(byte) BT_PCSC_CMD_ERROR, (byte) BT_PCSC_CMD_ERROR_NO_READERS,
+							(byte) BT_PCSC_CMD_DISCONNECT};
+					os.write(buffer);
+					os.flush();
+					cancel();
+				}
+				
 				os.flush();
-
+				
 				while (!cancel) {
 					int cmd = is.read();
 
@@ -195,6 +211,12 @@ public class BtpcscServer extends Service {
 					this.socket.close();
 				} catch (IOException e1) {
 				}
+			} catch (Exception e) {
+				log("Error: " + e);
+				try {
+					this.socket.close();
+				} catch (IOException e1) {
+				}	
 			}
 
 			if (channel != null)
@@ -243,11 +265,15 @@ public class BtpcscServer extends Service {
 			is.read(buffer);
 
 			String slot = new String(buffer);
-
-			if (slots == null) {
+			String[] slots = null;
+			try {
+				slots = smartcardClient.getReaders();
+			} catch (CardException e) {
 				os.write(BT_PCSC_CMD_ERROR);
 				return;
 			}
+			if (slots == null)
+				return;
 
 			boolean contained = false;
 			for (int i = 0; i < slots.length; i++) {
@@ -259,7 +285,7 @@ public class BtpcscServer extends Service {
 
 			if (!contained) {
 				os.write(BT_PCSC_CMD_ERROR);
-				log("Client requested nonexistent slot " + slot + ".");
+				log("Client requested nonexistent slot "+slot+".");
 				return;
 			}
 
@@ -331,7 +357,7 @@ public class BtpcscServer extends Service {
 			byte[] buffer = new byte[apduLength];
 			is.read(buffer);
 
-//			log("Client transmitted APDU: " + apduToString(buffer));
+			log("Client transmitted APDU: " + apduToString(buffer));
 
 			if (catchSpecialApdu(buffer))
 				// This is not a regular APDU to be sent to the card. The handler
@@ -348,8 +374,10 @@ public class BtpcscServer extends Service {
 				e.printStackTrace();
 			}
 
-//			if (receivedApdu != null)
-//				log("Card returned APDU: " + apduToString(receivedApdu));
+			if (receivedApdu != null)
+				log("Card returned APDU: " + apduToString(receivedApdu));
+			else
+				log("Error: Card returned nothing.");
 
 			sendApdu(receivedApdu);
 
@@ -438,8 +466,8 @@ public class BtpcscServer extends Service {
 			e.printStackTrace();
 			return;
 		}
-
-		log("Application started. Launching Server.");
+		
+		log("BTPCSC service started.");
 		if (smartcardSlot != null)
 			log("Using reader " + smartcardSlot + ".");
 
@@ -447,14 +475,25 @@ public class BtpcscServer extends Service {
 
 		if (adapter == null) {
 			log("No bluetooth adapter detected.");
+			this.stopSelf();
 		} else {
 			this.adapter = adapter;
 			if (!adapter.isEnabled()) {
 				log("Bluetooth adapter is disabled.");
+				this.stopSelf();
 			} else {
 				startListening();
 			}
 		}
+		
+		bluetoothStateChangeReceiver = new BroadcastReceiver() {
+			@Override
+			public void onReceive(Context context, Intent intent) {
+				BtpcscServer.this.stopSelf();
+			}
+		};
+		IntentFilter filter = new IntentFilter(BluetoothAdapter.ACTION_STATE_CHANGED);
+		registerReceiver(bluetoothStateChangeReceiver, filter);
 
 	}
 	
@@ -476,6 +515,10 @@ public class BtpcscServer extends Service {
 		}
 		if (smartcardClient != null)
 			smartcardClient.shutdown();
+		
+		if (bluetoothStateChangeReceiver != null)
+			unregisterReceiver(bluetoothStateChangeReceiver);
+		
 		super.onDestroy();
 	}
 

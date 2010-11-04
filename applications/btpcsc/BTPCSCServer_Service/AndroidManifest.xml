@@ -7,13 +7,16 @@
     <uses-permission android:name="android.permission.SMARTCARD" />
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
     
-    <application android:icon="@drawable/icon" android:label="@string/app_name">
+    <application android:icon="@drawable/icon" android:label="BTPCSCServer">
+    
         <receiver android:enabled="true" android:name=".BtpcscBroadcastReceiver">
-            <intent-filter> 
-               <action android:name="android.intent.action.BOOT_COMPLETED"/> 
-               <category android:name="android.intent.category.DEFAULT" />
+            <intent-filter>
+               <action android:name="android.intent.action.BOOT_COMPLETED"/>
+			   <action android:name="android.bluetooth.adapter.action.STATE_CHANGED"/>
+			   <category android:name="android.intent.category.DEFAULT" />               
             </intent-filter> 
         </receiver>
+        
         <service android:name=".BtpcscServer" android:process=":remote"
                   android:label="@string/app_name">
             <intent-filter>
