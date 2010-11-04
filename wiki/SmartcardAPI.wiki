@@ -2,7 +2,7 @@
 
 = Introduction =
 
-The !SmartCard API is a reference implementation for a set of platform extensions that will enable Android applications to connect Secure Elements, e.g. USIM card, Mobile Security Card or others.<br/><br/>
+The !SmartCard API is a reference implementation for a set of platform extensions that will enable Android applications to connect Secure Elements, e.g. SIM card, Mobile Security Card or others.<br/><br/>
 The interface of the library should be considered as stable and independent of the underlying transport mechanism. Application developers usually care about the (stable) !SmartCard API interface whereas system integrators need to know the internals.<br/><br/>
 
 
@@ -29,7 +29,7 @@ Click to enlarge
 <br/><br/>
 
 == Architecture ==
-The core of the !SmartCard API is encapsulated in a remote Android service. Having a single service instance instead of a pure framework library ensure that security checks (who is accessing the service) and resource management (free a logical channel if a client dies) can be guaranteed.<br/><br/>
+The core of the !SmartCard API is encapsulated in a remote Android service. Having a single service instance instead of a pure framework library ensures that security checks (who is accessing the service) and resource management (free a logical channel if a client dies) can be guaranteed.<br/><br/>
 However, using an Android service for an API interface is not typical for smart card applications thus additional framework classes wrap the service specifics, e.g. `SmartcardError` exception marshaling. No further logic is kept in the framework classes, clients are permitted to access the service interface directly (but need to deal with marshaling by themselves).<br/>
 The framework classes - mainly `SmartcardClient` - are just wrapping the service specifics.<br/><br/>
 After binding to the !SmartCard service instance an `ISmartCardService` handle is accessible to retrieve a card channel object with a specific terminal, e.g. UICC or MSC.<br/>
@@ -98,6 +98,6 @@ The !SmartCard API deals with two interfaces, `ISmartCardService` and `ICardChan
 == Using the !SmartCard API ==
 Download and apply the patch files according to [http://code.google.com/p/seek-for-android/wiki/BuildingTheSystem Building building the system]<br/> 
 Compile the Android platform, build the SDK and flash a [Devices device] or start a new emulator instance with !SmartCard API support.
-To develop smart card application, using Eclipse is recommended where the Android SDK location needs to point to the self compiled SDK.<br/>
-Import the samples and run them on the phone or in the emulator. They provide a good starting point about how the !SmartCard API can be used.<br/>
+Eclipse is recommended to develop smart card application. But the Android SDK location needs to point to the self compiled SDK.<br/>
+Import the samples and run them on the phone or in the emulator. They provide a good starting point.<br/>
 <br/>
