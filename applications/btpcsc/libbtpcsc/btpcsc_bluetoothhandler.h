@@ -132,7 +132,6 @@ extern "C" {
 #define DBG_WARNING 3
 #define DBG_VERBOSE 4
 #define DBG_APDU 5
-#define DBG_DETAILED 6
 
 #define COLOR_BLUE "\33[34m"
 #define COLOR_RED "\33[31m"

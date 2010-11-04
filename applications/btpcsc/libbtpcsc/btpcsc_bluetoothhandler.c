@@ -128,8 +128,6 @@ int ensure_connection_exists(int Lun, int Channel) {
 // Reestablishes the given connection if it is closed
 int ensure_connection_is_active(int Lun, int Channel) {
 
-    dbg_print(DBG_DETAILED, "ensure_connection_is_active(%d, %d)", Lun, Channel);
-
     int result;
     result = ensure_connection_exists(Lun, Channel);
     if (result < 0)
@@ -305,6 +303,9 @@ RESPONSECODE IFDHGetCapabilities ( DWORD Lun, DWORD Tag,
             break;
 
 	}
+	
+	Value = 0;
+	*Length = 0;
 
     // TODO: Possibly implement more stuff here
 
