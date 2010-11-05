@@ -30,10 +30,13 @@ Download the [http://seek-for-android.googlecode.com/files/smartcard-webserver_1
  * `emulator.patch` - patches the qemu module to support the PC/SC UICC from the host system instead of the (standard) SIM simulator
 
 ===== PC/SC support =====
-Download the _todo_ patch and extract the content:
- * `system_service.patch` - patches the Java sources with a system service for native access
- * `pcsc-lite.patch` - patches external/pcsc/pcsc-lite with PC-SC support
- * `ifdhandler.patch` - patches external/pcsc/ifdhandler with native IFD Handler support
+The patch is optional, it is only required for applications using PCSC-Interface.<br/>
+Download the [http://seek-for-android.googlecode.com/files/pcsc_system_service_v093.tgz pcsc_system_service_v093.tgz] patch and extract the content:
+ * `pcsc_system_service.patch`
+ the patch includes:
+ ** Smartcard system-service based on the the Smartcard API
+ ** external/pcsc/pcsc-lite with PC-SC support 
+ ** external/pcsc/ifdhandler with native IFD Handler based on SmartCard API
 
 ===== Apply the patches and update the API =====
 {{{
@@ -46,9 +49,7 @@ $ patch –p1 < <path_to_my_patches>/smartcard-webserver_1.0/scws.patch
 Optional:
 $ patch –p1 < <path_to_my_patches>/smartcard-webserver_1.0/emulator.patch
 
-$ patch –p1 < <path_to_my_patches>/pcsc-interface_1.0/system_service.patch
-$ patch –p1 < <path_to_my_patches>/pcsc-interface_1.0/pcsc-lite.patch
-$ patch –p1 < <path_to_my_patches>/pcsc-interface_1.0/ifdhandler.patch
+$ patch –p1 < <path_to_my_patches>/pcsc_system_service_v093/pcsc_system_service.patch
 
 $ make update-api
 }}}
