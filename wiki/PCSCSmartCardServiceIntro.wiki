@@ -1,0 +1,22 @@
+#summary PCSC Support for SmartCard API
+
+= Introduction =
+
+To provide the PCSC Interface in additional to the SmartCard API, we implemented a smartcard reader driver (ifdhandler) for PCSC-Lite, which routes the APDU communication through a SmartCard system service to the SmartCard API. Whenever possible, it is recommended to directly use the SmartCard API.
+But the PCSC-Interface is the standard interface used for many PC applications accessing smartcards. So this implementation will provide the PCSC interface for already existing native applications requiring the PCSC interface.
+
+
+= Details =
+
+The current version (v093) of the ifdhandler is a first prototype, which opens a basic channel from the SmartCard API and routes all commands to this channel.
+Typical smartcard applications do not use logical channels, so this is the adequate solution to provide access to the smartcard for typical smartcard applications.
+For UICC the situation is different, as in real phones, the basic channel is mostly exclusively used by the baseband controller.
+
+
+
+== Version history ==
+
+pcsc_system_Service_v093.tgz
+
+ * first prototype
+ * only basic channel of the SmartCard API used
