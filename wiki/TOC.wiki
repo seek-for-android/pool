@@ -15,6 +15,7 @@
     * [EmulatorExtension Emulator Extension]
     * [SmartcardWebserver Smart Card Web Server]
   * PCSC Support
+    * [PCSCSmartCardServiceIntro PCSC Support]
   * Applications
     * [GoogleMSCAuthenticator]
     * [AndroidBelgiumEid]
