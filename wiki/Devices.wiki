@@ -21,9 +21,10 @@ The following devices were tested with the installable _MSC !SmartcardService.ap
 || HTC Tatoo || clic100 || donut || + ||
 || HTC Evo 4G || pc36100 || eclair || + ||
 || Google Nexus One || passion || eclair & froyo || + ||
+|| Samsung Galaxy S || GT-I9000 || eclair || + ||
 || Samsung Galaxy || GT-I7500 || cupcake & donut || + ||
 || Samsung Spica || GT-I5700 || cupcake || + ||
-|| Motorola Milestone || A853 || 2.0.1 || + ||
+|| Motorola Milestone || A853 || eclair || + ||
 || Sony Ericsson Xperia X10 || X10i || donut || + ||
 || Huawei Pulse || U8220 || cupcake || + ||
 
