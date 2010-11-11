@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources>
-    <string name="app_name">Google MSC Authenticator</string>
-	<string name="about_text">OATH demonstration package</string>
-	<string name="about_copyright">\nCopyright &#x00A9; 2010, Giesecke &#x0026; Devrient</string>
-	<string name="about_license">Apache License, Version 2.0</string>
-	<string name="about_url">http://seek-for-android.googlecode.com</string>
-	<string name="main_help">Press Menu to personalize</string>
-</resources>
