@@ -9,15 +9,15 @@ The _APK_ inside the archive can be installed on the device like on any other An
 <hr/>
 *Note*<br>
  * The _MSC !SmartcardService_ will only support the [https://www.cardsolutions-shop.com/shop/gi-de/ G&D Mobile Security Card]
- * Please check [Devices] for a list of tested devices (current Google Dev Phone is reference implementation)
-<br/><br/>
+ * Please check [Devices] for a list of tested devices (the current Google Dev Phone is reference device)
+<br/>
 
 <table>
 <tr>
 <td valign="top" width=55%>
 = Details =
 To test the _MSC !SmartcardService_ please
- * Download the [http://seek-for-android.googlecode.com/files/MSC_SmartcardService-1_4.tgz MSC_SmartcardService-1_4.tgz] and extract the card content
+ * Download the [http://seek-for-android.googlecode.com/files/MSC_SmartcardService-1_5.tgz MSC_SmartcardService-1_5.tgz] and extract the card content
 
  * ensure that _USB debugging_ is enabled on the phone
  (_Settings_ - _Applications_ - _Development_ - _USB debugging_)
@@ -46,6 +46,11 @@ When using Eclipse to develop smart card aware applications, do not use the self
 <br/><br/>
 
 = Version history =
+==== v1.5 - 11.11.2010 ====
+ * Bug fix: 'response too small' with some MSC card
+ * Bug fix: JNI library cleanup
+ * Corrections for Samsung Galaxy S
+
 ==== v1.4 - 02.11.2010 ====
  * Aligned _ISmartcardService_ interface to !SmartCard API
  * Detection of MSC card versus standard SD card
