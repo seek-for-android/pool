@@ -2,6 +2,16 @@
 
 = !SmartCard API =
 
+=== v1.2 - 12.11.2010 ===
+ * !MscTerminal redesign
+ * Msc native JNI: better APDU waiting loop
+ * dynamic card terminal instantiation:
+   * add or remove supported !XvyTerminal.java implementations by adding or removing files
+   * no further source code adaptions required
+ * internal cleanup: moved all terminal implementation into terminal namespace
+ * bugfix: APDU size of 255 bytes with !MscTerminal 
+<br/><br/>
+
 === v1.1 - 22.10.2010 ===
  * getAtr() removed from ISmartcardService
  * major internal redesign
