@@ -49,7 +49,7 @@ To provide PKI functionality on the Android OS, we use OpenSC with modifications
 
 
 From the download page get:
- * OpenSC 0.11.13 package: [http://seek-for-android.googlecode.com/files/external_opensc_0.11.13.tar.gz external_opensc.tar.gz]
+ * OpenSC 0.11.13 package: [http://seek-for-android.googlecode.com/files/external_opensc_0.11.13.tar.gz external_opensc_0.11.13.tar.gz]
  * Patch for OpenSC for Android: [http://seek-for-android.googlecode.com/files/opensc_android.patch opensc_android.patch]
  * Muscle Card Applet 0.9.12: [http://seek-for-android.googlecode.com/files/MCardApplet-0912.tar.gz MCardApplet-0912.tar.gz]
  * sample RSA key with certificate: [http://seek-for-android.googlecode.com/files/azur1024bit_password_12345678.pfx azur1024bit_password_12345678.pfx]
