@@ -31,6 +31,8 @@ public class Oath extends Applet {
 
 	// OATH counter
 	private byte counter[] = { 0, 0, 0, 0, 0, 0, 0, 0 };
+	
+	private boolean hotp = false;
 
 	// OATH digits
 	private short digits = 6;
@@ -95,20 +97,22 @@ public class Oath extends Applet {
 		switch (INS) {
 		case 0x10:
 			// SET new OATH counter value
+			if (apdu.setIncomingAndReceive() != 8)
+				ISOException.throwIt(ISO7816.SW_WRONG_DATA);
 			Util.arrayCopy(buffer, (short) ISO7816.OFFSET_CDATA, counter, (short) 0, (short) counter.length);
-
 			break;
 
 		case 0x11:
 			// GET current OATH counter value 
 			Util.arrayCopy(counter, (short) 0, buffer, (short) 0, (short) counter.length);
-			apdu.setOutgoingAndSend((short) 0, (short) counter.length);
+			apdu.setOutgoingAndSend((short) 0, (short) (counter.length));
 			
 			break;
 
 		case 0x12:
 			// SET the number of digits for the OTP
 			this.digits = (byte)buffer[ISO7816.OFFSET_P1]; 
+			this.hotp = (byte)buffer[ISO7816.OFFSET_P2] != 0; 
 
 			// Personalize the shared secret (=seed)
 			if (apdu.setIncomingAndReceive() /* =Lc */ != 20)
@@ -158,6 +162,17 @@ public class Oath extends Applet {
 			apdu.setOutgoingAndSend((short) 0, this.digits);
 
 			break;
+			
+		case 0x14:
+		    personalized = false;
+		    for (short i = 0; i < (short) counter.length; i++)
+		        counter[i] = 0;
+		    break;
+		    
+		case 0x15:
+		    buffer[0] = (hotp) ? (byte) 1 : 0;
+		    apdu.setOutgoingAndSend((short) 0, (short) 1);
+		    break;
 
 		default:
 			ISOException.throwIt(ISO7816.SW_INCORRECT_P1P2);
@@ -179,7 +194,7 @@ public class Oath extends Applet {
 		tmpBuffer[tmp] = (byte) (tmpBuffer[tmp] & 0x7f);
 		Util.arrayCopy(tmpBuffer, (short) tmp, fullOtp, (short) 0, (short) 4);
 
-		incrementCounter();
+		if (this.hotp) incrementCounter();
 
 		return;
 	}
