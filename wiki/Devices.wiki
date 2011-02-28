@@ -31,5 +31,6 @@ The following devices were tested with the installable _MSC !SmartcardService.ap
 || Sony Ericsson Xperia X10 || X10i || donut || + ||
 || Sony Ericsson X10 mini || E10i || eclair || + ||
 || Huawei Pulse || U8220 || cupcake || + ||
+|| Pidion BIP 6000 || BIP6000 || cupcake & ecliar || + ||
 
 Please help by providing feedback regarding the installable _MSC !SmartcardService.apk_ on different devices we could not test!
