@@ -33,9 +33,9 @@ Download the [http://seek-for-android.googlecode.com/files/smartcard-webserver-1
 The patch is optional, it is only required for (native) Android applications relying on the PC/SC interface.<br/>
 Download the [http://seek-for-android.googlecode.com/files/pcsc_system_service_v093.tgz pcsc_system_service_v093.tgz] patch and extract the content *`pcsc_system_service.patch`*
 The patch includes:
- * Smartcard system-service based on the the Smartcard API
+ * Smartcard system-service based on the the !SmartCard API
  * external/pcsc/pcsc-lite with PC-SC support 
- * external/pcsc/ifdhandler with native IFD Handler based on SmartCard API
+ * external/pcsc/ifdhandler with native IFD Handler based on !SmartCard API
 
 ===== Apply the patches and update the API =====
 {{{
@@ -55,7 +55,8 @@ $ patch –p1 < <path_to_my_patches>/pcsc_system_service_v093/pcsc_system_servic
 Required:
 $ make update-api
 }}}
-<br/>
+Note that applying the patches might result in failed hunks. This is no problem as long as no modification was rejected.
+<br/><br/>
 
 == Building the system ==
 Compile the sources for the target device (use `crespo`, `passion`, `sapphire` or `dream` depending on the actual development phone)
@@ -66,7 +67,8 @@ $ ./extract-files.sh
 $ cd -
 $ TARGET_PRODUCT=full_crespo TARGET_BUILD_VARIANT=user TARGET_BUILD_TYPE=debug make
 }}}
-Make sure to have properly connected the reference phone to extract the binary files or downloaded the corresponding ZIP archive to run `unzip-files.sh` instead. The Internet might also provide more up-to-date information about how to build the system for a real device.
+Make sure to have properly connected the reference phone to extract the binary files or downloaded the corresponding ZIP archive to run `unzip-files.sh` instead. The Internet might also provide more up-to-date information about how to build the system for a real device.<br/>
+Note that the tools compiled for the host system will be 32bit executables thus you need to ensure to link with a 32bit pcsclite library when the `emulator.patch` is applied. 
 <br/><br/>
 
 == Flashing the phone ==
@@ -74,16 +76,19 @@ Make sure to have properly connected the reference phone to extract the binary f
 To flash the phone, execute:
 {{{
 $ ./out/host/linux-x86/bin/adb reboot bootloader
-$ ANDROID_PRODUCT_OUT=out/target/product/crespo ./out/host/linux-x86/bin/fastboot –w flashall
+$ ANDROID_PRODUCT_OUT=out/debug/target/product/crespo ./out/host/linux-x86/bin/fastboot –w flashall
 }}}
 If `flashall` fails you might also try:
 {{{
-$ ./out/host/linux-x86/bin/fastboot flash boot out/target/product/crespo/boot.img
-$ ./out/host/linux-x86/bin/fastboot flash system out/target/product/crespo/system.img
-$ ./out/host/linux-x86/bin/fastboot flash userdata out/target/product/crespo/data.img
+$ ./out/host/linux-x86/bin/fastboot flash boot out/debug/target/product/crespo/boot.img
+$ ./out/host/linux-x86/bin/fastboot flash system out/debug/target/product/crespo/system.img
+$ ./out/host/linux-x86/bin/fastboot flash userdata out/debug/target/product/crespo/data.img
 }}}
-Again, replace `crespo` with `passion`, `sapphire` or `dream` depending on the actual development phone. Skip flashing the boot partition if you don't want to replace the existing kernel.
-<br/><br/>
+Again, replace `crespo` with `passion`, `sapphire` or `dream` depending on the actual development phone. Skip flashing the boot partition if you don't want to replace the existing kernel.<br/>
+{{{
+$ ./out/host/linux-x86/bin/fastboot reboot
+}}}
+<br/>
 
 == Building the SDK ==
 As the new system image running on the phone now contains an extended framework API, these changes need to be included in the SDK as well.<br/>
