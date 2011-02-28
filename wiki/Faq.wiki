@@ -4,6 +4,16 @@ The following summary is a list of (frequent) questions that we received through
 <br/><br/>
 
 <table>
+<tr><td valign='top'>*Q*</td><td>I does not make sense to test !SmartCard APDI and the Nexus S with no Micro SD card slot?</td></tr>
+<tr><td valign='top'>*A*</td><td>Internally we used a dummy terminal in order to verify that the integration is working.</td></tr>
+<tr><td valign='top'></td><td>...SEEK is not only about the Mobile Security Card but also about SIM or embedded Secure Elements support.</td></tr>
+<tr><td><br/></td><td></td></tr>
+
+<tr><td valign='top'>*Q*</td><td>When applying the patches I get a message with 'HUNK failed' - what is wrong?</td></tr>
+<tr><td valign='top'>*A*</td><td>Nothing as long as the modifications have not been rejected.</td></tr>
+<tr><td valign='top'></td><td>...we built and tested the patch files with e.g. android-2.3.1_r1 and in the meantime you work with android-2.3.3_r1 where files might differ already.</td></tr>
+<tr><td><br/></td><td></td></tr>
+
 <tr><td valign='top'>*Q*</td><td>Do you plan to submit the !SmartCard API into the Android platform and when?</td></tr>
 <tr><td valign='top'>*A*</td><td>Yes - that's the overall goal of this project.</td></tr>
 <tr><td valign='top'></td><td>...we submit the patches when they are ready.</td></tr>
