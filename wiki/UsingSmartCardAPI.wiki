@@ -1,38 +1,34 @@
 #summary Writing Android applications with access to Secure Elements using the SmartCard API
 
+
 =Introduction=
 
-This document introduces how the Android smart card library can be used to
-develop and test applications which communicate with connected Secure Elements available in the real device or the emulator.
+This document explains how the !SmartCard API for can be used to
+develop and test Android applications which communicate with Secure Elements available in the real device or the emulator.
 
 =====Notice=====
-Currently, real devices do not support UICC access as the corresponding changes in the baseband are not implemented yet. See [UICCSupport] for more information.
-
+Currently, real devices do not support UICC access as the corresponding changes in the baseband are not implemented yet thus SIM access can only be tested with the Android emulator. See [UICCSupport] for more information.<br/>
 
 ===Prerequisites===
-  * The phone is flashed with the !SmartCard API according to [BuildingTheSystem]
-  * Basic knowledge of Java Card applets and APDU communication
+  * The development phone is flashed with !SmartCard API support according to [BuildingTheSystem] and the integration is verified according to [IntegrationsTests]
+  * Basic knowledge of [http://www.oracle.com/technetwork/java/javacard/overview/index.html Java Card] applets and [http://www.wrankl.de/SCH/SCH.html smart card] communication
   * Eclipse development IDE with the Android Development Tools (ADT) and Java installed on the host (although Eclipse is not mandatory). See http://developer.android.com/sdk/eclipse-adt.html
-  * Android SDK of the compiled sources is used in Eclipse according to [BuildingTheSystem]
-  * Basic understanding of the Android development platform. See http://developer.android.com/sdk/index.html
+  * Android SDK with !SmartCard API integrated according to [BuildingTheSystem] used in Eclipse
+  * Basic understanding of the Android development platform. See http://developer.android.com/sdk/index.html<br/>
 
 ===Setting up the Environment===
-Since the !SmartCard API is part of the system, the Eclipse development environment
-must use the compiled SDK (from [BuildingTheSystem]) with the integrated !SmartCard API interface as well.<br/>
-If not yet done, adapt the SDK location in Eclipse in order to register the API
-extension available in the development environment.<br/>
-The output of _make sdk_ can be found under _$ANDROID_ROOT/out/host/linux-x86/sdk/..._
+Since the !SmartCard API is part of the Android platform, the Eclipse development environment needs to be configured in order to use the compiled SDK (from [BuildingTheSystem]) with the integrated !SmartCard API interface instead of the official SDK from Google.<br/>
+If not yet done, adapt the SDK location in Eclipse in order to register the API extension available in the development environment.<br/>
+The output of _make PRODUCT-sdk-sdk_ can be found under _$ANDROID_ROOT/out/host/linux-x86/sdk/..._
  * Open Eclipse and go to Windows -> Preferences -> Android
  * Specify the SDK Location as _$ANDROID_ROOT/out/host/linux-x86/sdk/..._
-<br/><br/>
+<br/>
 
 =Hello, Smart Card.=
-For developers, the most important code to get started with in a new development environment is the _Hello, World._ sample. The text to be displayed will be created from the applet installed on the smart card.
-<br/>The Android application attempts to connect to the smart card and displays the text on the screen of the device.<br/><br/>
-This tutorial assumes that the Eclipse environment is set up properly and that the
-ADT plug in is installed according to the Android developer documentation on the
-Internet.<br/>
-In addition, the Hello Smartcard Java Card applet is installed on the Secure Element that is available in the SVN repository.
+For developers, the most important code to get started with in a new development environment is the _Hello, World._ sample. The text to be displayed will be created from the applet installed on the Secure Element.<br/>
+The Android application communicates with the applet running on the Secure Element and displays the text response of the card APDU command on the screen of the device.<br/>
+This tutorial assumes that the Eclipse environment is set up properly and that the ADT plug in is installed according to the Android developer documentation on the Internet.<br/>
+The _Hello Smartcard_ Java Card applet available in the SVN repository needs to be installed on the Secure Element with any kind of card management tool like JLoad from the _Mobile Security Developers Kit_.
   * Using the Eclipse project wizard, create a new Android project
     _File -> New -> Project_
   * Select _Android Project_ and click _Next_
@@ -41,10 +37,10 @@ In addition, the Hello Smartcard Java Card applet is installed on the Secure Ele
     Application name: _Hello Smartcard_<br/>
     Package name: _com.gieseckedevrient.android.hellosmartcard_<br/>
     Create Activity: _!MainActivity_
-  * Click _Finish_ to create the body of the (empty) Android application
+  * Click _Finish_ to create the body of the (empty) Android application<br/>
 
-==Creating the View==
-In this tutorial, we do not care much about the user interface, we just create a button which starts the communication with the applet on the smart card when pressed.<br/><br/>
+===Creating the View===
+In this tutorial, we do not care much about the user interface, we just create a button which starts the communication with the applet on the smart card when pressed.<br/>
 In _!MainActivity.java_, add the following code to the _onCreate()_ method.
 {{{
 @Override
@@ -74,10 +70,10 @@ public void onCreate(Bundle savedInstanceState) {
   setContentView(layout);
 }
 }}}
-Add the required imports for the new code manually or use `Ctrl+Shift+O` within Eclipse to organize all imports.
+Add the required imports for the new code manually or use `Ctrl+Shift+O` within Eclipse to organize all imports.<br/>
 
-==Initialize the !SmartCard API==
-Create a handle to the smart card API. At the end of the _onCreate()_ method, add
+===Initialize the !SmartCard API===
+Create a handle to the !SmartCard API. At the end of the _onCreate()_ method, add
 {{{
 try {
   smartcard = new SmartcardClient(this, null);
@@ -91,21 +87,18 @@ and create a _!SmartcardClient_ object within the _!MainActivity_ class
 {{{
 SmartcardClient smartcard;
 }}}
-If the sample is executed now on the phone, a security exception is thrown complaining about a missing _SMARTCARD_ permission. See the log output of the command.
+If the sample is executed on the phone now, a security exception is thrown complaining about a missing _SMARTCARD_ permission. See the log output of the command when starting the application in its current stage
 {{{
 $ adb logcat *:v
 }}}
-In order to be allowed to use the !SmartCard API, an application must implement the _SMARTCARD_ permission. This permission request notifies a user when installing an application which requests access to a smart card.<br/><br/>
+In order to be allowed to use the !SmartCard API, an application must implement the _SMARTCARD_ permission. This permission notifies a user when installing an application that requests access to a Secure Element.<br/><br/>
 Define the permission in the _!AndroidManifest.xml_ file
 {{{
 <uses-permission android:name="android.permission.SMARTCARD"/>
 }}}
-and the sample will launch correctly.<br/><br/>
-Note that the constructor will automatically bind to the !SmartcardService interface in
-the background. Since service binding is asynchronous in Android, the proper way
-to initialize the library is to wait for a notification event as discussed later.<br/><br/>
-To clean up the service binding, call the shutdown method when the application is
-closing or not using smart card services anymore (for example, in _onDestroy()_)
+and the sample will launch properly.<br/><br/>
+Note that the constructor of _!SmartcardClient_ will automatically bind to the !SmartcardService interface in the background. Since service binding is asynchronous in Android, the proper way to initialize the library is to wait for a notification event as discussed later.<br/><br/>
+To clean up the service binding, call the shutdown method when the application is closing or is not using smart card services anymore (for example, in _onDestroy()_)
 {{{
 @Override
 protected void onDestroy() {
@@ -117,7 +110,7 @@ protected void onDestroy() {
 }
 }}}
 
-==Accessing the Smart Card==
+===Accessing the Smart Card===
 Add the following code snippet inside the _onClick()_ handler of the button
 {{{
 ICardChannel cardChannel;
@@ -142,18 +135,14 @@ try {
   return;
 }
 }}}
-In this code, a logical channel to the smart card applet identified by the AID `D2 76 00 01 18 00 02 FF 49 50 25 89 C0 01 9B 01` is created. The !HelloSmartcard applet
-specific APDU command `90 10 00 00 00` is sent.<br/><br/>
-The last two bytes of the response `90 00` (=status code) are truncated and the result is
-displayed on the screen.
+In this code, a logical channel to the _!HelloSmartcard_ applet identified by its AID `D2 76 00 01 18 00 02 FF 49 50 25 89 C0 01 9B 01` is created. The _!HelloSmartcard_ applet
+specific APDU command `90 10 00 00 00` is sent to retrieve the applet response.<br/>
+The last two bytes of the response (=status word or SW1SW2), typically `90 00` on successful execution of the command are truncated and the result is displayed on the screen.<br/>
 
-==Running the Application==
-In the Eclipse environment, click on Run or press `Ctrl+F11` to execute the sample on the phone.<br/>
-Each time the applet is accessed, the counter is incremented by one.<br/>
-This shows the data persistence of the application running on the smart card.<br/>
+===Running the Application===
+In Eclipse, click on Run or press `Ctrl+F11` to execute the sample on the phone.<br/>
+Each time the applet is accessed, the counter is incremented by one and stored in NV memory on the Secure Element. This shows the data persistence of the application running on the smart card.<br/>
 To debug the application, you need to
  * Add additional `Log.e()` messages
  * Run `$ logcat *:v` in a terminal to show all log messages
  * Use Eclipse to set breakpoints and step through the code
-
-
