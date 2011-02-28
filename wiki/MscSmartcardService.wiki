@@ -9,7 +9,7 @@ The _APK_ inside the archive can be installed on the device like on any other An
 <hr/>
 *Note*<br>
  * The _MSC !SmartcardService_ will only support the [https://www.cardsolutions-shop.com/shop/gi-de/ G&D Mobile Security Card]
- * Please check [Devices] for a list of tested devices (the current Google Dev Phone is reference device)
+ * Please check [Devices] for a list of tested devices whereas the latest Google Dev Phone with SD card slot is reference device
 <br/>
 
 <table>
