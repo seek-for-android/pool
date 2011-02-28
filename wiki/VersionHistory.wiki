@@ -3,6 +3,7 @@
 = !SmartCard API =
 
 === v2.0 - 28.02.2011 ===
+ * Gingerbread support
  * API redesign to provide a better abstraction of the SE sevices
 <br/><br/>
 
