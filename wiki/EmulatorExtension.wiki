@@ -9,9 +9,9 @@ The Android emulator is only supporting a primitive 'fake' SIM card or SIM simul
 On real devices, the RIL library is very restrictive in terms of STK support and needs to be extended but on the emulator a patch can be applied in order to provide full SIM access through the host PC/SC system.<br/><br/>
 This enables the Android emulator to forward any APDU traffic (AT+CRSM, AT+CPIN, etc. commands) to a real SIM card that is connected through a PC/SC card reader and accessible with pcsc-lite running on the host. Additionally, this patch adds the missing support for the Sim Toolkit framework to the emulator's RIL implementation (reference-ril).
 </td>
-<td width=10>
+<td>
 </td>
-<td width=450>
+<td>
 <img src=http://seek-for-android.googlecode.com/svn/wiki/img/emulator-extensions.png/>
 </td>
 </tr>
