@@ -9,83 +9,98 @@ This documents describes how to build the system from scratch, apply the smart c
 
 A more detailed description how to set up the local work environment can be found  [http://source.android.com/source/download.html here].
 {{{
-$ repo init -u git://android.git.kernel.org/platform/manifest.git -b froyo
+$ repo init -u git://android.git.kernel.org/platform/manifest.git -b android-2.3.3_r1
 $ repo sync
 }}}
 <br/>
 
 == Patching the sources ==
-Apply the necessary patches in the root directory of the Froyo source code to enable smart card support.<br/>
-Please make sure what patches should be applied. We separated the different use cases (!SmartCard API, SCWS/BIP, PC/SC) into different download packages.
+Apply the necessary patches in the root directory of the Android source code to enable smart card support.<br/>
+Please make sure what patches should be applied as the different use cases (!SmartCard API, SCWS/BIP, PC/SC support) are separated in different download packages.
 
 ===== !SmartCard API support =====
-Download the [http://seek-for-android.googlecode.com/files/smartcard-api_1.1.tgz smartcard-api_1.1.tgz] patch and extract the content:
- * `smartcard-api.patch` - patches the Java sources for !SmartCard API support
+Download the [http://seek-for-android.googlecode.com/files/smartcard-api-2_0.tgz smartcard-api-2_0.tgz] patch and extract the content:
+ * `smartcard-api-2_0.patch` - patches the Java sources for !SmartCard API support
  * `uicc.patch` - patches the Android Telephony framework with the required UICC methods for the !SmartCard API !UiccTerminal support
- * `emulator.patch` - patches the qemu module to support the PC/SC UICC from the host system instead of the (standard) SIM simulator
+ * `emulator.patch` - patches the qemu module to support a UICC connected through the PC/SC host interface instead of the default Android SIM simulator
 
 ===== Smart Card Web Server support =====
-Download the [http://seek-for-android.googlecode.com/files/smartcard-webserver_1.0.tgz smartcard-webserver_1.0.tgz] patch and extract the content:
- * `scws.patch` - patches the Java sources for BIP and Smart Card Web Server support
- * `emulator.patch` - patches the qemu module to support the PC/SC UICC from the host system instead of the (standard) SIM simulator
+Download the [http://seek-for-android.googlecode.com/files/smartcard-webserver-1_1.tgz smartcard-webserver-1_1.tgz] patch and extract the content:
+ * `scws.patch` - patches the Java sources for BIP and Smart Card Web Server support (prototype)
+ * `emulator.patch` - patches the qemu module to support a UICC connected through the PC/SC host interface instead of the default Android SIM simulator
 
 ===== PC/SC support =====
-The patch is optional, it is only required for applications using PCSC-Interface.<br/>
-Download the [http://seek-for-android.googlecode.com/files/pcsc_system_service_v093.tgz pcsc_system_service_v093.tgz] patch and extract the content:
- * `pcsc_system_service.patch`
- the patch includes:
- ** Smartcard system-service based on the the Smartcard API
- ** external/pcsc/pcsc-lite with PC-SC support 
- ** external/pcsc/ifdhandler with native IFD Handler based on SmartCard API
+The patch is optional, it is only required for (native) Android applications relying on the PC/SC interface.<br/>
+Download the [http://seek-for-android.googlecode.com/files/pcsc_system_service_v093.tgz pcsc_system_service_v093.tgz] patch and extract the content *`pcsc_system_service.patch`*
+The patch includes:
+ * Smartcard system-service based on the the Smartcard API
+ * external/pcsc/pcsc-lite with PC-SC support 
+ * external/pcsc/ifdhandler with native IFD Handler based on SmartCard API
 
 ===== Apply the patches and update the API =====
 {{{
-$ cd <ANDROID_FROYO_ROOT_DIR>
-$ patch –p1 < <path_to_my_patches>/smartcard-api_1.1/smartcard-api.patch
-$ patch –p1 < <path_to_my_patches>/smartcard-api_1.1/uicc.patch
-$ patch –p1 < <path_to_my_patches>/smartcard-api_1.1/emulator.patch
+$ cd <ANDROID_ROOT_DIR>
+$ patch –p1 < <path_to_my_patches>/smartcard-api-2_0/smartcard-api-2_0.patch
+$ patch –p1 < <path_to_my_patches>/smartcard-api-2_0/uicc.patch
+$ patch –p1 < <path_to_my_patches>/smartcard-api-2_0/emulator.patch
 
-$ patch –p1 < <path_to_my_patches>/smartcard-webserver_1.0/scws.patch
+For SCWS and BIP support:
+$ patch –p1 < <path_to_my_patches>/smartcard-webserver-1_1/scws.patch
 Optional:
-$ patch –p1 < <path_to_my_patches>/smartcard-webserver_1.0/emulator.patch
+$ patch –p1 < <path_to_my_patches>/smartcard-webserver-1_1/emulator.patch
 
+For PC/SC support:
 $ patch –p1 < <path_to_my_patches>/pcsc_system_service_v093/pcsc_system_service.patch
 
+Required:
 $ make update-api
 }}}
 <br/>
 
 == Building the system ==
-Compile the sources for the target device (e.g. replace `passion` with `sapphire` or `dream` depending on your device)
+Compile the sources for the target device (use `crespo`, `passion`, `sapphire` or `dream` depending on the actual development phone)
 {{{
-$ cd device/htc/passion
-$ ./unzip-files.sh
+$ cd <ANDROID_ROOT_DIR>
+$ cd device/samsung/crespo
+$ ./extract-files.sh
 $ cd -
-$ TARGET_PRODUCT=full_passion make
+$ TARGET_PRODUCT=full_crespo TARGET_BUILD_VARIANT=user TARGET_BUILD_TYPE=debug make
 }}}
-Make sure to have downloaded the correct ZIP archive for `unzip-files.sh`, if unsuccessful attach the device and run `extract-files.sh` or search the Internet for more information how to build the system for a real device.
-<br/><br/><br/>
+Make sure to have properly connected the reference phone to extract the binary files or downloaded the corresponding ZIP archive to run `unzip-files.sh` instead. The Internet might also provide more up-to-date information about how to build the system for a real device.
+<br/><br/>
 
 == Flashing the phone ==
 *Note: You'll loose all data on the phone if you proceed*<br/>
 To flash the phone, execute:
 {{{
 $ ./out/host/linux-x86/bin/adb reboot bootloader
-$ ANDROID_PRODUCT_OUT=out/target/product/passion ./out/host/linux-x86/bin/fastboot –w flashall
+$ ANDROID_PRODUCT_OUT=out/target/product/crespo ./out/host/linux-x86/bin/fastboot –w flashall
 }}}
 If `flashall` fails you might also try:
 {{{
-$ ./out/host/linux-x86/bin/fastboot flash boot out/target/product/passion/boot.img
-$ ./out/host/linux-x86/bin/fastboot flash system out/target/product/passion/system.img
-$ ./out/host/linux-x86/bin/fastboot flash userdata out/target/product/passion/data.img
-}}}  
-<br/>
+$ ./out/host/linux-x86/bin/fastboot flash boot out/target/product/crespo/boot.img
+$ ./out/host/linux-x86/bin/fastboot flash system out/target/product/crespo/system.img
+$ ./out/host/linux-x86/bin/fastboot flash userdata out/target/product/crespo/data.img
+}}}
+Again, replace `crespo` with `passion`, `sapphire` or `dream` depending on the actual development phone. Skip flashing the boot partition if you don't want to replace the existing kernel.
+<br/><br/>
 
-== Building the SDK and documentation ==
+== Building the SDK ==
 As the new system image running on the phone now contains an extended framework API, these changes need to be included in the SDK as well.<br/>
-Run a
+SDK for Linux or Mac-OS X, run
 {{{
-$ make sdk
+$ make PRODUCT-sdk-sdk
+}}}
+SDK for Windows, run:
+{{{
+$ make PRODUCT-sdk-win_sdk
+}}}
+to find the new SDK under `out/host/linux-x86/sdk`
+<br/><br/>
+
+== Generating the documentation ==
+Run
+{{{
 $ make docs
 }}}
-to find the new SDK under `out/host/linux-x86/sdk` and the offline documentation under `out/target/common/docs/offline-sdk/reference`
+to find the offline documentation under `out/target/common/docs/offline-sdk/reference`
