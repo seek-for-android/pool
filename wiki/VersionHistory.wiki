@@ -2,6 +2,10 @@
 
 = !SmartCard API =
 
+=== v2.0 - 28.02.2011 ===
+ * API redesign to provide a better abstraction of the SE sevices
+<br/><br/>
+
 === v1.2 - 12.11.2010 ===
  * !MscTerminal redesign
  * Msc native JNI: better APDU waiting loop
