@@ -3,12 +3,15 @@
 Android is running on different devices from different manufacturers. This overview should list the devices and configuration that was tested successfully with !SmartCard API support.<br/>
 
 ====System image patch====
-The following devices were tested with _smartcard-api.patch_ according to [BuildingTheSystem Building the System]
+The following devices were tested with _!SmartCard API extensions_ according to [BuildingTheSystem Building the System]
 
-||  || *Android 1.6 (donut)* || *Android 2.2 (froyo)* ||
-|| ADP1 / Dream || + || - ||
-|| ADP2 / Sapphire || + || + ||
-|| Google Nexus One || - || + ||
+||  || *Android 1.6 (donut)* || *Android 2.2 (froyo)* || *Android 2.3 (gingerbread)* ||
+|| ADP1 / Dream || + || - || - ||
+|| ADP2 / Sapphire || + || + || - ||
+|| Google Nexus One || - || + || + ||
+|| Google Nexus S _(note1)_ || - || - || + ||
+
+_note1_: The Nexus S was obviously not tested with the Mobile Security Card (_!MscTerminal_) but with a _!DummyTerminal_ as it lacks MicroSD support.
 
 
 <br><br>
@@ -21,11 +24,12 @@ The following devices were tested with the installable _MSC !SmartcardService.ap
 || HTC Tatoo || clic100 || donut || + ||
 || HTC Evo 4G || pc36100 || eclair || + ||
 || Google Nexus One || passion || eclair & froyo || + ||
-|| Samsung Galaxy S || GT-I9000 || eclair || + ||
+|| Samsung Galaxy S || GT-I9000 || eclair & froyo || + ||
 || Samsung Galaxy || GT-I7500 || cupcake & donut || + ||
 || Samsung Spica || GT-I5700 || cupcake || + ||
 || Motorola Milestone || A853 || eclair || + ||
 || Sony Ericsson Xperia X10 || X10i || donut || + ||
+|| Sony Ericsson X10 mini || E10i || eclair || + ||
 || Huawei Pulse || U8220 || cupcake || + ||
 
 Please help by providing feedback regarding the installable _MSC !SmartcardService.apk_ on different devices we could not test!
