@@ -1,17 +1,18 @@
 #summary How to enable the emulator to communicate with a SIM card connected through PC/SC
 
-= Introduction =
-
 <table>
 <tr>
-<td>
-<img src=http://seek-for-android.googlecode.com/svn/wiki/img/emulator-extensions.png/>
-</td>
-<td>
-</td>
 <td valign="top">
-The Android emulator is only supporting a primitive 'fake' SIM card or SIM simulation which cannot be used to extend the Sim Toolkit framework or test the !SmartCard API. On real devices, the RIL library is very restrictive in terms of STK support and needs to be extended but on the emulator a patch can be applied in order to provide full SIM access through the host PC/SC system.<br/>
+= Introduction =
+
+The Android emulator is only supporting a primitive 'fake' SIM card or SIM simulation which cannot be used to extend the Sim Toolkit framework or test the !SmartCard API.<br/>
+On real devices, the RIL library is very restrictive in terms of STK support and needs to be extended but on the emulator a patch can be applied in order to provide full SIM access through the host PC/SC system.<br/><br/>
 This enables the Android emulator to forward any APDU traffic (AT+CRSM, AT+CPIN, etc. commands) to a real SIM card that is connected through a PC/SC card reader and accessible with pcsc-lite running on the host. Additionally, this patch adds the missing support for the Sim Toolkit framework to the emulator's RIL implementation (reference-ril).
+</td>
+<td width=10>
+</td>
+<td width=450>
+<img src=http://seek-for-android.googlecode.com/svn/wiki/img/emulator-extensions.png/>
 </td>
 </tr>
 </table>
@@ -40,7 +41,8 @@ $ PCSCLITE_INCPATH=<path/to/pcsc-lite>/src/PCSC PCSCLITE_LIBPATH=<path/to/pcsc-l
  * Create an AVD and launch the emulator:
 {{{
 android create avd -n Android_2.3 -t 12
-ANDROID_SDK_ROOT=<path/to/android-sdk-linux> ./out/host/linux-x86/bin/emulator -avd Android_2.3 -system out/target/product/generic/system.img -pcsc <reader>
+ANDROID_SDK_ROOT=<path/to/android-sdk-linux> ./out/host/linux-x86/bin/emulator -avd Android_2.3
+     -system out/target/product/generic/system.img -pcsc <reader>
 }}}
  * In the emulator output a card reader will get listed, e.g. _sim_card.c: using card reader Cherry XX44 00 00_
   * If a SIM Toolkit application is located on the SIM card inserted to the card reader, the Android SIM Toolkit (Stk) application can be used to use/test/debug the card applet.
@@ -50,9 +52,12 @@ http://seek-for-android.googlecode.com/svn/wiki/img/EmulatorExtensionScreenshot.
 == Command line interface ==
 After the emulator extensions patch is applied, these command-line options are available to the emulator.
 {{{
-Option                         Description
--pcsc <card reader's name>     Enable access to a SIM card inserted to a PC/SC card reader. if <card reader's name> is omitted
-                               the emulator outputs a list of card reader names and uses the first card reader from that list.
--msc <filepath>                Enable access to a Mobile Security Card. Use <filepath> as SD in-/output file located on the host's mount point.
--no_dns                        Workaround for running the emulator on a host without configured DNS (without network connectivity).
+Option                    Description
+-pcsc <terminal name>     Enable access to a SIM card inserted to a PC/SC card reader. If <card reader's name> is
+                          omitted the emulator outputs a list of card reader names and uses the first card reader
+                          from that list.
+-msc <filepath>           Enable access to a Mobile Security Card. Use <filepath> as SD in-/output file located on
+                          the host's mount point.
+-no_dns                   Workaround for running the emulator on a host without configured DNS thus without network
+                          connectivity.
 }}}
