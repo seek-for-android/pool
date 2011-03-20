@@ -4,6 +4,11 @@ The following summary is a list of (frequent) questions that we received through
 <br/><br/>
 
 <table>
+<tr><td valign='top'>*Q*</td><td>What version of Android is supported by SEEK?</td></tr>
+<tr><td valign='top'>*A*</td><td>The latest version of Android is supported.</td></tr>
+<tr><td valign='top'></td><td>...due to limited resources of our team and the variety of Android versions we only concentrate on the latest Android version as good as possible.</td></tr>
+<tr><td><br/></td><td></td></tr>
+
 <tr><td valign='top'>*Q*</td><td>I does not make sense to test !SmartCard APDI and the Nexus S with no Micro SD card slot?</td></tr>
 <tr><td valign='top'>*A*</td><td>Internally we used a dummy terminal in order to verify that the integration is working.</td></tr>
 <tr><td valign='top'></td><td>...SEEK is not only about the Mobile Security Card but also about SIM or embedded Secure Elements support.</td></tr>
