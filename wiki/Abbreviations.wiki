@@ -1,0 +1,21 @@
+#summary Abbreviations used in the context of SEEK
+
+|| Abbreviation || Meaning || further information ||
+|| APDU || Application Data Protocol Unit || ||
+|| AT || AT command set || ||
+|| ATR || Answer to Reset || ||
+|| BIP || Bearer Independent Protocol || ||
+|| !DevKit || Mobile Security Developer's Kit || ||
+|| ISO || ISO-7816 || ||
+|| MNO || Mobile Network Operator || ||
+|| MSC || Mobile Security Card || ||
+|| µSD || Micro Secure Digital Memory Card || ||
+|| OEM || Original Equipment Manufacturer || ||
+|| OTA || Over the air || ||
+|| PCSC || Personal Computer/Smart Card || ||
+|| SCAPI || !SmartCard API || ||
+|| SCWS || Smartcard Webserver || ||
+|| SE || Secure Element || ||
+|| SIM || Subscriber Identity Module || ||
+|| UICC || Universal Integrated Circuit Card || ||
+|| USIM || Universal Subscriber Identity Module || ||
