@@ -21,9 +21,9 @@ Corresponding to the PKCS#11 interface, the [http://www.rsa.com/rsalabs/node.asp
 
 == 1.2 OpenSC ==
 [http://www.opensc-project.org/opensc OpenSC] is a widely-used Open Source development, which provides a set of libraries and tools for accessing smart cards for management and cryptographic operations. 
-It provides a !PKCS#11 interface and already supports smart cards from different vendors. 
-!OpenSC provides smart card access according to the !PKCS#15 standard.
-A good overview about !OpenSC can be found [http://www.opensc-project.org/opensc/wiki/OverView here]
+It provides a PKCS#11 interface and already supports smart cards from different vendors. 
+OpenSC provides smart card access according to the PKCS#15 standard.
+A good overview about OpenSC can be found [http://www.opensc-project.org/opensc/wiki/OverView here]
 
 
 == 1.3 Muscle Card Applet ==
@@ -156,7 +156,7 @@ A description of the initialisation command can be found here:
 http://www.opensc-project.org/opensc/wiki/MuscleApplet
 
 
-http://seek-for-android.googlecode.com/svn/wiki/img/PKI_snap1_opensc_init.png
+http://seek-for-android.googlecode.com/svn/wiki/img/PKI2_snap1_opensc_init.png
 
 
 === 2.4.2 Create PKCS#15 structure ===
@@ -171,7 +171,7 @@ During initalisation process you will be asked to enter the values for PINs/pass
 <br>Further information to the pkcs15-init tool can be found here: [http://www.opensc-project.org/opensc/wiki/CardPersonalization CardPersonalisation]
 
 
-http://seek-for-android.googlecode.com/svn/wiki/img/PKI_snap2_init_p15.png
+http://seek-for-android.googlecode.com/svn/wiki/img/PKI2_snap2_init_p15.png
 
 
 === 2.4.3  Dump PKCS#15 content on the card. ===
@@ -182,7 +182,7 @@ The content of the smart card can be listet by using the following command:
 {{{
 # pkcs15-tool --dump
 }}}
-http://seek-for-android.googlecode.com/svn/wiki/img/PKI_snap3_p15_dump.png
+http://seek-for-android.googlecode.com/svn/wiki/img/PKI2_snap3_p15_dump.png
 
 
 === 2.4.4 Import a RSA key and certificate. ===
@@ -202,7 +202,7 @@ $ adb shell
 }}}
 
 
-http://seek-for-android.googlecode.com/svn/wiki/img/PKI_snap4_import_key_from_p12.png
+http://seek-for-android.googlecode.com/svn/wiki/img/PKI2_snap4_import_key_from_p12.png
 
 
 === 2.4.5 Dump smart card content ===
@@ -214,7 +214,7 @@ After successful import of the key and certificate you can see the new objects b
 }}}
 
 
-http://seek-for-android.googlecode.com/svn/wiki/img/PKI_snap5_p15_dump_key.png
+http://seek-for-android.googlecode.com/svn/wiki/img/PKI2_snap5_p15_dump_key.png
 
 
 === 2.4.6 List PKC#11 Slots ===
@@ -226,6 +226,7 @@ Here, in the slot 4 the Secure Element is available.
 # pkcs11-tool --L
 }}}
 
+http://seek-for-android.googlecode.com/svn/wiki/img/PKI2_snap5a_p15_dump_key.png
 
 === 2.4.7 Perform a signature using the PKCS#11 library. ===
 
@@ -244,7 +245,7 @@ As signature algorithm we use the SHA1-RSA-PKCS, which performs both, a SHA-1 ha
 }}}
 
 
-http://seek-for-android.googlecode.com/svn/wiki/img/PKI_snap6_create_signature.png
+http://seek-for-android.googlecode.com/svn/wiki/img/PKI2_snap6_create_signature.png
 
 
 === 2.4.8 Logging the PKCS#11 calls ===
