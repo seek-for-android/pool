@@ -21,9 +21,9 @@ Corresponding to the PKCS#11 interface, the [http://www.rsa.com/rsalabs/node.asp
 
 == 1.2 OpenSC ==
 [http://www.opensc-project.org/opensc OpenSC] is a widely-used Open Source development, which provides a set of libraries and tools for accessing smart cards for management and cryptographic operations. 
-It provides a PKCS#11 interface and already supports smart cards from different vendors. 
-OpenSC provides smart card access according to the PKCS#15 standard.
-A good overview about OpenSC can be found [http://www.opensc-project.org/opensc/wiki/OverView here]
+It provides a !PKCS#11 interface and already supports smart cards from different vendors. 
+!OpenSC provides smart card access according to the !PKCS#15 standard.
+A good overview about !OpenSC can be found [http://www.opensc-project.org/opensc/wiki/OverView here]
 
 
 == 1.3 Muscle Card Applet ==
@@ -43,28 +43,29 @@ To provide PKI functionality on the Android OS, we use OpenSC with modifications
 == 2.1 Prerequisites ==
 
 
- * Android 2.2 (froyo) sources with smart card related patches (see [http://code.google.com/p/seek-for-android/wiki/BuildingTheSystem Building the system])
+ * Android 2.3.3 (gingerbread) sources with smart card related patches (see [http://code.google.com/p/seek-for-android/wiki/BuildingTheSystem Building the system])
  * Secure Element with Java Card OS in microSD format (_e.g. G&D Mobile Security Card_), for using it on a real hardware device.
  * Tool to load a Java Card applet onto the Secure Element (_e.g. G&D JLoad_ for _G&D Mobile Security Card_)
 
 
-From the download page get:
- * OpenSC 0.11.13 package: [http://seek-for-android.googlecode.com/files/external_opensc_0.11.13.tar.gz external_opensc_0.11.13.tar.gz]
- * Patch for OpenSC for Android: [http://seek-for-android.googlecode.com/files/opensc_android.patch opensc_android.patch]
- * Muscle Card Applet 0.9.12: [http://seek-for-android.googlecode.com/files/MCardApplet-0912.tar.gz MCardApplet-0912.tar.gz]
- * sample RSA key with certificate: [http://seek-for-android.googlecode.com/files/azur1024bit_password_12345678.pfx azur1024bit_password_12345678.pfx]
+From the download page get the OpenSC for Android package [http://seek-for-android.googlecode.com/files/opensc_android_package_v2.0.tgz opensc_android_package_v2.0.tgz] <br><br>
+This package contains:
+ * OpenSC 0.11.13: external_opensc_0.11.13.tar.gz
+ * Patch for OpenSC for Android: opensc_android.patch
+ * Muscle Card Applet 0.9.12: MCardApplet-0912.tar.gz
+ * sample RSA key with certificate: azur1024bit_password_12345678.pfx
 
 
-<br>The system environment for porting the PKI functionality to the Android 2.2 (froyo) was an Ubuntu 10.04 with gcc 4.4.3.<br>
+<br>The system environment for porting the PKI functionality to the Android 2.3.3 (gingerbread) was an Ubuntu 10.04 with gcc 4.4.3.<br>
 As Secure Element a _G&D Mobile Security Card_ and for loading the Java card applet, the _G&D JLoad_ was used, provided within the _G&D Mobile Security Developers Kit_ [https://www.cardsolutions-shop.com/shop/gi-de/].<br>As phone, there was a HTC Magic (Sapphire) used.<br>
 
 
 
 
-== 2.2 Add OpenSC to the froyo sources ==
+== 2.2 Add OpenSC to the Android sources ==
 
 
-To add the support for OpenSC to your froyo sources, you need to build your system with smart card support according to the description [http://code.google.com/p/seek-for-android/wiki/BuildingTheSystem Building the system] and additionally add the patches for OpenSC to your sources.
+To add the support for OpenSC to your Android sources, you need to build your system with smart card support according to the description [http://code.google.com/p/seek-for-android/wiki/BuildingTheSystem Building the system] and additionally add the patches for OpenSC to your sources.
 
 
 After you performed the step "Patching the source" as described in [http://code.google.com/p/seek-for-android/wiki/BuildingTheSystem Building the system] add the patches for OpenSC.
@@ -161,12 +162,13 @@ http://seek-for-android.googlecode.com/svn/wiki/img/PKI_snap1_opensc_init.png
 === 2.4.2 Create PKCS#15 structure ===
 
 
-To create the PKCS#15 structure on the smart card use the _pkcs15-tool_
+To create the PKCS#15 structure on the smart card use the _pkcs15-tool_.
+The parameter _r_ adresses the reader, where typically _0_ is the UICC and the MSC is _1_.
 {{{
-# pkcs15-init -r 0 -C
+# pkcs15-init -r 1 -C
 }}}
-During initalisation process you will be asked to enter the values for PINs/passwords.
-Further information to the pkcs15-init tool can be found here: [http://www.opensc-project.org/opensc/wiki/CardPersonalization CardPersonalisation]
+During initalisation process you will be asked to enter the values for PINs/passwords. <br>In our sample, we set the value "12345678" for all passwords.
+<br>Further information to the pkcs15-init tool can be found here: [http://www.opensc-project.org/opensc/wiki/CardPersonalization CardPersonalisation]
 
 
 http://seek-for-android.googlecode.com/svn/wiki/img/PKI_snap2_init_p15.png
@@ -215,7 +217,17 @@ After successful import of the key and certificate you can see the new objects b
 http://seek-for-android.googlecode.com/svn/wiki/img/PKI_snap5_p15_dump_key.png
 
 
-=== 2.4.6 Perform a signature using the PKCS#11 library. ===
+=== 2.4.6 List PKC#11 Slots ===
+
+
+For operating with the PKCS#11 interface, it is required to know the PKCS#11 Slot, which contains the Secure Element.
+Here, in the slot 4 the Secure Element is available.
+{{{
+# pkcs11-tool --L
+}}}
+
+
+=== 2.4.7 Perform a signature using the PKCS#11 library. ===
 
 
 With the _pkcs11-tool_ it is possible to perform cryptographic operations with the PKCS#11 library _opensc-pkcs11.so_.
@@ -228,14 +240,14 @@ The result is stored in the output file. The output file created has a length of
 (The signature has the same length as the Private key on the smart card, which is 1024 bit).
 As signature algorithm we use the SHA1-RSA-PKCS, which performs both, a SHA-1 hash and signature according to the RSA algorithm in one step.
 {{{
-# pkcs11-tool --sign --slot 0 -m SHA1-RSA-PKCS --input-file /data/azur1024bit_password_12345678.pfx --output-file /data/signature
+# pkcs11-tool --sign --slot 4 -m SHA1-RSA-PKCS --input-file /data/azur1024bit_password_12345678.pfx --output-file /data/signature
 }}}
 
 
 http://seek-for-android.googlecode.com/svn/wiki/img/PKI_snap6_create_signature.png
 
 
-=== 2.4.7 Logging the PKCS#11 calls ===
+=== 2.4.8 Logging the PKCS#11 calls ===
 
 
 To see the PKCS#11 calls sent to the PKCS#11 library it is possible to load the _pkcs11-spy.so_ libary and log the calls before forwarding it to the real PKCS#11 library _opensc-pkcs11.so_.
@@ -245,7 +257,7 @@ In this example we call the digital signature operation as described before, but
 With the environment variable `PKCS11SPY` we advise the _pkcs11-spy.so_ library to forward the calls to the real PKCS#11 library _opensc-pkcs11.so_.
 This will display all the PKCS#11 calls including sensitive information like PIN values entered. This is useful for debugging with applications using the PKCS#11 interface.
 {{{
-# PKCS11SPY=/system/lib/opensc-pkcs11.so ./pkcs11-tool --module /system/lib/pkcs11-spy.so ./pkcs11-tool --sign --slot 0 -m SHA1-RSA-PKCS --input-file /data/azur1024bit_password_12345678.pfx --output-file /data/signature
+# PKCS11SPY=/system/lib/opensc-pkcs11.so ./pkcs11-tool --module /system/lib/pkcs11-spy.so ./pkcs11-tool --sign --slot 4 -m SHA1-RSA-PKCS --input-file /data/azur1024bit_password_12345678.pfx --output-file /data/signature
 }}}
 
 
