@@ -2,21 +2,28 @@
 
 = Introduction =
 
-To provide the PCSC Interface in additional to the SmartCard API, we implemented a smartcard reader driver (ifdhandler) for PCSC-Lite, which routes the APDU communication through a SmartCard system service to the SmartCard API. Whenever possible, it is recommended to directly use the SmartCard API.
-But the PCSC-Interface is the standard interface used for many PC applications accessing smartcards. So this implementation will provide the PCSC interface for already existing native applications requiring the PCSC interface.
-
+To provide the PCSC Interface on the Android device, additional to the !SmartCard API, we implemented a smartcard reader driver (ifdhandler) for PCSC-Lite, which routes the APDU communication through a !SmartCard system service to the !SmartCard API. PCSC Support for the !SmartCard API is an optional component which is typically not required, as the !SmartCard API already allow to communicate with any Secure Element. 
+But the PCSC-Interface is the standard interface used for many PC applications accessing smartcards. So this implementation will provide the PCSC interface for already existing native applications (e.g. OpenSC), which are ported to Android and requiring the PCSC interface.
+Whenever possible, it is recommended to directly use the !SmartCard API.
 
 = Details =
 
-The current version (v093) of the ifdhandler is a first prototype, which opens a basic channel from the SmartCard API and routes all commands to this channel.
-Typical smartcard applications do not use logical channels, so this is the adequate solution to provide access to the smartcard for typical smartcard applications.
-For UICC the situation is different, as in real phones, the basic channel is mostly exclusively used by the baseband controller.
-
+The current version (v094) of the ifdhandler is a prototype, which allow to route the APDU communication from the PCSC interface to the !SmartCard API.
 
 
 == Version history ==
 
+pcsc_system_service_v094.tgz
+
+ * Prototype
+ * Support of !SmartCard API 2.0
+ * Support of basic and logical channels of the !SmartCard API 
+ * Patch for gingerbread 2.3.3
+ * tested with Mobile Security Card on Nexus One with Gingerbread 2.3.3
+
+
 pcsc_system_Service_v093.tgz
 
  * first prototype
- * only basic channel of the SmartCard API used
+ * only basic channel of the !SmartCard API used
+ 
