@@ -50,10 +50,10 @@ To provide PKI functionality on the Android OS, we use OpenSC with modifications
 
 From the download page get the OpenSC for Android package [http://seek-for-android.googlecode.com/files/opensc_android_package_v2.0.tgz opensc_android_package_v2.0.tgz] <br><br>
 This package contains:
- * OpenSC 0.11.13: external_opensc_0.11.13.tar.gz
- * Patch for OpenSC for Android: opensc_android.patch
- * Muscle Card Applet 0.9.12: MCardApplet-0912.tar.gz
- * sample RSA key with certificate: azur1024bit_password_12345678.pfx
+ * OpenSC 0.11.13: _external_opensc_0.11.13.tar.gz_
+ * Patch for OpenSC for Android: _opensc_android.patch_
+ * Muscle Card Applet 0.9.12: _MCardApplet-0912.tar.gz_
+ * sample RSA key with certificate: _azur1024bit_password_12345678.pfx_
 
 
 <br>The system environment for porting the PKI functionality to the Android 2.3.3 (gingerbread) was an Ubuntu 10.04 with gcc 4.4.3.<br>
