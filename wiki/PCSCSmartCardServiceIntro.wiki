@@ -18,8 +18,8 @@ pcsc_system_service_v094.tgz
  * Prototype
  * Support of !SmartCard API 2.0
  * Support of basic and logical channels of the !SmartCard API 
- * Patch for gingerbread 2.3.3
- * tested with Mobile Security Card on Nexus One with Gingerbread 2.3.3
+ * Patch for Android 2.3.3 (gingerbread)
+ * tested with Mobile Security Card on Nexus One with Android 2.3.3 (gingerbread)
 
 
 pcsc_system_Service_v093.tgz
