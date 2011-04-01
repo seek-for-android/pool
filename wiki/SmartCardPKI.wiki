@@ -163,7 +163,7 @@ http://seek-for-android.googlecode.com/svn/wiki/img/PKI2_snap1_opensc_init.png
 
 
 To create the PKCS#15 structure on the smart card use the _pkcs15-tool_.
-The parameter _r_ adresses the reader, where typically _0_ is the UICC and the MSC is _1_.
+The parameter _r_ adresses the reader, here the value _0_ is for the UICC and _1_for the MSC, which we use.
 {{{
 # pkcs15-init -r 1 -C
 }}}
@@ -223,10 +223,10 @@ http://seek-for-android.googlecode.com/svn/wiki/img/PKI2_snap5_p15_dump_key.png
 For operating with the PKCS#11 interface, it is required to know the PKCS#11 Slot, which contains the Secure Element.
 Here, in the slot 4 the Secure Element is available.
 {{{
-# pkcs11-tool --L
+# pkcs11-tool -L
 }}}
 
-http://seek-for-android.googlecode.com/svn/wiki/img/PKI2_snap5a_p15_dump_key.png
+http://seek-for-android.googlecode.com/svn/wiki/img/PKI2_snap5a_p15_list_slots.png
 
 === 2.4.7 Perform a signature using the PKCS#11 library. ===
 
@@ -245,7 +245,7 @@ As signature algorithm we use the SHA1-RSA-PKCS, which performs both, a SHA-1 ha
 }}}
 
 
-http://seek-for-android.googlecode.com/svn/wiki/img/PKI2_snap6_create_signature.png
+http://seek-for-android.googlecode.com/svn/wiki/img/PKI2_snap6_create_singature.png
 
 
 === 2.4.8 Logging the PKCS#11 calls ===
