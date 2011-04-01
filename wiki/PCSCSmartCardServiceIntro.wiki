@@ -10,6 +10,7 @@ Whenever possible, it is recommended to directly use the !SmartCard API.
 
 The current version (v094) of the ifdhandler is a prototype, which allow to route the APDU communication from the PCSC interface to the !SmartCard API.
 
+http://seek-for-android.googlecode.com/svn/wiki/img/struktur_pcsc_for_smartcard_api.jpg
 
 == Version history ==
 
