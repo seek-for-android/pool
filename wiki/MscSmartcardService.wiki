@@ -17,7 +17,7 @@ The _APK_ inside the archive can be installed on the device like on any other An
 <td valign="top" width=55%>
 = Details =
 To test the _MSC !SmartcardService_ please
- * Download the [http://seek-for-android.googlecode.com/files/MSC_SmartcardService-1_5.tgz MSC_SmartcardService-1_5.tgz] and extract the card content
+ * Download the [http://seek-for-android.googlecode.com/files/MSC_SmartcardService-2_1_1.tgz MSC_SmartcardService-2_1_1.tgz] and extract the card content
 
  * ensure that _USB debugging_ is enabled on the phone
  (_Settings_ - _Applications_ - _Development_ - _USB debugging_)
@@ -26,9 +26,11 @@ To test the _MSC !SmartcardService_ please
 
  * execute `adb install SmartcardSample.apk`
 
+ * execute `adb install OpenMobileAPISample.apk`
+
  * ensure a [https://www.cardsolutions-shop.com/shop/gi-de/ Mobile Security Card] is inserted in the phone
 
- * on the phone, run the !SmartcardSample application and see the APDU communication
+ * on the phone, run the !SmartcardSample or OpenMobileAPISample application and see the APDU communication
 </td>
 <td width=5%>
 </td>
@@ -46,8 +48,12 @@ When using Eclipse to develop smart card aware applications, do not use the self
 <br/><br/>
 
 = Version history =
+==== v2.1.1 - 15.04.2011 ====
+ * Major update: integration of SIMalliance Open Mobile API interface
+ * Bug fix: improved retry-loop to receive response with some MSC cards
+
 ==== v1.5 - 11.11.2010 ====
- * Bug fix: 'response too small' with some MSC card
+ * Bug fix: 'response too small' with some MSC cards
  * Bug fix: JNI library cleanup
  * Corrections for Samsung Galaxy S
 
