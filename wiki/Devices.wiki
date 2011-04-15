@@ -28,6 +28,7 @@ The following devices were tested with the installable _MSC !SmartcardService.ap
 || Samsung Galaxy || GT-I7500 || cupcake & donut || + || ||
 || Samsung Spica || GT-I5700 || cupcake || + || ||
 || Motorola Milestone || A853 || eclair || + || ||
+|| Motorola Charm || MB502 || ? || + || 14.04.11, kdusilve...@gmail.com ||
 || Sony Ericsson Xperia X10 || X10i || donut || + || ||
 || Sony Ericsson X10 mini || E10i || eclair || + || ||
 || Huawei Ideos || U8150 || froyo || + || 30.03.11, yun...@gmail.com||
