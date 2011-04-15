@@ -109,15 +109,14 @@ public class MainActivity extends Activity implements ISmartcardConnectionListen
 		ICardChannel basicChannel;
         try {
         	basicChannel = smartcard.openBasicChannel(cardReader);
-			logText(" ATR: " + bytesToString(basicChannel.getAtr()) + "\n");
 		} catch (CardException e) {
 			logText(e.getMessage());
 			return;
 		}
 		
-		logText("\ntransmit() (SELECT ISD)\n");
+		logText("\ntransmit() (GET CPLC)\n");
         try {
-			byte[] response = basicChannel.transmit(new byte[] {0x00, (byte) 0xA4, 0x04, 0x00, 0x00});
+			byte[] response = basicChannel.transmit(new byte[] {(byte) 0x80, (byte) 0xCA, (byte) 0x9F, 0x7F, 0x00});
 			logText(" Response: " + bytesToString(response) + "\n");
 		} catch (CardException e) {
 			logText(e.getMessage());
@@ -128,7 +127,6 @@ public class MainActivity extends Activity implements ISmartcardConnectionListen
 		ICardChannel logicalChannel;
         try {
         	logicalChannel = smartcard.openLogicalChannel(cardReader, ISD_AID);
-			logText(" ATR: " + bytesToString(logicalChannel.getAtr()) + "\n");
 		} catch (CardException e) {
 			logText(e.getMessage());
 			return;
