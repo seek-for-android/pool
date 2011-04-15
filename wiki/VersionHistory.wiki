@@ -2,6 +2,15 @@
 
 = !SmartCard API =
 
+=== v2.1.1 - 15.04.2011 ===
+ * fully SIM Alliance Open Mobile API compliant
+ * added Terminal provider interface
+ * minor bugfixes and extensions in the terminal implementation:
+   * MscTerminal is connected at later time if initial connect failed
+   * SmartMxTerminal was adapted to the latest interface
+   * UiccTerminal was improved in terms of error handling
+<br/><br/>
+
 === v2.0 - 28.02.2011 ===
  * Gingerbread support
  * API redesign to provide a better abstraction of the SE sevices
