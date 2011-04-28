@@ -8,15 +8,22 @@ Whenever possible, it is recommended to directly use the !SmartCard API.
 
 = Details =
 
-The current version (v094) of the ifdhandler is a prototype, which allow to route the APDU communication from the PCSC interface to the !SmartCard API.
+The current version (v095) of the ifdhandler is a prototype, which allow to route the APDU communication from the PCSC interface to the !SmartCard API.
 
 http://seek-for-android.googlecode.com/svn/wiki/img/struktur_pcsc_for_smartcard_api.jpg
 
 == Version history ==
 
+pcsc_system_service_v095.tgz
+
+ * prototype
+ * minor adaptions for support of !SmartCard API 2.1.1
+ * minor corrections in errorhandling and logging
+ * tested with Mobile Security Card on Nexus One with Android 2.3.3 r1 (gingerbread) 
+
 pcsc_system_service_v094.tgz
 
- * Prototype
+ * prototype
  * Support of !SmartCard API 2.0
  * Support of basic and logical channels of the !SmartCard API 
  * Patch for Android 2.3.3 (gingerbread)
