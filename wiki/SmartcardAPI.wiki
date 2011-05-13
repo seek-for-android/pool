@@ -44,8 +44,6 @@ V1 was the first public release of the platform extensions to allow Secure Eleme
  * *!SmartcardError* is introduced instead of mapping error conditions to existing exception classes
  * *Platform specific instantiation* is part of !SmartcardClient as well as the Secure Element functions - no separation of methods
 
-See !SmartCard API [http://seek-for-android.googlecode.com/svn/trunk/doc/index.html JavaDoc]
-<br/>
 
 
 == Using the !SmartCard API ==
@@ -54,4 +52,6 @@ Compile the Android platform, build the SDK and flash a [Devices device] or star
 Start working on your own project with a quick start from [UsingSmartCardAPI Using the SmartCard API].<br/>
 Eclipse is recommended to develop smart card application. But the Android SDK location needs to point to the self compiled SDK.<br/>
 Import the samples and run them on the phone or in the emulator. They provide a good starting point.<br/>
+
+See !SmartCard API [http://seek-for-android.googlecode.com/svn/trunk/doc/index.html JavaDoc]
 <br/>
