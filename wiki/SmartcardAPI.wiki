@@ -44,8 +44,7 @@ V1 was the first public release of the platform extensions to allow Secure Eleme
  * *!SmartcardError* is introduced instead of mapping error conditions to existing exception classes
  * *Platform specific instantiation* is part of !SmartcardClient as well as the Secure Element functions - no separation of methods
 
-See [http://seek-for-android.googlecode.com/svn/trunk/docs/version1_x/index.html JavaDoc] for !SmartCard API version 1.x and [http://seek-for-android.googlecode.com/svn/trunk/docs/version2_x/index.html JavaDoc] for !SmartCard API version 2.x
-
+See !SmartCard API [http://seek-for-android.googlecode.com/svn/trunk/doc/index.html JavaDoc]
 <br/>
 
 
