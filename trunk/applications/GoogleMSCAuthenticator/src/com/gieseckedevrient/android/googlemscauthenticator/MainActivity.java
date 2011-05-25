@@ -26,8 +26,10 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.ActivityNotFoundException;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -57,16 +59,17 @@ public class MainActivity extends Activity {
 	
 	private Context mContext = null;
 	private Timer mTimer = null;
-	private String cardReader = "Mobile Security Card 00 00";
+	private String cardReader = "Mobile Security Card";
 	public static String otp = "";
+	
+	private int disconnects = 0;
+	private boolean connected = false;
 	
 	ISmartcardConnectionListener connectionListener = new ISmartcardConnectionListener() {
 		public void serviceConnected() {
-			// ensure we deal with the correct card reader
 	        try {
 	        	String[] reader = smartcard.getReaders(); 
-				if (reader.length > 0 && reader[0] != cardReader)
-					cardReader = reader[0];
+				cardReader = reader[0];
 			} catch (Exception e) {
 				Toast.makeText(mContext, "Could not access the card reader: " + e, Toast.LENGTH_LONG).show();
 				finish();
@@ -75,8 +78,8 @@ public class MainActivity extends Activity {
 			
 			// ensure a card is present
 	        try {
-				if (smartcard.isCardPresent(cardReader) == false) {
-					Toast.makeText(mContext, "No MicroSD card in reader", Toast.LENGTH_LONG).show();
+				if (!smartcard.isCardPresent(cardReader)) {
+					Toast.makeText(mContext, "No smartcard in reader or card in use.", Toast.LENGTH_LONG).show();
 					finish();
 					return;
 				}
@@ -86,12 +89,17 @@ public class MainActivity extends Activity {
 				finish();
 				return;
 			}
+			
+			connected = true;
 
 			refresh();
 		}
 
 		public void serviceDisconnected() {
-			// SmartcardService was killed - restart the binding...
+			disconnects++;
+			connected = false;
+			if (disconnects <= 5)
+				smartcard = new SmartcardClient(mContext, connectionListener);
 		}
 	};
 	SmartcardClient smartcard;
@@ -104,6 +112,15 @@ public class MainActivity extends Activity {
 		menu.add(0, 3, 3, "About").setIcon(R.drawable.menu_about);
 
 		return true;
+	}
+	
+	private void askYesNo(String message, DialogInterface.OnClickListener yesListener, 
+			DialogInterface.OnClickListener noListener) {
+		AlertDialog.Builder builder = new AlertDialog.Builder(this);
+		builder.setMessage(message);
+		builder.setPositiveButton("Yes", yesListener);
+		builder.setNegativeButton("No", noListener);
+		builder.show();
 	}
 
 	public boolean onOptionsItemSelected(MenuItem item) {
@@ -119,7 +136,18 @@ public class MainActivity extends Activity {
 			break;
 			
 		case 2:		// RESET
-			reset();						
+			
+			if (!ensureConnected()) return true;
+			
+			DialogInterface.OnClickListener yesListener = new DialogInterface.OnClickListener() {
+				@Override
+				public void onClick(DialogInterface dialog, int which) {
+					reset();
+				}
+			};
+			
+			askYesNo("Are you sure you want to reset your smartcard personalisation for Google OTP?",
+					yesListener, null);
 			break;
 
 		case 3:		// ABOUT 
@@ -150,22 +178,19 @@ public class MainActivity extends Activity {
 			tv.setText("n/a");	
 			
 		} catch (Exception e) {
-			Log.w(OTP_DEMO_TAG, "Exception during handleSecret()");
-			e.printStackTrace();
+			Log.w(OTP_DEMO_TAG, "Error during reset: " + e);
     		Toast.makeText(mContext, "Could not reset: " + e, Toast.LENGTH_LONG).show();
+    		e.printStackTrace();
 		}
 	}
 	
 	// Opens the barcode scanner in order to scan the personalisation code
 	private void scanCode() {
+		if (!ensureConnected()) return;
     	Intent intent = new Intent("com.google.zxing.client.android.SCAN");
         intent.putExtra("SCAN_MODE", "QR_CODE_MODE");
         intent.putExtra("SAVE_HISTORY", false);
-        try {
-        	startActivityForResult(intent, SCAN_INTENT_ID);
-        } catch (ActivityNotFoundException e) { 
-        	e.printStackTrace();
-        }
+        startActivityForResult(intent, SCAN_INTENT_ID);
 	}
 	
 	
@@ -175,7 +200,13 @@ public class MainActivity extends Activity {
     public void onActivityResult(int requestCode, int resultCode, Intent intent) {
     	if (requestCode == SCAN_INTENT_ID && resultCode == Activity.RESULT_OK) {
     		String result = intent.getStringExtra("SCAN_RESULT");
-    		parseAndSaveSecret(Uri.parse(result));
+    		try {
+    			Uri uri = Uri.parse(result);
+    			parseAndSaveSecret(uri);
+    		} catch (IllegalArgumentException e) {
+    			Toast.makeText(mContext, "Invalid QR code. Please ensure the code you scanned is a valid OTP secret code.", 
+    					Toast.LENGTH_LONG).show();
+    		}
     	}
     }
 	
@@ -184,6 +215,12 @@ public class MainActivity extends Activity {
 	private void parseAndSaveSecret(Uri uri) {
     	
     	String scheme = uri.getScheme();
+    	
+    	if (scheme == null) {
+    		Log.w(OTP_DEMO_TAG, "QR code is not a URI.");
+    		throw new IllegalArgumentException("Invalid QR code: Code is not a URI");
+    	}
+    	
     	String authority = uri.getAuthority();
     	String user = null, secret = null;
     	int type = TOTP;
@@ -226,8 +263,7 @@ public class MainActivity extends Activity {
     	
     	if (secret == null || secret.length() == 0) {
     		Log.w(OTP_DEMO_TAG, "Secret not found in URI.");
-    		Toast.makeText(mContext, "Invalid code.", Toast.LENGTH_LONG).show();
-    		return;
+    		throw new IllegalArgumentException("Invalid QR code: No secret in code.");  
     	}
     	
     	handleSecret(Base32Utils.base32ToByteArray(secret, 20), counter, type);
@@ -286,6 +322,8 @@ public class MainActivity extends Activity {
 	private void handleSecret(byte[] secret, long counter, int type) {
 		try {
 		
+			if (!ensureConnected()) return;
+			
 			ICardChannel channel = openChannelAndSelect();
 			if (type == HOTP) setCounter(channel, counter);
 			
@@ -319,9 +357,13 @@ public class MainActivity extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		// Initialize the layout
 		super.onCreate(savedInstanceState);
-
+		
 		// remove title
 	    this.requestWindowFeature(Window.FEATURE_NO_TITLE);
+		
+		setContentView(R.layout.main);
+		TextView tv = (TextView) findViewById(R.id.otp);
+		tv.setText("n/a");	
 	    
 		mContext = this;
 		try {
@@ -346,7 +388,17 @@ public class MainActivity extends Activity {
     	return currentTimeSeconds / INTERVAL_LENGTH;
     }
     
-    private void refresh() {	
+    private boolean ensureConnected() {
+    	if (!connected) 
+    		Toast.makeText(mContext, "Could not establish connection to the smartcard service. "+
+    				"Please try again.", Toast.LENGTH_LONG).show();
+    	return connected;
+    }
+    
+    private void refresh() {
+    	
+    	if (!ensureConnected()) return;
+    	
 		otp = "";
 		
 		// access the applet and retrieve the OTP
@@ -397,8 +449,17 @@ public class MainActivity extends Activity {
 			Log.v(OTP_DEMO_TAG, "OTP: " + otp);
 			
 			setTimer();
+			
+        } catch (AppletNotAvailableException e) {
+        	Toast.makeText(mContext, "The Google MSC Authenticator applet is not installed on the smartcard.", 
+        			Toast.LENGTH_LONG).show();
+			try {
+				cardChannel.close();
+			} catch (Exception ex) {
+			}
+        	finish();
 		} catch (Exception e) {
-			Toast.makeText(mContext, "Could not access card reader.", Toast.LENGTH_LONG).show();
+			Toast.makeText(mContext, "Could not access card reader: " + e.getMessage(), Toast.LENGTH_LONG).show();
 			Log.e(OTP_DEMO_TAG, "Exception.3: " + e.getMessage());
 			e.printStackTrace();
 			try {
@@ -410,14 +471,10 @@ public class MainActivity extends Activity {
     }
     
     private ICardChannel openChannelAndSelect() throws Exception {
-    	ICardChannel cardChannel = smartcard.openBasicChannel(cardReader);
+    	ICardChannel cardChannel = smartcard.openBasicChannel(cardReader, new byte[] {(byte)0xD2, 0x76, 0x00, 0x01, 0x18, 0x00, 0x03, (byte)0xFF, 0x49, 0x10, 0x00, (byte)0x89, 0x00, 0x00, 0x02, 0x01});
     	
     	if (cardChannel == null)
     		throw new Exception("No basic card channel available");
-    	
-    	byte[] response = cardChannel.transmit(new byte[] {0x00, (byte) 0xA4, 0x04, 0x00, 0x10, (byte)0xD2, 0x76, 0x00, 0x01, 0x18, 0x00, 0x03, (byte)0xFF, 0x49, 0x10, 0x00, (byte)0x89, 0x00, 0x00, 0x02, 0x01});
-    	if (response.length != 2 ||  response[0] != (byte) 0x90 || response[1] != 0x00)
-    		throw new Exception("Could not select applet.");
     	
     	return cardChannel;
 	}
