@@ -3,7 +3,7 @@
       package="android.smartcard"
       android:sharedUserId="android.uid.smartcard"
       android:versionCode="1" 
-      android:versionName="2.1.1">
+      android:versionName="2.1.2">
     
     <permission android:label="SmartcardServicePermission label" 
     			android:protectionLevel="dangerous" 
