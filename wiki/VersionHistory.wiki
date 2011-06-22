@@ -4,7 +4,7 @@
 
 === v2.1.2 - 21.06.2011 ===
  * Fully compliant to SIMalliance Open Mobile API Specification V1.01. 
- * New SE Access Control unit can restrict the access to Secure Elements by prefined policies. See the SE Access Control description.
+ * New SE Access Control unit can restrict the access to Secure Elements by predefined policies. See the SE Access Control description.
  * CTS test suite for !SmartCard API.
  * Support of ASSD (Advanced Security SD).
  * API is now also provided as a shared library.
