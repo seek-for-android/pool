@@ -2,7 +2,7 @@ package android.smartcard.test;
 
 import android.app.Activity;
 import android.os.Bundle;
-import android.smartcard.CardException;
+import android.smartcard.Exception;
 import android.smartcard.ICardChannel;
 import android.smartcard.SmartcardClient;
 import android.smartcard.SmartcardClient.ISmartcardConnectionListener;
@@ -85,7 +85,7 @@ public class MainActivity extends Activity implements ISmartcardConnectionListen
 				logText(" " + reader + "\n");
 			}
 			cardReader = smartcard.getReaders()[0];
-		} catch (CardException e) {
+		} catch (Exception e) {
 			logText(e.getMessage());
 			return;
 		} catch (Exception e) {
@@ -97,7 +97,7 @@ public class MainActivity extends Activity implements ISmartcardConnectionListen
         try {
 			boolean isPresent = smartcard.isCardPresent(cardReader);
 			logText(isPresent ? " present\n" : " absent\n");
-		} catch (CardException e) {
+		} catch (Exception e) {
 			logText(e.getMessage());
 			return;
 		} catch (Exception e) {
@@ -109,7 +109,7 @@ public class MainActivity extends Activity implements ISmartcardConnectionListen
 		ICardChannel basicChannel;
         try {
         	basicChannel = smartcard.openBasicChannel(cardReader);
-		} catch (CardException e) {
+		} catch (Exception e) {
 			logText(e.getMessage());
 			return;
 		}
@@ -118,7 +118,7 @@ public class MainActivity extends Activity implements ISmartcardConnectionListen
         try {
 			byte[] response = basicChannel.transmit(new byte[] {(byte) 0x80, (byte) 0xCA, (byte) 0x9F, 0x7F, 0x00});
 			logText(" Response: " + bytesToString(response) + "\n");
-		} catch (CardException e) {
+		} catch (Exception e) {
 			logText(e.getMessage());
 			return;
 		}
@@ -127,7 +127,7 @@ public class MainActivity extends Activity implements ISmartcardConnectionListen
 		ICardChannel logicalChannel;
         try {
         	logicalChannel = smartcard.openLogicalChannel(cardReader, ISD_AID);
-		} catch (CardException e) {
+		} catch (Exception e) {
 			logText(e.getMessage());
 			return;
 		}
@@ -136,7 +136,7 @@ public class MainActivity extends Activity implements ISmartcardConnectionListen
         try {
 			byte[] response = logicalChannel.transmit(new byte[] {(byte) 0x80, (byte) 0xCA, (byte) 0x9F, 0x7F, 0x00});
 			logText(" Response: " + bytesToString(response) + "\n");
-		} catch (CardException e) {
+		} catch (Exception e) {
 			logText(e.getMessage());
 			return;
 		}
@@ -145,7 +145,7 @@ public class MainActivity extends Activity implements ISmartcardConnectionListen
         try {
         	basicChannel.close();
 			logText(" basic channel is closed");
-		} catch (CardException e) {
+		} catch (Exception e) {
 			logText(e.getMessage());
 			return;
 		}
@@ -154,7 +154,7 @@ public class MainActivity extends Activity implements ISmartcardConnectionListen
         try {
         	logicalChannel.close();
 			logText(" logical channel is closed");
-		} catch (CardException e) {
+		} catch (Exception e) {
 			logText(e.getMessage());
 			return;
 		}		
