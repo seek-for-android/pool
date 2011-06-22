@@ -1,0 +1,45 @@
+#summary Description of the content of the !SmartCardAPI delivery package.
+
+= Content of the !SmartCard API package =
+
+The !SmartCard API (v2.1.2 or later) system patch for Android is offered in a package (smartcard-api.tgz) which also includes a set of additional (optional) patches.<br/><br/>
+
+==The smartcard-api.tgz package contains following patches as dedicated directories:==
+
+===Core patch: ===
+
+<b>smartcard-api/</b> <br/>
+Contains two patches containing the !SmartCard API source file: <br/>
+
+	<b>android2.3.4r1_as_sharedlib/</b> <br/>
+	Contains the !SmartCard API Service based on shared library interfaces. The !SmartCard API has been contributed to the Android Master branch based on this concept and offers the possibility to add this component to a preexisting Android SDK as add on. It has to be considered that the two interfaces !SmartCardClient and OpenMobileAPI (SIMalliance) are separated in different shared libraries. Thus an application can be developed based on one of both shared libraries depending on the used interface.
+	<b>android2.3.4r1_as_systemlib/</b> <br/>
+	Contains the !SmartCard API Service based on an API integrated in the android framework. This concept was also applied in previous versions and integrates the component into the Android SDK. <br/><br/>
+
+Consider that only one of these patches can be applied to the android system.
+
+
+===Additional patch:===
+
+<b>uicc/</b> 
+Contains a patch with files needed for the connection to the UICC via RIL. 
+
+<b>assd/</b> 
+Contains a patch with files needed for the SE connection via the ASSD standard. 
+
+<b>cts/</b> 
+Contains a patch with the CTS test suite for the !SmartCard API . 
+
+<b>emulator/</b> 
+Contains a patch file for the Android system which allows the usage of the !SmartCard API in an emulator. 
+
+The containing patch files can be applied to the Android source.
+
+
+===Each directory has following structure:===
+
+<b>{component}</b>/ <br/>
+<b>ref/</b> Original source files from the Android system which have to be patched.<br>
+<b>work/</b> Modified Android source files or new files which shall be added to the Android system.<br/>
+<b>createpatch.sh</b> Creates a patch file via diff <br/>
+<b>{component}.patch</b>  diff patch file which can be applied via "patch -p1 < {component}.patch" to the Android system.<br/>
