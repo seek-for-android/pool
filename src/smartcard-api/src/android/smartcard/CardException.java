@@ -1,5 +1,5 @@
 /*
- * Copyright 2010 Giesecke & Devrient GmbH.
+ * Copyright (C) 2011, The Android Open Source Project
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -13,6 +13,9 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+/*
+ * Contributed by: Giesecke & Devrient GmbH.
+ */
 
 package android.smartcard;
 
@@ -21,18 +24,18 @@ package android.smartcard;
  */
 public class CardException extends Exception {
 
-	private static final long serialVersionUID = 945149106070548293L;
+    private static final long mSerialVersionUID = 945149106070548293L;
 
-	public CardException(String message) {
-		super(message);
-	}
+    public CardException(String message) {
+        super(message);
+    }
 
-	public CardException(String message, Throwable cause) {
-		super(message, cause);
-	}
+    public CardException(String message, Throwable cause) {
+        super(message, cause);
+    }
 
-	public CardException(Throwable cause) {
-		super(cause);
-	}
+    public CardException(Throwable cause) {
+        super(cause);
+    }
 
 }

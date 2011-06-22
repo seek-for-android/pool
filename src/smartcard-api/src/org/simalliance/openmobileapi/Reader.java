@@ -1,5 +1,5 @@
 /*
- * Copyright 2011 Giesecke & Devrient GmbH.
+ * Copyright (C) 2011, The Android Open Source Project
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -12,6 +12,9 @@
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
+ */
+/*
+ * Contributed by: Giesecke & Devrient GmbH.
  */
 
 package org.simalliance.openmobileapi;
@@ -27,105 +30,108 @@ import java.util.ArrayList;
  */
 public class Reader {
 
-	String _name;
-	SEService _service;
+    private String mName;
 
-	private final ArrayList<Session> _sessions = new ArrayList<Session>();
+    private SEService mService;
 
-	Reader(String name, SEService service) {
-		_name = name;
-		_service = service;
-	}
+    private final ArrayList<Session> mSessions = new ArrayList<Session>();
 
-	/**
-	 * The name of this Reader
-	 * 
-	 * @return name of this Reader
-	 */
-	public String getName() {
-		return _name;
-	}
+    Reader(String name, SEService service) {
+        mName = name;
+        mService = service;
+    }
 
-	/**
-	 * Connects to a secure element in this reader. <br>
-	 * This method prepares (initializes) the Secure Element for communication
-	 * before the Session object is returned (e.g. powers the Secure Element by
-	 * ICC ON). There might be multiple sessions opened at the same time on the
-	 * same reader. The system ensures the interleaving of APDUs between the
-	 * respective sessions.
-	 * 
-	 * @throws IOException
-	 *             if something went wrong with the communicating to the Secure
-	 *             Element or the reader.
-	 * 
-	 * @return a Session object to be used to create Channels.
-	 */
-	public Session openSession() throws IOException {
+    /**
+     * The name of this Reader
+     * 
+     * @return name of this Reader
+     */
+    public String getName() {
+        return mName;
+    }
 
-		synchronized (_sessions) {
-			Session session = new Session(getName(), this);
-			_sessions.add(session);
-			return session;
-		}
-	}
+    /**
+     * Connects to a secure element in this reader. <br>
+     * This method prepares (initializes) the Secure Element for communication
+     * before the Session object is returned (e.g. powers the Secure Element by
+     * ICC ON if its not already on). There might be multiple sessions opened at
+     * the same time on the same reader. The system ensures the interleaving of
+     * APDUs between the respective sessions.
+     * 
+     * @throws IOException if something went wrong with the communicating to the
+     *             Secure Element or the reader.
+     * @return a Session object to be used to create Channels.
+     */
+    public Session openSession() throws IOException {
 
-	/**
-	 * Check if a Secure Element is present in this reader.
-	 * 
-	 * @return <code>true</code> if the SE is present.
-	 */
-	public boolean isSecureElementPresent() {
+        synchronized (mSessions) {
+            Session session = new Session(getName(), this);
+            mSessions.add(session);
+            return session;
+        }
+    }
 
-		return _service.isSecureElementPresent(this);
-	}
+    /**
+     * Check if a Secure Element is present in this reader.
+     * 
+     * @return <code>true</code> if the SE is present.
+     */
+    public boolean isSecureElementPresent() {
 
-	/**
-	 * Return the Secure Element service this reader is bound to.
-	 * 
-	 * @return the SEService object.
-	 */
-	public SEService getSEService() {
-		return _service;
-	}
+        return mService.isSecureElementPresent(this);
+    }
 
-	/**
-	 * Close all the sessions opened on this reader. All the channels opened by
-	 * all these sessions will be closed.
-	 */
-	public void closeSessions() {
-		synchronized (_sessions) {
+    /**
+     * Return the Secure Element service this reader is bound to.
+     * 
+     * @return the SEService object.
+     */
+    public SEService getSEService() {
+        return mService;
+    }
 
-			for (Session session : _sessions)
-				closeSession(session);
-		}
-	}
+    /**
+     * Close all the sessions opened on this reader. All the channels opened by
+     * all these sessions will be closed.
+     */
+    public void closeSessions() {
+        synchronized (mSessions) {
 
-	// ******************************************************************
-	// package private methods
-	// ******************************************************************
+            for (Session session : mSessions) {
+                if (session != null && !session.isClosed()) {
+                    session.closeChannels();
+                    session.setClosed();
+                }
+            }
+            mSessions.clear();
+        }
+    }
 
-	/**
-	 * Closes the defined Session and all its allocated resources. <br>
-	 * After calling this method the Session can not be used for the
-	 * communication with the Secure Element any more.
-	 * 
-	 * @param session
-	 *            the Session that should be closed
-	 * 
-	 * @throws NullPointerException
-	 *             if Session is null
-	 */
-	void closeSession(Session session) {
-		if (session == null)
-			throw new NullPointerException("session is null");
+    // ******************************************************************
+    // package private methods
+    // ******************************************************************
 
-		synchronized (_sessions) {
+    /**
+     * Closes the defined Session and all its allocated resources. <br>
+     * After calling this method the Session can not be used for the
+     * communication with the Secure Element any more.
+     * 
+     * @param session the Session that should be closed
+     * @throws NullPointerException if Session is null
+     */
+    void closeSession(Session session) {
+        if (session == null) {
+            throw new NullPointerException("session is null");
+        }
 
-			if (!session.isClosed()) {
-				session.setClosed();
-			}
-			_sessions.remove(session);
-		}
-	}
+        synchronized (mSessions) {
+
+            if (!session.isClosed()) {
+                session.closeChannels();
+                session.setClosed();
+            }
+            mSessions.remove(session);
+        }
+    }
 
 }

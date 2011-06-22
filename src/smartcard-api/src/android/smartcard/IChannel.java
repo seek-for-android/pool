@@ -1,5 +1,5 @@
 /*
- * Copyright 2010 Giesecke & Devrient GmbH.
+ * Copyright (C) 2011, The Android Open Source Project
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -13,10 +13,14 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+/*
+ * Contributed by: Giesecke & Devrient GmbH.
+ */
 
 package android.smartcard;
 
 
+import android.smartcard.security.ChannelAccess;
 
 
 
@@ -25,60 +29,71 @@ package android.smartcard;
  */
 public interface IChannel {
 
-	/**
-	 * Closes this channel.
-	 * @throws CardException
-	 *           if closing the channel failed.
-	 */
-	void close() throws CardException;
-	
-	/**
-	 * Returns the channel number according to ISO 7816-4.
-	 * @return the channel number according to ISO 7816-4.
-	 */
-	int getChannelNumber();
-	
-	/**
-	 * Returns if this channel is a basic channel
-	 * @return true if this channel is a basic channel
-	 */
-	boolean isBasicChannel();
-	
-	/**
-	 * Returns the associated terminal.
-	 * @return the associated terminal.
-	 */
-	Terminal getTerminal();
-	
-	/**
-	 * Transmits the specified command APDU and returns the response APDU.
-	 * MANAGE channel commands are not allowed.
-	 * Applet selection commands are not allowed if this is a logical channel. 
-	 * @param command
-	 *          the command APDU to be transmitted.
-	 * @return the response APDU.
-	 * @throws CardException
-	 *           if command transmission failed or the command is not allowed.
-	 */
-	byte[] transmit(byte[] command) throws CardException;
-	
-	
-	
-	/**
-	 * 
-	 * @return
-	 */
-	ISmartcardServiceCallback getCallback();
-	
-	/**
-	 * 
-	 * @return
-	 */
-	boolean hasSelectedAid();
-	
-	/**
-	 * 
-	 * @return
-	 */
-	void hasSelectedAid(boolean has);
+    /**
+     * Closes this channel.
+     * 
+     * @throws CardException if closing the channel failed.
+     */
+    void close() throws CardException;
+
+    /**
+     * Returns the channel number according to ISO 7816-4.
+     * 
+     * @return the channel number according to ISO 7816-4.
+     */
+    int getChannelNumber();
+
+    /**
+     * Returns if this channel is a basic channel
+     * 
+     * @return true if this channel is a basic channel
+     */
+    boolean isBasicChannel();
+
+    /**
+     * Returns the associated terminal.
+     * 
+     * @return the associated terminal.
+     */
+    Terminal getTerminal();
+
+    /**
+     * Transmits the specified command APDU and returns the response APDU.
+     * MANAGE channel commands are not allowed. Applet selection commands are
+     * not allowed if this is a logical channel.
+     * 
+     * @param command the command APDU to be transmitted.
+     * @return the response APDU.
+     * @throws CardException if command transmission failed or the command is
+     *             not allowed.
+     */
+    byte[] transmit(byte[] command) throws CardException;
+
+    
+    /**
+     * @param channelAccess
+     */
+    void setChannelAccess(ChannelAccess channelAccess);
+
+    /**
+     * @return
+     */
+    ChannelAccess getChannelAccess();
+
+    
+
+    /**
+     * @return
+     */
+    ISmartcardServiceCallback getCallback();
+
+    /**
+     * @return
+     */
+    boolean hasSelectedAid();
+
+    /**
+     * @return
+     */
+    void hasSelectedAid(boolean has);
 }

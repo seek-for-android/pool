@@ -1,5 +1,5 @@
 /*
- * Copyright 2010 Giesecke & Devrient GmbH.
+ * Copyright (C) 2011, The Android Open Source Project
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -12,6 +12,9 @@
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
+ */
+/*
+ * Contributed by: Giesecke & Devrient GmbH.
  */
 
 package android.smartcard;
@@ -29,23 +32,23 @@ interface ISmartcardService {
      * A logical channel will be closed.
      */
     void closeChannel(long hChannel, out SmartcardError error);
-    
+
     /**
      * Returns the friendly names of available smart card readers.
      */
     String[] getReaders(out SmartcardError error);
-    
+
     /**
      * Returns true if a card is present in the specified reader.
      * Returns false if a card is not present in the specified reader.
      */
     boolean isCardPresent(String reader, out SmartcardError error);
-    
+
    	/**
-	 * Returns the ATR of the connected card or null if the ATR is not available. 
+	 * Returns the ATR of the connected card or null if the ATR is not available.
 	 */
     byte[] getAtr(String reader, out SmartcardError error);
-    
+
     /**
      * Opens a connection using the basic channel of the card in the
      * specified reader and returns a channel handle.
@@ -53,23 +56,23 @@ interface ISmartcardService {
      * Use interface method openLogicalChannel() to open a logical channel.
      */
     long openBasicChannel(String reader, ISmartcardServiceCallback callback, out SmartcardError error);
-    
+
     /**
      * Opens a connection using the basic channel of the card in the
      * specified reader and returns a channel handle. Selects the specified applet.
-     * Logical channels cannot be opened with this connection.     
+     * Logical channels cannot be opened with this connection.
      * Selection of other applets with this connection is not supported.
      * Use interface method openLogicalChannel() to open a logical channel.
      */
     long openBasicChannelAid(String reader, in byte[] aid, ISmartcardServiceCallback callback, out SmartcardError error);
-    
+
     /**
      * Opens a connection using the next free logical channel of the card in the
      * specified reader. Selects the specified applet.
      * Selection of other applets with this connection is not supported.
      */
     long openLogicalChannel(String reader, in byte[] aid, ISmartcardServiceCallback callback, out SmartcardError error);
-    
+
     /**
      * Transmits the specified command APDU and returns the response APDU.
      * MANAGE channel commands are not supported.
