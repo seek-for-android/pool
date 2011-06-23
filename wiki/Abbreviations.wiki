@@ -4,14 +4,13 @@
 || ACA || Access Control Applet || [AccessControlIntroduction] ||
 || ACD || Access Control Data || [AccessControlIntroduction] ||
 || ACE || Access Control Enforcer || [AccessControlIntroduction] ||
-|| AT || AT command set || ||
-|| AT || AT command set || ||
 || APDU || Application Data Protocol Unit || ||
 || AT || AT command set || ||
 || ATR || Answer to Reset || ||
 || BIP || Bearer Independent Protocol || ||
 || CLF || Contactless frontend || ||
 || !DevKit || Mobile Security Developer's Kit || ||
+|| HCI || Host controller interface || ||
 || ISO || ISO-7816 || ||
 || MNO || Mobile Network Operator || ||
 || MSC || Mobile Security Card || ||
@@ -23,5 +22,6 @@
 || SCWS || Smartcard Webserver || ||
 || SE || Secure Element || ||
 || SIM || Subscriber Identity Module || ||
+|| SWP || Single Wire Protocol || ||
 || UICC || Universal Integrated Circuit Card || ||
 || USIM || Universal Subscriber Identity Module || ||
