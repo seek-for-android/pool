@@ -4,7 +4,7 @@
 
 The !SmartCard API (v2.1.2 or later) system patch for Android is offered in a package (smartcard-api.tgz) which also includes a set of additional (optional) patches.<br/>
 
-==The smartcard-api.tgz package contains following patches as dedicated directories:==
+==The smartcard-api.tgz package contains following patches in dedicated directories:==
 
 ===Core patch: ===
 
