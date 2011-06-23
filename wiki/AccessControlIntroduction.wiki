@@ -47,7 +47,7 @@ Scenario: a client application wants to communicate with a secure element applic
 <table>
 <tr>
 <td valign="top">
-<a alt="view large image" href=http://code.google.com/p/seek-for-android/wiki/ACA_overview_png>
+<a alt="view large image" href=http://code.google.com/p/seek-for-android/wiki/ACA_diagram_png>
 <img src=http://seek-for-android.googlecode.com/svn/wiki/img/ACA_diagram.png width=274 height=257/>
 </a>
 <br/>
