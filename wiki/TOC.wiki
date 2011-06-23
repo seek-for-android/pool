@@ -9,6 +9,8 @@
     * [BuildingTheSystem Building the System]
     * [UsingSmartCardAPI Using the SmartCard API]
     * [MscSmartcardService MSC_SmartcardService]
+  * Access Control Scheme
+    * [AccessControlIntroduction Introduction]
   * UICC Support
     * [UICCSupport AT Command Extensions]
     * [EmulatorExtension Emulator Extension]
@@ -16,7 +18,7 @@
   * PC/SC Interface
     * [PCSCLite PC/SC-Lite Discussion]
     * [PCSCSmartCardServiceIntro PC/SC Support]
-  * Security Services
+  * Services Layer
     * [SmartCardPKI PKI Support on Android]
   * Applications
     * [GoogleMSCAuthenticator]
