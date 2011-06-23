@@ -1,4 +1,4 @@
-#summary Description of the content of the !SmartCardAPI delivery package.
+#summary Description of the content of the SmartCard API delivery package.
 
 = Content of the !SmartCard API package =
 
