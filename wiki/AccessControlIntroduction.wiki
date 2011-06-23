@@ -14,7 +14,9 @@ The implementation relies on an extension of the handset integration in combinat
 <td width=5%>
 </td>
 <td width=60%>
-<img src=http://seek-for-android.googlecode.com/svn/wiki/img/ACA_overview.png width=353 height=513/>
+<a alt="view large image" href=http://code.google.com/p/seek-for-android/wiki/ACA_overview_png>
+<img src=http://seek-for-android.googlecode.com/svn/wiki/img/ACA_overview.png width=177 height=257/>
+</a>
 <br/>
 Click to enlarge
 </td>
@@ -24,9 +26,40 @@ Click to enlarge
 == Components ==
 
 ===Access Control Enforcer===
+The Access Control Enforcer (ACE) is the module that is integrated in the !SmartCard API, see `android.smartcard.security` in the !SmartcardService package.<br/>
+The module reads the access policy from the ACA and verifies the client application when a communication channel is opened. Access to is either granted or denied depending on the client certificate.<br/>
+When the communication channel is established all APDU transfer is checked against the APDU filter list if available.<br/>
+No access policy is stored in the ACE itself, all data is read from the Secure Element, the ACA.
 
 ===Access Control Applet===
+The Access Control Applet (ACA) is the application on the Secure Element that stores the Access Control Data. This data is a mapping between Secure Element applications (their AIDs) and hashes of certificate for allowed Android client applications.<br/>
+In addition, the ACA stores an APDU mask of allowed commands to be sent to the SE application.<br/>
+If no ACA is installed on the Secure Element, full access is granted for any client application. If an ACA is installed, all SE access is blocked expect the valid rules that are personalized in the ACA.<br/>
 
-===Access Control Policies===
+ 
+===Access Control Data===
+The Access Control Policy (ACD) is stored in the ACA and can be updated over the air with standardized Global Platform Secure Messaging or  Remote Applet Management functionality.<br/>
+The ACD consists of a set of certificates and access conditions which are associated with AIDs. To define the access rules for channel communication without explicit applet selection a dummy AID is defined.
+<br/><br/>
 
 == How does it work ==
+Scenario: a client application wants to communicate with a secure element application.
+<table>
+<tr>
+<td valign="top">
+<a alt="view large image" href=http://code.google.com/p/seek-for-android/wiki/ACA_overview_png>
+<img src=http://seek-for-android.googlecode.com/svn/wiki/img/ACA_diagram.png width=274 height=257/>
+</a>
+<br/>
+Click to enlarge
+</td>
+<td width=15>
+</td>
+<td valign=top>
+1. A client application signed with a unique key tries to access a specific application through its AID on a Secure Element<br/>
+2. ACE reads the ACD for the specific AID. If and computes/verifies the certificate of the client application<br/>
+3. Grant access to the client application if rule exists and certificate matches or deny access is rule is not found or certificate is different<br/>
+4. Client application can communicate with the SE applet if the command APDUs match the filter list checked by the ACE<br/>
+</td>
+</tr>
+</table>
