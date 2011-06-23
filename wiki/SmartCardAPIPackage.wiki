@@ -18,7 +18,7 @@ Contains two patches containing the !SmartCard API source file:
 Consider that only one of these patches can be applied to the android system.
 
 
-===Additional patch:===
+===Additional patches:===
 
 <b>uicc/</b> 
 Contains a patch with files needed for the connection to the UICC via RIL. 
