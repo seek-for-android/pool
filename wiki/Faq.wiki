@@ -4,6 +4,11 @@ The following summary is a list of (frequent) questions that we received through
 <br/><br/>
 
 <table>
+<tr><td valign='top'>*Q*</td><td>Which interface should I use in my application: 'android.smartcard' or 'org.simalliance.openmobileapi' ?</td></tr>
+<tr><td valign='top'>*A*</td><td>Open Mobile API should only be used.</td></tr>
+<tr><td valign='top'></td><td>...the interface 'android.smartcard' is still included and supported due to compatibility reasons but will soon be declared as 'deprecated'.</td></tr>
+<tr><td><br/></td><td></td></tr>
+
 <tr><td valign='top'>*Q*</td><td>What version of Android is supported by SEEK?</td></tr>
 <tr><td valign='top'>*A*</td><td>The latest version of Android is supported.</td></tr>
 <tr><td valign='top'></td><td>...due to limited resources of our team and the variety of Android versions we only concentrate on the latest Android version as good as possible.</td></tr>
