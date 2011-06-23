@@ -11,6 +11,11 @@
    * [UsingSmartCardAPI Using the SmartCard API]<br>Writing Android applications with access to Secure Elements using the !SmartCard API<br><br>
    * [MscSmartcardService MSC_SmartcardService]<br>Installable MSC !SmartcardService for Android phones which don't allow to flash a new system image. ([Devices List of tested devices])<br><br>
 
+====Access Control====
+   * [AccessControlIntroduction Introduction]<br>General introduction about the Access Control Scheme provided by the !SmartCard API<br><br>
+   * [AccessControlDetails Details]<br>Technical description about the Access Control implementation<br><br>
+   * [AccessControlBenefits Benefits]<br>Open discussion about the benefits of providing an access control scheme for the !SmartCard API<br><br>
+
 ====UICC Support====
    * [UICCSupport AT Command Extensions]<br>Specification of the AT Command Interface required for the !SmartCard API support on real devices<br><br>
    * [EmulatorExtension]<br>Extend the Android emulator with a PC/SC interface that enables the emulation environment to access a physical connected UICC instead of the built in (SIM) simulation<br><br>
