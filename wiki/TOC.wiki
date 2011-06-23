@@ -9,8 +9,10 @@
     * [BuildingTheSystem Building the System]
     * [UsingSmartCardAPI Using the SmartCard API]
     * [MscSmartcardService MSC_SmartcardService]
-  * Access Control Scheme
+  * Access Control
     * [AccessControlIntroduction Introduction]
+    * [AccessControlDetails Details]
+    * [AccessControlBenefits Benefits]
   * UICC Support
     * [UICCSupport AT Command Extensions]
     * [EmulatorExtension Emulator Extension]
