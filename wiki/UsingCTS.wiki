@@ -3,4 +3,3 @@
 = Introduction =
 
 The [http://source.android.com/compatibility/cts-intro.html Compatibility Test Suite] can be used to test the Smartcard API.
-
