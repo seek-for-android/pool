@@ -46,7 +46,7 @@ The ACD consists of a set of certificates and access conditions which are associ
 Scenario: a client application wants to communicate with a secure element application.
 <table>
 <tr>
-<td valign="top">
+<td width=30% valign="top">
 <a alt="view large image" href=http://code.google.com/p/seek-for-android/wiki/ACA_diagram_png>
 <img src=http://seek-for-android.googlecode.com/svn/wiki/img/ACA_diagram.png width=274 height=257/>
 </a>
