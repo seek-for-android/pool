@@ -9,7 +9,7 @@
     * [BuildingTheSystem Building the System]
     * [UsingSmartCardAPI Using the SmartCard API]
     * [MscSmartcardService MSC_SmartcardService]
-    * [UsingCTS Using the CTS]
+    * [CTS]
   * Access Control
     * [AccessControlIntroduction Introduction]
     * [AccessControlDetails Details]
