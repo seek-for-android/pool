@@ -1,5 +1,3 @@
-#explanation of how the CTS is used to test the Smartcard API
-
 = Introduction =
 
 The [http://source.android.com/compatibility/cts-intro.html|Android Compatatbility Test Suite] can be used to test the Smartcard API.
