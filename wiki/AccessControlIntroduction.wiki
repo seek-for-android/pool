@@ -15,7 +15,7 @@ The implementation relies on an extension of the handset integration in combinat
 </td>
 <td width=60%>
 <a alt="view large image" href=http://code.google.com/p/seek-for-android/wiki/ACA_overview_png>
-<img src=http://seek-for-android.googlecode.com/svn/wiki/img/ACA_overview.png width=177 height=257/>
+<img src=http://seek-for-android.googlecode.com/svn/wiki/img/ACA_overview.png width=277 height=357/>
 </a>
 <br/>
 Click to enlarge
