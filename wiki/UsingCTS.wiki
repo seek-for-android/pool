@@ -1,4 +1,4 @@
-#Using the CTS
+#summary Explanation of how to use the CTS for testing the Smartcard API
 
 = Introduction =
 
