@@ -12,6 +12,7 @@ The following paragraphs describe
 = How to Build the CTS with Smartcard API Tests =
 
 For building CTS with Smartcard API tests
+  * change into directory with Android build mit Smartcard API
   * extract file smartcard-api-2_1_2/cts/cts.patch from archive [http://seek-for-android.googlecode.com/files/smartcard-api-2_1_2.tgz smartcard-api-2_1_2.tgz] and apply it as patch and
   * build the CTS:
 
