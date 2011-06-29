@@ -5,7 +5,7 @@
 The [http://source.android.com/compatibility/cts-intro.html Compatibility Test Suite] can be extended so it can be used also to test the Smartcard API.
 
 The following paragraphs describe
-  * how to build an extended CTS containing the additional Smartcard API test plans,
+  * how to build an extended CTS containing the additional Smartcard API tests,
   * how to run the tests, and
   * where to find documentation and results of the tests.
 
