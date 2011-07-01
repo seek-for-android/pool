@@ -30,7 +30,7 @@ Download the [http://seek-for-android.googlecode.com/files/smartcard-webserver-1
  * `scws.patch` - patches the Java sources for BIP and Smart Card Web Server support (prototype)
  * `emulator.patch` - patches the qemu module to support a UICC connected through the PC/SC host interface instead of the default Android SIM simulator
 
-===== PC/SC support (current patches apply to smartcard-api-2_0 and Android 2.3.3r1. The update will follow soon) =====
+===== PC/SC support =====
 The patch is optional, it is only required for (native) Android applications relying on the PC/SC interface.<br/>
 Download the [http://seek-for-android.googlecode.com/files/pcsc_system_service_v094.tgz pcsc_system_service_v094.tgz] patch and extract the content `pcsc_system_service.patch`
 The patch includes:
