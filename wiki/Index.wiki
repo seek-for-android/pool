@@ -7,7 +7,6 @@
    * [VersionHistory Version History]<br>Summary of the release notes of all !SmartCard API versions<br><br>
 
 ====How To====
-   * [SmartCardAPIPackage SmartCard API Package]<br>Description of the !SmartCard API delivery package. <br><br>
    * [BuildingTheSystem]<br>For details on how to compile the Android sources with !SmartCard API support. ([Devices List of tested devices])<br><br>
    * [UsingSmartCardAPI Using the SmartCard API]<br>Writing Android applications with access to Secure Elements using the !SmartCard API<br><br>
    * [MscSmartcardService MSC_SmartcardService]<br>Installable MSC !SmartcardService for Android phones which don't allow to flash a new system image. ([Devices List of tested devices])<br><br>
