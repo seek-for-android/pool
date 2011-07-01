@@ -41,14 +41,14 @@ The patch includes:
 ===== Apply the patches and update the API =====
 {{{
 $ cd <ANDROID_ROOT_DIR>
-$ patch -p1 < <path_to_my_patches>/smartcard-api-2_2_0/smartcard-api-2_0.patch
+$ patch -p1 < <path_to_my_patches>/smartcard-api-2_2_0/smartcard-api-2.2.0.patch
 $ patch -p1 < <path_to_my_patches>/smartcard-api-2_2_0/uicc.patch
 $ patch -p1 < <path_to_my_patches>/smartcard-api-2_2_0/emulator.patch
 $ patch -p1 < <path_to_my_patches>/smartcard-api-2_2_0/cts.patch
 
 For SCWS and BIP support:
 $ patch -p1 < <path_to_my_patches>/smartcard-webserver-1_1/scws.patch
-Optional (only apply once - do not apply this if smartcard-api-2_0/emulator.patch was already applied previously!):
+Optional (only apply once - do not apply this if smartcard-api-2_2_0/emulator.patch was already applied previously!):
 $ patch -p1 < <path_to_my_patches>/smartcard-webserver-1_1/emulator.patch
 
 For PC/SC support:
