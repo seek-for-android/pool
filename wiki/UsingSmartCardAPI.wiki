@@ -148,49 +148,6 @@ To debug the application, you need to
  * Use Eclipse to set breakpoints and step through the code
 
 
-<br><br>
-=Integration of the shared library based !SmartCard API.=
-
-Download the `smartcard-api_sharedlibrary-2_2_1.tgz` patch and extract the content. The package includes: 
-
- * The shared library based !SmartCard API as patch for the android source tree (`smartcard-api-2.2.1.patch`)
- * The CTS extension for the shared library based !SmartCard API as patch for the android source tree (`cts.patch`)
- * The emulator extention for the !SmartCard API as patch for the android source tree (`emulator.patch`)
- * The system modifications/extension for the UICC connection for the !SmartCard API as patch for the android source tree (`uicc.patch`)
-
-Apply the patches:
-{{{
-$ cd <ANDROID_ROOT_DIR> 
-$ patch -p1 < <path_to_my_patches>/smartcard-api-2_2_1/smartcard-api-2.2.1.patch 
-$ patch -p1 < <path_to_my_patches>/smartcard-api-2_2_1/uicc.patch 
-$ patch -p1 < <path_to_my_patches>/smartcard-api-2_2_1/emulator.patch 
-$ patch -p1 < <path_to_my_patches>/smartcard-api-2_2_1/cts.patch  
-}}}
-
-After applying the patches the android source tree contains all !SmartCard API source files in "/packages/apps/!SmartcardService": 
- * !SmartcardService/ - Contains the whole !SmartCard API project
- * jni/ Contains the native sources of this project
- * src/ - Contains the source files of the !SmartCard API Service (backend system of the !SmartCard API)
- * openmobileapi/ - Contains the Open Mobile API (SIMalliance standardized API for applications) shared library project. 
- * smartcardapi/  - Contains the !SmartcardClient API (proprietary API for applications) shared library project. 
- <br>
-
-For integrating the !SmartCard API into the product build the variable PRODUCT_PACKAGES (e.g. in core.mk or device.mk) has to be extended with following lines:
-{{{
-PRODUCT_PACKAGES := \ 
- org.simalliance.openmobileapi \  (for integrating the SmartCard API with the shared library for SIMalliance standardized API Open Mobile API)
- android.smartcard \  (for integrating the SmartCard API with the shared library for the proprietary API SmartcardClient) 		
-}}}
- 
-Note: The `smartcard-api-2.2.1.patch` already includes these required entries for PRODUCT_PACKAGES in the file ./build/target/product/core.mk
-
-Update the API:
-{{{
-$ make update-api
-}}}
-
-Continue with the instructions as described in section "Building the system".
-
 <br><br> 
 =Using the !SmartCard API via shared library =
 
