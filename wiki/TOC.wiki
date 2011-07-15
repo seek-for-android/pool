@@ -4,7 +4,7 @@
     * [SmartcardAPI SmartCard API]
     * [SecurityConcept Security Concept]
     * [VersionHistory Version History]
-    * [SharedLibraryBasedSmartCardAPI Shared library based SmartCard API]
+    * [SmartCardAPIAsSharedLibrary SmartCard API as shared library]
   * How To
     * [BuildingTheSystem Building the System]
     * [UsingSmartCardAPI Using the SmartCard API]
