@@ -61,4 +61,6 @@ respectively.
 
 The results of test runs are stored in directory<br>
 {{{out/host/linux-x86/cts/android-cts/repository/results}}}. 
+
+Sample result files of test runs of both test plans can be downloaded [http://seek-for-android.googlecode.com/files/cts-sample-results.tgz here].
  
