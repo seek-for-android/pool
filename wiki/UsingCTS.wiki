@@ -27,6 +27,8 @@ $ tar -xOf PATH_TO_PATCH_ARCHIVE/smartcard-api-2_2_1.tgz smartcard-api-2_2_1/cts
 $ make cts
 }}}
 
+Note: In case the shared library version of the Smartcard API/Open Mobile API is used (archive {{{smartcard-api_sharedlibrary-2_2_1.tgz}}}) also the {{{cts.patch}}} of that archive has to be used for the CTS build. 
+
 = How to Run the CTS Tests =
 After the CTS has been built successfully with the Smartcard API/Open Mobile API
 test extensions, the test tool {{{startcts}}} can be found in directory
