@@ -4,9 +4,28 @@ The following summary is a list of (frequent) questions that we received through
 <br/><br/>
 
 <table>
-<tr><td valign='top'>*Q*</td><td>Which interface should I use in my application: 'android.smartcard' or 'org.simalliance.openmobileapi' ?</td></tr>
-<tr><td valign='top'>*A*</td><td>Open Mobile API should only be used.</td></tr>
-<tr><td valign='top'></td><td>...the interface 'android.smartcard' is still included and supported due to compatibility reasons but will soon be declared as 'deprecated'.</td></tr>
+
+
+<tr><td valign='top'>*Q*</td><td>Why do you offer a shared library based !SmartCard API now as an additional alternative solution?</td></tr>
+<tr><td valign='top'>*A*</td><td>In general, the !SmartCard API is designed as Android system component and is ideally located in the Android SDK framework. Therefore we provide the !SmartCard API patch as Android SDK framework component. Besides this SDK framework based solution we provide also an alternative solution (a shared library based !SmartCard API) for developers/system integrators who don't want to modify the Android SDK for integrating the !SmartCard API. The shared library variant contains exactly the same !SmartCard API components as the SDK framework based variant and can be used without limitations or restrictions. As the shared library variant is very new it is tagged as "experimental" but is also well tested and approved as the SDK framework based variant.</td></tr>
+<tr><td><br/></td><td></td></tr>
+
+<tr><td valign='top'>*Q*</td><td>Which !SmartCard API patch shall I use?</td></tr>
+<tr><td valign='top'>*A*</td><td>In principal, we recommend the SDK framework based !SmartCard API as also provided in previous versions. The shared library variant can be used by developers/system integrators who don't want to modify the Android framework SDK.</td></tr>
+<tr><td><br/></td><td></td></tr>
+
+<tr><td valign='top'>*Q*</td><td>Where do I get the Access Control Applet?</td></tr>
+<tr><td valign='top'>*A*</td><td>Please contact us directly via eMail.</td></tr>
+<tr><td><br/></td><td></td></tr>
+
+<tr><td valign='top'>*Q*</td><td>What is the difference between the interfaces "Open Mobile API" ('org.simalliance.openmobileapi') and "!SmartcardClient" ('android.smartcard')?</td></tr>
+<tr><td valign='top'>*A*</td><td>Both interfaces can be used by an Android application for accessing a Secure Element. The "Open Mobile API" is a [http://simalliance.org/ SIMalliance] standardized new interface for Secure Element access which provides the same functionality as offered by the older proprietary interface "!SmartcardClient" but has a more object oriented structure. As the "Open Mobile API" will be extended soon with more features (e.g. additional service layer classes) we generally recommend the "Open Mobile API" as application interface.</td></tr>
+<tr><td><br/></td><td></td></tr>
+
+
+<tr><td valign='top'>*Q*</td><td>Which interface should I use in my application: "!SmartcardClient" ('android.smartcard') or "Open Mobile API" ('org.simalliance.openmobileapi')?</td></tr>
+<tr><td valign='top'>*A*</td><td>"Open Mobile API" should only be used.</td></tr>
+<tr><td valign='top'></td><td>...the interface "!SmartcardClient" is still included and supported due to compatibility reasons but will soon be declared as 'deprecated'.</td></tr>
 <tr><td><br/></td><td></td></tr>
 
 <tr><td valign='top'>*Q*</td><td>What version of Android is supported by SEEK?</td></tr>
@@ -31,7 +50,8 @@ The following summary is a list of (frequent) questions that we received through
 
 <tr><td valign='top'>*Q*</td><td>Does !SmartCard API support the UICC?</td></tr>
 <tr><td valign='top'>*A*</td><td>In the Android emulator: _yes_<br/>On a real device (currently): _no_</td></tr>
-<tr><td valign='top'></td><td>...when OEMs implement the required AT command interface a phone will support the !SmartCard API with UICC access too.</td></tr>
+<tr><td valign='top'></td><td>...when OEMs implement the required AT command interface a phone will support the !SmartCard API with UICC 
+access too.</td></tr>
 <tr><td><br/></td><td></td></tr>
 
 <tr><td valign='top'>*Q*</td><td>How can I test the !SmartCard API?</td></tr>
@@ -63,5 +83,6 @@ Change `UNCOMPRESS_DATA_MAX = 1 * 1024 * 1024`<br/>
 to `UNCOMPRESS_DATA_MAX = 3 * 1024 * 1024`<br/>
 and rebuild the SDK.</td></tr>
 <tr><td><br/></td><td></td></tr>
+
 
 </table>
