@@ -1,0 +1,104 @@
+#summary How to compile the Kernel and Android sources with !SmartCard API and ASSD support.
+
+This introduction shows how the !SmartCard API with ASSD support can be integrated into an Android device to access SD memory cards with an embedded security system (Advanced Security SD specification provided by the [http://www.sdcard.org/developers/tech/ASSD/ SD Association])
+
+== The ASSD kernel driver can be built by building a custom kernel:==
+
+=== Getting the Kernel sources:=== 
+
+{{{
+$ git clone git://android.git.kernel.org/kernel/msm.git
+The repository is created in the subfolder msm
+$ cd <MSM_DIR>
+<MSM_DIR>$ git checkout -b assd 42bad328ba45ee4fe93216e7e99fe79a782d9155
+}}}
+Note: Currently we can only provide a patch of this kernel version.
+
+=== Download the smartcard-api-2_2_1.tgz patch and extract the content: === 
+
+ * assd_kernel.patch - patches the Kernel sources for ASSD support
+ * readme.txt - description how to build
+
+=== Apply the patch: ===
+
+{{{
+<MSM_DIR>$ patch -p1 < assd_kernel.patch
+}}}
+
+=== Building the kernel:===
+
+{{{
+<MSM_DIR>$ make ARCH=arm mahimahi_defconfig
+<MSM_DIR>$ make ARCH=arm clean
+<MSM_DIR>$ make ARCH=arm CROSS_COMPILE=arm-eabi- -j4
+}}}
+
+The new kernel is created as ./arch/arm/boot/zImage
+
+
+== The Android system can be built with ASSD support by using this custom built kernel: ==
+
+=== Download the smartcard-api-2_2_1.tgz patch and extract the content:=== 
+
+ * smartcard-api.patch - patches the Java sources for !SmartCard API support
+ * uicc.patch - patches the Android Telephony framework with the required UICC methods for the !SmartCard API !UiccTerminal support 
+ * emulator.patch - patches the qemu module to support a UICC connected through the PC/SC host interface instead of the default Android SIM simulator 
+ * cts.patch - adds the compatibility testsuite for the !SmartCard API. 
+
+
+=== Apply the patches:=== 
+
+{{{
+$ cd <ANDROID_ROOT_DIR> 
+$ patch -p1 < <path_to_my_patches>/smartcard-api-2_2_1/smartcard-api-2.2.1.patch 
+$ patch -p1 < <path_to_my_patches>/smartcard-api-2_2_1/uicc.patch 
+$ patch -p1 < <path_to_my_patches>/smartcard-api-2_2_1/cts.patch 
+}}}
+
+(Note: `emulator.patch` is not needed for the build as the current emulator patch does not support ASSD)
+
+=== Apply the patches and update the API:=== 
+
+{{{
+$ make update-api
+}}}
+
+
+=== Building the system: ===
+
+Compile the sources for the target device (use passion, sapphire or dream depending on the actual development phone) and specify the location of the custom kernel (built in the previous step).
+
+{{{
+$ cd <ANDROID_ROOT_DIR> 
+$ cd device/htc/passion
+$ ./extract-files.sh 
+$ cd - 
+$ TARGET_PRODUCT=full_passion TARGET_PREBUILT_KERNEL=<MSM_DIR>/arch/arm/boot/zImage make
+}}}
+
+Make sure to have properly connected the reference phone to extract the binary files or downloaded the corresponding ZIP archive to run unzip-files.sh instead. The Internet might also provide more up-to-date information about how to build the system for a real device.
+
+=== Flashing the phone: ===
+
+Note: You'll loose all data on the phone if you proceed
+
+{{{
+$ <ANDROID_ROOT_DIR>./out/host/linux-x86/bin/adb reboot bootloader
+$ <ANDROID_ROOT_DIR>./out/host/linux-x86/bin/fastboot flash boot out/debug/target/product/passion/boot.img 
+$ <ANDROID_ROOT_DIR>./out/host/linux-x86/bin/fastboot flash system out/debug/target/product/passion/system.img 
+$ <ANDROID_ROOT_DIR>./out/host/linux-x86/bin/fastboot flash userdata out/debug/target/product/passion/data.img
+}}}
+
+Again, replace passion with sapphire or dream depending on the actual development phone. Consider that the boot partition must also be flashed as the kernel is modified for ASSD support.
+
+{{{
+$ <ANDROID_ROOT_DIR>./out/host/linux-x86/bin/fastboot reboot
+}}}
+
+If there are problems while booting it's worth to try 
+
+{{{
+$ ./out/host/linux-x86/bin/fastboot erase userdata
+}}}
+
+Instead of flashing the user partition. 
