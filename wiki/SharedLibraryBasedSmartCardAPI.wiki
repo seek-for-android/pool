@@ -1,4 +1,4 @@
-#summary Introduction to the shared library based !SmartCard API.
+#summary Introduction to the shared library based SmartCard API.
 
 == Introduction ==
 
