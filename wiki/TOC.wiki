@@ -5,7 +5,7 @@
     * [SecurityConcept Security Concept]
     * [VersionHistory Version History]
     * [SharedLibraryBasedSmartCardAPI SmartCard API as shared library]
-    * How To
+  * How To
     * [BuildingTheSystem Building the System]
     * [UsingSmartCardAPI Using the SmartCard API]
     * [MscSmartcardService MSC_SmartcardService]
