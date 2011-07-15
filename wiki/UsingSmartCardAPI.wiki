@@ -146,3 +146,95 @@ To debug the application, you need to
  * Add additional `Log.e()` messages
  * Run `$ logcat *:v` in a terminal to show all log messages
  * Use Eclipse to set breakpoints and step through the code
+
+
+<br><br>
+=Integration of the shared library based !SmartCard API.=
+
+Download the `smartcard-api_sharedlibrary-2_2_1.tgz` patch and extract the content. The package includes: 
+
+ * The shared library based !SmartCard API as patch for the android source tree (`smartcard-api-2.2.1.patch`)
+ * The CTS extension for the shared library based !SmartCard API as patch for the android source tree (`cts.patch`)
+ * The emulator extention for the !SmartCard API as patch for the android source tree (`emulator.patch`)
+ * The system modifications/extension for the UICC connection for the !SmartCard API as patch for the android source tree (`uicc.patch`)
+
+Apply the patches:
+{{{
+$ cd <ANDROID_ROOT_DIR> 
+$ patch -p1 < <path_to_my_patches>/smartcard-api-2_2_1/smartcard-api-2.2.1.patch 
+$ patch -p1 < <path_to_my_patches>/smartcard-api-2_2_1/uicc.patch 
+$ patch -p1 < <path_to_my_patches>/smartcard-api-2_2_1/emulator.patch 
+$ patch -p1 < <path_to_my_patches>/smartcard-api-2_2_1/cts.patch  
+}}}
+
+After applying the patches the android source tree contains all !SmartCard API source files in "/packages/apps/!SmartcardService": 
+ * !SmartcardService/ - Contains the whole !SmartCard API project
+ * jni/ Contains the native sources of this project
+ * src/ - Contains the source files of the !SmartCard API Service (backend system of the !SmartCard API)
+ * openmobileapi/ - Contains the Open Mobile API (SIMalliance standardized API for applications) shared library project. 
+ * smartcardapi/  - Contains the !SmartcardClient API (proprietary API for applications) shared library project. 
+ <br>
+
+For integrating the !SmartCard API into the product build the variable PRODUCT_PACKAGES (e.g. in core.mk or device.mk) has to be extended with following lines:
+{{{
+PRODUCT_PACKAGES := \ 
+ org.simalliance.openmobileapi \  (for integrating the SmartCard API with the shared library for SIMalliance standardized API Open Mobile API)
+ android.smartcard \  (for integrating the SmartCard API with the shared library for the proprietary API SmartcardClient) 		
+}}}
+ 
+Note: The `smartcard-api-2.2.1.patch` already includes these required entries for PRODUCT_PACKAGES in the file ./build/target/product/core.mk
+
+Update the API:
+{{{
+$ make update-api
+}}}
+
+Continue with the instructions as described in section "Building the system".
+
+<br><br> 
+=Using the !SmartCard API via shared library =
+
+An application can use the !SmartCard API via a shared library ("org.simalliance.openmobileapi" or "android.smartcard") by defining the shared library name in its !AndroidManfest.xml in a  [http://developer.android.com/guide/topics/manifest/uses-library-element.html uses-library-element]. This element tells the android system where the library classes (used by the application) can be found in the system.
+
+The "uses-library" allows to set an android:required flag:
+ * <b>android:required="true"</b> <br>
+ indicates if the application (which uses the shared library) can only be installed to the device if the library is available in the device. This option is useful if the application absolutely needs the library for the execution. Consider that the application (which requires the shard library) is not visible in the Android Market if the shared library is not available on the device.
+ * <b>android:required="false"</b> <br>
+ indicates if the application (which uses the shared library) can be installed to the device even if the library is not available in the device. This option is useful if the application can use the library for performing an action but does not require it for the general execution.
+
+Example of an `AndroidManfest.xml` of an application which uses the SIMalliance standardized interface OpenMobileAPI:
+
+{{{
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+          ...
+        <activity android:name="<ActivityName>"
+	<uses-library android:name="org.simalliance.openmobileapi" android:required="true" />
+        </activity>
+        ...
+</manifest> 
+}}}
+
+Example of an `AndroidManfest.xml` of an application which uses the proprietary interface !SmartcardClient:
+
+{{{
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+          ...
+        <activity android:name="<ActivityName>"
+	<uses-library android:name="android.smartcard" android:required="true" />
+        </activity>
+        ...
+</manifest> 
+}}}
+
+For compiling the application (using the shard library based !SmartCard API) the shared library classes has to be explicitly added to the classpath as these classes are not part of the android  SDK framework. Therefore add the JAR archive (besides the Android SDK JAR archive "android.jar") of the needed shared library ("org.simalliance.openmobileapi" or "android.smartcard") to your classpath.
+<br/><br/>
+After an Android system build (containing the shared library based !SmartCard API) the JAR archive of the "org.simalliance.openmobileapi" shared library can be found here:
+{{{
+<ANDROID_ROOT_DIR>/out/target/common/obj/JAVA_LIBRARIES/org.simalliance.openmobileapi_intermediates/classes-full-debug.jar
+}}}
+After an Android system build (containing the shared library based !SmartCard API) the JAR archive of the "android.smartcard" shared library can be found here:
+{{{
+<ANDROID_ROOT_DIR>/out/target/common/obj/JAVA_LIBRARIES/android.smartcardapi_intermediates/classes-full-debug.jar
+}}}
