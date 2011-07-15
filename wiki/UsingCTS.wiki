@@ -1,18 +1,18 @@
-#summary Explanation of how to use the CTS for testing the Smartcard API
+#summary Explanation of how to use the CTS for testing the Smartcard API and Open Mobile API
 
 = Introduction =
 
-The [http://source.android.com/compatibility/cts-intro.html Compatibility Test Suite] can be extended so it can be used also to test the Smartcard API.
+The [http://source.android.com/compatibility/cts-intro.html Compatibility Test Suite] can be extended so it can be used also to test the Smartcard API and Open Mobile API.
 
 The following paragraphs describe
-  * how to build an extended CTS containing the additional Smartcard API tests,
+  * how to build an extended CTS containing the additional Smartcard API and Open Mobile API tests,
   * how to run the tests, and
   * where to find documentation and results of the tests.
 
-= How to Build the CTS with Smartcard API Tests =
+= How to Build the CTS =
 
-For building CTS with Smartcard API tests
-  * change into directory with Android build mit Smartcard API
+For building CTS with Smartcard API and Open Mobile API tests
+  * change into directory of Android build with Smartcard API and Open Mobile API
   * extract file smartcard-api-2_2_0/cts/cts.patch from archive [http://seek-for-android.googlecode.com/files/smartcard-api-2_2_0.tgz smartcard-api-2_2_0.tgz] and apply it as patch and
   * build the CTS:
 
@@ -22,6 +22,6 @@ $ tar -xOf PATH_TO_PATCH_ARCHIVE/smartcard-api2_2_0.tgz smartcard-api-2_2_0/cts/
 $ make cts
 }}}
 
-= How to Run the Smartcard API CTS Tests =
+= How to Run the CTS Tests =
 
-= Documentation and Results of Smartcard API CTS Tests = 
+= Documentation and Results of CTS Tests = 
