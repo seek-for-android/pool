@@ -43,6 +43,7 @@ public abstract class OMAPITestCase extends AndroidTestCase implements SEService
 	}
 
 	public void serviceConnected(SEService service) {
+	    android.os.SystemClock.sleep(100);
 		mReaders = service.getReaders();
 		mOMService = service;
 	} // serviceConnected

@@ -142,10 +142,10 @@ public class UiccTerminal extends Terminal {
                 channelId[i] = manager.openIccLogicalChannel(ByteArrayToString(aid, 0));
                 if (channelId[i] == 0) {
                     int lastError = manager.getLastError();
-                    if (lastError == 1) {
+                    if (lastError == 2) {
                         throw new MissingResourceException("all channels are used", "", "");
                     }
-                    if (lastError == 2) {
+                    if (lastError == 3) {
                         throw new NoSuchElementException("applet not found");
                     }
                     throw new CardException("open channel failed");
