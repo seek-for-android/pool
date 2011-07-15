@@ -5,7 +5,7 @@
 The [http://source.android.com/compatibility/cts-intro.html Compatibility Test Suite (CTS)] can be extended so it can be used also to test the Smartcard API and Open Mobile API.
 
 All test cases for testing the Smartcard API are contained in a test plan called 'Smartcard'.<br>
-All test cases for testing the Open Mobile API are contained in a test plan called 'OpenMobile'.
+All test cases for testing the Open Mobile API are contained in a test plan called '!OpenMobile'.
 
 The tests include and utilize a mock plug-in reader that simulates a secure element with an appropriate applet. So the tests can be executed without a real card.
 
