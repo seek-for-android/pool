@@ -44,6 +44,7 @@ public abstract class SmartcardTestCase extends AndroidTestCase implements ISmar
 
 	public void serviceConnected() {
 		try { 
+		    android.os.SystemClock.sleep(100);
 			mReaders = mSmartcardClient.getReaders(); 
 		}
 		catch (Exception e) { 
