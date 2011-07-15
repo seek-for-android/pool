@@ -18,12 +18,12 @@ The following paragraphs describe
 
 For building CTS with Smartcard API and Open Mobile API tests
   * change into directory of Android build with Smartcard API and Open Mobile API
-  * extract file {{{smartcard-api-2_2_0/cts/cts.patch}}} from archive {{{smartcard-api-2_2_0.tgz}}} ([http://seek-for-android.googlecode.com/files/smartcard-api-2_2_0.tgz download]) and apply it as patch and
+  * extract file {{{smartcard-api-2_2_1/cts/cts.patch}}} from archive {{{smartcard-api-2_2_1.tgz}}} ([http://seek-for-android.googlecode.com/files/smartcard-api-2_2_1.tgz download]) and apply it as patch and
   * build the CTS:
 
 {{{
 $ cd ANDROID_ROOT_DIR
-$ tar -xOf PATH_TO_PATCH_ARCHIVE/smartcard-api-2_2_0.tgz smartcard-api-2_2_0/cts/cts.patch | patch -p1 
+$ tar -xOf PATH_TO_PATCH_ARCHIVE/smartcard-api-2_2_1.tgz smartcard-api-2_2_1/cts/cts.patch | patch -p1 
 $ make cts
 }}}
 
