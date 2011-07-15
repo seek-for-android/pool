@@ -22,6 +22,11 @@
    * [EmulatorExtension]<br>Extend the Android emulator with a PC/SC interface that enables the emulation environment to access a physical connected UICC instead of the built in (SIM) simulation<br><br>
    * [SmartcardWebserver Smart Card Web Server]<br>Browse data located on the UICC with BIP extensions in the Android SIM Toolkit framework.<br><br>
 
+====ASSD Support====
+   * [ConceptAndSecurity]<br>Description of the ASSD concept and security<br><br>
+   * [HowToBuild]<br>Description how to integrate ASSD into the system.<br><br>
+
+
 ====PC/SC Interface====
    * [PCSCLite PCSC-Lite Discussion]<br>Discussion about the integration of the PC/SC interface in the !SmartCard API stack for native code<br><br>
    * [PCSCSmartCardServiceIntro PC/SC Support]<br>PC/SC Lite system service integration in Android for native clients<br><br>
