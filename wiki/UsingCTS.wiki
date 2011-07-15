@@ -30,18 +30,27 @@ $ make cts
 = How to Run the CTS Tests =
 After the CTS has been built successfully with the Smartcard API/Open Mobile API
 test extensions, the test tool {{{startcts}}} can be found in directory
-{{{out/host/linux-x86/cts/android-cts/tools}}}.
+{{{out/host/linux-x86/cts/android-cts/tools}}}.<br>
+So change into that directory:
+{{{
+$ cd ANDROID_ROOT_DIR/out/host/linux-x86/cts/android-cts/tools
+}}}
 
 Execution of the whole test plan for the Smartcard API is started by the following command: 
 {{{
-$ out/host/linux-x86/cts/android-cts/tools/startcts start --plan Smartcard
+$ ./startcts start --plan Smartcard
 }}}
 
 Execution of the whole test plan for the Open Mobile API is started by the following command: 
 {{{
-$ out/host/linux-x86/cts/android-cts/tools/startcts start --plan OpenMobile
+$ ./startcts start --plan OpenMobile
 }}}
 
+It is also possible to execute only a part of a test plan.<br>
+E.g. to execute only tests of test case {{{TestConformanceRequirements}}} use the following command: 
+{{{
+$ ./startcts start --plan OpenMobile -p org.simalliance.openmobileapi.cts.TestConformanceRequirements
+}}}
 = Documentation and Results of CTS Tests = 
 
 The documentation of the test cases of the test plans for the Smartcard API and the Open Mobile API are located in<br>
