@@ -24,7 +24,7 @@ The following summary is a list of (frequent) questions that we received through
 
 
 <tr><td valign='top'>*Q*</td><td>Which interface should I use in my application: "!SmartcardClient" ('android.smartcard') or "Open Mobile API" ('org.simalliance.openmobileapi')?</td></tr>
-<tr><td valign='top'>*A*</td><td>"Open Mobile API" should only be used.</td></tr>
+<tr><td valign='top'>*A*</td><td>"Open Mobile API" should be used.</td></tr>
 <tr><td valign='top'></td><td>...the interface "!SmartcardClient" is still included and supported due to compatibility reasons but will soon be declared as 'deprecated'.</td></tr>
 <tr><td><br/></td><td></td></tr>
 
