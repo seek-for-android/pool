@@ -13,12 +13,12 @@ The following paragraphs describe
 
 For building CTS with Smartcard API tests
   * change into directory with Android build mit Smartcard API
-  * extract file smartcard-api-2_1_2/cts/cts.patch from archive [http://seek-for-android.googlecode.com/files/smartcard-api-2_1_2.tgz smartcard-api-2_1_2.tgz] and apply it as patch and
+  * extract file smartcard-api_sharedlibrary-2_2_0/cts/cts.patch from archive [http://seek-for-android.googlecode.com/files/smartcard-api_sharedlibrary-2_2_0.tgz smartcard-api_sharedlibrary-2_2_0.tgz] and apply it as patch and
   * build the CTS:
 
 {{{
 $ cd ANDROID_ROOT_DIR
-$ tar -xOf PATH_TO_PATCH_ARCHIVE/smartcard-api-2_1_2.tgz smartcard-api-2_1_2/cts/cts.patch | patch -p1 
+$ tar -xOf PATH_TO_PATCH_ARCHIVE/smartcard-api_sharedlibrary-2_2_0.tgz smartcard-api_sharedlibrary-2_2_0/cts/cts.patch | patch -p1 
 $ make cts
 }}}
 
