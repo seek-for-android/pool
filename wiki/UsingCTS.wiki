@@ -28,7 +28,7 @@ $ make cts
 }}}
 
 = How to Run the CTS Tests =
-After the CTS has been built successfully with the Smartcard API/OpenMobile API
+After the CTS has been built successfully with the Smartcard API/Open Mobile API
 test extensions, the test tool {{{startcts}}} can be found in directory
 {{{out/host/linux-x86/cts/android-cts/tools}}}.
 
