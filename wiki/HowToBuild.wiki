@@ -1,4 +1,4 @@
-#summary How to compile the Kernel and Android sources with !SmartCard API and ASSD support.
+#summary How to compile the Kernel and Android sources with SmartCard API and ASSD support.
 
 This introduction shows how the !SmartCard API with ASSD support can be integrated into an Android device to access SD memory cards with an embedded security system (Advanced Security SD specification provided by the [http://www.sdcard.org/developers/tech/ASSD/ SD Association])
 
