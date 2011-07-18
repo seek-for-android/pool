@@ -12,7 +12,7 @@ The repository is created in the subfolder msm
 $ cd <MSM_DIR>
 <MSM_DIR>$ git checkout -b assd 42bad328ba45ee4fe93216e7e99fe79a782d9155
 }}}
-Note: Currently we can only provide a patch of this kernel version.
+Note: Currently we can only provide a patch for this kernel version.
 
 === Download the smartcard-api-2_2_1.tgz patch and extract the content: === 
 
