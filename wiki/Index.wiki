@@ -24,7 +24,7 @@
    * [SmartcardWebserver Smart Card Web Server]<br>Browse data located on the UICC with BIP extensions in the Android SIM Toolkit framework.<br><br>
 
 ====ASSD Support====
-   * [ConceptAndSecurity Concept and Security]<br>Description of the ASSD concept and security<br><br>
+   * [Concept Concept]<br>Description of the ASSD concept<br><br>
    * [HowToBuild How to Build]<br>Description how to integrate ASSD into the system.<br><br>
 
 
