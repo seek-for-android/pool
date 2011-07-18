@@ -1,0 +1,3 @@
+#summary Description of ASSD concept and security.
+
+The Advanced Security SD specification provided by the SD Association (www.sdcard.org) defines a standard for accessing an embedded secure element in an SD memory card. Detailed information about the ASSD can be found at http://www.sdcard.org/developers/tech/ASSD/. There you can also find a link to download the ASSD (simplified) specification.
