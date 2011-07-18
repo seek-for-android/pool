@@ -19,7 +19,7 @@
     * [EmulatorExtension Emulator Extension]
     * [SmartcardWebserver Smart Card Web Server]
   * ASSD Support
-    * [ConceptAndSecurity Concept and security]
+    * [ConceptAndSecurity Concept]
     * [HowToBuild How to build]
   * PC/SC Interface
     * [PCSCLite PC/SC-Lite Discussion]
