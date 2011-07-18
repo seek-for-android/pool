@@ -19,8 +19,8 @@ Apply the necessary patches in the root directory of the Android source code to 
 Please make sure what patches should be applied as the different use cases (!SmartCard API, SCWS/BIP, PC/SC support) are separated in different download packages.
 
 ==== !SmartCard API support ====
-Download the [http://seek-for-android.googlecode.com/files/smartcard-api-2_2_0.tgz smartcard-api-2_2_0.tgz] patch and extract the content:
- * `smartcard-api-2.2.0.patch` - patches the Java sources for !SmartCard API support
+Download the [http://seek-for-android.googlecode.com/files/smartcard-api-2_2_1.tgz smartcard-api-2_2_1.tgz] patch and extract the content:
+ * `smartcard-api-2.2.1.patch` - patches the Java sources for !SmartCard API support
  * `uicc.patch` - patches the Android Telephony framework with the required UICC methods for the !SmartCard API !UiccTerminal support
  * `emulator.patch` - patches the qemu module to support a UICC connected through the PC/SC host interface instead of the default Android SIM simulator
  * `cts.patch` - adds the compatibility testsuite for the !SmartCard API.
@@ -32,7 +32,7 @@ Download the [http://seek-for-android.googlecode.com/files/smartcard-webserver-1
 
 ==== PC/SC support ====
 The patch is optional, it is only required for (native) Android applications relying on the PC/SC interface.<br/>
-Download the [http://seek-for-android.googlecode.com/files/pcsc_system_service_v095.tgz pcsc_system_service_v095.tgz] patch and extract the content `pcsc_system_service.patch`
+Download the [http://seek-for-android.googlecode.com/files/pcsc_system_service_v096.tgz pcsc_system_service_v096.tgz] patch and extract the content `pcsc_system_service.patch`
 The patch includes:
  * Smartcard system-service based on the the !SmartCard API
  * external/pcsc/pcsc-lite with PC-SC support 
@@ -41,18 +41,18 @@ The patch includes:
 ==== Apply the patches and update the API ====
 {{{
 $ cd <ANDROID_ROOT_DIR>
-$ patch -p1 < <path_to_my_patches>/smartcard-api-2_2_0/smartcard-api-2.2.0.patch
-$ patch -p1 < <path_to_my_patches>/smartcard-api-2_2_0/uicc.patch
-$ patch -p1 < <path_to_my_patches>/smartcard-api-2_2_0/emulator.patch
-$ patch -p1 < <path_to_my_patches>/smartcard-api-2_2_0/cts.patch
+$ patch -p1 < <path_to_my_patches>/smartcard-api-2_2_1/smartcard-api-2.2.1.patch
+$ patch -p1 < <path_to_my_patches>/smartcard-api-2_2_1/uicc.patch
+$ patch -p1 < <path_to_my_patches>/smartcard-api-2_2_1/emulator.patch
+$ patch -p1 < <path_to_my_patches>/smartcard-api-2_2_1/cts.patch
 
 For SCWS and BIP support:
 $ patch -p1 < <path_to_my_patches>/smartcard-webserver-1_1/scws.patch
-Optional (only apply once - do not apply this if smartcard-api-2_2_0/emulator.patch was already applied previously!):
+Optional (only apply once - do not apply this if smartcard-api-2_2_1/emulator.patch was already applied previously!):
 $ patch -p1 < <path_to_my_patches>/smartcard-webserver-1_1/emulator.patch
 
 For PC/SC support:
-$ patch -p1 < <path_to_my_patches>/pcsc_system_service_v095/pcsc_system_service.patch
+$ patch -p1 < <path_to_my_patches>/pcsc_system_service_v096/pcsc_system_service.patch
 
 Required:
 $ make update-api
