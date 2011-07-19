@@ -61,6 +61,10 @@ Note that applying the patches might result in failed hunks. This is no problem 
 <br/><br/>
 
 == Building the system ==
+
+*Note:* Since SmartCardAPI 2.2.1 the Mobile Security Card (microSD Card with embedded Secure Element), is supported by using the ASSD standard (Advanced Security SD specification).
+For support of the Mobile Security Card, the kernel must be built with ASSD included, see [http://code.google.com/p/seek-for-android/wiki/HowToBuild ASSD Support]
+
 Compile the sources for the target device (use `crespo`, `passion`, `sapphire` or `dream` depending on the actual development phone)
 {{{
 $ cd <ANDROID_ROOT_DIR>
