@@ -90,7 +90,7 @@ and extract the content.
 Apply the patch within the freeradius source directory of freeradius. 
 You may want to try it first with option `--dry-run` to check if everything will do fine.
 {{{
-patch -p2 -i freeradius-2.1.9-dfsg_eap-sim-aka.0.1.patch
+patch -p2 -i freeradius-2.1.9-dfsg_eap-sim-aka-0.1.patch
 }}}
 
 Build the deb packages:
@@ -161,6 +161,9 @@ eap {
     ok = return
     }
 }}}
+
+After changes on the configuration files a restart of the server is necessary.
+
 === simtriplets.dat ===
 Create the file `/etc/freeradius/simtriplets.dat` with the content from your (U)SIMs you want to use.
 
