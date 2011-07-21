@@ -10,3 +10,7 @@ Add your content here.  Format your content with:
   * Text in *bold* or _italic_
   * Headings, paragraphs, and lists
   * Automatic links to other wiki pages
+
+<img src=http://seek-for-android.googlecode.com/svn/wiki/img/EapSim_System.png width=250 height=235/>
+
+<img src=http://seek-for-android.googlecode.com/svn/wiki/img/EapSim_DataFlow.png width=250 height=235/>
