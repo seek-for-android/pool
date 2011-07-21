@@ -18,6 +18,7 @@
     * [UICCSupport AT Command Extensions]
     * [EmulatorExtension Emulator Extension]
     * [SmartcardWebserver Smart Card Web Server]
+    * [EapSimAka EAP-SIM/AKA]
   * ASSD Support
     * [Concept Concept]
     * [HowToBuild How to build]
