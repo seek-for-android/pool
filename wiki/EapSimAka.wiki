@@ -1,4 +1,7 @@
 #summary Support for EAP-SIM and EAP-AKA in Android.
+
+*NOTE:* The describe EAP patch will only work on a *real* Android Smartphone which has an up and running SmartCardAPI with UICC support and PCSC System Service.
+
 = Introduction =
 EAP-SIM is a mechanism for authentication and session key generation using a GSM authentication algorithm on client and network sides.
 EAP-AKA is like EAP-SIM but uses the authentication algorithms on an USIM.
@@ -187,4 +190,3 @@ Only one of the methods may be active, the other method can be disabled by addin
 The EAP-SIM values can be creates using the tool asgm which kann be found here http://agsm.sourceforge.net/download.html
 
 <img src=http://seek-for-android.googlecode.com/svn/wiki/img/EapSim_AgsmMiscGsmAuth.png width=300/>
-
