@@ -85,7 +85,7 @@ sudo chown -R <user>:<group> ./freeradius-2.1.9-dfsg
 cd freeradius-2.1.9-dfsg
 }}}
 
-Get the [http://seek-for-android.googlecode.com/files/freeradius-2.1.9-dfsg_eap-sim-aka-0.1.tgz freeradius patch archive] 
+Get the [http://seek-for-android.googlecode.com/files/freeradius-2.1.9-dfsg_eap-sim-aka-0.1.tar.gz freeradius patch archive] 
 and extract the content.
 Apply the patch within the freeradius source directory of freeradius. 
 You may want to try it first with option `--dry-run` to check if everything will do fine.
