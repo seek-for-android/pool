@@ -65,8 +65,7 @@ with the correct data and keys.
 
 The result is a patch was developed with version 2.1.9 of the freeradius server but it might also work for other 2.1.x versions.
 
-'''NOTE:'''
-This patch will only work for EAP-AKA if on the USIM the sequence number check is disabled, 
+*NOTE:* This patch will only work for EAP-AKA if on the USIM the sequence number check is disabled, 
 since the AUTN provided by `rlm_sim_files` is constant. Therefore check `EF_AuthAlgo` on your USIM.
 
 On a ubuntu machine get freeradius sources via (first change to the directory where you want to store the sources)
@@ -195,4 +194,3 @@ Only one of the methods may be active, the other method can be disabled by addin
 The EAP-SIM values can be creates using the tool asgm which kann be found here http://agsm.sourceforge.net/download.html
 
 <img src=http://seek-for-android.googlecode.com/svn/wiki/img/EapSim_AgsmMiscGsmAuth.png width=300/>
-
