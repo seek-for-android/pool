@@ -12,12 +12,13 @@ Specifications about EAP can be found [http://tools.ietf.org/html/rfc3748 here] 
 
 
 = Details =
+An overview how a WLAN with EAP authentication may look like is shown below:
 
-Add your content here.  Format your content with:
-  * Text in *bold* or _italic_
-  * Headings, paragraphs, and lists
-  * Automatic links to other wiki pages
+<img src=http://seek-for-android.googlecode.com/svn/wiki/img/EapSim_System.png width=500/>
 
-<img src=http://seek-for-android.googlecode.com/svn/wiki/img/EapSim_System.png width=250 height=235/>
+To run an EAP-SIM/AKA authentication you will need a client as wpa_supplicant which has access to a (U)SIM. 
+The WLAN access point on the network has to support EAP (which is often transcribed as WPA(2)-RADIUS or WPA(2)-ENTERPRISE). The WLAN AP has to have access to a RADIUS server who handles the authentication and session key generation. The RADIUS server needs for EAP-SIM/AKA in a productive environment access to the home location register (HLR) of the MNO where the (U)SIMs are registered. For testing a file with precreated values for authentication is sufficient.
 
-<img src=http://seek-for-android.googlecode.com/svn/wiki/img/EapSim_DataFlow.png width=250 height=235/>
+The next picture shows simplified the data flow during the authentication process.
+
+<img src=http://seek-for-android.googlecode.com/svn/wiki/img/EapSim_DataFlow.png width=500/>
