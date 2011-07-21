@@ -1,7 +1,12 @@
 #summary Support for EAP-SIM and EAP-AKA in Android.
 = Introduction =
 EAP-SIM is a mechanism for authentication and session key generation using a GSM authentication algorithm on client and network sides.
-EAP-SIM is specified in 
+EAP-AKA is like EAP-SIM but uses the authentication algorithms on an USIM.
+
+EAP-SIM is specified in [http://tools.ietf.org/html/rfc4186 RFC 4186].
+EAP-AKA is specified in [http://tools.ietf.org/html/rfc4187 RFC 4187].
+
+
 
 
 
