@@ -22,3 +22,33 @@ The WLAN access point on the network has to support EAP (which is often transcri
 The next picture shows simplified the data flow during the authentication process.
 
 <img src=http://seek-for-android.googlecode.com/svn/wiki/img/EapSim_DataFlow.png width=600/>
+
+== Changes to Android ==
+
+In order to run EAP-SIM/AKA on a Android smartphone it is necessary to adapt two parts of the sources.
+Apart from the enabling of the PC/SC interface and integration of the SmartCard API. The EAP-SIM/AKA patch was tested against the SmartCard API 2.2.1 and the PCSC System Service 0.9.6.
+
+=== wpa_supplicant ===
+The main part is the adaption of the *wpa_supplicant* located in the `external/wpa_supplicant_6` subdirectory of the Android sources. There you have first change the settings in the `Android.mk` and `.config'' file to enable ''EAP-SIM'', ''EAP-AKA'' and ''PC/SC'' support.
+<br/>Furthermore the functions which encapsulate the PCSC interface in the `wpa_supplicant/src/utils/pcscfunc.c` file have to be adapted so that they can handle the responses form the SmartCardService.
+The original sources of the ''wpa_supplicant'' expected responses from the (U)SIM according to the T=0 protocol, but the SmartCardService returns response data according to T=1.
+
+=== Settings.apk ===
+To give the user the possibility to enable EAP-SIM or EAP-AKA on his Smartphone it is necessary to extend the WiFi Dialog where it is possible to select the EAP methods.
+The WiFi Dialog is located in the package Settings.apk. 
+Since parts of the dialog are generated dynamically from the resources it was necessary to add the identifiers `SIM` and `AKA` to  the resource file ''arrays.xml'' in the directory `packages/apps/Settings/res/values` but also for all other language specific ''arrays.xml''.
+
+Now the entries `SIM` and `AKA` are selectable as EAP-Method. When selecting `SIM` or `AKA` the other fields like `Phase 2 Authentication`, `CA-Cerificate` and so on can be left empty or by their default values.
+
+From the settings within the WiFi Dialog the config file for the `wpa_supplicant` is generated. To create the appropriate config file and adaption of the `WiFiDialog.java` was necessary. Since when `SIM` is selected that line ''eap = SIM AKA'' is written into the config file. This is necessary so that EAP-SIM will work for 2G and 3G cards.
+Furthermore it is necessary to add the line ''pcsc = ....'' so that PCSC will be used by the `wpa_supplicant`.
+
+'''NOTE:''' Currently the pcsc value `UICC 00 00` is written . But the current implementation of `wpa_supplicant` uses '''always''' the '''first entry''' in the reader list which is provided by the PCSC interface.
+
+=== Patch ===
+
+Apply the attached patch with
+{{{
+patch -p2 --dry-run -i gingerbread_EAP-SIM_AKA_0.3.patch
+}}}
+in the root directory of your Android Sources of Gingerbread.
