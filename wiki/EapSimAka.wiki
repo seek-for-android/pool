@@ -21,4 +21,4 @@ The WLAN access point on the network has to support EAP (which is often transcri
 
 The next picture shows simplified the data flow during the authentication process.
 
-<img src=http://seek-for-android.googlecode.com/svn/wiki/img/EapSim_DataFlow.png width=500/>
+<img src=http://seek-for-android.googlecode.com/svn/wiki/img/EapSim_DataFlow.png width=600/>
