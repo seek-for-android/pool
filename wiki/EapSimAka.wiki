@@ -4,9 +4,10 @@ EAP-SIM is a mechanism for authentication and session key generation using a GSM
 EAP-AKA is like EAP-SIM but uses the authentication algorithms on an USIM.
 
 EAP-SIM is specified in [http://tools.ietf.org/html/rfc4186 RFC 4186].
+
 EAP-AKA is specified in [http://tools.ietf.org/html/rfc4187 RFC 4187].
 
-
+Specifications about EAP can be found [http://tools.ietf.org/html/rfc3748 here] and [http://tools.ietf.org/html/rfc5247 here].
 
 
 
