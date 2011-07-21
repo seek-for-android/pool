@@ -1,56 +1,167 @@
-#summary Support for EAP-SIM and EAP-AKA in Android.
+#summary How to compile the Android sources with SmartCard API and SCWS support
+
 = Introduction =
-EAP-SIM is a mechanism for authentication and session key generation using a GSM authentication algorithm on client and network sides.
-EAP-AKA is like EAP-SIM but uses the authentication algorithms on an USIM.
 
-EAP-SIM is specified in [http://tools.ietf.org/html/rfc4186 RFC 4186].
-
-EAP-AKA is specified in [http://tools.ietf.org/html/rfc4187 RFC 4187].
-
-Specifications about EAP can be found [http://tools.ietf.org/html/rfc3748 here] and [http://tools.ietf.org/html/rfc5247 here].
+This documents describes how to build the system from scratch, apply the smart card related patches and flash a development device with the new images.
 
 
+== Getting the Android sources ==
 
-= Details =
-An overview how a WLAN with EAP authentication may look like is shown below:
-
-<img src=http://seek-for-android.googlecode.com/svn/wiki/img/EapSim_System.png width=500/>
-
-To run an EAP-SIM/AKA authentication you will need a client as wpa_supplicant which has access to a (U)SIM. 
-The WLAN access point on the network has to support EAP (which is often transcribed as WPA(2)-RADIUS or WPA(2)-ENTERPRISE). The WLAN AP has to have access to a RADIUS server who handles the authentication and session key generation. The RADIUS server needs for EAP-SIM/AKA in a productive environment access to the home location register (HLR) of the MNO where the (U)SIMs are registered. For testing a file with precreated values for authentication is sufficient.
-
-The next picture shows simplified the data flow during the authentication process.
-
-<img src=http://seek-for-android.googlecode.com/svn/wiki/img/EapSim_DataFlow.png width=600/>
-
-== Changes to Android ==
-
-In order to run EAP-SIM/AKA on a Android smartphone it is necessary to adapt two parts of the sources:
-- the wpa_supplicant and
-- the Settings.apk
-
-To get access to the (U)SIM it is necessary to enable the PC/SC interface and integration the SmartCard API with UICC support. 
-The EAP-SIM/AKA patch was tested against Android 2.3.4_r1, the SmartCard API 2.2.1 and the PCSC System Service 0.9.6.
-
-=== wpa_supplicant ===
-For the wpa_supplicant the use of the PCSC interface has to be enabled and the functions which encapsulate 
-the PCSC interface have to be adapted so that they can handle the responses form the SmartCardService.
-Since the original sources of the wpa_supplicant expected responses from the (U)SIM according to the T=0 protocol, 
-but the SmartCardService returns response data according to T=1.
-
-=== Settings.apk ===
-To give the user the possibility to enable EAP-SIM or EAP-AKA on his Smartphone it is necessary to extend the WiFi Dialog
-where it is possible to select the EAP methods.
-The WiFi Dialog is located in the package Settings.apk. 
-Now the entries `SIM` and `AKA` are now availabel and selectable as EAP-Method. 
-When selecting `SIM` or `AKA` the other fields like `Phase 2 Authentication`, `CA-Cerificate` and so on can be left empty 
-or by their default values.
-
-=== Patch ===
-Download the [http://seek-for-android.googlecode.com/files/eap-sim-aka-0.4.tgz EAP-SIM/AKA patch] and extract the content.
-
-Apply the patch with
+A more detailed description how to set up the local work environment can be found  [http://source.android.com/source/download.html here].
 {{{
-patch -p1 -i eap-sim-aka-0.4.patch
+$ repo init -u git://android.git.kernel.org/platform/manifest.git -b android-2.3.4_r1
+$ repo sync
 }}}
-in the root directory of your Android Sources.
+<br/>
+
+== Patching the sources ==
+Apply the necessary patches in the root directory of the Android source code to enable smart card support.<br/>
+Please make sure what patches should be applied as the different use cases (!SmartCard API, SCWS/BIP, PC/SC support) are separated in different download packages.
+
+==== !SmartCard API support ====
+Download the [http://seek-for-android.googlecode.com/files/smartcard-api-2_2_1.tgz smartcard-api-2_2_1.tgz] patch and extract the content:
+ * `smartcard-api-2.2.1.patch` - patches the Java sources for !SmartCard API support
+ * `uicc.patch` - patches the Android Telephony framework with the required UICC methods for the !SmartCard API !UiccTerminal support
+ * `emulator.patch` - patches the qemu module to support a UICC connected through the PC/SC host interface instead of the default Android SIM simulator
+ * `cts.patch` - adds the compatibility testsuite for the !SmartCard API.
+
+==== Smart Card Web Server support ====
+Download the [http://seek-for-android.googlecode.com/files/smartcard-webserver-1_1.tgz smartcard-webserver-1_1.tgz] patch and extract the content:
+ * `scws.patch` - patches the Java sources for BIP and Smart Card Web Server support (prototype)
+ * `emulator.patch` - patches the qemu module to support a UICC connected through the PC/SC host interface instead of the default Android SIM simulator
+
+==== PC/SC support ====
+The patch is optional, it is only required for (native) Android applications relying on the PC/SC interface.<br/>
+Download the [http://seek-for-android.googlecode.com/files/pcsc_system_service_v096.tgz pcsc_system_service_v096.tgz] patch and extract the content `pcsc_system_service.patch`
+The patch includes:
+ * Smartcard system-service based on the the !SmartCard API
+ * external/pcsc/pcsc-lite with PC-SC support 
+ * external/pcsc/ifdhandler with native IFD Handler based on !SmartCard API
+
+==== Apply the patches and update the API ====
+{{{
+$ cd <ANDROID_ROOT_DIR>
+$ patch -p1 < <path_to_my_patches>/smartcard-api-2_2_1/smartcard-api-2.2.1.patch
+$ patch -p1 < <path_to_my_patches>/smartcard-api-2_2_1/uicc.patch
+$ patch -p1 < <path_to_my_patches>/smartcard-api-2_2_1/emulator.patch
+$ patch -p1 < <path_to_my_patches>/smartcard-api-2_2_1/cts.patch
+
+For SCWS and BIP support:
+$ patch -p1 < <path_to_my_patches>/smartcard-webserver-1_1/scws.patch
+Optional (only apply once - do not apply this if smartcard-api-2_2_1/emulator.patch was already applied previously!):
+$ patch -p1 < <path_to_my_patches>/smartcard-webserver-1_1/emulator.patch
+
+For PC/SC support:
+$ patch -p1 < <path_to_my_patches>/pcsc_system_service_v096/pcsc_system_service.patch
+
+Required:
+$ make update-api
+}}}
+Note that applying the patches might result in failed hunks. This is no problem as long as no modification was rejected.
+<br/><br/>
+
+== Building the system ==
+
+*Note:* Since SmartCardAPI 2.2.1 the Mobile Security Card (microSD Card with embedded Secure Element), is supported by using the ASSD standard (Advanced Security SD specification).
+For support of the Mobile Security Card, the kernel must be built with ASSD included, see [http://code.google.com/p/seek-for-android/wiki/HowToBuild ASSD Support]
+
+Compile the sources for the target device (use `crespo`, `passion`, `sapphire` or `dream` depending on the actual development phone)
+{{{
+$ cd <ANDROID_ROOT_DIR>
+$ cd device/samsung/crespo
+$ ./extract-files.sh
+$ cd -
+$ TARGET_PRODUCT=full_crespo TARGET_BUILD_VARIANT=user TARGET_BUILD_TYPE=debug make
+}}}
+Make sure to have properly connected the reference phone to extract the binary files or downloaded the corresponding ZIP archive to run `unzip-files.sh` instead. The Internet might also provide more up-to-date information about how to build the system for a real device.<br/>
+Note that the tools compiled for the host system will be 32bit executables thus you need to ensure to link with a 32bit pcsclite library when the `emulator.patch` is applied. 
+<br/><br/>
+
+== Flashing the phone ==
+*Note: You'll loose all data on the phone if you proceed*<br/>
+To flash the phone, execute:
+{{{
+$ ./out/host/linux-x86/bin/adb reboot bootloader
+$ ANDROID_PRODUCT_OUT=out/debug/target/product/crespo ./out/host/linux-x86/bin/fastboot -w flashall
+}}}
+If `flashall` fails you might also try:
+{{{
+$ ./out/host/linux-x86/bin/fastboot flash boot out/debug/target/product/crespo/boot.img
+$ ./out/host/linux-x86/bin/fastboot flash system out/debug/target/product/crespo/system.img
+$ ./out/host/linux-x86/bin/fastboot flash userdata out/debug/target/product/crespo/data.img
+}}}
+Again, replace `crespo` with `passion`, `sapphire` or `dream` depending on the actual development phone. Skip flashing the boot partition if you don't want to replace the existing kernel.<br/>
+{{{
+$ ./out/host/linux-x86/bin/fastboot reboot
+}}}
+If there are problems while booting it's worth to try
+{{{
+$ ./out/host/linux-x86/bin/fastboot erase userdata
+}}}
+Instead of flashing the user partition.
+<br/><br/>
+
+== Building the SDK ==
+As the new system image running on the phone now contains an extended framework API, these changes need to be included in the SDK as well.<br/>
+SDK for Linux or Mac-OS X, run
+{{{
+$ make PRODUCT-sdk-sdk
+}}}
+SDK for Windows, run:
+{{{
+$ make PRODUCT-sdk-win_sdk
+}}}
+to find the new SDK under `out/host/linux-x86/sdk`
+<br/><br/>
+
+== Generating the documentation ==
+Run
+{{{
+$ make docs
+}}}
+to find the offline documentation under `out/target/common/docs/offline-sdk/reference`
+
+
+<br><br>
+=Integration of the shared library based !SmartCard API=
+
+Download the `smartcard-api_sharedlibrary-2_2_1.tgz` patch and extract the content. The package includes: 
+
+ * The shared library based !SmartCard API as patch for the Android source tree (`smartcard-api-2.2.1.patch`)
+ * The CTS extension for the shared library based !SmartCard API as patch for the android source tree (`cts.patch`)
+ * The emulator extention for the !SmartCard API as patch for the android source tree (`emulator.patch`)
+ * The system modifications/extension for the UICC connection for the !SmartCard API as patch for the android source tree (`uicc.patch`)
+
+Apply the patches:
+{{{
+$ cd <ANDROID_ROOT_DIR> 
+$ patch -p1 < <path_to_my_patches>/smartcard-api-2_2_1/smartcard-api-2.2.1.patch 
+$ patch -p1 < <path_to_my_patches>/smartcard-api-2_2_1/uicc.patch 
+$ patch -p1 < <path_to_my_patches>/smartcard-api-2_2_1/emulator.patch 
+$ patch -p1 < <path_to_my_patches>/smartcard-api-2_2_1/cts.patch  
+}}}
+
+After applying the patches the android source tree contains all !SmartCard API source files in "/packages/apps/!SmartcardService". 
+After applying the patches the android source tree contains all !SmartCard API source files in "/packages/apps/!SmartcardService": 
+ * !SmartcardService/ - Contains the whole !SmartCard API project
+ * jni/ Contains the native sources of this project
+ * src/ - Contains the source files of the !SmartCard API Service (backend system of the !SmartCard API)
+ * openmobileapi/ - Contains the Open Mobile API (SIMalliance standardized API for applications) shared library project. 
+ * smartcardapi/  - Contains the !SmartcardClient API (proprietary API for applications) shared library project. 
+ <br>
+For integrating the !SmartCard API into the product build the variable PRODUCT_PACKAGES (e.g. in core.mk or device.mk) has to be extended with following lines:
+{{{
+PRODUCT_PACKAGES := \ 
+ org.simalliance.openmobileapi \  (for integrating the SmartCard API with the shared library for SIMalliance standardized API Open Mobile API)
+ android.smartcard \  (for integrating the SmartCard API with the shared library for the proprietary API SmartcardClient) 		
+}}}
+ 
+Note: The `smartcard-api-2.2.1.patch` already includes these required entries for PRODUCT_PACKAGES in the file ./build/target/product/core.mk
+
+<br>
+Update the API:
+{{{
+$ make update-api
+}}}
+
+Continue with the instructions as described in section "Building the system".
