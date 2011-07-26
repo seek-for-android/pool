@@ -27,7 +27,14 @@ The [http://www.3gpp.org/ftp/Specs/html-info/27007.htm 3GPP TS 27.007 Technical 
 <sessionid></code>
  The AT+CCHO commands opens a logical channel to the card application _dfname_, and returns a _sessionid_. The _sessionid_ is to be used when sending commands with the AT+CGLA command.<br/>
  _dfname_ matches the applet AID that needs to be selected or can be _null_ if no applet needs to be selected on a new logical channel<br/>
- _sessionid_ is 0 in case of an error or != 0 in case of success
+ _sessionid_ is from 1 to 4294967295 in case of success. The value 0 is reserved.
+
+ In case of an error the baseband returns an error code.
+ <code>+CME ERROR: <err></code>
+ The upper layers need to distinguish between certain error cases. For this reason the baseband shall return one of the following values for _err_.<br/>
+ _memory full_ in case no logical channel was available<br/>
+ _not found_ in case the card application was not found<br/>
+ _unknown_ in case of any other error
 
  * *AT+CCHC (Close Logical Channel)*
  <code>+CCHC=<sessionid></code>
