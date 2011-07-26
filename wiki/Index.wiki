@@ -22,7 +22,7 @@
    * [UICCSupport AT Command Extensions]<br>Specification of the AT Command Interface required for the !SmartCard API support on real devices<br><br>
    * [EmulatorExtension Emulator Extension]<br>Extend the Android emulator with a PC/SC interface that enables the emulation environment to access a physical connected UICC instead of the built in (SIM) simulation<br><br>
    * [SmartcardWebserver Smart Card Web Server]<br>Browse data located on the UICC with BIP extensions in the Android SIM Toolkit framework.<br><br>
-   * [EapSimAka EAP-SIM/AKA]<br>Enables Android Smartphone to authenticate in a WLAN with behalf of EAP-SIM/AKA protocol.<br><br>
+   * [EapSimAka EAP-SIM/AKA]<br>Enables Android Smartphones to authenticate in a WLAN with behalf of EAP-SIM/AKA protocol.<br><br>
 
 ====ASSD Support====
    * [Concept Concept]<br>Description of the ASSD concept<br><br>
