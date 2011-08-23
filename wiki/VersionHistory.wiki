@@ -2,6 +2,14 @@
 
 = !SmartCard API =
 
+=== v2.2.2 - 23.08.2011 === 
+ * !SmartCard API is only provided as shared library.
+ * !SmartCard API is only based on the Open Mobile API[http://simalliance.org/ SIMalliance ] 
+ * The !SmartCard API can be extended with the old API (V 1.X) with the backward compatibilty add on patch.
+ * The permission for using the SmartCardAPI was changed from "android.permission.SMARTCARD" to "org.simalliance.openmobileapi.SMARTCARD".
+<br/><br/>
+
+
 === v2.2.1 - 15.07.2011 === 
  * Fully compliant to the latest [http://simalliance.org/ SIMalliance ]Open Mobile API Specification (V1.01)
  * New SE Access Control Enforcer can restrict the access to Secure Elements by predefined policies. See the SE Access Control description. 
