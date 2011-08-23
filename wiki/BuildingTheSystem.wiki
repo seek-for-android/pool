@@ -47,12 +47,12 @@ $ patch -p1 < <path_to_my_patches>/smartcard-api-2_2_2/uicc.patch
 $ patch -p1 < <path_to_my_patches>/smartcard-api-2_2_2/emulator.patch
 $ patch -p1 < <path_to_my_patches>/smartcard-api-2_2_2/cts.patch
 
-After applying the patches the android source tree contains all !SmartCard API source files in "/packages/apps/!SmartcardService": 
- * !SmartcardService/ - Contains the whole !SmartCard API project
+After applying the patches the android source tree contains all SmartCard API source files in "/packages/apps/!SmartcardService": 
+ * SmartcardService/ - Contains the whole SmartCard API project
  * jni/ Contains the native sources of this project
- * src/ - Contains the source files of the !SmartCard API Service (backend system of the !SmartCard API)
+ * src/ - Contains the source files of the SmartCard API Service (backend system of the !SmartCard API)
  * openmobileapi/ - Contains the Open Mobile API (SIMalliance standardized API for applications) shared library project. 
- * smartcardapi/  - Contains the !SmartcardClient API (proprietary API for applications) shared library project. 
+ * smartcardapi/  - Contains the SmartcardClient API (proprietary API for applications) shared library project. 
  <br>
 For integrating the !SmartCard API into the product build the variable PRODUCT_PACKAGES (e.g. in core.mk or device.mk) has to be extended with following lines:
 {{{
@@ -140,7 +140,7 @@ $ make docs
 to find the offline documentation under `out/target/common/docs/offline-sdk/reference`
 
 
-==== Apply the backward compatibilty patch for using the old 1.X API ====
+== Apply the backward compatibilty patch for using the old 1.X API ==
 
 Download the `smartcard-api_2_2_2_api_addon.tgz` patch and extract the content. The package includes: 
 
