@@ -53,7 +53,7 @@ After applying the patches the android source tree contains all SmartCard API so
  * src/ - Contains the source files of the SmartCard API Service (backend system of the !SmartCard API)
  * openmobileapi/ - Contains the Open Mobile API (SIMalliance standardized API for applications) shared library project. 
   <br>
-For integrating the !SmartCard API into the product build the variable PRODUCT_PACKAGES (e.g. in core.mk or device.mk) has to be extended with following line:
+For integrating the SmartCard API into the product build the variable PRODUCT_PACKAGES (e.g. in core.mk or device.mk) has to be extended with following line:
 {{{
 PRODUCT_PACKAGES := \ 
  org.simalliance.openmobileapi \  (for integrating the SmartCard API with the shared library for SIMalliance standardized API Open Mobile API)
