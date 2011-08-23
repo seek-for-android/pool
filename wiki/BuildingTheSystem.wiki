@@ -20,11 +20,11 @@ Please make sure what patches should be applied as the different use cases (!Sma
 
 ==== !SmartCard API support ====
 Download the [http://seek-for-android.googlecode.com/files/smartcard-api-2_2_2.tgz smartcard-api-2_2_2.tgz] patch and extract the content:
- * `smartcard-api-2.2.1.patch` - patches the Java sources for !SmartCard API support
+ * `smartcard-api.patch` - patches the Java sources for !SmartCard API support
  * `uicc.patch` - patches the Android Telephony framework with the required UICC methods for the !SmartCard API !UiccTerminal support
  * `emulator.patch` - patches the qemu module to support a UICC connected through the PC/SC host interface instead of the default Android SIM simulator
  * `cts.patch` - adds the compatibility testsuite for the !SmartCard API.
- * A JAR file which can be used for developing an application based on the 1.X API
+ * `org.simalliance.openmobileapi.jar` - JAR file which can be used for developing an application based on the Open Mobile API (2.X API)
 
 ==== Smart Card Web Server support ====
 Download the [http://seek-for-android.googlecode.com/files/smartcard-webserver-1_1.tgz smartcard-webserver-1_1.tgz] patch and extract the content:
@@ -140,13 +140,13 @@ $ make docs
 to find the offline documentation under `out/target/common/docs/offline-sdk/reference`
 
 
-== Apply the backward compatibilty patch for using the old 1.X API ==
+== Apply the backward compatibilty patch for using the old !SmartcardClient API (1.X API) ==
 
-Download the `smartcard-api_2_2_2_api_addon.tgz` patch and extract the content. The package includes: 
+Download the `smartcard-api_2_2_2_api_addon.tgz` patch and extract the content:
 
- * A patch which adds the 1.X API to the !SmartCard API in the Android source tree (`smartcard-api-2.2.2_api_addon.patch`)
- * The CTS extension for testing the !SmartCard API based on the 1.X API as patch for the android source tree (`cts_api_addon.patch`)
- * A JAR file which can be used for developing an application based on the 1.X API
+ * `smartcard-api-2.2.2_api_addon.patch` - adds the 1.X API to the !SmartCard API in the Android source tree
+ * `cts_api_addon.patch` - adds the compatibility testsuite for the !SmartCard API based on the 1.X API.
+ * `android.smartcard.jar` - JAR file which can be used for developing an application based on the !SmartcardClient API (1.X API)
 
 {{{
 $ cd <ANDROID_ROOT_DIR>
