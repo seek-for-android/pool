@@ -6,26 +6,22 @@ The following summary is a list of (frequent) questions that we received through
 <table>
 
 
-<tr><td valign='top'>*Q*</td><td>Why do you offer a shared library based !SmartCard API now as an additional alternative solution?</td></tr>
-<tr><td valign='top'>*A*</td><td>In general, the !SmartCard API is designed as Android system component and is ideally located in the Android SDK framework. Therefore we provide the !SmartCard API patch as Android SDK framework component. Besides this SDK framework based solution we provide also an alternative solution (a shared library based !SmartCard API) for developers/system integrators who don't want to modify the Android SDK for integrating the !SmartCard API. The shared library variant contains exactly the same !SmartCard API components as the SDK framework based variant and can be used without limitations or restrictions. As the shared library variant is very new it is tagged as "experimental" but is also well tested and approved as the SDK framework based variant.</td></tr>
-<tr><td><br/></td><td></td></tr>
-
-<tr><td valign='top'>*Q*</td><td>Which !SmartCard API patch shall I use?</td></tr>
-<tr><td valign='top'>*A*</td><td>In principal, we recommend the SDK framework based !SmartCard API as also provided in previous versions. The shared library variant can be used by developers/system integrators who don't want to modify the Android framework SDK.</td></tr>
+<tr><td valign='top'>*Q*</td><td>Why do you offer a shared library based !SmartCard API?</td></tr>
+<tr><td valign='top'>*A*</td><td>In general, the !SmartCard API is designed as Android system component and is ideally located in the Android SDK framework. Therefore we provided the !SmartCard API patch as Android SDK framework component in the past. Since the !SmartCard API version 2.2.2 the SDK framework based solution was replaced by a shared library based !SmartCard API which especially helps the developers/system integrators who don't want to modify the Android SDK for integrating the !SmartCard API. The shared library contains exactly the same !SmartCard API components as the SDK framework based versions provided in the past and can be used without limitations or restrictions.</td></tr>
 <tr><td><br/></td><td></td></tr>
 
 <tr><td valign='top'>*Q*</td><td>Where do I get the Access Control Applet?</td></tr>
 <tr><td valign='top'>*A*</td><td>Please contact us directly via eMail.</td></tr>
 <tr><td><br/></td><td></td></tr>
 
-<tr><td valign='top'>*Q*</td><td>What is the difference between the interfaces "Open Mobile API" ('org.simalliance.openmobileapi') and "!SmartcardClient" ('android.smartcard')?</td></tr>
-<tr><td valign='top'>*A*</td><td>Both interfaces can be used by an Android application for accessing a Secure Element. The "Open Mobile API" is a [http://simalliance.org/ SIMalliance] standardized new interface for Secure Element access which provides the same functionality as offered by the older proprietary interface "!SmartcardClient" but has a more object oriented structure. As the "Open Mobile API" will be extended soon with more features (e.g. additional service layer classes) we generally recommend the "Open Mobile API" as application interface.</td></tr>
+<tr><td valign='top'>*Q*</td><td>What is the difference between the interfaces "Open Mobile API" ('org.simalliance.openmobileapi') and the old "!SmartcardClient" ('android.smartcard')?</td></tr>
+<tr><td valign='top'>*A*</td><td>In principle both interfaces can be used by an Android application for accessing a Secure Element. The "Open Mobile API" is a [http://simalliance.org/ SIMalliance] standardized interface for Secure Element access which provides the same functionality as offered by the older proprietary interface "!SmartcardClient" but has a more object oriented structure. As the "Open Mobile API" will be extended soon with more features (e.g. additional service layer classes) we highly recommend the "Open Mobile API" as application interface.</td></tr>
 <tr><td><br/></td><td></td></tr>
 
 
 <tr><td valign='top'>*Q*</td><td>Which interface should I use in my application: "!SmartcardClient" ('android.smartcard') or "Open Mobile API" ('org.simalliance.openmobileapi')?</td></tr>
-<tr><td valign='top'>*A*</td><td>"Open Mobile API" should be used.</td></tr>
-<tr><td valign='top'></td><td>...the interface "!SmartcardClient" is still included and supported due to compatibility reasons but will soon be declared as 'deprecated'.</td></tr>
+<tr><td valign='top'>*A*</td><td>The "Open Mobile API" is the only interface provided by the SmartCard API since version 2.2.2.</td></tr>
+<tr><td valign='top'></td><td>... but the interface "!SmartcardClient" is still provided in the backward compatiblity patch for supporting older applications using the SmartCard API.</td></tr>
 <tr><td><br/></td><td></td></tr>
 
 <tr><td valign='top'>*Q*</td><td>What version of Android is supported by SEEK?</td></tr>
