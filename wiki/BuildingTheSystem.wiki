@@ -138,6 +138,7 @@ Run
 $ make docs
 }}}
 to find the offline documentation under `out/target/common/docs/offline-sdk/reference`
+<br/><br/>
 
 
 == Apply the backward compatibilty patch for using the old !SmartcardClient API (1.X API) ==
