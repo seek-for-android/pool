@@ -3,7 +3,7 @@
 
 =Introduction=
 
-This document explains how the !SmartCard API for can be used to
+This document explains how the SmartCard API for can be used to
 develop and test Android applications, which communicate with Secure Elements available in the real device or the emulator.
 
 This description adheres to the latest version of the !Smartcard API (V2.2.2 or higher), which contains the shared library based !SmartCard API.
