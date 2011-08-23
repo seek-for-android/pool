@@ -4,7 +4,7 @@
 
 === v2.2.2 - 23.08.2011 === 
  * !SmartCard API is only provided as shared library.
- * !SmartCard API is only based on the Open Mobile API[http://simalliance.org/ SIMalliance ] 
+ * !SmartCard API is only based on the Open Mobile API [http://simalliance.org/ SIMalliance ] 
  * The !SmartCard API can be extended with the old API (V 1.X) with the backward compatibilty add on patch.
  * The permission for using the SmartCardAPI was changed from "android.permission.SMARTCARD" to "org.simalliance.openmobileapi.SMARTCARD".
 <br/><br/>
