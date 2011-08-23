@@ -1,10 +1,13 @@
-#summary Writing Android applications with access to Secure Elements using the SmartCard API
+#summary Writing Android applications with access to Secure Elements using the SmartCard API (V2.2.2 or newer)
 
 
 =Introduction=
 
 This document explains how the !SmartCard API for can be used to
 develop and test Android applications which communicate with Secure Elements available in the real device or the emulator.
+
+This description adheres to the latest version of the SmartcardAPI (V2.2.2 or higher), which contains the shared library based !SmartCardAPI.
+
 
 =====Notice=====
 Currently, real devices do not support UICC access as the corresponding changes in the baseband are not implemented yet thus SIM access can only be tested with the Android emulator. See [UICCSupport] for more information.<br/>
@@ -13,13 +16,13 @@ Currently, real devices do not support UICC access as the corresponding changes 
   * The development phone is flashed with !SmartCard API support according to [BuildingTheSystem] and the integration is verified according to [IntegrationsTests]
   * Basic knowledge of [http://www.oracle.com/technetwork/java/javacard/overview/index.html Java Card] applets and [http://www.wrankl.de/SCH/SCH.html smart card] communication
   * Eclipse development IDE with the Android Development Tools (ADT) and Java installed on the host (although Eclipse is not mandatory). See http://developer.android.com/sdk/eclipse-adt.html
-  * Android SDK with !SmartCard API integrated according to [BuildingTheSystem] used in Eclipse
+  * Android SDK with !SmartCard API as shared library according to [BuildingTheSystem] used in Eclipse
   * Basic understanding of the Android development platform. See http://developer.android.com/sdk/index.html<br/>
 
 ===Setting up the Environment===
-Since the !SmartCard API is part of the Android platform, the Eclipse development environment needs to be configured in order to use the compiled SDK (from [BuildingTheSystem]) with the integrated !SmartCard API interface instead of the official SDK from Google.<br/>
-If not yet done, adapt the SDK location in Eclipse in order to register the API extension available in the development environment.<br/>
-The output of _make PRODUCT-sdk-sdk_ can be found under _$ANDROID_ROOT/out/host/linux-x86/sdk/..._
+The Eclipse development environment needs to be configured in order to use the Android SDK. <br/>
+This can be either the official SDK from Google or the compiled SDK (from [BuildingTheSystem]). 
+The output of _make PRODUCT-sdk-sdk_ (compiled SDK) can be found under _$ANDROID_ROOT/out/host/linux-x86/sdk/..._
  * Open Eclipse and go to Windows -> Preferences -> Android
  * Specify the SDK Location as _$ANDROID_ROOT/out/host/linux-x86/sdk/..._
 <br/>
@@ -39,8 +42,45 @@ The _Hello Smartcard_ Java Card applet available in the SVN repository needs to 
     Create Activity: _!MainActivity_
   * Click _Finish_ to create the body of the (empty) Android application<br/>
 
+
+For compiling the application, the shared library classes have to be explicitly added to the classpath as these classes are not part of the android  SDK framework. Therefore add the JAR archive of shared library ("org.simalliance.openmobileapi") to your classpath.
+<br/>  
+ * Add the Smartcard API shared library to your Eclipse project:
+    Select the Project from the Eclipse package Explorer -> _Properties -> Java Build Path -> Tab: Libraries -> Add External JARs.._
+
+After an Android system build the JAR archive of the "org.simalliance.openmobileapi" shared library can be found here:
+{{{
+<ANDROID_ROOT_DIR>/out/target/common/obj/JAVA_LIBRARIES/org.simalliance.openmobileapi_intermediates/classes-full-debug.jar
+}}}
+Alternatively the shared library included in the SmartcardAPI V2.2.2 package can be used.
+
+
+An application can use the !SmartCard API via a shared library "org.simalliance.openmobileapi" by defining the shared library name in its !AndroidManfest.xml in a  [http://developer.android.com/guide/topics/manifest/uses-library-element.html uses-library-element]. This element tells the android system where the library classes (used by the application) can be found in the system.
+
+The "uses-library" allows to set an android:required flag:
+ * <b>android:required="true"</b> <br>
+ indicates if the application (which uses the shared library) can only be installed to the device if the library is available in the device. This option is useful if the application absolutely needs the library for the execution. Consider that the application (which requires the shard library) is not visible in the Android Market if the shared library is not available on the device.
+ * <b>android:required="false"</b> <br>
+ indicates if the application (which uses the shared library) can be installed to the device even if the library is not available in the device. This option is useful if the application can use the library for performing an action but does not require it for the general execution.
+
+Example of an `AndroidManfest.xml` of an application which uses the SIMalliance standardized interface OpenMobileAPI:
+
+{{{
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+          ...
+        <activity android:name="<ActivityName>"
+	<uses-library android:name="org.simalliance.openmobileapi" android:required="true" />
+        </activity>
+        ...
+        <uses-permission android:name="org.simalliance.openmobileapi.SMARTCARD"/>
+</manifest> 
+}}}
+
+
 ===Creating the View===
-In this tutorial, we do not care much about the user interface, we just create a button which starts the communication with the applet on the smart card when pressed.<br/>
+In this tutorial, we use the OpenMobile API interface.
+We do not care much about the user interface, we just create a button which starts the communication with the applet on the smart card when pressed.<br/>
 In _!MainActivity.java_, add the following code to the _onCreate()_ method.
 {{{
 @Override
@@ -72,20 +112,23 @@ public void onCreate(Bundle savedInstanceState) {
 }}}
 Add the required imports for the new code manually or use `Ctrl+Shift+O` within Eclipse to organize all imports.<br/>
 
-===Initialize the !SmartCard API===
-Create a handle to the !SmartCard API. At the end of the _onCreate()_ method, add
+===Initialize the !SEService ===
+Create a handle to the !SEService API. At the end of the _onCreate()_ method, add
 {{{
-try {
-  smartcard = new SmartcardClient(this, null);
-} catch (SecurityException e) {
-  Log.e(LOG_TAG, "Binding not allowed, SMARTCARD permission?");
-} catch (Exception e) {
-  Log.e(LOG_TAG, "Exception: " + e.getMessage());
-}
+   try {
+          // create API entry point
+          Log.i(LOG_TAG, "creating new SEService");
+          seService = new SEService(this, this);
+   } catch (SecurityException e) {
+          Log.e(LOG_TAG, "Binding not allowed, uses-permission SMARTCARD?");
+   } catch (Exception e) {
+          Log.e(LOG_TAG, "Exception: " + e.getMessage());
+   }
+ 
 }}}
-and create a _!SmartcardClient_ object within the _!MainActivity_ class
+and create a _!SEService object within the _!MainActivity_ class
 {{{
-SmartcardClient smartcard;
+   private SEService seService; 
 }}}
 If the sample is executed on the phone now, a security exception is thrown complaining about a missing _SMARTCARD_ permission. See the log output of the command when starting the application in its current stage
 {{{
@@ -94,46 +137,58 @@ $ adb logcat *:v
 In order to be allowed to use the !SmartCard API, an application must implement the _SMARTCARD_ permission. This permission notifies a user when installing an application that requests access to a Secure Element.<br/><br/>
 Define the permission in the _!AndroidManifest.xml_ file
 {{{
-<uses-permission android:name="android.permission.SMARTCARD"/>
+<uses-permission android:name="org.simalliance.openmobileapi.SMARTCARD"/>
 }}}
 and the sample will launch properly.<br/><br/>
-Note that the constructor of _!SmartcardClient_ will automatically bind to the !SmartcardService interface in the background. Since service binding is asynchronous in Android, the proper way to initialize the library is to wait for a notification event as discussed later.<br/><br/>
+Note that the constructor of SEService will automatically bind to the !SEService interface in the background. Since service binding is asynchronous in Android, the proper way to initialize the library is to wait for a notification event as discussed later.<br/><br/>
 To clean up the service binding, call the shutdown method when the application is closing or is not using smart card services anymore (for example, in _onDestroy()_)
 {{{
 @Override
 protected void onDestroy() {
-  if (smartcard != null) {
-    smartcard.shutdown();
-  }
-
-  super.onDestroy();
-}
+   if (seService != null && seService.isConnected()) {
+      seService.shutdown();
+   }
+   super.onDestroy();
+} 
 }}}
 
 ===Accessing the Smart Card===
 Add the following code snippet inside the _onClick()_ handler of the button
 {{{
-ICardChannel cardChannel;
-try {
-  cardChannel = smartcard.openLogicalChannel(
-      "Mobile Security Card",
-      new byte[] { (byte)0xD2, 0x76, 0x00, 0x01, 0x18, 0x00, 0x02,
-                   (byte)0xFF, 0x49, 0x50, 0x25, (byte)0x89,
-                   (byte)0xC0, 0x01, (byte)0x9B, 0x01});
+   try {
+      Log.d(LOG_TAG, "Getting available readers...");
+      Reader[] readers = seService.getReaders();
 
-  byte[] respApdu = cardChannel.transmit(
-           new byte[] {(byte)0x90, 0x10, 0x00, 0x00, 0x00 });
+      Log.d(LOG_TAG, "readers.length = " + readers.length);
+      if (readers.length < 1)
+         return;
 
-  cardChannel.close();
+      Log.d(LOG_TAG, "Getting Session from the first reader...");
+      Session session = readers[0].openSession();
 
-  byte[] helloStr = new byte[respApdu.length - 2];
-  System.arraycopy(respApdu, 0, helloStr, 0, respApdu.length - 2);
+      // Select our applet
+      Log.d(LOG_TAG,
+      "Getting logical channel from the session...");
+      Channel channel = session.openLogicalChannel(new byte[] {
+      (byte) 0xD2, 0x76, 0x00, 0x01, 0x18, 0x00, 0x02,
+      (byte) 0xFF, 0x49, 0x50, 0x25, (byte) 0x89,
+      (byte) 0xC0, 0x01, (byte) 0x9B, 0x01 });
 
-  Toast.makeText(MainActivity.this, new String(helloStr),
-                 Toast.LENGTH_LONG).show();
-} catch (CardException e) {
-  return;
-}
+      // Send our custom hello world command
+      Log.d(LOG_TAG, "transmit()");
+      byte[] respApdu = channel.transmit(new byte[] {
+      (byte) 0x90, 0x10, 0x00, 0x00, 0x00 });
+
+      channel.close();
+
+      // Parse response and show String
+      byte[] helloStr = new byte[respApdu.length - 2];
+      System.arraycopy(respApdu, 0, helloStr, 0,respApdu.length - 2);
+      Toast.makeText(MainActivity.this, new String(helloStr),	Toast.LENGTH_LONG).show();
+   } catch (Exception e) {
+      Log.e(LOG_TAG, "Error occured:", e);
+      return;
+   } 
 }}}
 In this code, a logical channel to the _!HelloSmartcard_ applet identified by its AID `D2 76 00 01 18 00 02 FF 49 50 25 89 C0 01 9B 01` is created. The _!HelloSmartcard_ applet
 specific APDU command `90 10 00 00 00` is sent to retrieve the applet response.<br/>
@@ -147,51 +202,3 @@ To debug the application, you need to
  * Run `$ logcat *:v` in a terminal to show all log messages
  * Use Eclipse to set breakpoints and step through the code
 
-
-<br><br> 
-=Using the !SmartCard API via shared library =
-
-An application can use the !SmartCard API via a shared library ("org.simalliance.openmobileapi" or "android.smartcard") by defining the shared library name in its !AndroidManfest.xml in a  [http://developer.android.com/guide/topics/manifest/uses-library-element.html uses-library-element]. This element tells the android system where the library classes (used by the application) can be found in the system.
-
-The "uses-library" allows to set an android:required flag:
- * <b>android:required="true"</b> <br>
- indicates if the application (which uses the shared library) can only be installed to the device if the library is available in the device. This option is useful if the application absolutely needs the library for the execution. Consider that the application (which requires the shard library) is not visible in the Android Market if the shared library is not available on the device.
- * <b>android:required="false"</b> <br>
- indicates if the application (which uses the shared library) can be installed to the device even if the library is not available in the device. This option is useful if the application can use the library for performing an action but does not require it for the general execution.
-
-Example of an `AndroidManfest.xml` of an application which uses the SIMalliance standardized interface OpenMobileAPI:
-
-{{{
-<?xml version="1.0" encoding="utf-8"?>
-<manifest xmlns:android="http://schemas.android.com/apk/res/android"
-          ...
-        <activity android:name="<ActivityName>"
-	<uses-library android:name="org.simalliance.openmobileapi" android:required="true" />
-        </activity>
-        ...
-</manifest> 
-}}}
-
-Example of an `AndroidManfest.xml` of an application which uses the proprietary interface !SmartcardClient:
-
-{{{
-<?xml version="1.0" encoding="utf-8"?>
-<manifest xmlns:android="http://schemas.android.com/apk/res/android"
-          ...
-        <activity android:name="<ActivityName>"
-	<uses-library android:name="android.smartcard" android:required="true" />
-        </activity>
-        ...
-</manifest> 
-}}}
-
-For compiling the application (using the shard library based !SmartCard API) the shared library classes has to be explicitly added to the classpath as these classes are not part of the android  SDK framework. Therefore add the JAR archive (besides the Android SDK JAR archive "android.jar") of the needed shared library ("org.simalliance.openmobileapi" or "android.smartcard") to your classpath.
-<br/><br/>
-After an Android system build (containing the shared library based !SmartCard API) the JAR archive of the "org.simalliance.openmobileapi" shared library can be found here:
-{{{
-<ANDROID_ROOT_DIR>/out/target/common/obj/JAVA_LIBRARIES/org.simalliance.openmobileapi_intermediates/classes-full-debug.jar
-}}}
-After an Android system build (containing the shared library based !SmartCard API) the JAR archive of the "android.smartcard" shared library can be found here:
-{{{
-<ANDROID_ROOT_DIR>/out/target/common/obj/JAVA_LIBRARIES/android.smartcardapi_intermediates/classes-full-debug.jar
-}}}
