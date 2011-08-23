@@ -47,7 +47,7 @@ $ patch -p1 < <path_to_my_patches>/smartcard-api-2_2_2/uicc.patch
 $ patch -p1 < <path_to_my_patches>/smartcard-api-2_2_2/emulator.patch
 $ patch -p1 < <path_to_my_patches>/smartcard-api-2_2_2/cts.patch
 
-After applying the patches the android source tree contains all SmartCard API source files in "/packages/apps/!SmartcardService": 
+After applying the patches the android source tree contains all SmartCard API source files in "/packages/apps/SmartcardService": 
  * SmartcardService/ - Contains the whole SmartCard API project
  * jni/ Contains the native sources of this project
  * src/ - Contains the source files of the SmartCard API Service (backend system of the !SmartCard API)
