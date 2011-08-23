@@ -56,7 +56,7 @@ The results of test runs are stored in directory<br>
 Sample result files of a test run of this test plan can be downloaded [http://seek-for-android.googlecode.com/files/CTS_results-2_2_2.tgz here].
 <br><br>
 
-= CTS extension for !SmarcardClient (!SmartCard API 1.X)  =
+= CTS extension for !SmartcardClient (!SmartCard API 1.X)  =
 
 The [http://source.android.com/compatibility/cts-intro.html Compatibility Test Suite (CTS)] can be extended so it can be used also to test the Smartcard API (API V1.X).
 
@@ -69,7 +69,7 @@ The following paragraphs describe
   * how to run the tests, and
   * where to find documentation and results of the tests.
 
-== How to Build the CTS for !SmarcardClient (API 1.X) ==
+== How to Build the CTS for !SmartcardClient (API 1.X) ==
 
 For building CTS with Smartcard API (V1.X) tests
   * change into directory of Android build with Smartcard API
@@ -82,7 +82,7 @@ $ tar -xOf PATH_TO_PATCH_ARCHIVE/smartcard-api-2_2_2_api_addon.tgz smartcard-api
 $ make cts
 }}}
 
-== How to Run the CTS for !SmarcardClient (API 1.X)  ==
+== How to Run the CTS for !SmartcardClient (API 1.X)  ==
 After the CTS has been built successfully with the Smartcard API
 test extensions, the test tool {{{startcts}}} can be found in directory
 {{{out/host/linux-x86/cts/android-cts/tools}}}.<br>
@@ -97,7 +97,7 @@ $ ./startcts start --plan Smartcard
 }}}
 
 
-== Documentation and Results of CTS Tests for !SmarcardClient (API 1.X)== 
+== Documentation and Results of CTS Tests for !SmartcardClient (API 1.X)== 
 
 The documentation of the test cases of the test plans for the Smartcard API and the Open Mobile API are located in<br>
 {{{out/host/linux-x86/cts/android-cts/repository/testcases/CtsSmartcardTestCases.xml}}}
