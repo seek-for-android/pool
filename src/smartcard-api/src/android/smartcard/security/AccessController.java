@@ -107,17 +107,6 @@ public class AccessController {
             return null;
         }
 
-        String foundReqPerm = null;
-        for (String reqPerm : foundPkgInfo.requestedPermissions) {
-            if (reqPerm.equals("android.permission.SMARTCARD")) {
-                foundReqPerm = reqPerm;
-                break;
-            }
-        }
-        if (foundReqPerm == null) {
-            return null;
-        }
-
         for (Signature signature : foundPkgInfo.signatures) {
             return decodeCertificate(signature.toByteArray());
         }
