@@ -4,9 +4,9 @@
 =Introduction=
 
 This document explains how the !SmartCard API for can be used to
-develop and test Android applications which communicate with Secure Elements available in the real device or the emulator.
+develop and test Android applications, which communicate with Secure Elements available in the real device or the emulator.
 
-This description adheres to the latest version of the SmartcardAPI (V2.2.2 or higher), which contains the shared library based !SmartCardAPI.
+This description adheres to the latest version of the !Smartcard API (V2.2.2 or higher), which contains the shared library based !SmartCard API.
 
 
 =====Notice=====
@@ -112,8 +112,8 @@ public void onCreate(Bundle savedInstanceState) {
 }}}
 Add the required imports for the new code manually or use `Ctrl+Shift+O` within Eclipse to organize all imports.<br/>
 
-===Initialize the !SEService ===
-Create a handle to the !SEService API. At the end of the _onCreate()_ method, add
+===Initialize the SEService ===
+Create a handle to the SEService API. At the end of the _onCreate()_ method, add
 {{{
    try {
           // create API entry point
@@ -126,7 +126,7 @@ Create a handle to the !SEService API. At the end of the _onCreate()_ method, ad
    }
  
 }}}
-and create a _!SEService object within the _!MainActivity_ class
+and create a _SEService object within the _!MainActivity_ class
 {{{
    private SEService seService; 
 }}}
@@ -201,4 +201,3 @@ To debug the application, you need to
  * Add additional `Log.e()` messages
  * Run `$ logcat *:v` in a terminal to show all log messages
  * Use Eclipse to set breakpoints and step through the code
-
