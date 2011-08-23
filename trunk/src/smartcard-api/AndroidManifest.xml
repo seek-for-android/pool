@@ -3,18 +3,18 @@
       package="android.smartcard"
       android:sharedUserId="android.uid.smartcard"
       android:versionCode="1" 
-      android:versionName="2.1.2">
+      android:versionName="2.2">
     
     <permission android:label="SmartcardServicePermission label" 
     			android:protectionLevel="dangerous" 
-    			android:name="android.permission.SMARTCARD">
+    			android:name="org.simalliance.openmobileapi.SMARTCARD">
    	</permission>
     
     <application android:label="SmartcardService">
         <service android:enabled="true"
          		android:name="android.smartcard.SmartcardService" 
          		android:process=":remote"
-         		android:permission="android.permission.SMARTCARD">
+         		android:permission="org.simalliance.openmobileapi.SMARTCARD">
             <intent-filter>
                 <action android:name="android.smartcard.ISmartcardService" />
             </intent-filter>
@@ -23,4 +23,5 @@
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 	<uses-permission android:name="android.permission.WRITE_SECURE_SETTINGS" />
 	<uses-permission android:name="android.permission.NFC" />
+	<uses-permission android:name="com.android.nfc.permission.NFCEE_ADMIN" />
 </manifest> 
