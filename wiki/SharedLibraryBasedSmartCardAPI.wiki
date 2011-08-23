@@ -1,16 +1,19 @@
-#summary Introduction to the shared library based SmartCard API.
+#summary Introduction to the shared library.
 
 == Introduction ==
 
-Since version 2.2.0 the !SmartCard API is also offered as a shared library based variant as an alternative to the previous variant "!SmartCard API as SDK framework component". Both !SmartCard API variants (SDK framework and shared library based) contains exactly the same !SmartCard API solution but are differently located within the android source tree. The shared library configuration allows the integration of the !SmartCard API into an android system without modifying the android SDK framework. This especially helps developers/system integrators (working on android system) who cannot or don't want to modify the SDK framework.
+Since version 2.2.2 the !SmartCard API is offered as a shared library and replaced the previous !SmartCard API which was provided as SDK framework component. The shared library configuration allows the integration of the !SmartCard API into an android system without modifying the android SDK framework. This especially helps developers/system integrators (working on android system) who cannot or don't want to modify the SDK framework.
 
-== Shared libraries vs SDK framework based !SmartCard API ==
-
-The shared library based variant of the !SmartCard API is offered as an alternative solution to the android SDK framework based variant and can be used by developers/system integrators if the SDK shall not be modified. The shared library variant contains exactly the same !SmartCard API components as the SDK framework based variant and can be used without limitations or restrictions. As the shared library variant is very new it is tagged as "experimental" but is also well tested and approved as the SDK framework based variant. Consider that the both !SmartCard API variants (SDK framework based and shared library based) can not be integrated together into the same android source tree because the shared library based variant is just an alternative solution to the SDK framework based variant. This means the developer/integrator has to select a certain !SmartCard API variant (SDK framework based or shared library based) for the system integration (depending on which variant fits better into the custom system configuration and build) .
 
 
 == The shared libraries of the !SmartCard API ==
 
-The !SmartCard API offers two interfaces ("OpenMobileAPI" and "!SmartcardClient") for applications and for each interface the !SmartCard API provides a dedicated shared library:
+The !SmartCard API offers two interfaces:
+ * "OpenMobileAPI" (SCAPI V 2.X): The official API which is standardized in SIMalliance.
+ * "!SmartcardClient" (SCAPI 1.X): The old API which is proprietary and just provided for backward compatiblity.
+
+
+
+For both interfaces the !SmartCard API provides two dedicated shared libraries which can be used by applications:
  * The shared library "org.simalliance.openmobileapi" for the SIMalliance standardized interface "OpenMobileAPI".
  * The shared library "android.smartcard" for the proprietary interface "!SmartcardClient". 
