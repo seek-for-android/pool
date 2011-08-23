@@ -52,16 +52,14 @@ After applying the patches the android source tree contains all SmartCard API so
  * jni/ Contains the native sources of this project
  * src/ - Contains the source files of the SmartCard API Service (backend system of the !SmartCard API)
  * openmobileapi/ - Contains the Open Mobile API (SIMalliance standardized API for applications) shared library project. 
- * smartcardapi/  - Contains the SmartcardClient API (proprietary API for applications) shared library project. 
- <br>
-For integrating the !SmartCard API into the product build the variable PRODUCT_PACKAGES (e.g. in core.mk or device.mk) has to be extended with following lines:
+  <br>
+For integrating the !SmartCard API into the product build the variable PRODUCT_PACKAGES (e.g. in core.mk or device.mk) has to be extended with following line:
 {{{
 PRODUCT_PACKAGES := \ 
  org.simalliance.openmobileapi \  (for integrating the SmartCard API with the shared library for SIMalliance standardized API Open Mobile API)
- android.smartcard \  (for integrating the SmartCard API with the shared library for the proprietary API SmartcardClient) 		
 }}}
  
-Note: The `smartcard-api-2.2.2.patch` already includes these required entries for PRODUCT_PACKAGES in the file ./build/target/product/core.mk
+Note: The `smartcard-api-2.2.2.patch` already includes these required entry for PRODUCT_PACKAGES in the file ./build/target/product/core.mk
 
 
 For SCWS and BIP support:
@@ -161,13 +159,12 @@ After applying the patches the android source tree contains all !SmartCard API s
  * openmobileapi/ - Contains the Open Mobile API (SIMalliance standardized API for applications: API 2.X) shared library project. 
  * smartcardapi/  - Contains the !SmartcardClient API (proprietary API for applications: API 1.X) shared library project. 
  <br>
-For integrating the !SmartCard API with both interfaces (1.X API and 2.X API) into the product build the variable PRODUCT_PACKAGES (e.g. in core.mk or device.mk) has to be extended with following lines:
+For integrating the !SmartCard API with 1.X API and into the product build the variable PRODUCT_PACKAGES (e.g. in core.mk or device.mk) has to be extended with following line:
 {{{
 PRODUCT_PACKAGES := \ 
- org.simalliance.openmobileapi \  (for integrating the SmartCard API with the shared library for SIMalliance standardized API Open Mobile API)
  android.smartcard \  (for integrating the SmartCard API with the shared library for the proprietary API SmartcardClient) 		
 }}}
  
-Note: The `smartcard-api-2.2.2_api_addon.patch` already includes these required entries for PRODUCT_PACKAGES in the file ./build/target/product/core.mk
+Note: The `smartcard-api-2.2.2_api_addon.patch` already includes these required entry for PRODUCT_PACKAGES in the file ./build/target/product/core.mk
 
 Continue with the instructions as described in section "Building the system".
