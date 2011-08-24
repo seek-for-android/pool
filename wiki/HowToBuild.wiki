@@ -14,7 +14,7 @@ $ cd <MSM_DIR>
 }}}
 Note: Currently we can only provide a patch for this kernel version.
 
-=== Download the smartcard-api-2_2_1.tgz patch and extract the content: === 
+=== Download the [http://seek-for-android.googlecode.com/files/20110715-assd-kernel.tar.gz 20110715-assd-kernel.tar.gz] patch and extract the content: === 
 
  * assd_kernel.patch - patches the Kernel sources for ASSD support
  * readme.txt - description how to build
@@ -38,7 +38,7 @@ The new kernel is created as ./arch/arm/boot/zImage
 
 == The Android system can be built with ASSD support by using this custom built kernel: ==
 
-=== Download the smartcard-api-2_2_1.tgz patch and extract the content:=== 
+=== Download the [http://seek-for-android.googlecode.com/files/smartcard-api-2_2_2.tgz smartcard-api-2_2_2.tgz] patch and extract the content:=== 
 
  * smartcard-api.patch - patches the Java sources for !SmartCard API support
  * uicc.patch - patches the Android Telephony framework with the required UICC methods for the !SmartCard API !UiccTerminal support 
@@ -50,9 +50,9 @@ The new kernel is created as ./arch/arm/boot/zImage
 
 {{{
 $ cd <ANDROID_ROOT_DIR> 
-$ patch -p1 < <path_to_my_patches>/smartcard-api-2_2_1/smartcard-api-2.2.1.patch 
-$ patch -p1 < <path_to_my_patches>/smartcard-api-2_2_1/uicc.patch 
-$ patch -p1 < <path_to_my_patches>/smartcard-api-2_2_1/cts.patch 
+$ patch -p1 < <path_to_my_patches>/smartcard-api-2_2_2/smartcard-api-2.2.2.patch 
+$ patch -p1 < <path_to_my_patches>/smartcard-api-2_2_2/uicc.patch 
+$ patch -p1 < <path_to_my_patches>/smartcard-api-2_2_2/cts.patch 
 }}}
 
 (Note: `emulator.patch` is not needed for the build as the current emulator patch does not support ASSD)
