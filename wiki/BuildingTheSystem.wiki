@@ -49,8 +49,8 @@ $ patch -p1 < <path_to_my_patches>/smartcard-api-2_2_2/emulator.patch
 $ patch -p1 < <path_to_my_patches>/smartcard-api-2_2_2/cts.patch
 }}}
 
-After applying the patches the android source tree contains all !SmartCard API source files in "/packages/apps/SmartCardService": 
- * !SmartcardService/ - Contains the whole !SmartCard API project
+After applying the patches the android source tree contains all !SmartCard API source files in "/packages/apps/!SmartCardService": 
+ * !SmartCardService/ - Contains the whole !SmartCard API project
  * jni/ Contains the native sources of this project
  * src/ - Contains the source files of the !SmartCard API Service (backend system of the !SmartCard API)
  * openmobileapi/ - Contains the Open Mobile API (SIMalliance standardized API for applications) shared library project. 
@@ -155,8 +155,8 @@ $ cd <ANDROID_ROOT_DIR>
 $ patch -p1 < <path_to_my_patches>/smartcard-api-2_2_2/smartcard-api-2.2.2_api_addon.patch
 }}}
 
-After applying the patches the android source tree contains all !SmartCard API source files in "/packages/apps/!SmartcardService": 
- * !SmartcardService/ - Contains the whole !SmartCard API project
+After applying the patches the android source tree contains all !SmartCard API source files in "/packages/apps/!SmartCardService": 
+ * !SmartCardService/ - Contains the whole !SmartCard API project
  * jni/ Contains the native sources of this project
  * src/ - Contains the source files of the !SmartCard API Service (backend system of the !SmartCard API)
  * openmobileapi/ - Contains the Open Mobile API (SIMalliance standardized API for applications: API 2.X) shared library project. 
