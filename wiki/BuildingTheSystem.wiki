@@ -38,6 +38,7 @@ The patch includes:
  * Smartcard system-service based on the the !SmartCard API
  * external/pcsc/pcsc-lite with PC-SC support 
  * external/pcsc/ifdhandler with native IFD Handler based on !SmartCard API
+Note: Please use the [http://seek-for-android.googlecode.com/files/smartcard-api-2_2_1.tgz smartcard-api-2_2_1.tgz] instead of smartcard-api-2_2_2.tgz for integrating the PC/SC support.
  
 ==== Apply the patches and update the API ====
 {{{
@@ -46,23 +47,25 @@ $ patch -p1 < <path_to_my_patches>/smartcard-api-2_2_2/smartcard-api-2.2.2.patch
 $ patch -p1 < <path_to_my_patches>/smartcard-api-2_2_2/uicc.patch
 $ patch -p1 < <path_to_my_patches>/smartcard-api-2_2_2/emulator.patch
 $ patch -p1 < <path_to_my_patches>/smartcard-api-2_2_2/cts.patch
+}}}
 
-After applying the patches the android source tree contains all SmartCard API source files in "/packages/apps/SmartcardService": 
- * SmartcardService/ - Contains the whole SmartCard API project
+After applying the patches the android source tree contains all !SmartCard API source files in "/packages/apps/SmartCardService": 
+ * !SmartcardService/ - Contains the whole !SmartCard API project
  * jni/ Contains the native sources of this project
- * src/ - Contains the source files of the SmartCard API Service (backend system of the !SmartCard API)
+ * src/ - Contains the source files of the !SmartCard API Service (backend system of the !SmartCard API)
  * openmobileapi/ - Contains the Open Mobile API (SIMalliance standardized API for applications) shared library project. 
   <br>
-For integrating the SmartCard API into the product build the variable PRODUCT_PACKAGES (e.g. in core.mk or device.mk) has to be extended with following line:
+For integrating the !SmartCard API into the product build the variable PRODUCT_PACKAGES (e.g. in core.mk or device.mk) has to be extended with following line:
 {{{
 PRODUCT_PACKAGES := \ 
- org.simalliance.openmobileapi \  (for integrating the SmartCard API with the shared library for SIMalliance standardized API Open Mobile API)
+ org.simalliance.openmobileapi \  (for integrating the !SmartCard API with the shared library for SIMalliance standardized API Open Mobile API)
 }}}
  
 Note: The `smartcard-api-2.2.2.patch` already includes these required entry for PRODUCT_PACKAGES in the file ./build/target/product/core.mk
 
 
 For SCWS and BIP support:
+{{{
 $ patch -p1 < <path_to_my_patches>/smartcard-webserver-1_1/scws.patch
 Optional (only apply once - do not apply this if smartcard-api-2_2_2/emulator.patch was already applied previously!):
 $ patch -p1 < <path_to_my_patches>/smartcard-webserver-1_1/emulator.patch
