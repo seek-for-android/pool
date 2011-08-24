@@ -14,7 +14,7 @@ The following summary is a list of (frequent) questions that we received through
 <tr><td valign='top'>*A*</td><td>Please contact us directly via eMail.</td></tr>
 <tr><td><br/></td><td></td></tr>
 
-<tr><td valign='top'>*Q*</td><td>What is the difference between the interfaces "Open Mobile API" ('org.simalliance.openmobileapi', API V2.X) and the old "!SmartcardClient" ('android.smartcard', API V1.X)?</td></tr>
+<tr><td valign='top'>*Q*</td><td>What is the difference between the interfaces "Open Mobile API" ('org.simalliance.openmobileapi', API V2.X) and "!SmartcardClient" ('android.smartcard', API V1.X)?</td></tr>
 <tr><td valign='top'>*A*</td><td>In principle both interfaces can be used by an Android application for accessing a Secure Element. The "Open Mobile API" is a [http://simalliance.org/ SIMalliance] standardized interface for Secure Element access which provides the same functionality as offered by the older proprietary interface "!SmartcardClient" but has a more object oriented structure. As the "Open Mobile API" will be extended soon with more features (e.g. additional service layer classes) we highly recommend the "Open Mobile API" as application interface.</td></tr>
 <tr><td><br/></td><td></td></tr>
 
