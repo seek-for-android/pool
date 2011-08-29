@@ -32,7 +32,7 @@ In order to run EAP-SIM/AKA on an Android smartphone it is necessary to adapt tw
   * the wpa_supplicant and
   * the Settings.apk
 To get access to the (U)SIM it is necessary to enable the PC/SC interface and integrate the SmartCard API with UICC support. <br/>
-The EAP-SIM/AKA patch was tested against Android 2.3.5_r1, the [http://seek-for-android.googlecode.com/files/smartcard-api-2_2_2.tgz SmartCard API 2.2.1] 
+The EAP-SIM/AKA patch was tested against Android 2.3.5_r1, the [http://seek-for-android.googlecode.com/files/smartcard-api-2_2_2.tgz SmartCard API 2.2.2] 
 and the [http://seek-for-android.googlecode.com/files/pcsc_system_service_v096.tgz PCSC System Service 0.9.7].
 === wpa_supplicant ===
 For the wpa_supplicant the use of the PCSC interface has to be enabled and the functions which encapsulate 
@@ -47,7 +47,7 @@ Now the entries `SIM` and `AKA` are now available and selectable as EAP-Method.
 When selecting `SIM` or `AKA` the other fields like `Phase 2 Authentication`, `CA-Cerificate` and so on can be left empty 
 or by their default values.
 === Patch ===
-Download the [http://seek-for-android.googlecode.com/files/eap-sim-aka_0.4.1.tgz EAP-SIM/AKA patch] and extract the content.
+Download the [http://seek-for-android.googlecode.com/files/eap-sim-aka_0.4.1.tar.gz EAP-SIM/AKA patch] and extract the content.
 
 Apply the patch with
 {{{
