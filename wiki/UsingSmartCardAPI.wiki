@@ -31,7 +31,7 @@ The output of _make PRODUCT-sdk-sdk_ (compiled SDK) can be found under _$ANDROID
 For developers, the most important code to get started with in a new development environment is the _Hello, World._ sample. The text to be displayed will be created from the applet installed on the Secure Element.<br/>
 The Android application communicates with the applet running on the Secure Element and displays the text response of the card APDU command on the screen of the device.<br/>
 This tutorial assumes that the Eclipse environment is set up properly and that the ADT plug in is installed according to the Android developer documentation on the Internet.<br/>
-The _Hello Smartcard_ Java Card applet available in the SVN repository needs to be installed on the Secure Element with any kind of card management tool like JLoad from the _Mobile Security Developers Kit_.
+The _Hello Smartcard_ Java Card applet available in the SVN repository needs to be installed on the Secure Element with any kind of card management tool like JLoad from the _Mobile Security Developers Kit_.<br/>
 The sample code, which is described here, can also be found in the SVN repository.
   * Using the Eclipse project wizard, create a new Android project
     _File -> New -> Project_
@@ -101,7 +101,7 @@ public class MainActivity extends Activity implements SEService.CallBack {
 
 
 	public void serviceConnected(SEService service) {
-		Log.i(LOG_TAG, "entry: seviceConnected()");
+		//Log.i(LOG_TAG, "entry: seviceConnected()");
 
 	}
 
