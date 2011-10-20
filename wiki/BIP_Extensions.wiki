@@ -21,7 +21,7 @@ This BIP extension patch based on a proof of concept which enabled the SCWS for 
   * Supports BIP in TCP Server mode.
   * Extends the STK framework with support of the STK commands SET_POLL_INTERVAL, SET_UP_EVENT_LIST, OPEN_CHANNEL, CLOSE_CHANNEL, SEND_DATA, RECEIVE_DATA and GET_CHANNEL_STATUS.
   * Supports CHANNEL_STATUS and DATA_AVAILABLE Event with crosscheck to event list provided by SET_UP_EVENTLIST. 
-  * Uses data connections in PDP context.
+  * Uses data connections in PDP context.(PDP = Packet Data Protocol e.g. IP or X25 or PPP)
 
 
 == Restrictions ==
