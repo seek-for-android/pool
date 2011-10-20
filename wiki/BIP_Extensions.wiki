@@ -65,7 +65,7 @@ within the root directory of your android source.
 
 == Environment ==
   * Built and developed on Android 2.3.5_r1.
-  * Emulator extension patch from SmartCardAPI 2.2.2.
+  * [http://code.google.com/p/seek-for-android/wiki/EmulatorExtension Emulator extension patch] from SmartCardAPI 2.2.2.
 
 
 == Using SCWS ==
