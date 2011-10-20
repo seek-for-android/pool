@@ -7,7 +7,7 @@
 Modern (U)SIM cards have been enhanced by many more functionalities than simple user authentication. One of those enhanced functionalities is the smart card web server (SCWS).
 The SCWS delivers web pages using the HTTP protocol. These web pages (e.g. the phone book) can be shown within the mobile phone's web browser, and so offer an enhanced user experience to the mobile phone user. 
 
-These data is transported between browser and UICC via Bearer Independent Protocol.
+These data are transported between browser and UICC via Bearer Independent Protocol.
 
 Basically BIP consists of five proactive commands (OPEN CHANNEL, CLOSE CHANNEL, SEND DATA, RECEIVE DATA and GET CHANNEL STATUS) and two events (Data available and channel status).
 It allows the UICC to exchange data to a remote Server in the Network or serve data to a local browser.
