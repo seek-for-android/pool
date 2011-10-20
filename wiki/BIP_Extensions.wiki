@@ -1,4 +1,4 @@
-#summary One-sentence summary of this page.
+#summary Enables Android to support BIP. To use e.g. the SmartCard Webserver (SCWS).
 
 == Bearer Independent Protocol (BIP) ==
 
