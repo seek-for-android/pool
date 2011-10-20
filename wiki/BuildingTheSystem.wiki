@@ -26,10 +26,8 @@ Download the [http://seek-for-android.googlecode.com/files/smartcard-api-2_2_2.t
  * `cts.patch` - adds the compatibility testsuite for the !SmartCard API.
  * `org.simalliance.openmobileapi.jar` - JAR file which can be used for developing an application based on the Open Mobile API (2.X API)
 
-==== Smart Card Web Server support ====
-Download the [http://seek-for-android.googlecode.com/files/smartcard-webserver-1_1.tgz smartcard-webserver-1_1.tgz] patch and extract the content:
- * `scws.patch` - patches the Java sources for BIP and Smart Card Web Server support (prototype)
- * `emulator.patch` - patches the qemu module to support a UICC connected through the PC/SC host interface instead of the default Android SIM simulator
+==== BIP support ====
+ * Patch the sources according to [http://code.google.com/p/seek-for-android/wiki/BIP_Extensions BIP Extensions]. 
 
 ==== PC/SC support ====
 The patch is optional, it is only required for (native) Android applications relying on the PC/SC interface.<br/>
