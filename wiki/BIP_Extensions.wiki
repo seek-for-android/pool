@@ -39,7 +39,7 @@ This BIP extension patch based on a proof of concept which enabled the SCWS for 
 
 You need to extract the archive, then you will get three patches to be applied to the android sources.
 
-  1. STK enabling patch. This patch is optional it is necessary to enable STK support within android. You don't have to apply this patch if you already use the STK application in Android.
+  1. STK enabling patch. This patch is optional, it is necessary to enable STK support within android. You don't have to apply this patch if you already use the STK application in Android.
 
 Apply patch with
 {{{
