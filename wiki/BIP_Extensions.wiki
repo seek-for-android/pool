@@ -35,7 +35,7 @@ This BIP extension patch based on a proof of concept which enabled the SCWS for 
  
 
 == Patch ==
-[http://neon/trac/attachment/wiki/BipExtensions/bip-extensions-0_9.tar.gz BIP Extensions Patch][[BR]]
+[http://seek-for-android.googlecode.com/files/bip-extensions-0_9.tar.gz BIP Extensions Patch]
 
 You need to extract the archive, then you will get three patches to be applied to the android sources.
 
