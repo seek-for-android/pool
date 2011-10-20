@@ -17,15 +17,10 @@ This BIP extension patch based on a proof of concept which enabled the SCWS for 
 == Features ==
 
   * Enables Android to support BIP with default (network) bearer and BIP in server mode.
-
   * Supports BIP client with TCP/UDP connection (local and remote).
-
   * Supports BIP in TCP Server mode.
-
   * Extends the STK framework with support of the STK commands SET_POLL_INTERVAL, SET_UP_EVENT_LIST, OPEN_CHANNEL, CLOSE_CHANNEL, SEND_DATA, RECEIVE_DATA and GET_CHANNEL_STATUS.
-
   * Supports CHANNEL_STATUS and DATA_AVAILABLE Event with crosscheck to event list provided by SET-UP-EVENTLIST. 
-
   * Opens data connections in PDP context.
 
 
@@ -73,17 +68,6 @@ within the root directory of your android source.
   * Emulator extension patch from SmartCardAPI 2.2.2.
 
 
-== Further Information ==
-
-The radio interface layer (RIL) must support BIP. On current Android phones, the RIL does not support BIP.
-
-For this reason the bip extension patch includes an emulator extension (emulator.patch), which adds BIP support to the emulator's RIL (reference-ril). See [wiki:EmulatorExtensions EmulatorExtension] for how to build the emulator with extensions. 
-
-
-This BIP extensions based on the SCWS extensions which needed BIP to exchange data with the browser and a remote admin server.
-Therefore the classes named with prefix SCWS are renamed with the prefix Bip (e.g. SCWSProxy -> BipProxy).
-
-
 == Using SCWS ==
 The bip extension patch enables support for SCWS to the Android framework. Once the patches have been applied, web pages on an SCWS enabled SIM card can be accessed under the URL http://localhost:3516/.
 
@@ -96,3 +80,7 @@ http://seek-for-android.googlecode.com/svn/wiki/img/SmartcardWebserverScreenshot
 
 == Support ==
 For support please use the SEEK mailing list seek-for-android@googlegroups.com
+
+== Releated Specification ==
+
+  * ETSI 102.223 Card Application Toolkit (CAT)
