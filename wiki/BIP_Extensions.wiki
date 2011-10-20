@@ -94,7 +94,7 @@ The BIP extensions contain source code contributed by STEricsson, Contact: johan
 == Using SCWS ==
 The bip extension patch enables support for SCWS to the Android framework. Once the patches have been applied, web pages on an SCWS enabled SIM card can be accessed under the URL http://localhost:3516/.
 
-[[Image(SmartcardWebserverScreenshot.png)]]
+http://seek-for-android.googlecode.com/svn/wiki/img/SmartcardWebserverScreenshot.png
 
 == With Contribution of ==
 * Johan Hellman former ST Ericsson
