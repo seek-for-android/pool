@@ -19,9 +19,9 @@ This enables the Android emulator to forward any APDU traffic (AT+CRSM, AT+CPIN,
 
 == Applying the patch to the emulator sources ==
 
-  * Download the [http://seek-for-android.googlecode.com/files/smartcard-webserver-1_1.tgz patch archive]
-  * Unpack the patch archive: <code>$ tar xvzf smartcard-webserver-1_1.tgz</code>
-  * Apply the patch(es) in the root folder of the Android source tree: <code>$ patch -p1 < emulator.patch</code>Note: the emulator extensions are no longer provided as a separate download file, but only together with e.g. the SCWS patches. However, the emulator extension patches (emulator.patch) still work without any additional patches.
+  * Download the [http://seek-for-android.googlecode.com/files/smartcard-api-2_2_2.tgz smartcard-api-2_2_2.tgz patch archive]
+  * Unpack the patch archive: <code>$ tar xvzf smartcard-api-2_2_2.tgz</code>
+  * Apply the patch(es) in the root folder of the Android source tree: <code>$ patch -p1 < emulator.patch</code>Note: the emulator extensions are no longer provided as a separate download file, but only together with e.g. the SmartCardAPI patches. However, the emulator extension patches (emulator.patch) still work without any additional patches.
  * Download and build pcsc-lite from the official Internet sources (_Optional step_: you can also use the pcsc-lite package maintained by the package installer of the Linux distribution):
 {{{
 $ tar xvjf pcsc-lite-<version>.tar.bz2
