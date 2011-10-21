@@ -9,9 +9,9 @@ The following devices were tested with _!SmartCard API extensions_ according to 
 || ADP1 / Dream || + || - || - ||
 || ADP2 / Sapphire || + || + || - ||
 || Google Nexus One || - || + || + ||
-|| Google Nexus S _(note1)_ || - || - || + ||
+|| Google Nexus S _(note.1)_ || - || - || + ||
 
-_note1_: The Nexus S was obviously not tested with the Mobile Security Card (_!MscTerminal_) but with a _!DummyTerminal_ as it lacks MicroSD support.
+_note.1_: The Nexus S was obviously not tested with the Mobile Security Card (_!MscTerminal_) but with a _!DummyTerminal_ as it lacks MicroSD support.
 
 
 <br><br>
@@ -26,7 +26,7 @@ The following devices were tested with the installable _MSC !SmartcardService.ap
 || HTC Desire HD || PD98100 || || 2.2.1 ||
 || Google Nexus One || passion || eclair & froyo || 2.2.1 & 2.3.4 || ||
 || Samsung Galaxy S || GT-I9000 || eclair & froyo || 2.1-update1 & 2.2.1 || ||
-|| Samsung Galaxy S2 || GT-I9100 || || 2.3.3 || ||
+|| Samsung Galaxy S2 || GT-I9100 || || 2.3.3 || _note.1_ ||
 || Samsung Galaxy || GT-I7500 || cupcake & donut || 1.6 || ||
 || Samsung Spica || GT-I5700 || cupcake ||  || ||
 || Acer Liquid || S100 || || 1.6 || ||
@@ -40,3 +40,5 @@ The following devices were tested with the installable _MSC !SmartcardService.ap
 || Pidion BIP 6000 || BIP6000 || cupcake & ecliar ||  || ||
 
 Please help by providing feedback regarding the installable _MSC !SmartcardService.apk_ on different devices we could not test!
+
+_note.1_: Applications using the OpenMobileAPI methods are not working as a version of !SmartCard API is already integrated in the system framework that does not support all OpenMobileAPI functionality yet. Applications using the android.smartcard interface work without problems.
