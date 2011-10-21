@@ -2,7 +2,7 @@
 
 Android is running on different devices from different manufacturers. This overview should list the devices and configuration that was tested successfully with !SmartCard API support.<br/>
 
-====System image patch====
+====!SmartCard API====
 The following devices were tested with _!SmartCard API extensions_ according to [BuildingTheSystem Building the System]
 
 ||  || *Android 1.6 (donut)* || *Android 2.2 (froyo)* || *Android 2.3 (gingerbread)* ||
@@ -15,29 +15,30 @@ _note.1_: The Nexus S was obviously not tested with the Mobile Security Card (_!
 
 
 <br><br>
-====Installable MSC !SmartcardService====
+====MSC !SmartcardService====
 The following devices were tested with the installable _MSC !SmartcardService.apk_ according to [MscSmartcardService MSC_SmartcardService]
 
 || *Device* || *Model* || *MSC_v2.1.1* || *MSC_v2.2.2* || *Notes* ||
+|| Acer Liquid || S100 || || 1.6 || ||
+|| Google Nexus One || passion || eclair & froyo || 2.2.1 & 2.3.4 || ||
 || HTC Dream || drea100 || cupcake || 1.5 || ||
 || HTC Magic || sapp100 || donut || 1.6 || ||
 || HTC Tatoo || clic100 || donut || 1.6 || ||
 || HTC Evo 4G || pc36100 || eclair || 2.1-update1 || ||
 || HTC Desire HD || PD98100 || || 2.2.1 ||
-|| Google Nexus One || passion || eclair & froyo || 2.2.1 & 2.3.4 || ||
+|| Huawei Ideos || U8150 || froyo ||  || 30.03.11, yun...@gmail.com||
+|| Huawei Pulse || U8220 || cupcake || 1.5 || ||
+|| LG P990 Optimus || star || || 2.2.2 || ||
+|| Motorola Milestone || A853 || eclair ||  || ||
+|| Motorola Charm || MB502 || ? ||  || 14.04.11, kdusilve...@gmail.com ||
+|| Pidion BIP 6000 || BIP6000 || cupcake & ecliar ||  || ||
 || Samsung Galaxy S || GT-I9000 || eclair & froyo || 2.1-update1 & 2.2.1 || ||
 || Samsung Galaxy S2 || GT-I9100 || || 2.3.3 || _note.1_ ||
 || Samsung Galaxy || GT-I7500 || cupcake & donut || 1.6 || ||
 || Samsung Spica || GT-I5700 || cupcake ||  || ||
-|| Acer Liquid || S100 || || 1.6 || ||
-|| LG P990 Optimus || star || || 2.2.2 || ||
+|| Samsung Galaxy Tab 7 || GT-P1000 || || 2.2 || ||
 || Sony Ericsson Xperia X10 || X10i || donut || 1.6 || ||
 || Sony Ericsson X10 mini || E10i || eclair || 2.1-update1 || ||
-|| Huawei Ideos || U8150 || froyo ||  || 30.03.11, yun...@gmail.com||
-|| Huawei Pulse || U8220 || cupcake || 1.5 || ||
-|| Motorola Milestone || A853 || eclair ||  || ||
-|| Motorola Charm || MB502 || ? ||  || 14.04.11, kdusilve...@gmail.com ||
-|| Pidion BIP 6000 || BIP6000 || cupcake & ecliar ||  || ||
 
 Please help by providing feedback regarding the installable _MSC !SmartcardService.apk_ on different devices we could not test!
 
