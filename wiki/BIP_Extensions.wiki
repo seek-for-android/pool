@@ -81,6 +81,6 @@ http://seek-for-android.googlecode.com/svn/wiki/img/SmartcardWebserverScreenshot
 == Support ==
 For support please use the SEEK mailing list seek-for-android@googlegroups.com
 
-== Releated Specification ==
+== Related Specification ==
 
   * ETSI 102.223 Card Application Toolkit (CAT)
