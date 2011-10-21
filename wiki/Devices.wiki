@@ -21,22 +21,24 @@ The following devices were tested with the installable _MSC !SmartcardService.ap
 || *Device* || *Model* || *MSC_v2.1.1* || *MSC_v2.2.2* || *Notes* ||
 || Acer Liquid || S100 || || 1.6 || ||
 || Google Nexus One || passion || eclair & froyo || 2.2.1 & 2.3.4 || ||
+|| HTC Desire || PB99200 || froyo || || 23.05.11, noot...@gmail.com ||
+|| HTC Desire Z || || froyo || || 23.05.11, noot...@gmail.com ||
+|| HTC Desire HD || PD98100 || || 2.2.1 ||
 || HTC Dream || drea100 || cupcake || 1.5 || ||
+|| HTC Evo 4G || pc36100 || eclair || 2.1-update1 || ||
 || HTC Magic || sapp100 || donut || 1.6 || ||
 || HTC Tatoo || clic100 || donut || 1.6 || ||
-|| HTC Evo 4G || pc36100 || eclair || 2.1-update1 || ||
-|| HTC Desire HD || PD98100 || || 2.2.1 ||
 || Huawei Ideos || U8150 || froyo ||  || 30.03.11, yun...@gmail.com||
 || Huawei Pulse || U8220 || cupcake || 1.5 || ||
 || LG P990 Optimus || star || || 2.2.2 || ||
-|| Motorola Milestone || A853 || eclair ||  || ||
 || Motorola Charm || MB502 || ? ||  || 14.04.11, kdusilve...@gmail.com ||
-|| Pidion BIP 6000 || BIP6000 || cupcake & ecliar ||  || ||
+|| Motorola Milestone || A853 || eclair ||  || ||
+|| Pidion BIP 6000 || BIP6000 || cupcake & eclair ||  || ||
+|| Samsung Galaxy || GT-I7500 || cupcake & donut || 1.6 || ||
 || Samsung Galaxy S || GT-I9000 || eclair & froyo || 2.1-update1 & 2.2.1 || ||
 || Samsung Galaxy S2 || GT-I9100 || || 2.3.3 || _note.1_ ||
-|| Samsung Galaxy || GT-I7500 || cupcake & donut || 1.6 || ||
-|| Samsung Spica || GT-I5700 || cupcake ||  || ||
 || Samsung Galaxy Tab 7 || GT-P1000 || || 2.2 || ||
+|| Samsung Spica || GT-I5700 || cupcake ||  || ||
 || Sony Ericsson Xperia X10 || X10i || donut || 1.6 || ||
 || Sony Ericsson X10 mini || E10i || eclair || 2.1-update1 || ||
 
