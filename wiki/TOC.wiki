@@ -4,7 +4,6 @@
     * [SmartcardAPI SmartCard API]
     * [SecurityConcept Security Concept]
     * [VersionHistory Version History]
-    * [SharedLibraryBasedSmartCardAPI SmartCard API as shared library]
   * How To
     * [BuildingTheSystem Building the System]
     * [EmulatorExtension Emulator Extension]
