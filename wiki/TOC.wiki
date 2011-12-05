@@ -7,6 +7,7 @@
     * [SharedLibraryBasedSmartCardAPI SmartCard API as shared library]
   * How To
     * [BuildingTheSystem Building the System]
+    * [EmulatorExtension Emulator Extension]
     * [UsingSmartCardAPI Using the SmartCard API]
     * [MscSmartcardService MSC_SmartcardService]
     * [UsingCTS Using CTS]
@@ -16,7 +17,6 @@
     * [AccessControlBenefits Benefits]
   * UICC Support
     * [UICCSupport AT Command Extensions]
-    * [EmulatorExtension Emulator Extension]
     * [BIP_Extensions BIP Extensions]
     * [EapSimAka EAP-SIM/AKA]
   * ASSD Support
