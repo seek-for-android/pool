@@ -22,55 +22,60 @@ import mockcard.MockCardException;
 
 public class APDUTester extends Applet
 {
-	byte[] buffer = new byte[260];
+
+	byte[] buffer = new byte[261];
 	
     public APDUTester() {
     } // constructor
       
     public byte[] process(byte[] command) throws MockCardException {
-        System.arraycopy(command, 0, buffer, 0, command.length);
-        byte ins = buffer[INX_INS];
+        int lc;
+        int le;
+        byte ins = command[1];
         
         if (isSelect()) {
-            return new byte[0];
+            return new byte[]{(byte)0x08, (byte)0x15, (byte)0x47, (byte)0x11};
         }
         
-        int lc = 0;
-        int le = 0;
+        lc = (command.length<=4)? 0: (0xff & command[4]);
+        le = 0;
         
         switch (ins) {
             case (byte)0x01:
             	// case-1 test command:
+            	le = 0;
                 break;
             
             case (byte)0x02:
             	// case-2 test command:
-                le = 0xff & buffer[4];
+            	lc = 0;
+                le = (command.length<=4)? 0: ((command[4]==0)? 256: (0xff & command[4]));
                 break;
         
             case (byte)0x03:
             	// case-3 test command:
-                lc = 0xff & buffer[INX_LC];
+                le = 0;
                 break;
         
             case (byte)0x04:
             	// case-4 test command:
-                lc = 0xff & buffer[INX_LC];
-                le = 0xff & buffer[OFFSET_CDATA+lc];
+                le = (command[2]<<8) | (0xff & command[3]);
+                if (le == 0)
+                	le = (command.length<=5+lc)? 0: ((command[5+lc]==0)? 256: (0xff & command[5+lc]));
                 break;
             
             case (byte)0x10:
             	// send CLA byte as response:
                 le = 1;
-                return Arrays.copyOf(buffer, le);
+                return Arrays.copyOf(command, le);
             
             default:
                 throw new MockCardException(0x6D00);
         }
-        
+
         // verify incoming data (if there is any):
         for (int i=0; i<lc; i++)
-            if (buffer[OFFSET_CDATA+i]!=(byte)i)
+            if (command[5+i]!=(byte)i)
                 throw new MockCardException(0x6FFF);
         
         // set outgoing data (if there is any):

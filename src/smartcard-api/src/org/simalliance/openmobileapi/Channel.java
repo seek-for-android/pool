@@ -27,6 +27,8 @@ import java.io.IOException;
  * be used to send APDUs to the secure element. Channels are opened by calling
  * the Session.openBasicChannel(byte[]) or Session.openLogicalChannel(byte[])
  * methods.
+ * 
+ * @see <a href="http://simalliance.org">SIMalliance Open Mobile API  v2.02</a>
  */
 public class Channel {
 
@@ -46,16 +48,14 @@ public class Channel {
     }
 
     /**
-     * Close this channel to the secure element. If the channel is used after
-     * being closed, an IllegalStateError will be raised. If this channel is the
-     * basic channel, it can't be closed this method will be ignored.
+     * Closes this channel to the Secure Element. If the method is called when the channel is already closed,
+     * this method will be ignored. The close() method shall wait for completion of any pending 
+     * transmit(byte[] command) before closing the channel.
      */
     public void close() {
 
         if (isClosed()) {
-            if (!isBasicChannel()) {
-                throw new IllegalStateException("channel is already closed");
-            }
+        	return;
         }
         mSession.closeChannel(this);
     }
@@ -63,16 +63,16 @@ public class Channel {
     /**
      * Tells if this channel is closed.
      * 
-     * @return <code>true</code> if the channel is closed.
+     * @return <code>true</code> if the channel is closed, <code>false</code> otherwise.
      */
     public boolean isClosed() {
         return mIsClosed;
     }
 
     /**
-     * Returns a boolean telling if this channel is the basic channel..
+     * Returns a boolean telling if this channel is the basic channel.
      * 
-     * @return <code>true</code> if this channel is a basic channel. false if
+     * @return <code>true</code> if this channel is a basic channel. <code>false</code> if
      *         this channel is a logical channel.
      */
     public boolean isBasicChannel() {
@@ -92,24 +92,21 @@ public class Channel {
      * ignored. The underlying system will add any required information to
      * ensure the APDU is transported on this channel. There are restrictions on
      * the set of commands that can be sent: <br>
-     * MANAGE_CHANNEL commands are not allowed.
      * 
-     * <pre>
-     * <lu> 
+     * <ul> 
      * <li>MANAGE_CHANNEL commands are not allowed.</li> 
      * <li>SELECT by DF Name (p1=04) are not allowed.</li>
      * <li>CLA bytes with channel numbers are de-masked.</li> 
-     * </lu>
-     * </pre>
+     * </ul>
      * 
      * @param command the APDU command to be transmitted, as a byte array.
-     * @return the response received, as a byte array
-     * @throws IOException if something goes wrong with the communication to the
-     *             reader or to the secure element.
+     * 
+     * @return the response received, as a byte array.
+     * 
+     * @throws IOException if there is a communication problem to the reader or the Secure Element.
      * @throws IllegalStateException if the channel is used after being closed.
-     * @throws IllegalArgumentException if the command is not correctly
-     *             formatted or is not complaint to the restrictions mentioned
-     *             above
+     * @throws IllegalArgumentException if the command byte array is less than 4 bytes long.
+     * @throws IllegalArgumentException if the length of the APDU is not coherent with the length of the command byte array.
      * @throws SecurityException if the command is filtered by the security
      *             policy
      */
@@ -127,6 +124,23 @@ public class Channel {
      */
     public Session getSession() {
         return mSession;
+    }
+    
+    /**
+     * Returns the data as received from the application select command inclusively the status word.
+     * The returned byte array contains the data bytes in the following order:
+     * [&lt;first data byte&gt;, ..., &lt;last data byte&gt;, &lt;sw1&gt;, &lt;sw2&gt;]
+     * @return The data as returned by the application select command inclusively the status word.
+     * Only the status word if the application select command has no returned data.
+     * Returns null if an application select command has not been performed or the selection response can not
+     * be retrieved by the reader implementation.
+     */
+    public byte[] getSelectResponse()
+    {
+    	byte[] response = mSession.getReader().getSEService().getSelectResponse(this);
+    	if(response != null && response.length == 0)
+    		response = null;
+    	return response;
     }
 
     // ******************************************************************

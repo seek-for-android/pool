@@ -27,6 +27,8 @@ import java.util.ArrayList;
  * device. These Readers can be physical devices or virtual devices. They can be
  * removable or not. They can contain Secure Element that can or cannot be
  * removed.
+ * 
+ * @see <a href="http://simalliance.org">SIMalliance Open Mobile API  v2.02</a>
  */
 public class Reader {
 
@@ -42,7 +44,12 @@ public class Reader {
     }
 
     /**
-     * The name of this Reader
+     * Return the user-friendly name of this reader.
+     * <ul>
+	 * <li>If this reader is a SIM reader, then its name must start with the "SIM" prefix.</li>
+	 * <li>If the reader is a SD or micro SD reader, then its name must start with the "SD" prefix</li>
+	 * <li>If the reader is a embedded SE reader, then its name must start with the "eSE" prefix</li>
+	 * <ul>
      * 
      * @return name of this Reader
      */
@@ -52,7 +59,7 @@ public class Reader {
 
     /**
      * Connects to a secure element in this reader. <br>
-     * This method prepares (initializes) the Secure Element for communication
+     * This method prepares (initialises) the Secure Element for communication
      * before the Session object is returned (e.g. powers the Secure Element by
      * ICC ON if its not already on). There might be multiple sessions opened at
      * the same time on the same reader. The system ensures the interleaving of
@@ -74,7 +81,7 @@ public class Reader {
     /**
      * Check if a Secure Element is present in this reader.
      * 
-     * @return <code>true</code> if the SE is present.
+     * @return <code>true</code> if the SE is present, <code>false</code> otherwise.
      */
     public boolean isSecureElementPresent() {
 

@@ -64,9 +64,9 @@ public class MockCard {
 	 * @param applet
 	 */
 	public void installApplet(byte[] aidBytes, Applet applet) {
-		if (LOG_VERBOSE) 
-			Log.v(TAG, "install: AID="+Util.bytesToHexString(aidBytes)+" --> "+
-					   "Applet \""+applet.getClass().getName()+"\"");
+		//if (LOG_VERBOSE) 
+		//	Log.v(TAG, "MockCard: install: AID="+Util.bytesToHexString(aidBytes)+" --> "+
+		//			   "Applet \""+applet.getClass().getName()+"\"");
 		
 		AID aid = new AID(aidBytes);
 		if (aid2applet.containsKey(aid))
@@ -180,6 +180,7 @@ public class MockCard {
 			if (Arrays.equals(Arrays.copyOfRange(command, 1, 18),
 					          new byte[]{(byte)0xA4, (byte)0x04, (byte)0x00, (byte)0x0D, (byte)0xD2, (byte)0x76, (byte)0x00, (byte)0x01, (byte)0x18, (byte)0xAA, (byte)0xFF, (byte)0xFF, (byte)0x49, (byte)0x10, (byte)0x48, (byte)0x89, (byte)0x01}))
 				s = " = select ACA";
+			Log.v(TAG, "process: -----------------------------------------------------------------------");
 			Log.v(TAG, "process: C-APDU="+Util.bytesToMaxHexString(command, 20)+s);
 		}
 
@@ -219,15 +220,15 @@ public class MockCard {
 			// hand over to selected applet:
 			selectedApplet[iChannel].mockSetSelect(isSelect);
 			response = selectedApplet[iChannel].process(command);
-
+	
 			// append SW=0x9000:
 			int l=response.length+2;
 			response = Arrays.copyOf(response, l);
 			response[l-2] = (byte)0x90;
 			response[l-1] = (byte)0x00; 
 		}
-		catch(MockCardException isoException) {
-		    String msg = ((isoException.toString() != null) ? isoException.toString() : "unknown");
+		catch(MockCardException e) {
+		    String msg = ((e.toString() != null) ? e.toString() : "unknown");
 			if (LOG_VERBOSE) Log.v(TAG, "process: MockCardException: " + msg);
 			response = new byte[]{(byte)0x6f, (byte)0x01};
 		}

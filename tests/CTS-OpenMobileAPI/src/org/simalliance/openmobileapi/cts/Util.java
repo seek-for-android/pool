@@ -38,8 +38,8 @@ public class Util {
 	/**
 	 * converts up to a max. number of bytes of an array of bytes into a hex string.
 	 * <p>
-	 * If n<5 at least 5 bytes are converted.<br>
-	 * If n>=5 first n-2 and last 2 bytes are converted.
+	 * If n<=10 at least 10 bytes are converted.<br>
+	 * If n>10 first n-5 and last 4 bytes are converted.
 	 * 
 	 * @param bytes          array of bytes to convert to hex string
 	 * @param n              max. number of bytes in hex string
@@ -47,11 +47,15 @@ public class Util {
 	 */
 	public static String bytesToMaxHexString(byte[] bytes, int n) {
 		if(bytes==null) return "null";
-		if (n < 5 || bytes.length <= n) return bytesToHexString(bytes);
+		if (n < 10 || bytes.length <= n) return bytesToHexString(bytes);
 		StringBuffer sb = new StringBuffer();
-		for(int i=0; i<n-2; i++)
+		for(int i=0; i<n-5; i++)
 			sb.append(String.format("%02X ", 0xff & bytes[i]));
-		sb.append(String.format("... %02X %02X", bytes[bytes.length-2] & 0xFF, bytes[bytes.length-1] & 0xFF));
+		sb.append(String.format("... %02X %02X %02X %02X", 
+				bytes[bytes.length-4] & 0xFF, 
+				bytes[bytes.length-3] & 0xFF, 
+				bytes[bytes.length-2] & 0xFF, 
+				bytes[bytes.length-1] & 0xFF));
 		return sb.toString();
 	} // bytesToMaxHexString
 

@@ -36,7 +36,7 @@ public class PluginTerminal {
 	private static final byte[] command_MANAGE_CHANNEL_close = {(byte)0x00, (byte)0x70, (byte)0x80, (byte)0x00};
 	private static final byte[] commandHeader_SELECT         = {(byte)0x00, (byte)0xA4, (byte)0x04, (byte)0x00};
 
-    static volatile boolean isCardPresent = true;
+	byte[] mSelectResponse;
 	
     MockCard mockCard;
     
@@ -47,11 +47,12 @@ public class PluginTerminal {
 	    mockCard.installApplet(OMAPITestCase.AID_APDU_TESTER, new APDUTester());
 	} // constructor
 	
-	public byte[] getAtr()           { return isCardPresent?mockCard.getATR():null; }
-	public String getName()          { return "CTSMock"; }
-	public boolean isCardPresent()   { return isCardPresent; }
-	public void internalConnect()    { }
-	public void internalDisconnect() { }
+	public byte[] getAtr()            { return mockCard.getATR(); }
+	public String getName()           { return "CTSMock"; }
+	public boolean isCardPresent()    { return true; }
+	public void internalConnect()     { }
+	public void internalDisconnect()  { }
+    public byte[] getSelectResponse() { return mSelectResponse; }
 
 	public byte[] internalTransmit(byte[] command){ 
 		return mockCard.process(command); 
@@ -72,14 +73,14 @@ public class PluginTerminal {
 		if (LOG_VERBOSE) Log.v(TAG, "internalOpenLogicalChannel(aid)");
 		int iChannel = internalOpenLogicalChannel();
 		byte[] commandSelect;
-		byte[] response;
 		commandSelect = Arrays.copyOfRange(commandHeader_SELECT, 0, 5+aid.length);
 		commandSelect[0] = (byte)((iChannel<4)? iChannel: 0x40 | (iChannel-4));
 		commandSelect[4] = (byte)aid.length;
 		System.arraycopy(aid, 0, commandSelect, 5, aid.length);
-		response = mockCard.process(commandSelect);
-		int sw = ((0xff & response[response.length-2])<<8) | 
-                  (0xff & response[response.length-1]);
+		mSelectResponse = mockCard.process(commandSelect);
+		if (LOG_VERBOSE) Log.v(TAG, "mSelectResponse.length="+mSelectResponse.length);
+		int sw = ((0xff & mSelectResponse[mSelectResponse.length-2])<<8) | 
+                  (0xff & mSelectResponse[mSelectResponse.length-1]);
         if (sw!=0x9000) throw new NoSuchElementException("SELECT: applet not found");
 		return iChannel;
 	} // internalOpenLogicalChannel
@@ -95,12 +96,4 @@ public class PluginTerminal {
 		if (sw!=0x9000) throw new NoSuchElementException("MANAGE_CHANNEL: close failed");
 	} // internalCloseLogicalChannel
 
-	/**
-	 * sets the card presence state; used only for testing purpose.
-	 * @param cardPresence
-	 */
-	static void setCardPresence(boolean cardPresence) { 
-		isCardPresent = cardPresence; 
-	} // setCardPresence
-	
 } // class

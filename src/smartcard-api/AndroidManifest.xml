@@ -1,22 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-      package="android.smartcard"
-      android:sharedUserId="android.uid.smartcard"
+      package="org.simalliance.openmobileapi.service"
+      android:sharedUserId="org.simalliance.uid.openmobileapi"
       android:versionCode="1" 
-      android:versionName="2.2">
+      android:versionName="2.3.0">
     
     <permission android:label="SmartcardServicePermission label" 
     			android:protectionLevel="dangerous" 
     			android:name="org.simalliance.openmobileapi.SMARTCARD">
    	</permission>
     
-    <application android:label="SmartcardService">
+    <application android:label="SmartcardService" android:debuggable="true">
         <service android:enabled="true"
-         		android:name="android.smartcard.SmartcardService" 
+         		android:name="org.simalliance.openmobileapi.service.SmartcardService" 
          		android:process=":remote"
          		android:permission="org.simalliance.openmobileapi.SMARTCARD">
             <intent-filter>
-                <action android:name="android.smartcard.ISmartcardService" />
+                <action android:name="org.simalliance.openmobileapi.service.ISmartcardService" />
             </intent-filter>
         </service>
     </application>

@@ -19,25 +19,29 @@
 
 package org.simalliance.openmobileapi;
 
+import java.io.IOException;
+import java.security.AccessControlException;
+import java.util.MissingResourceException;
+import java.util.NoSuchElementException;
+
+import org.simalliance.openmobileapi.service.CardException;
+import org.simalliance.openmobileapi.service.ISmartcardService;
+import org.simalliance.openmobileapi.service.ISmartcardServiceCallback;
+import org.simalliance.openmobileapi.service.SmartcardError;
+
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.ServiceConnection;
 import android.os.IBinder;
-import android.smartcard.CardException;
-import android.smartcard.ISmartcardService;
-import android.smartcard.ISmartcardServiceCallback;
-import android.smartcard.SmartcardError;
 import android.util.Log;
 
-import java.io.IOException;
-import java.security.AccessControlException;
-import java.util.MissingResourceException;
-
 /**
- * The SEService realizes the communication to available Secure Elements on the
+ * The SEService realises the communication to available Secure Elements on the
  * device. This is the entry point of this API. It is used to connect to the
  * infrastructure and get access to a list of Secure Element Readers.
+ * 
+ * @see <a href="http://simalliance.org">SIMalliance Open Mobile API  v2.02</a>
  */
 public class SEService {
 
@@ -93,7 +97,7 @@ public class SEService {
      * the specified listener is called or if isConnected() returns
      * <code>true</code>. <br>
      * The call-back object passed as a parameter will have its
-     * serviceConnected() method called when the connection actually happen..
+     * serviceConnected() method called when the connection actually happen.
      * 
      * @param context the context of the calling application. Cannot be
      *            <code>null</code>.
@@ -158,11 +162,11 @@ public class SEService {
     }
 
     /**
-     * Returns the list of available secure element readers. More precisely it
+     * Returns the list of available Secure Element readers. More precisely it
      * returns the list of readers that the calling application has the
      * permission to connect to.
      * 
-     * @return the readers list, as an array of Readers.
+     * @return The readers list, as an array of Readers. If there are no readers the returned array is of length 0.
      */
     public Reader[] getReaders() {
         if (mSmartcardService == null) {
@@ -295,9 +299,19 @@ public class SEService {
         } catch (Exception e) {
             throw new IOException(e.getMessage());
         }
-        if (allChannelsInUse(error)) {
+        if (basicChannelInUse(error)) {
+        	return null;
+        }
+        if (channelCannotBeEstablished(error)) {
             return null;
         }
+        if(aid == null || aid.length == 0)
+        {
+	        if (!isDefaultApplicationSelected(error)) {
+	            return null;
+	        }
+        }
+        checkIfAppletAvailable(error);
         checkForException(error);
 
         Channel basicChannel = new Channel(session, hChannel, false);
@@ -344,9 +358,10 @@ public class SEService {
         } catch (Exception e) {
             throw new IOException(e.getMessage());
         }
-        if (allChannelsInUse(error)) {
+        if (channelCannotBeEstablished(error)) {
             return null;
         }
+        checkIfAppletAvailable(error);
         checkForException(error);
 
         Channel logicalChannel = new Channel(session, hChannel, true);
@@ -423,6 +438,31 @@ public class SEService {
 
         return response;
     }
+    
+    byte[] getSelectResponse(Channel channel)  {
+
+    	if (mSmartcardService == null) {
+            throw new IllegalStateException("service not connected to system");
+        }
+        if (channel == null) {
+            throw new NullPointerException("channel must not be null");
+        }
+        if (channel.isClosed()) {
+            throw new IllegalStateException("channel is closed");
+        }
+
+        SmartcardError error = new SmartcardError();
+        byte[] response;
+        try {
+            response = mSmartcardService.getSelectResponse(channel.getHandle(), error);
+            checkForException(error);
+        } catch (Exception e) {
+            throw null;
+        }
+        checkForException(error);
+
+        return response;
+    }
 
     byte[] getAtr(Reader reader) {
 
@@ -443,8 +483,34 @@ public class SEService {
         }
         return atr;
     }
+    
+    private boolean isDefaultApplicationSelected(SmartcardError error) {
+        Exception exp = error.createException();
+        if (exp != null) {
+                String msg = exp.getMessage();
+                if (msg != null) {
+                    if (msg.contains("default application is not selected")) {
+                        return false;
+                    }
+                }
+        }
+        return true;
+    }
+    
+    private boolean basicChannelInUse(SmartcardError error) {
+        Exception exp = error.createException();
+        if (exp != null) {
+            String msg = exp.getMessage();
+            if (msg != null) {
+                if (msg.contains("basic channel in use")) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
 
-    private boolean allChannelsInUse(SmartcardError error) {
+    private boolean channelCannotBeEstablished(SmartcardError error) {
         Exception exp = error.createException();
         if (exp != null) {
             if (exp instanceof MissingResourceException) {
@@ -455,9 +521,27 @@ public class SEService {
                 if (msg.contains("channel in use")) {
                     return true;
                 }
+                if (msg.contains("open channel failed")) {
+                    return true;
+                }
+                if (msg.contains("out of channels")) {
+                    return true;
+                }
+                if (msg.contains("MANAGE CHANNEL")) {
+                    return true;
+                }
             }
         }
         return false;
+    }
+    
+    private void checkIfAppletAvailable(SmartcardError error) throws IOException {
+        Exception exp = error.createException();
+        if (exp != null) {
+	    	if(exp instanceof NoSuchElementException) {
+	    		throw new IOException("Applet with the defined aid does not exist in the SE");
+	    	}
+        }
     }
 
     private void checkForException(SmartcardError error) {

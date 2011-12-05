@@ -40,13 +40,17 @@ public class TestConformanceRequirements extends AndroidTestCase implements SESe
 	/**
 	 * AID of test applet that will be used for most of the tests
 	 */
-	public static final byte[] AID_APDU_TESTER = {(byte)0xD2, (byte)0x76, (byte)0x00, (byte)0x01, (byte)0x18, (byte)0x01, (byte)0x01};
+	public static final byte[] AID_APDU_TESTER = {(byte)0xD2, (byte)0x76, (byte)0x00, (byte)0x01, (byte)0x18, (byte)0x00, (byte)0x00};
 
 	volatile SEService mOMService;
-	String   mReaderName = "CTSMock";
-    String   mReaderNameNoCard = "CTSMockNoCard";
+	String   mReaderName       = "CTSMock";
+	String   mReaderNameNoCard = "CTSMockNoCard";;
 	Reader[] mReaders;
 
+	/* 
+	 * SEService.CallBack interface method
+	 * @see SEService.CallBack#serviceConnected(SEService)
+	 */
 	public void serviceConnected(SEService service) {
 		mReaders = service.getReaders();
 		mOMService = service;
@@ -58,13 +62,18 @@ public class TestConformanceRequirements extends AndroidTestCase implements SESe
 	@Override
 	public void setUp() throws Exception {
 		super.setUp();
-		PluginTerminal.setCardPresence(true);
+		
+		// get reader name from InstrumentationTestRunner parameter 
+		// only if a "reader" parameter is given:
+		if (InstrumentationTestRunnerParameterized.mArguments != null && 
+				InstrumentationTestRunnerParameterized.mArguments.getString("reader") != null)
+				mReaderName = InstrumentationTestRunnerParameterized.mArguments.getString("reader");
+
 	} // setUp
 	
 	@Override
 	public void tearDown() throws Exception {
 		if (LOG_VERBOSE) Log.v(TAG, "shutDownService()");
-		PluginTerminal.setCardPresence(true);
 		if (mOMService!=null) 
 			mOMService.shutdown();
 		mReaders = null;
@@ -74,7 +83,6 @@ public class TestConformanceRequirements extends AndroidTestCase implements SESe
 
 	void waitMaxUntilConnected(SEService service) {
 		// wait for the service to connect; at the most 5s:
-		//for(int i=0; i<50 && !service.isConnected(); i++) android.os.SystemClock.sleep(100); // <-- results in failures
 		for(int i=0; i<50 && mOMService==null; i++) android.os.SystemClock.sleep(100);
 		assertTrue("Error: service did not connect after 5s", service.isConnected());
 	} // waitMaxUntilConnected
@@ -84,6 +92,7 @@ public class TestConformanceRequirements extends AndroidTestCase implements SESe
 		Reader reader = null;
 		for (Reader readerL: mReaders) if (readerL.getName().equals(mReaderName)) { reader = readerL; break; }
 		assertNotNull(reader);
+		if (LOG_VERBOSE) Log.v(TAG, "default test reader is \""+mReaderName+"\"");
 		return reader;
 	} // getDefaultTestReader
 	
@@ -102,7 +111,7 @@ public class TestConformanceRequirements extends AndroidTestCase implements SESe
 		assertNotNull(mReaders);
 		int n = mReaders.length;
 		Reader reader = null;
-		for(Reader readerL: mReaders) if (readerL.getName().equals(mReaderName)){ reader = readerL; }
+		for(Reader readerL: mReaders) if (readerL.getName().equals(mReaderName)){ reader = readerL; break; }
 		assertTrue(reader != null ||     // CRN1 
 				   n==0);                // CRN2
 		for (int i=0; i<n; i++) {
@@ -136,8 +145,21 @@ public class TestConformanceRequirements extends AndroidTestCase implements SESe
 		SEService service = new SEService(getContext(), this);
 		waitMaxUntilConnected(service);
 		assertNotNull(mReaders);
-		Reader reader = mReaders[0];
-		assertTrue(reader.getName()!=null && reader.getName().length()>0); // CRN1
+
+		Reader readerSIM=null, readerSD=null, readerEmbeddedSE=null;
+		for (Reader reader: mReaders) {
+			String readerName = reader.getName();
+			assertTrue(readerName!=null && readerName.length()>0); // CRN1
+			if      (readerName.startsWith("SIM: ")) readerSIM = reader; 
+			else if (readerName.startsWith("SD: " )) readerSD = reader; 
+			else if (readerName.startsWith("eSE: ")) readerEmbeddedSE = reader; 
+		}
+		assertTrue(readerSIM        != null); // CRN2 verify that SIM reader exists
+		assertTrue(readerSD         != null); // CRN3 verify that SD  reader exists
+		assertTrue(readerEmbeddedSE != null); // CRN4 verify that eSE reader exists
+
+		assertTrue(readerSIM == mReaders[0]); // first reader in list should be the SIM reader
+
 	} // test_Reader_getName
 
 	public void test_Reader_getSEService() {
@@ -153,11 +175,9 @@ public class TestConformanceRequirements extends AndroidTestCase implements SESe
 		waitMaxUntilConnected(service);
 		
 		Reader reader = getDefaultTestReaderNoCard();
-		PluginTerminal.setCardPresence(false);
 		assertFalse(reader.isSecureElementPresent()); // CRN1.1
 		
 	    reader = getDefaultTestReader();
-		PluginTerminal.setCardPresence(true);
 		assertTrue(reader.isSecureElementPresent()); // CRN1.2
 		
 	} // test_Reader_isSecureElementPresent
@@ -283,7 +303,15 @@ public class TestConformanceRequirements extends AndroidTestCase implements SESe
 		// open logical channels until capacity of card is reached;
 		// openLogiocalChannel must return null if no more channels can be opened (expect NO exception!)
 		for(int i=0; i<50; i++) {
-			channel = session.openLogicalChannel(null);
+			try {
+				channel = session.openLogicalChannel(null);
+			} 
+			catch(IllegalStateException ise) {
+				if (ise.toString().indexOf("MANAGE CHANNEL response too small") >= 0)
+					channel = null;
+				else
+					throw ise;
+			}
 			if (channel==null)
 				break;
 		}
@@ -318,7 +346,7 @@ public class TestConformanceRequirements extends AndroidTestCase implements SESe
 		channel = session.openBasicChannel(null); 
 		assertTrue(channel.isBasicChannel()); // CRN1
 		channel.close();
-		channel = session.openLogicalChannel(null); 
+		channel = session.openLogicalChannel(OMAPITestCase.AID_APDU_TESTER); 
 		assertFalse(channel.isBasicChannel()); // CRN2
 		channel.close();
 		session.close();
@@ -335,6 +363,19 @@ public class TestConformanceRequirements extends AndroidTestCase implements SESe
 		assertTrue(channel.isClosed()); // CRN2
 		session.close();
 	} // test_Channel_isClosed
+
+	public void test_Channel_getSelectResponse() throws IOException {
+		SEService service = new SEService(getContext(), this);
+		waitMaxUntilConnected(service);
+		Reader reader = getDefaultTestReader();
+		Session session = reader.openSession();
+		Channel channel = session.openLogicalChannel(AID_APDU_TESTER); 
+		byte[] r = channel.getSelectResponse();
+		assertTrue(Arrays.equals(r, new byte[]{(byte)0x08, (byte)0x15, (byte)0x47, (byte)0x11, (byte)0x90, (byte)0x00})); // CRN1, CRN2
+		// CRN3, CRN4 not tested
+		channel.close();
+		session.close();
+	} // test_Channel_getSelectResponse
 
 	public void test_Channel_getSession() throws IOException {
 		SEService service = new SEService(getContext(), this);
@@ -405,7 +446,7 @@ public class TestConformanceRequirements extends AndroidTestCase implements SESe
 		
 		// concurrent transmit test for CRN2 and CRN3:
 		// start N threads each running a loop that transmits and receives long C- and R-APDUs on a different channel
-		final int N = 8;
+		final int N = 3;
 		final Channel[] channels = new Channel[N];
 		Thread[] threads = new Thread[N];
 		for(int i=0; i<N; i++) {
@@ -426,7 +467,7 @@ public class TestConformanceRequirements extends AndroidTestCase implements SESe
 
 		for(Channel channel: channels) channel.close();
 		
-		channel0 = session.openLogicalChannel(OMAPITestCase.AID_APDU_TESTER); 
+		channel0 = session.openLogicalChannel(AID_APDU_TESTER); 
 		byte cla = channel0.transmit(new byte[]{(byte)0x00, (byte)0x10, (byte)0x00, (byte)0x00, (byte)0x01})[0];
 		// CRN4: manipulating the lowest two bits of the CLA doesn't affect the channel number that is actually used in the C-APDU
 		assertTrue(channel0.transmit(new byte[]{(byte)(cla^0x01), (byte)0x10, (byte)0x00, (byte)0x00, (byte)0x01})[0]==cla);
