@@ -2,6 +2,14 @@
 
 = !SmartCard API =
 
+=== v2.3.0 - 05.12.2011 === 
+ * Fully compliant to the latest SIMalliance Open Mobile API Specification (V2.02) [http://simalliance.org/ SIMalliance ] 
+ * !SmartCard API is only based on the Open Mobile API SIMalliance
+ * The namespace "android.smartcard" was completely removed
+ * !SmartCard API is only provided as shared library. 
+<br/><br/>
+
+
 === v2.2.2 - 23.08.2011 === 
  * !SmartCard API is only provided as shared library.
  * !SmartCard API is only based on the Open Mobile API [http://simalliance.org/ SIMalliance ] 
