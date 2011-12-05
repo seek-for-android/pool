@@ -17,6 +17,7 @@
 package org.simalliance.openmobileapi.cts;
 
 import java.io.IOException;
+import java.util.NoSuchElementException;
 
 import junit.framework.TestCase;
 import org.simalliance.openmobileapi.Channel;
@@ -31,6 +32,8 @@ public class TestBasic extends OMAPITestCase {
 
 	private static final boolean LOG_VERBOSE = true;
 	private static final String TAG = "CTS";
+
+	public static final byte[] AID_APDU_TESTER = {(byte)0xD2, (byte)0x76, (byte)0x00, (byte)0x01, (byte)0x18, (byte)0x00, (byte)0x00};
 
 	public TestBasic() {
 	} // constructor
@@ -59,10 +62,17 @@ public class TestBasic extends OMAPITestCase {
 	public void testOpen() throws IOException {
 		if (LOG_VERBOSE) Log.v(TAG, "testBasicChannelOpening()");
 		
-		Session session = mReader.openSession();
-		Channel basicChannel = session.openBasicChannel(null);
-		TestCase.assertNotNull(basicChannel);
-		basicChannel.close();
+		Session session = mReader.openSession();		
+		Channel channel;
+		try { 
+			channel = session.openBasicChannel(null); 
+		}
+		catch (NoSuchElementException nsee) { 
+			channel = session.openLogicalChannel(AID_APDU_TESTER); 
+		}
+		
+		TestCase.assertNotNull(channel);
+		channel.close();
 		session.close();
 	} // testBasicChannelOpening
 	
@@ -75,11 +85,18 @@ public class TestBasic extends OMAPITestCase {
 		if (LOG_VERBOSE) Log.v(TAG, "testBasicChannelOpening()");
 		
 		Session session = mReader.openSession();
-		Channel basicChannel = session.openBasicChannel(null);
-		TestCase.assertNotNull(basicChannel);
-		byte[] r = basicChannel.transmit(new byte[]{(byte)0x10,(byte)0x20,(byte)0x30,(byte)0x40});
+		Channel channel;
+		try { 
+			channel = session.openBasicChannel(null); 
+		}
+		catch (NoSuchElementException nsee) { 
+			channel = session.openLogicalChannel(AID_APDU_TESTER); 
+		}
+		
+		TestCase.assertNotNull(channel);
+		byte[] r = channel.transmit(new byte[]{(byte)0x10,(byte)0x20,(byte)0x30,(byte)0x40});
 		TestCase.assertTrue(r.length>=2);
-		basicChannel.close();
+		channel.close();
 		session.close();
 	} // testBasicChannelTransmit
 	

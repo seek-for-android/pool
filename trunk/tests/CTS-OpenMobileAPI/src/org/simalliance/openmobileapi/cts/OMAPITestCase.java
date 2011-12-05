@@ -15,7 +15,6 @@
  */
 
 package org.simalliance.openmobileapi.cts;
-
 import org.simalliance.openmobileapi.Reader;
 import org.simalliance.openmobileapi.SEService;
 import android.test.AndroidTestCase;
@@ -32,7 +31,7 @@ public abstract class OMAPITestCase extends AndroidTestCase implements SEService
 	/**
 	 * AID of test applet that will be used for most of the tests
 	 */
-	public static final byte[] AID_APDU_TESTER = {(byte)0xD2, (byte)0x76, (byte)0x00, (byte)0x01, (byte)0x18, (byte)0x01, (byte)0x01};
+	public static final byte[] AID_APDU_TESTER = {(byte)0xD2, (byte)0x76, (byte)0x00, (byte)0x01, (byte)0x18, (byte)0x00, (byte)0x00};
 
 	volatile SEService mOMService;
 	String   mReaderName = "CTSMock";
@@ -55,32 +54,40 @@ public abstract class OMAPITestCase extends AndroidTestCase implements SEService
 	 */
 	@Override
 	public void setUp() throws Exception {
-		if (mReaderName==null) return;
 		if (LOG_VERBOSE) Log.v(TAG, "setUp()");
 
 		super.setUp();
+
+		// get reader name from InstrumentationTestRunner parameter 
+		// only if a "reader" parameter is given:
+		if (InstrumentationTestRunnerParameterized.mArguments != null && 
+			InstrumentationTestRunnerParameterized.mArguments.getString("reader") != null)
+			mReaderName = InstrumentationTestRunnerParameterized.mArguments.getString("reader");
+		
 		new SEService(getContext(), this);
 		
-		// wait for the service to connect; at the most 3s:
-		for(int i=0; i<30 && mOMService==null; i++) android.os.SystemClock.sleep(100);
+		// wait for the service to connect; at the most 10s:
+		for(int i=0; i<100 && mOMService==null; i++) android.os.SystemClock.sleep(100);
 
 		assertNotNull("Error: service not connected", mOMService);
 		assertNotNull("Error: no readers", mReaders);
 
-		// log list of available readers:
-		if (LOG_VERBOSE) 
-			for (Reader reader: mReaders) {
-				Log.v(TAG, String.format("  %c \"%s\"", reader.isSecureElementPresent()?'*':'o',
-						                                reader.getName()));
-			}
-		
 		mReader = null;
 		for (Reader reader: mReaders) {
 			if (mReaderName.equals(reader.getName())) { mReader = reader; break; }
 		}
+
+		// log list of available readers:
+		if (LOG_VERBOSE) 
+			for (Reader reader: mReaders) {
+				Log.v(TAG, String.format("  %s %c \"%s\"", 
+					reader==mReader?"-->":"   ",
+					reader.isSecureElementPresent()?'*':'o',
+					reader.getName()));
+			}
+		
 	    assertNotNull("Error: reader \""+mReaderName+"\" not available", mReader);
-		assertTrue("Error: no secure element present in reader \""+mReaderName+"\"", 
-				mReader.isSecureElementPresent());
+		assertTrue("Error: no secure element present in reader \""+mReaderName+"\"", mReader.isSecureElementPresent());
 		if (LOG_VERBOSE) Log.v(TAG, ".");
 	} // setUp
 
@@ -96,5 +103,8 @@ public abstract class OMAPITestCase extends AndroidTestCase implements SEService
 		if (LOG_VERBOSE) { Log.v(TAG, "."); Log.v(TAG, ""); }
 	} // tearDown
 
+	public void testPreconditions() {
+	} // testPreconditions
+	
 } // class
 

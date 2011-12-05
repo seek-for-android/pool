@@ -32,7 +32,7 @@ public class TestMultiChannel extends OMAPITestCase {
 	/**
 	 * number of channels this test will exercise
 	 */
-	public static final int N_CHANNELS = 10;
+	public static final int N_CHANNELS = 4;
 
 	protected Session mSession;
 	
