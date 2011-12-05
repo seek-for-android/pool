@@ -2,24 +2,26 @@
 
 = Introduction =
 
-The !SmartCard API is a reference implementation for a set of platform extensions that will enable Android applications to connect to Secure Elements, e.g. SIM card, Mobile Security Card or others and communicate with application installed on the SE.<br/><br/>
-The interface of the library should be considered as stable and independent of the underlying transport mechanism. Application developers usually care about the (stable) !SmartCard API interface whereas system integrators need to know the internals.<br/>
-With the latest 2.x release we also provide a new interface that might serve as the input for an upcoming industry standard thus the !SmartCard API currently provides two interfaces simultaneously.<br/><br/>
+The !SmartCard API is a reference implementation of the SIMalliance Open Mobile API specification that will enable Android applications to communicate with Secure Elements, e.g. SIM card, embedded Secure Elements, Mobile Security Card or others.<br/>
+The interface of the library is kept platform independent whereas the !SmartcardService implementation is Android specific.<br/>
+With !SmartCard API version 1 release a proprietary interface was introduced to provide access to Secure Elements. Version 2 included the Open Mobile API interface parallel to the proprietary one. Further releases considered the proprietary interface as deprecated and version 2.3.0 completely removes the old one and only supports the Open Mobile API.<br/>  
+Previous versions extended the Android framework with !SmartCard API functionality which caused difficulties for application developers as modified platform SDK libraries were required. Since version 2.1.2 the shared library approach was introduced which does not modify the official framework but provides a library extension instead. Since version 2.3.0 the shared library approach is the only supported integration.<br/>
+The !SmartCard API provides functionality to list and select the supported Secure Elements, open a communication channel to a dedicated Secure Element application and transfer APDUs to such. No applet selection or channel management APDU functions are allowed as this might cause security problems. Also, no card on/off functions are available in contrast to PC/SC.<br/><br/>
 
 
 == !SmartCard API modules ==
 <table>
 <tr>
-<td valign="top" width=35%>
+<td valign="top" width=55%>
 The !SmartCard API consists of several software layers
-  * *!SmartcardService* Android remote service as the core of the smart card access<br/>Integration in `frameworks/base/packages/!SmartcardService`<br/>
-  * *!SmartcardClient* V1.x wrapper classes to hide the service binding specifics and deal as the main interface for the application developer<br/>Integration in `frameworks/base/core/java/android/smartcard`<br/>
-  * *SEService* V2.x wrapper classes to hide the service binding specifics and deal as the main interface for the application developer<br/>Integration in `frameworks/base/core/java/android/com/gieseckedevrient/smartcard`<br/>
-  * *xxxTerminal* Implementation of a Secure Element specific terminal, e.g. `UiccTerminal` or `MscTerminal`, ...<br/>Integration in `frameworks/base/packages/SmartcardService`
+  * *!SmartcardService* Android remote service as the core of the smart card access<br/>Integration in `packages/apps/!SmartcardService/src`<br/>
+  * *SEService* V2.x wrapper classes to hide the service binding specifics and deal as the main interface for application developers<br/>Integration in `packages/apps/SmartCardService/openmobileapi`<br/>
+  * *xxxTerminal* Implementation of a Secure Element specific terminal, e.g. `UiccTerminal` or `ASSDTerminal`, ...<br/>Integration in `packages/apps/SmartCardService/src/org/simalliance/openmobileapi/service/terminals`<br/>
+  * *Access Control* Implementation of the Access Control Enforcer to control APDU access from Android applications<br/>Integration in `packages/apps/SmartCardService/src/org/simalliance/openmobileapi/service/security`
 </td>
 <td width=5%>
 </td>
-<td width=60%>
+<td width=40%>
 <a alt="view large image" href=http://code.google.com/p/seek-for-android/wiki/SCAPI_modules_png>
 <img src=http://seek-for-android.googlecode.com/svn/wiki/img/SCAPI_modules.png width=250 height=235/>
 </a>
@@ -28,30 +30,24 @@ Click to enlarge
 </td>
 </tr>
 </table>
-<br/><br/>
+<br/>
 
 == Architecture ==
-The core of the !SmartCard API is encapsulated in a remote Android service. Having a single service instance instead of a pure framework library ensures that security checks (who is accessing the service) and resource management (free a logical channel if a client dies) can be guaranteed.<br/><br/>
+The core of the !SmartCard API is encapsulated in a remote Android service. Having a single service instance instead of a pure framework library ensures that security checks (who is accessing the service) and resource management (free a logical channel if a client dies) can be guaranteed - even if a client application hangs or dies unexpectedly.<br/>
 However, using an Android service for an API interface is not typical for smart card applications thus additional framework classes wrap the service specifics, e.g. Binding to a Remote Service object. No further logic is kept in the framework classes, clients are permitted to access the service interface directly (but need to deal with the Service specifics by themselves).<br/>
-The framework classes - mainly `SmartcardClient` or `SEService` - are just wrapping the service specifics.<br/><br/>
+The framework classes around `SEService` are just wrapping the service specifics for application developers.<br/>
 The card channel is used for actual card communication by transferring APDUs. All channel management for logical card channels is encapsulated by the channel objects.<br/><br/>
 
-== Difference between V1 and V2 ==
-V1 was the first public release of the platform extensions to allow Secure Element access.It's easy to use but contains some drawbacks that need to solved in the new releases:
- * *No industry standard* V2.x tries to solve this issue
- * *Not part of the Android platform* when an industry standard is established it will be uploaded into the Android platform
- * *API interface too flat* all functionality is mapped into a single !SmartcardClient object
- * *!SmartcardError* is introduced instead of mapping error conditions to existing exception classes
- * *Platform specific instantiation* is part of !SmartcardClient as well as the Secure Element functions - no separation of methods
-
-
+== System integration ==
+The `smartcard-api.patch` includes assess to all Secure Elements currently introduced. However, not all phones have SD card slots or embedded Secure Elements. System integrators should remove the builtin terminals the platform does not support (e.g. removing ASSDTerminal on phones that have no SD card slot like Nexus S).<br/>
+The !SmartCard API will enumerate the terminals at run time which means that removing a xxxTerminal.java file is enough to remove a specific SE.<br/> 
+In addition, the addon-terminal concept provides the possibility to extend the supported terminals through additional libraries.<br/><br/>
 
 == Using the !SmartCard API ==
 Download and apply the patch files according to [BuildingTheSystem Building building the system]<br/> 
-Compile the Android platform, build the SDK and flash a [Devices device] or start a new emulator instance with !SmartCard API support.<br/>
+Compile the Android platform, build and flash a [Devices device] or start a new [EmulatorExtension emulator] instance with !SmartCard API support.<br/>
 Start working on your own project with a quick start from [UsingSmartCardAPI Using the SmartCard API].<br/>
-Eclipse is recommended to develop smart card application. But the Android SDK location needs to point to the self compiled SDK.<br/>
-Import the samples and run them on the phone or in the emulator. They provide a good starting point.<br/>
-
-See !SmartCard API [http://seek-for-android.googlecode.com/svn/trunk/doc/index.html JavaDoc]
+[http://developer.android.com/sdk/installing.html Eclipse] is recommended to develop smart card applications but not required for Android development.<br/>
+Import the [http://code.google.com/p/seek-for-android/source/browse/#svn%2Ftrunk%2Fsamples samples] and run them on the phone or in the emulator. They provide a good starting point.<br/>
+See !SmartCard API [http://seek-for-android.googlecode.com/svn/trunk/doc/index.html JavaDoc] for further documentation.
 <br/>
