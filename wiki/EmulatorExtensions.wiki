@@ -1,6 +1,6 @@
 #summary How to enable the emulator to communicate with a SIM card connected through PC/SC or a Mobile Security Card through ASSD
 
-#page under construction [cha, 5-Dec-12]
+= Page under construction = 
 
 <table>
 <tr>
@@ -42,7 +42,7 @@ $ make
 }}}
  In case of problems that the build system cannot find the proper include & lib files, specify them manually:
 {{{
-$ PCSCLITE_INCPATH=<path/to/pcsc-lite>/src/PCSC PCSCLITE_LIBPATH=<path/to/pcsc-lite>/src/.libs make
+$ PCSC_INCPATH=<path/to/pcsc-lite>/src/PCSC PCSC_LIBPATH=<path/to/pcsc-lite>/src/.libs make
 }}}
  * Create an AVD and launch the emulator:
 {{{
@@ -54,7 +54,45 @@ ANDROID_SDK_ROOT=<path/to/android-sdk-linux> ./out/host/linux-x86/bin/emulator -
   * If a SIM Toolkit application is located on the SIM card inserted to the card reader, the Android SIM Toolkit (Stk) application can be used to use/test/debug the card applet.
 http://seek-for-android.googlecode.com/svn/wiki/img/EmulatorExtensionScreenshot.png
 
-== ASSD Support in Android Emulator ==
+== ASSD Support in Android Emulator for SD Card integrated Secure Element ==
+
+Enabling ASSD support in the Android emulator, allows to access a Secure SD Card with integrated Secure Element by using the ASSD interface (Advanced Security SD specification). Therefore it is required to additionally enable both, the kernel of the emulator and the kernel of the Host-PC with ASSD support.
+
+== Enabling ASSD Support in Android Emulator ==
+
+Retrieve the kernel source for the emulator
+{{{
+$ git clone git://android.git.kernel.org/kernel/qemu.git -b android-goldfish-2.6.29
+The repository is created in the subdirectory 'qemu'
+cd <QEMU_DIR>
+<QEMU_DIR>$git checkout -b assd 
+}}}
+
+=== Apply the patch ===
+{{{
+<QEMU_DIR>$ patch -p1 < assd_kernel.patch
+}}}
+
+=== Build the kernel:===
+
+{{{
+<QEMU_DIR>$export ARCH=arm
+<QEMU_DIR>$export CROSS_COMPILE=arm-eabi-
+<QEMU_DIR>$export PATH=<PATH_TO_ANDROID_SOURCE>/gingerbread_a33_237/prebuilt/linux-x86/toolchain/arm-eabi-4.4.0/bin:$PATH
+<QEMU_DIR>$make goldfish_defconfig
+<QEMU_DIR>$make    
+}}}
+
+Once finished, the following message occurs
+'Kernel: arch/arm/boot/zImage is ready'
+
+== ASSD Support in Host-PC ==
+
+Create your own kernel for your Host-PC by adding the ASSD-Patch (e.g. for Kernel 2.6.32 when you use Ubuntu 10.04. as host system
+
+
+
+
 
 == Command line interface ==
 After the emulator extensions patch is applied, these command-line options are available to the emulator.
@@ -63,8 +101,7 @@ Option                    Description
 -pcsc <terminal name>     Enable access to a SIM card inserted to a PC/SC card reader. If <card reader's name> is
                           omitted the emulator outputs a list of card reader names and uses the first card reader
                           from that list.
--msc <filepath>           Enable access to a Mobile Security Card. Use <filepath> as SD in-/output file located on
-                          the host's mount point.
+
 -no_dns                   Workaround for running the emulator on a host without configured DNS thus without network
                           connectivity.
 }}}
