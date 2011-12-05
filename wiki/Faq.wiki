@@ -6,32 +6,13 @@ The following summary is a list of (frequent) questions that we received through
 <table>
 
 
-<tr><td valign='top'>*Q*</td><td>Why do you offer a shared library based !SmartCard API?</td></tr>
-<tr><td valign='top'>*A*</td><td>In general, the !SmartCard API is designed as Android system component and is ideally located in the Android SDK framework. Therefore we provided the !SmartCard API patch as Android SDK framework component in the past. Since the !SmartCard API version 2.2.2 the SDK framework based solution was replaced by a shared library based !SmartCard API which especially helps the developers/system integrators who don't want to modify the Android SDK for integrating the !SmartCard API. The shared library contains exactly the same !SmartCard API components as the SDK framework based versions provided in the past and can be used without limitations or restrictions.</td></tr>
-<tr><td><br/></td><td></td></tr>
-
 <tr><td valign='top'>*Q*</td><td>Where do I get the Access Control Applet?</td></tr>
 <tr><td valign='top'>*A*</td><td>Please contact us directly via eMail.</td></tr>
 <tr><td><br/></td><td></td></tr>
 
-<tr><td valign='top'>*Q*</td><td>What is the difference between the interfaces "Open Mobile API" ('org.simalliance.openmobileapi', API V2.X) and "!SmartcardClient" ('android.smartcard', API V1.X)?</td></tr>
-<tr><td valign='top'>*A*</td><td>In principle both interfaces can be used by an Android application for accessing a Secure Element. The "Open Mobile API" is a [http://simalliance.org/ SIMalliance] standardized interface for Secure Element access which provides the same functionality as offered by the older proprietary interface "!SmartcardClient" but has a more object oriented structure. As the "Open Mobile API" will be extended soon with more features (e.g. additional service layer classes) we highly recommend the "Open Mobile API" as application interface.</td></tr>
-<tr><td><br/></td><td></td></tr>
-
-
-<tr><td valign='top'>*Q*</td><td>Which interface should I use in my application: "Open Mobile API" ('org.simalliance.openmobileapi', API V2.X) or "!SmartcardClient" ('android.smartcard', API V1.X)?</td></tr>
-<tr><td valign='top'>*A*</td><td>The "Open Mobile API" is the only interface provided by the !SmartCard API since version 2.2.2.</td></tr>
-<tr><td valign='top'></td><td>... but the interface "!SmartcardClient" is still provided in the backward compatiblity patch for supporting older applications using the !SmartCard API.</td></tr>
-<tr><td><br/></td><td></td></tr>
-
 <tr><td valign='top'>*Q*</td><td>What version of Android is supported by SEEK?</td></tr>
 <tr><td valign='top'>*A*</td><td>The latest version of Android is supported.</td></tr>
-<tr><td valign='top'></td><td>...due to limited resources of our team and the variety of Android versions we only concentrate on the latest Android version as good as possible.</td></tr>
-<tr><td><br/></td><td></td></tr>
-
-<tr><td valign='top'>*Q*</td><td>It does not make sense to test !SmartCard API and the Nexus S with no Micro SD card slot?</td></tr>
-<tr><td valign='top'>*A*</td><td>Internally we used a dummy terminal in order to verify that the integration is working.</td></tr>
-<tr><td valign='top'></td><td>...SEEK is not only about the Mobile Security Card but also about SIM or embedded Secure Elements support.</td></tr>
+<tr><td valign='top'></td><td>...due to limited resources of the team and the variety of Android versions we only concentrate on the latest Android version as good as possible.</td></tr>
 <tr><td><br/></td><td></td></tr>
 
 <tr><td valign='top'>*Q*</td><td>When applying the patches I get a message with 'HUNK failed' - what is wrong?</td></tr>
@@ -41,17 +22,13 @@ The following summary is a list of (frequent) questions that we received through
 
 <tr><td valign='top'>*Q*</td><td>Do you plan to submit the !SmartCard API into the Android platform and when?</td></tr>
 <tr><td valign='top'>*A*</td><td>Yes - that's the overall goal of this project.</td></tr>
-<tr><td valign='top'></td><td>...we submit the patches when they are ready.</td></tr>
+<tr><td valign='top'></td><td>...we submitted the patches mid of 2011 - now it's not under our control whether they get accepted or not.</td></tr>
 <tr><td><br/></td><td></td></tr>
 
 <tr><td valign='top'>*Q*</td><td>Does !SmartCard API support the UICC?</td></tr>
 <tr><td valign='top'>*A*</td><td>In the Android emulator: _yes_<br/>On a real device (currently): _no_</td></tr>
 <tr><td valign='top'></td><td>...when OEMs implement the required AT command interface a phone will support the !SmartCard API with UICC 
 access too.</td></tr>
-<tr><td><br/></td><td></td></tr>
-
-<tr><td valign='top'>*Q*</td><td>How can I test the !SmartCard API?</td></tr>
-<tr><td valign='top'>*A*</td><td>Either in the emulator with a UICC connected through host PC/SC or with getting the [https://www.cardsolutions-shop.com/shop/gi-de/ Mobile Security Developer's Kit].</td></tr>
 <tr><td><br/></td><td></td></tr>
 
 <tr><td valign='top'>*Q*</td><td>Why did you not contribute this or work on that?</td></tr>
@@ -64,7 +41,7 @@ access too.</td></tr>
 <tr><td valign='top'></td><td>...we do not see PC/SC as a suitable interface for mobile phones, however we need a PC/SC link for native applications.</td></tr>
 <tr><td><br/></td><td></td></tr>
 
-<tr><td valign='top'>*Q*</td><td>Why is the !SmartCard API not exporting _ATR_, _Reset_, _!PowerOn_ or _!PowerOff_ methods?</td></tr>
+<tr><td valign='top'>*Q*</td><td>Why is the !SmartCard API not exporting _Reset_, _!PowerOn_ or _!PowerOff_ methods?</td></tr>
 <tr><td valign='top'>*A*</td><td>In short: because the Secure Elements are under control of the phone, not the user in opposite to a PC.</td></tr>
 <tr><td valign='top'></td><td>...think about a _Reset_ for the UICC where the phone goes offline before the user enters the PIN again or a _!PowerOff_ on the MSC while the Email client tries to sign the mail.</td></tr>
 <tr><td><br/></td><td></td></tr>
@@ -72,13 +49,5 @@ access too.</td></tr>
 <tr><td valign='top'>*Q*</td><td>I have an interesting project with Android and Secure Elements, can you help me?</td></tr>
 <tr><td valign='top'>*A*</td><td>Please make your idea public! If interesting we might be able to support you with hardware, at least support.</td></tr>
 <tr><td><br/></td><td></td></tr>
-
-<tr><td valign='top'>*Q*</td><td>When I include the self compiled android.jar in Eclipse I get error messages like _Unable to get buffer of resource asset file_?</td></tr>
-<tr><td valign='top'>*A*</td><td>The issue of this is that `resources.arsc` is larger than the `aapt` tool allows. Edit the file _frameworks/base/include/utils/Asset.h_:<br/>
-Change `UNCOMPRESS_DATA_MAX = 1 * 1024 * 1024`<br/>
-to `UNCOMPRESS_DATA_MAX = 3 * 1024 * 1024`<br/>
-and rebuild the SDK.</td></tr>
-<tr><td><br/></td><td></td></tr>
-
 
 </table>
