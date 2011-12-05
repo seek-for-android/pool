@@ -14,6 +14,13 @@ http://seek-for-android.googlecode.com/svn/wiki/img/struktur_pcsc_for_smartcard_
 
 == Version history ==
 
+pcsc-system-service-0_9_8.tgz
+
+ * prototype
+ * patch updated for !SmartCard API 2.3.0 and Android 2.3.7r1
+ * updated reader names in reader.conf corresponding to reader names in !SmartCard API 2.3.0
+
+
 pcsc_system_service_v097.tgz
 
  * prototype
