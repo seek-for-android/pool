@@ -1,0 +1,65 @@
+#summary How to enable the emulator to communicate with a SIM card connected through PC/SC or a Mobile Security Card through ASSD
+
+#page under construction [cha, 5-Dec-12]
+
+<table>
+<tr>
+<td valign="top">
+= Introduction =
+
+The Android emulator is only supporting a primitive 'fake' SIM card or SIM simulation which cannot be used to extend the Sim Toolkit framework or test the !SmartCard API.<br/>
+On real devices, the RIL library is very restrictive in terms of STK support and needs to be extended but on the emulator a patch can be applied in order to provide full SIM access through the host PC/SC system.<br/><br/>
+This enables the Android emulator to forward any APDU traffic (AT+CRSM, AT+CPIN, etc. commands) to a real SIM card that is connected through a PC/SC card reader and accessible with pcsc-lite running on the host. Additionally, this patch adds the missing support for the Sim Toolkit framework to the emulator's RIL implementation (reference-ril).
+</td>
+<td>
+</td>
+<td>
+<img src=http://seek-for-android.googlecode.com/svn/wiki/img/emulator-extensions.png/>
+</td>
+</tr>
+</table>
+
+== Applying the patch to the emulator sources ==
+
+  * Download the [http://seek-for-android.googlecode.com/files/smartcard-api-2_2_2.tgz smartcard-api-2_2_2.tgz archive]
+  * Unpack the patch archive: <code>$ tar xvzf smartcard-api-2_2_2.tgz</code>
+  * Apply the patch(es) in the root folder of the Android source tree: <code>$ patch -p1 < emulator.patch</code>Note: the emulator extensions are no longer provided as a separate download file, but only together with e.g. the SmartCardAPI patches. However, the emulator extension patches (emulator.patch) still work without any additional patches.
+ * Download and build pcsc-lite from the official Internet sources (_Optional step_: you can also use the pcsc-lite package maintained by the package installer of the Linux distribution):
+{{{
+$ tar xvjf pcsc-lite-<version>.tar.bz2
+$ cd <path/to/pcsc-lite>
+$ ./configure; make
+}}}
+ * Rebuild the emulator with PC/SC support: 
+{{{
+$ touch external/qemu/telephony/sim_card.c
+$ touch external/qemu/android/cmdline-option.c
+$ make
+}}}
+ In case of problems that the build system cannot find the proper include & lib files, specify them manually:
+{{{
+$ PCSCLITE_INCPATH=<path/to/pcsc-lite>/src/PCSC PCSCLITE_LIBPATH=<path/to/pcsc-lite>/src/.libs make
+}}}
+ * Create an AVD and launch the emulator:
+{{{
+android create avd -n Android_2.3 -t 12
+ANDROID_SDK_ROOT=<path/to/android-sdk-linux> ./out/host/linux-x86/bin/emulator -avd Android_2.3
+     -system out/target/product/generic/system.img -pcsc <reader>
+}}}
+ * In the emulator output a card reader will get listed, e.g. _sim_card.c: using card reader Cherry XX44 00 00_
+  * If a SIM Toolkit application is located on the SIM card inserted to the card reader, the Android SIM Toolkit (Stk) application can be used to use/test/debug the card applet.
+http://seek-for-android.googlecode.com/svn/wiki/img/EmulatorExtensionScreenshot.png
+
+
+== Command line interface ==
+After the emulator extensions patch is applied, these command-line options are available to the emulator.
+{{{
+Option                    Description
+-pcsc <terminal name>     Enable access to a SIM card inserted to a PC/SC card reader. If <card reader's name> is
+                          omitted the emulator outputs a list of card reader names and uses the first card reader
+                          from that list.
+-msc <filepath>           Enable access to a Mobile Security Card. Use <filepath> as SD in-/output file located on
+                          the host's mount point.
+-no_dns                   Workaround for running the emulator on a host without configured DNS thus without network
+                          connectivity.
+}}}
