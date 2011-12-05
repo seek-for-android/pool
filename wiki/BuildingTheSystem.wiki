@@ -2,133 +2,128 @@
 
 = Introduction =
 
-This documents describes how to build the system from scratch, apply the smart card related patches and flash a development device with the new images.
+This documents describes how to build the system from scratch, apply the smart card related patches and flash a development device with the new images.<br/>
 
 
 == Getting the Android sources ==
 
-A more detailed description how to set up the local work environment can be found  [http://source.android.com/source/download.html here].
+A detailed description how to set up the local work environment can be found  [http://source.android.com/source/download.html here].
 {{{
-$ repo init -u git://android.git.kernel.org/platform/manifest.git -b android-2.3.5_r1
+$ repo init -u https://android.googlesource.com/platform/manifest -b android-2.3.7_r1
 $ repo sync
 }}}
 <br/>
 
 == Patching the sources ==
 Apply the necessary patches in the root directory of the Android source code to enable smart card support.<br/>
-Please make sure what patches should be applied as the different use cases (!SmartCard API, SCWS/BIP, PC/SC support) are separated in different download packages.
+Please make sure what patches should be applied as the different use cases (!SmartCard API, SCWS/BIP, PC/SC support) are separated in different download packages. Do not apply patches multiple times.
 
 ==== !SmartCard API support ====
-Download the [http://seek-for-android.googlecode.com/files/smartcard-api-2_2_2.tgz smartcard-api-2_2_2.tgz] patch and extract the content:
- * `smartcard-api.patch` - patches the Java sources for !SmartCard API support
- * `uicc.patch` - patches the Android Telephony framework with the required UICC methods for the !SmartCard API !UiccTerminal support
- * `emulator.patch` - patches the qemu module to support a UICC connected through the PC/SC host interface instead of the default Android SIM simulator
- * `cts.patch` - adds the compatibility testsuite for the !SmartCard API.
- * `org.simalliance.openmobileapi.jar` - JAR file which can be used for developing an application based on the Open Mobile API (2.X API)
+Download the [http://seek-for-android.googlecode.com/files/smartcard-api-2_3_0.tgz smartcard-api-2_3_0.tgz] patch and extract the content:
+ * `smartcard-api.patch` - patches the Java sources for !SmartCard API support - always required
+ * `uicc.patch` - patches the Android Telephony framework with the required UICC methods and for the !SmartCard API !UiccTerminal support within the emulator - optional for SIM access only
+ * `emulator.patch` - patches the qemu module to support a UICC connected through the PC/SC host interface instead of the default Android SIM simulator and ASSD support when the host also supports ASSD - optional for emulator support
+ * `cts.patch` - adds the compatibility testsuite for the !SmartCard API to verify the integration - optional for CTS support
 
 ==== BIP support ====
- * Patch the sources according to [http://code.google.com/p/seek-for-android/wiki/BIP_Extensions BIP Extensions]. 
+ * Patch the sources according to [http://code.google.com/p/seek-for-android/wiki/BIP_Extensions BIP Extensions] - optional, only required for BIP support
 
 ==== PC/SC support ====
-The patch is optional, it is only required for (native) Android applications relying on the PC/SC interface.<br/>
-Download the [http://seek-for-android.googlecode.com/files/pcsc_system_service_v097.tgz pcsc_system_service_v097.tgz] patch and extract the content `pcsc_system_service.patch`
-The patch includes:
- * Smartcard system-service based on the the !SmartCard API
- * external/pcsc/pcsc-lite with PC-SC support 
- * external/pcsc/ifdhandler with native IFD Handler based on !SmartCard API
+ * Patch the sources according to [http://code.google.com/p/seek-for-android/wiki/PCSCSmartCardServiceIntro PCSC Support] - optional, only required for (native) Android applications relying on the PC/SC interface.<br/>
 
  
-==== Apply the patches and update the API ====
+==== Apply the patches ====
 {{{
-$ cd <ANDROID_ROOT_DIR>
-$ patch -p1 < <path_to_my_patches>/smartcard-api-2_2_2/smartcard-api-2.2.2.patch
-$ patch -p1 < <path_to_my_patches>/smartcard-api-2_2_2/uicc.patch
-$ patch -p1 < <path_to_my_patches>/smartcard-api-2_2_2/emulator.patch
-$ patch -p1 < <path_to_my_patches>/smartcard-api-2_2_2/cts.patch
+$ cd <ANDROID_SRC_ROOT_DIR>
+$ patch -p1 < <path_to_my_patches>/smartcard-api-2.2.2.patch
+$ patch -p1 < <path_to_my_patches>/uicc.patch
+$ patch -p1 < <path_to_my_patches>/emulator.patch
+$ patch -p1 < <path_to_my_patches>/cts.patch
 }}}
 
-After applying the patches the android source tree contains all !SmartCard API source files in "/packages/apps/!SmartCardService": 
- * !SmartCardService/ - Contains the whole !SmartCard API project
- * jni/ Contains the native sources of this project
- * src/ - Contains the source files of the !SmartCard API Service (backend system of the !SmartCard API)
- * openmobileapi/ - Contains the Open Mobile API (SIMalliance standardized API for applications) shared library project. 
-  <br>
-For integrating the !SmartCard API into the product build the variable PRODUCT_PACKAGES (e.g. in core.mk or device.mk) has to be extended with following line:
+After applying the patches the android source tree contains all !SmartCard API source files in `packages/apps/SmartCardService`: 
+ * `SmartCardService` - contains the complete !SmartCard API project
+  * `jni` - contains the native sources for ASSD support
+  * `src` - contains the sources of the !SmartCard API Service
+  * `openmobileapi` - contains the Open Mobile API shared library project. 
+In addition, the smartcard-api.patch extends `build/target/product/core.mk` to include the !SmartCard API in the built.
+Also, the UID/GID smartcard/smartcard is introduced to have the !SmartCardService installed with a unique ID.
+
+Update `current.xml` as the new IDs needs to known by the system:
 {{{
-PRODUCT_PACKAGES := \ 
- org.simalliance.openmobileapi \  (for integrating the !SmartCard API with the shared library for SIMalliance standardized API Open Mobile API)
-}}}
- 
-Note: The `smartcard-api-2.2.2.patch` already includes these required entry for PRODUCT_PACKAGES in the file ./build/target/product/core.mk
-
-
-For SCWS and BIP support:
-{{{
-$ patch -p1 < <path_to_my_patches>/smartcard-webserver-1_1/scws.patch
-Optional (only apply once - do not apply this if smartcard-api-2_2_2/emulator.patch was already applied previously!):
-$ patch -p1 < <path_to_my_patches>/smartcard-webserver-1_1/emulator.patch
-
-For PC/SC support:
-$ patch -p1 < <path_to_my_patches>/pcsc_system_service_v097/pcsc_system_service.patch
-
-Required:
 $ make update-api
 }}}
-Note that applying the patches might result in failed hunks. This is no problem as long as no modification was rejected.
-<br/><br/>
+<br/>
 
-== Building the system ==
-
-*Note:* Since SmartCardAPI 2.2.2 the Mobile Security Card (microSD Card with embedded Secure Element), is supported by using the ASSD standard (Advanced Security SD specification).
-For support of the Mobile Security Card, the kernel must be built with ASSD included, see [http://code.google.com/p/seek-for-android/wiki/HowToBuild ASSD Support]
-
-Compile the sources for the target device (use `crespo`, `passion`, `sapphire` or `dream` depending on the actual development phone)
+== Extract the vendor specific libraries ==
+Make sure to have properly connected the reference phone to extract the binary files
 {{{
 $ cd <ANDROID_ROOT_DIR>
 $ cd device/samsung/crespo
 $ ./extract-files.sh
 $ cd -
-$ TARGET_PRODUCT=full_crespo TARGET_BUILD_VARIANT=user TARGET_BUILD_TYPE=debug make
 }}}
-Make sure to have properly connected the reference phone to extract the binary files or downloaded the corresponding ZIP archive to run `unzip-files.sh` instead. The Internet might also provide more up-to-date information about how to build the system for a real device.<br/>
-Note that the tools compiled for the host system will be 32bit executables thus you need to ensure to link with a 32bit pcsclite library when the `emulator.patch` is applied. 
-<br/><br/>
+*Note.1* Use `unzip-files.sh` instead if the corresponding ZIP archive is available.<br/>
+*Note.2* The Internet might provide more information on this topic.<br/>
+<br/>
+
+== Optional: _embedded SE support_ ==
+NFC on the Nexus S is not activated per default when compiling the Android sources. To enable NFC with SmartMX support, add the following lines to `/device/samsung/crespo/device_base.mk`
+{{{
+# NFC support
+PRODUCT_PACKAGES += \
+    libnfc \
+    libnfc_jni \
+    Nfc \
+    Tag
+}}}
+<br/>
+
+== Building the system ==
+Compile the sources for the target device by either using `lunch` or setting the environment variables manually. Replace `crespo` with `passion`, `sapphire` or `dream` depending on the actual development phone supported by Android:
+{{{
+$ TARGET_PRODUCT=full_crespo TARGET_BUILD_VARIANT=eng make
+}}}
+*Note.1* Using `lunch` does include the build variant _user_, it is recommended to use _eng_ instead for easier debugging.
+
+*Note.2* The Internet might provide more up-to-date information about how to build the system for a real devices as this gets outdated pretty soon...<br/>
+*Note.3* Keep in mind that the tools compiled for the host system will be 32bit executables. Compiling the patches on a 64bit system requires additional effort with PC/SC support.<br/>
+*Note.4* Of course, run `make -jX` to speed up the compilation process where `X` is the optimum number of parallel compiler threads of the build machine.<br/>
+<br/>
 
 == Flashing the phone ==
-*Note: You'll loose all data on the phone if you proceed*<br/>
+*Note* You'll loose all data on the phone if you proceed!<br/>
 To flash the phone, execute:
 {{{
 $ ./out/host/linux-x86/bin/adb reboot bootloader
-$ ANDROID_PRODUCT_OUT=out/debug/target/product/crespo ./out/host/linux-x86/bin/fastboot -w flashall
+$ ANDROID_PRODUCT_OUT=out/target/product/crespo ./out/host/linux-x86/bin/fastboot -w flashall
 }}}
 If `flashall` fails you might also try:
 {{{
-$ ./out/host/linux-x86/bin/fastboot flash boot out/debug/target/product/crespo/boot.img
-$ ./out/host/linux-x86/bin/fastboot flash system out/debug/target/product/crespo/system.img
-$ ./out/host/linux-x86/bin/fastboot flash userdata out/debug/target/product/crespo/data.img
+$ ./out/host/linux-x86/bin/fastboot erase userdata
+$ ./out/host/linux-x86/bin/fastboot erase cache
+$ ./out/host/linux-x86/bin/fastboot flash boot out/target/product/crespo/boot.img
+$ ./out/host/linux-x86/bin/fastboot flash system out/target/product/crespo/system.img
+$ ./out/host/linux-x86/bin/fastboot flash userdata out/target/product/crespo/userdata.img
 }}}
-Again, replace `crespo` with `passion`, `sapphire` or `dream` depending on the actual development phone. Skip flashing the boot partition if you don't want to replace the existing kernel.<br/>
+Again, replace `crespo` with `passion`, `sapphire` or `dream` depending on the actual development phone. Skip flashing the boot partition if you don't want to replace the existing kernel and ramdisk by executing `fastboot boot boot.img` as the last command.<br/>
+Reboot into Android with:
 {{{
 $ ./out/host/linux-x86/bin/fastboot reboot
 }}}
-If there are problems while booting it's worth to try
-{{{
-$ ./out/host/linux-x86/bin/fastboot erase userdata
-}}}
-Instead of flashing the user partition.
-<br/><br/>
+<br/>
 
-== Building the SDK ==
-As the new system image running on the phone now contains an extended framework API, these changes need to be included in the SDK as well.<br/>
-SDK for Linux or Mac-OS X, run
+== Deprecated: _Building the SDK_ ==
+Since !SmartCard API provided as shared library it is not required to rebuild the SDK but just include the org.simalliance.openmobileapi.jar file in Android projects.<br/>
+If required, the SDK for Linux or Mac-OS X can still be build with
 {{{
 $ make PRODUCT-sdk-sdk
 }}}
-SDK for Windows, run:
+or for Windows:
 {{{
 $ make PRODUCT-sdk-win_sdk
 }}}
-to find the new SDK under `out/host/linux-x86/sdk`
+Find the new SDK under `out/host/linux-x86/sdk` if required.
 <br/><br/>
 
 == Generating the documentation ==
@@ -136,36 +131,8 @@ Run
 {{{
 $ make docs
 }}}
-to find the offline documentation under `out/target/common/docs/offline-sdk/reference`
+to find the offline documentation under `out/target/common/docs/offline-sdk/reference` or use the [http://seek-for-android.googlecode.com/svn/trunk/doc/index.html ApiDoc]
 <br/><br/>
 
-
-== Apply the backward compatibilty patch for using the old !SmartcardClient API (1.X API) ==
-
-Download the `smartcard-api_2_2_2_api_addon.tgz` patch and extract the content:
-
- * `smartcard-api-2.2.2_api_addon.patch` - adds the 1.X API to the !SmartCard API in the Android source tree
- * `cts_api_addon.patch` - adds the compatibility testsuite for the !SmartCard API based on the 1.X API.
- * `android.smartcard.jar` - JAR file which can be used for developing an application based on the !SmartcardClient API (1.X API)
-
-{{{
-$ cd <ANDROID_ROOT_DIR>
-$ patch -p1 < <path_to_my_patches>/smartcard-api-2_2_2/smartcard-api-2.2.2_api_addon.patch
-}}}
-
-After applying the patches the android source tree contains all !SmartCard API source files in "/packages/apps/!SmartCardService": 
- * !SmartCardService/ - Contains the whole !SmartCard API project
- * jni/ Contains the native sources of this project
- * src/ - Contains the source files of the !SmartCard API Service (backend system of the !SmartCard API)
- * openmobileapi/ - Contains the Open Mobile API (SIMalliance standardized API for applications: API 2.X) shared library project. 
- * smartcardapi/  - Contains the !SmartcardClient API (proprietary API for applications: API 1.X) shared library project. 
- <br>
-For integrating the !SmartCard API with 1.X API and into the product build the variable PRODUCT_PACKAGES (e.g. in core.mk or device.mk) has to be extended with following line:
-{{{
-PRODUCT_PACKAGES := \ 
- android.smartcard \  (for integrating the SmartCard API with the shared library for the proprietary API SmartcardClient) 		
-}}}
- 
-Note: The `smartcard-api-2.2.2_api_addon.patch` already includes these required entry for PRODUCT_PACKAGES in the file ./build/target/product/core.mk
-
-Continue with the instructions as described in section "Building the system".
+== Continue ==
+with the instructions as described in section [EmulatorExtension] and/or [UsingSmartCardAPI]
