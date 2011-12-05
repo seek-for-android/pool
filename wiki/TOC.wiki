@@ -8,8 +8,8 @@
     * [BuildingTheSystem Building the System]
     * [EmulatorExtension Emulator Extension]
     * [UsingSmartCardAPI Using the SmartCard API]
-    * [MscSmartcardService MSC_SmartcardService]
     * [UsingCTS Using CTS]
+    * [MscSmartcardService MSC_SmartcardService]
   * Access Control
     * [AccessControlIntroduction Introduction]
     * [AccessControlDetails Details]
