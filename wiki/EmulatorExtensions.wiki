@@ -7,6 +7,10 @@
 <td valign="top">
 = Introduction =
 
+For using th Android emulator with a real SIM or with a SD card with embedded Secure Element, the emulator has to be extended. 
+
+== UICC Support in Android Emulator ==
+
 The Android emulator is only supporting a primitive 'fake' SIM card or SIM simulation which cannot be used to extend the Sim Toolkit framework or test the !SmartCard API.<br/>
 On real devices, the RIL library is very restrictive in terms of STK support and needs to be extended but on the emulator a patch can be applied in order to provide full SIM access through the host PC/SC system.<br/><br/>
 This enables the Android emulator to forward any APDU traffic (AT+CRSM, AT+CPIN, etc. commands) to a real SIM card that is connected through a PC/SC card reader and accessible with pcsc-lite running on the host. Additionally, this patch adds the missing support for the Sim Toolkit framework to the emulator's RIL implementation (reference-ril).
@@ -19,7 +23,7 @@ This enables the Android emulator to forward any APDU traffic (AT+CRSM, AT+CPIN,
 </tr>
 </table>
 
-== Applying the patch to the emulator sources ==
+=== Applying the patch to the emulator sources ===
 
   * Download the [http://seek-for-android.googlecode.com/files/smartcard-api-2_2_2.tgz smartcard-api-2_2_2.tgz archive]
   * Unpack the patch archive: <code>$ tar xvzf smartcard-api-2_2_2.tgz</code>
@@ -50,6 +54,7 @@ ANDROID_SDK_ROOT=<path/to/android-sdk-linux> ./out/host/linux-x86/bin/emulator -
   * If a SIM Toolkit application is located on the SIM card inserted to the card reader, the Android SIM Toolkit (Stk) application can be used to use/test/debug the card applet.
 http://seek-for-android.googlecode.com/svn/wiki/img/EmulatorExtensionScreenshot.png
 
+== ASSD Support in Android Emulator ==
 
 == Command line interface ==
 After the emulator extensions patch is applied, these command-line options are available to the emulator.
