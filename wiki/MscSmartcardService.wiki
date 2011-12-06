@@ -2,35 +2,35 @@
 
 = Introduction =
 
-Flashing the system is not supported on every system, thus using the !SmartCard API is limited to development devices.<br/>
-However, not all functionality to enable smart card support on Android is required to be patched in the system image. Also, flashing the system is not suitable for end users who just want to use an application with smart card support.<br/>
+Flashing the system is not supported on every device, thus using the !SmartCard API is limited to development phone only.<br/>
+However, access to Secure Elements does not always require flashing the system image. Also, application developers can use the !SmartcardService as a quick way to develop their applications as well as end users who just want to use an application with smart card support.<br/>
 _MSC !SmartcardService_ enables (any) Android phone with SD card slot to use !SmartCard API without flashing the system or rooting the phone.<br/>
 The _APK_ inside the archive can be installed on the device like on any other Android application.
-<hr/>
+<br/>
 *Note*<br>
  * The _MSC !SmartcardService_ will only support the [https://www.cardsolutions-shop.com/shop/gi-de/ G&D Mobile Security Card]
- * Please check [Devices] for a list of tested devices whereas the latest Google Dev Phone with SD card slot is reference device
+ * The source code of _MSC !SmartcardService_ is equal to the !SmartCard API from SVN with the exception of `libmsc.so` which will not be provided Open Source.  
 <br/>
 
 <table>
 <tr>
 <td valign="top" width=55%>
 = Details =
-To test the _MSC !SmartcardService_ please
- * Download the [http://seek-for-android.googlecode.com/files/MSC_SmartcardService-2_2_2.tgz MSC_SmartcardService-2_2_2.tgz] and extract the card content
+To test the _MSC !SmartcardService_
+ * download the [http://seek-for-android.googlecode.com/files/MSC_SmartcardService-2_3_0.tgz MSC_SmartcardService-2_3_0.tgz] and extract the card content
 
- * ensure that _USB debugging_ is enabled on the phone
- (_Settings_ - _Applications_ - _Development_ - _USB debugging_)
+ * ensure that _USB debugging_ is enabled on the phone<br/>(_Settings_ - _Applications_ - _Development_ - _USB debugging_)
 
  * execute `adb install MSC_SmartcardService.apk`
-
- * execute `adb install SmartcardSample.apk`
 
  * execute `adb install OpenMobileAPISample.apk`
 
  * ensure a [https://www.cardsolutions-shop.com/shop/gi-de/ Mobile Security Card] is inserted in the phone
 
- * on the phone, run the !SmartcardSample or OpenMobileAPISample application and see the APDU communication
+ * on the phone, run the OpenMobileAPISample application and see the log output
+
+ * in addition, the [http://seek-for-android.googlecode.com/files/PerformanceTester-1_3_0.tgz PerformanceTester] application can be used to run more detailed tests
+
 </td>
 <td width=5%>
 </td>
@@ -42,12 +42,17 @@ To test the _MSC !SmartcardService_ please
 
 = Development =
 The _MSC !SmartcardService_ provides the *same* interface as the !SmartCard API so application developers can write and test their applications with the installable version and have no migration issues later on<br/>
-When using Eclipse to develop smart card aware applications, do not use the self compiled SDK as described in [UsingSmartCardAPI Using the SmartCard API] but the plain unmodified Google SDK as usual. When creating a project, add the `org.simalliance.openmobileapi.jar` file to the build path of the project to provide the same interface as the !SmartCard API does.
+When using Eclipse to develop Secure Element applications, setup the development environment as normal as refer to [UsingSmartCardAPI Using the !SmartCard API]. When creating a project, add the `org.simalliance.openmobileapi.jar` file to the build path of the project in the same way as !SmartCard API applications do.
 
 [http://seek-for-android.googlecode.com/svn/wiki/img/MscSmartcardService_eclipse.png]
 <br/><br/>
 
 = Version history =
+==== v2.3.0 - 06.12.2011 ====
+ * Compliant to the SIMalliance Open Mobile API Specification V2.02 (transport layer only)
+ * The namespace "android.smartcard" was completely removed
+ * Access Control was completely removed
+
 ==== v2.2.2 - 21.10.2011 ====
  * Compliant to the latest SIMalliance Open Mobile API Specification (V1.01)
  * Support for PluginTerminals
