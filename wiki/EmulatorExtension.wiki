@@ -1,9 +1,13 @@
-#summary How to enable the emulator to communicate with a SIM card connected through PC/SC
+#summary How to enable the emulator to communicate with a SIM card connected through PC/SC or a Mobile Security Card through ASSD
 
 <table>
 <tr>
 <td valign="top">
 = Introduction =
+
+For using th Android emulator with a real SIM or with a SD card with embedded Secure Element, the emulator must be built from the modified emulator source. 
+
+== 1. UICC Support in Android Emulator ==
 
 The Android emulator is only supporting a primitive 'fake' SIM card or SIM simulation which cannot be used to extend the Sim Toolkit framework or test the !SmartCard API.<br/>
 On real devices, the RIL library is very restrictive in terms of STK support and needs to be extended but on the emulator a patch can be applied in order to provide full SIM access through the host PC/SC system.<br/><br/>
@@ -17,10 +21,10 @@ This enables the Android emulator to forward any APDU traffic (AT+CRSM, AT+CPIN,
 </tr>
 </table>
 
-== Applying the patch to the emulator sources ==
+=== 1.1 Applying the patch to the emulator sources ===
 
-  * Download the [http://seek-for-android.googlecode.com/files/smartcard-api-2_2_2.tgz smartcard-api-2_2_2.tgz archive]
-  * Unpack the patch archive: <code>$ tar xvzf smartcard-api-2_2_2.tgz</code>
+  * Download the [http://seek-for-android.googlecode.com/files/smartcard-api-2_3_0.tgz smartcard-api-2_3_0.tgz] archive
+  * Unpack the patch archive: <code>$ tar xvzf smartcard-api-2_3_0.tgz</code>
   * Apply the patch(es) in the root folder of the Android source tree: <code>$ patch -p1 < emulator.patch</code>Note: the emulator extensions are no longer provided as a separate download file, but only together with e.g. the SmartCardAPI patches. However, the emulator extension patches (emulator.patch) still work without any additional patches.
  * Download and build pcsc-lite from the official Internet sources (_Optional step_: you can also use the pcsc-lite package maintained by the package installer of the Linux distribution):
 {{{
@@ -36,11 +40,11 @@ $ make
 }}}
  In case of problems that the build system cannot find the proper include & lib files, specify them manually:
 {{{
-$ PCSCLITE_INCPATH=<path/to/pcsc-lite>/src/PCSC PCSCLITE_LIBPATH=<path/to/pcsc-lite>/src/.libs make
+$ PCSC_INCPATH=<path/to/pcsc-lite>/src/PCSC PCSC_LIBPATH=<path/to/pcsc-lite>/src/.libs make
 }}}
  * Create an AVD and launch the emulator:
 {{{
-android create avd -n Android_2.3 -t 12
+android create avd -n Android_2.3 -t 1
 ANDROID_SDK_ROOT=<path/to/android-sdk-linux> ./out/host/linux-x86/bin/emulator -avd Android_2.3
      -system out/target/product/generic/system.img -pcsc <reader>
 }}}
@@ -48,16 +52,63 @@ ANDROID_SDK_ROOT=<path/to/android-sdk-linux> ./out/host/linux-x86/bin/emulator -
   * If a SIM Toolkit application is located on the SIM card inserted to the card reader, the Android SIM Toolkit (Stk) application can be used to use/test/debug the card applet.
 http://seek-for-android.googlecode.com/svn/wiki/img/EmulatorExtensionScreenshot.png
 
+== 2. ASSD Support in Android Emulator (for SD Card with integrated Secure Element) ==
 
-== Command line interface ==
+Enabling ASSD support in the Android emulator, allows to access a Secure SD Card with integrated Secure Element by using the ASSD interface (Advanced Security SD specification). Therefore it is required to additionally enable both, the kernel of the emulator and the kernel of the Host-PC with ASSD support.
+
+=== 2.1 Enabling ASSD Support in Android Emulator ===
+
+  * Retrieve the kernel source for the emulator
+{{{
+$ git clone https://android.googlesource.com/kernel/goldfish
+The repository is created in the subdirectory 'goldfish'
+$cd <GOLDFISH_DIR>
+<QEMU_DIR>$git checkout android-goldfish-2.6.29 
+}}}
+
+  * Apply the patch 
+{{{
+<GOLDFISH_DIR>$ patch -p1 < assd_kernel.patch
+}}}
+
+  * Build the kernel
+{{{
+<GOLDFISH_DIR>$export ARCH=arm
+<GOLDFISH_DIR>$export CROSS_COMPILE=arm-eabi-
+<GOLDFISH_DIR>$export PATH=<PATH_TO_ANDROID_SOURCE>/prebuilt/linux-x86/toolchain/arm-eabi-4.4.0/bin:$PATH
+<GOLDFISH_DIR>$make goldfish_defconfig
+<GOLDFISH_DIR>$make    
+}}}
+
+Once finished, the following message occurs
+'Kernel: arch/arm/boot/zImage is ready'
+
+=== 2.2 ASSD Support in Host-PC ===
+
+*Note:* The ASSD support requires an SD-Card slot with SD-Card controller on your host. It will not work with SD-Card readers connected via USB. 
+
+  * Create a custom specific kernel for your Host-PC by adding the ASSD-Patch (e.g. patch  the for Kernel 2.6.32 when you use Ubuntu 10.04).
+  * The patch to enable ASSD in the kernel of the host is identical to the patch applied to the emulator kernel source. 
+  * Once the kernel of the host is replaced, ensure that you have enough rights to access the device node /dev/assd.
+
+=== 2.3 Run the emulator with ASSD Support ===
+
+ * Create an AVD and launch the emulator:
+{{{
+android create avd -n mydevice -t 1 -c 10M
+ANDROID_SDK_ROOT=<path/to/android-sdk-linux> ./out/host/linux-x86/bin/emulator -avd mydevice -system out/target/product/generic/system.img -kernel goldfish/prebuilt/android-arm/kernel/zImage
+}}}
+ * In the emulator output there will information shown regarding the status of ASSD support, e.g. goldfish_mmc: ASSD is ready goldfish_mmc: ASSD available
+
+
+== 3. Command line interface ==
 After the emulator extensions patch is applied, these command-line options are available to the emulator.
 {{{
 Option                    Description
 -pcsc <terminal name>     Enable access to a SIM card inserted to a PC/SC card reader. If <card reader's name> is
                           omitted the emulator outputs a list of card reader names and uses the first card reader
                           from that list.
--msc <filepath>           Enable access to a Mobile Security Card. Use <filepath> as SD in-/output file located on
-                          the host's mount point.
+
 -no_dns                   Workaround for running the emulator on a host without configured DNS thus without network
                           connectivity.
 }}}
