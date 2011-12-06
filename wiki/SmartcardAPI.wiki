@@ -5,7 +5,7 @@
 The !SmartCard API is a reference implementation of the SIMalliance Open Mobile API specification that will enable Android applications to communicate with Secure Elements, e.g. SIM card, embedded Secure Elements, Mobile Security Card or others.<br/>
 The interface of the library is kept platform independent whereas the !SmartcardService implementation is Android specific.<br/>
 With !SmartCard API version 1 release a proprietary interface was introduced to provide access to Secure Elements. Version 2 included the Open Mobile API interface parallel to the proprietary one. Further releases considered the proprietary interface as deprecated and version 2.3.0 completely removes the old one and only supports the Open Mobile API.<br/>  
-Previous versions extended the Android framework with !SmartCard API functionality which caused difficulties for application developers as modified platform SDK libraries were required. Since version 2.1.2 the shared library approach was introduced which does not modify the official framework but provides a library extension instead. Since version 2.3.0 the shared library approach is the only supported integration.<br/>
+Previous versions extended the Android framework with !SmartCard API functionality which caused difficulties for application developers as modified platform SDK libraries were required. Since version 2.1.2 the shared library approach was introduced which does not extend the official framework but provides a library extension instead. Since version 2.3.0 the shared library approach is the only supported concept for the integration.<br/>
 The !SmartCard API provides functionality to list and select the supported Secure Elements, open a communication channel to a dedicated Secure Element application and transfer APDUs to such. No applet selection or channel management APDU functions are allowed as this might cause security problems. Also, no card on/off functions are available in contrast to PC/SC.<br/><br/>
 
 
@@ -15,7 +15,7 @@ The !SmartCard API provides functionality to list and select the supported Secur
 <td valign="top" width=55%>
 The !SmartCard API consists of several software layers
   * *!SmartcardService* Android remote service as the core of the smart card access<br/>Integration in `packages/apps/SmartcardService/src`<br/>
-  * *SEService* V2.x wrapper classes to hide the service binding specifics and deal as the main interface for application developers<br/>Integration in `packages/apps/SmartCardService/openmobileapi`<br/>
+  * *SEService* wrapper classes to hide the service binding specifics and deal as the main interface for application developers<br/>Integration in `packages/apps/SmartCardService/openmobileapi`<br/>
   * *xxxTerminal* Implementation of a Secure Element specific terminal, e.g. `UiccTerminal` or `ASSDTerminal`, ...<br/>Integration in `packages/apps/SmartCardService/src/org/simalliance/openmobileapi/service/terminals`<br/>
   * *Access Control* Implementation of the Access Control Enforcer to control APDU access from Android applications<br/>Integration in `packages/apps/SmartCardService/src/org/simalliance/openmobileapi/service/security`
 </td>
