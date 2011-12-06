@@ -39,7 +39,7 @@ The framework classes around `SEService` are just wrapping the service specifics
 The card channel is used for actual card communication by transferring APDUs. All channel management for logical card channels is encapsulated by the channel objects.<br/><br/>
 
 == System integration ==
-The `smartcard-api.patch` includes assess to all Secure Elements currently introduced. However, not all phones have SD card slots or embedded Secure Elements. System integrators should remove the builtin terminals the platform does not support (e.g. removing ASSDTerminal on phones that have no SD card slot like Nexus S).<br/>
+The `smartcard-api.patch` includes access to all Secure Elements currently introduced. However, not all phones have SD card slots or embedded Secure Elements. System integrators should remove the builtin terminals the platform does not support (e.g. removing ASSDTerminal on phones that have no SD card slot like Nexus S).<br/>
 The !SmartCard API will enumerate the terminals at run time which means that removing a xxxTerminal.java file is enough to remove a specific SE.<br/> 
 In addition, the addon-terminal concept provides the possibility to extend the supported terminals through additional libraries.<br/><br/>
 
