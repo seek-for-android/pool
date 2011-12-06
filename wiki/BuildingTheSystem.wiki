@@ -49,7 +49,7 @@ After applying the patches the android source tree contains all !SmartCard API s
 In addition, the smartcard-api.patch extends `build/target/product/core.mk` to include the !SmartCard API in the built.
 Also, the UID/GID smartcard/smartcard is introduced to have the !SmartCardService installed with a unique ID.
 
-Update `current.xml` as the new IDs needs to known by the system:
+Update `current.xml` as the system needs to known the new IDs:
 {{{
 $ make update-api
 }}}
@@ -64,7 +64,7 @@ $ ./extract-files.sh
 $ cd -
 }}}
 *Note.1* Use `unzip-files.sh` instead if the corresponding ZIP archive is available.<br/>
-*Note.2* The Internet might provide more information on this topic.<br/>
+*Note.2* The Internet might provide more information regarding the vendor specific libraries.<br/>
 <br/>
 
 == Optional: _embedded SE support_ ==
