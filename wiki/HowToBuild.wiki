@@ -50,9 +50,9 @@ The new kernel is created as ./arch/arm/boot/zImage
 
 {{{
 $ cd <ANDROID_ROOT_DIR> 
-$ patch -p1 < <path_to_my_patches>/smartcard-api-2_2_2/smartcard-api.patch 
-$ patch -p1 < <path_to_my_patches>/smartcard-api-2_2_2/uicc.patch 
-$ patch -p1 < <path_to_my_patches>/smartcard-api-2_2_2/cts.patch 
+$ patch -p1 < <path_to_my_patches>/smartcard-api-2_3_0/smartcard-api.patch 
+$ patch -p1 < <path_to_my_patches>/smartcard-api-2_3_0/uicc.patch 
+$ patch -p1 < <path_to_my_patches>/smartcard-api-2_3_0/cts.patch 
 }}}
 
 (Note: `emulator.patch` is not needed for the build as the current emulator patch does not support ASSD)
