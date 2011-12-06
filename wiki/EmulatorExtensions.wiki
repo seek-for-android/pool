@@ -5,7 +5,7 @@
 <td valign="top">
 = Introduction =
 
-For using th Android emulator with a real SIM or with a SD card with embedded Secure Element, the emulator has to be extended. 
+For using th Android emulator with a real SIM or with a SD card with embedded Secure Element, the emulator must be built from the modified emulator source. 
 
 == 1. UICC Support in Android Emulator ==
 
