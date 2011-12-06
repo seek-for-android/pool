@@ -1,4 +1,4 @@
-#summary Writing Android applications with access to Secure Elements using the SmartCard API (V2.2.2 or newer)
+#summary Writing Android applications with access to Secure Elements using the SmartCard API (V2.3.0 or newer)
 
 
 =Introduction=
@@ -6,7 +6,7 @@
 This document explains how the !SmartCard API for can be used to
 develop and test Android applications, which communicate with Secure Elements available in the real device or the emulator.
 
-This description adheres to the latest version of the !SmartCard API (V2.2.2 or higher), which contains the shared library based !SmartCard API.
+This description adheres to the latest version of the !SmartCard API (V2.3.0 or higher), which contains the shared library based !SmartCard API.
 
 
 =====Notice=====
