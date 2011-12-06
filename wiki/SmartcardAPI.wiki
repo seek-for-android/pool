@@ -14,7 +14,7 @@ The !SmartCard API provides functionality to list and select the supported Secur
 <tr>
 <td valign="top" width=55%>
 The !SmartCard API consists of several software layers
-  * *!SmartcardService* Android remote service as the core of the smart card access<br/>Integration in `packages/apps/!SmartcardService/src`<br/>
+  * *!SmartcardService* Android remote service as the core of the smart card access<br/>Integration in `packages/apps/SmartcardService/src`<br/>
   * *SEService* V2.x wrapper classes to hide the service binding specifics and deal as the main interface for application developers<br/>Integration in `packages/apps/SmartCardService/openmobileapi`<br/>
   * *xxxTerminal* Implementation of a Secure Element specific terminal, e.g. `UiccTerminal` or `ASSDTerminal`, ...<br/>Integration in `packages/apps/SmartCardService/src/org/simalliance/openmobileapi/service/terminals`<br/>
   * *Access Control* Implementation of the Access Control Enforcer to control APDU access from Android applications<br/>Integration in `packages/apps/SmartCardService/src/org/simalliance/openmobileapi/service/security`
