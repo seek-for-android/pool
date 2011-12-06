@@ -50,7 +50,7 @@ The new kernel is created as ./arch/arm/boot/zImage
 
 {{{
 $ cd <ANDROID_ROOT_DIR> 
-$ patch -p1 < <path_to_my_patches>/smartcard-api-2_2_2/smartcard-api-2.2.2.patch 
+$ patch -p1 < <path_to_my_patches>/smartcard-api-2_2_2/smartcard-api.patch 
 $ patch -p1 < <path_to_my_patches>/smartcard-api-2_2_2/uicc.patch 
 $ patch -p1 < <path_to_my_patches>/smartcard-api-2_2_2/cts.patch 
 }}}
