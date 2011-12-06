@@ -1,7 +1,5 @@
 #summary How to enable the emulator to communicate with a SIM card connected through PC/SC or a Mobile Security Card through ASSD
 
-= Page under construction = 
-
 <table>
 <tr>
 <td valign="top">
@@ -9,7 +7,7 @@
 
 For using th Android emulator with a real SIM or with a SD card with embedded Secure Element, the emulator has to be extended. 
 
-== UICC Support in Android Emulator ==
+== 1. UICC Support in Android Emulator ==
 
 The Android emulator is only supporting a primitive 'fake' SIM card or SIM simulation which cannot be used to extend the Sim Toolkit framework or test the !SmartCard API.<br/>
 On real devices, the RIL library is very restrictive in terms of STK support and needs to be extended but on the emulator a patch can be applied in order to provide full SIM access through the host PC/SC system.<br/><br/>
@@ -23,7 +21,7 @@ This enables the Android emulator to forward any APDU traffic (AT+CRSM, AT+CPIN,
 </tr>
 </table>
 
-=== Applying the patch to the emulator sources ===
+=== 1.1 Applying the patch to the emulator sources ===
 
   * Download the [http://seek-for-android.googlecode.com/files/smartcard-api-2_3_0.tgz smartcard-api-2_3_0.tgz] archive
   * Unpack the patch archive: <code>$ tar xvzf smartcard-api-2_3_0.tgz</code>
@@ -54,11 +52,11 @@ ANDROID_SDK_ROOT=<path/to/android-sdk-linux> ./out/host/linux-x86/bin/emulator -
   * If a SIM Toolkit application is located on the SIM card inserted to the card reader, the Android SIM Toolkit (Stk) application can be used to use/test/debug the card applet.
 http://seek-for-android.googlecode.com/svn/wiki/img/EmulatorExtensionScreenshot.png
 
-== ASSD Support in Android Emulator for SD Card integrated Secure Element ==
+== 2. ASSD Support in Android Emulator (for SD Card with integrated Secure Element) ==
 
 Enabling ASSD support in the Android emulator, allows to access a Secure SD Card with integrated Secure Element by using the ASSD interface (Advanced Security SD specification). Therefore it is required to additionally enable both, the kernel of the emulator and the kernel of the Host-PC with ASSD support.
 
-=== Enabling ASSD Support in Android Emulator ===
+=== 2.1 Enabling ASSD Support in Android Emulator ===
 
   * Retrieve the kernel source for the emulator
 {{{
@@ -85,7 +83,7 @@ $cd <GOLDFISH_DIR>
 Once finished, the following message occurs
 'Kernel: arch/arm/boot/zImage is ready'
 
-=== ASSD Support in Host-PC ===
+=== 2.2 ASSD Support in Host-PC ===
 
 *Note:* The ASSD support requires an SD-Card slot with SD-Card controller on your host. It will not work with SD-Card readers connected via USB. 
 
@@ -93,7 +91,7 @@ Once finished, the following message occurs
   * The patch to enable ASSD in the kernel of the host is identical to the patch applied to the emulator kernel source. 
   * Once the kernel of the host is replaced, ensure that you have enough rights to access the device node /dev/assd.
 
-=== Run the emulator with ASSD Support ===
+=== 2.3 Run the emulator with ASSD Support ===
 
  * Create an AVD and launch the emulator:
 {{{
@@ -103,7 +101,7 @@ ANDROID_SDK_ROOT=<path/to/android-sdk-linux> ./out/host/linux-x86/bin/emulator -
  * In the emulator output there will information shown regarding the status of ASSD support, e.g. goldfish_mmc: ASSD is ready goldfish_mmc: ASSD available
 
 
-== Command line interface ==
+== 3. Command line interface ==
 After the emulator extensions patch is applied, these command-line options are available to the emulator.
 {{{
 Option                    Description
