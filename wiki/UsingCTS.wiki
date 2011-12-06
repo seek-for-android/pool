@@ -20,7 +20,7 @@ For building CTS with Open Mobile API tests
 
 {{{
 $ cd ANDROID_ROOT_DIR
-$ tar -xOf PATH_TO_PATCH_ARCHIVE/smartcard-api-2_3_0.tgz smartcard-api-2_2_2/cts.patch | patch -p1 
+$ tar -xOf PATH_TO_PATCH_ARCHIVE/smartcard-api-2_3_0.tgz smartcard-api-2_3_0/cts.patch | patch -p1 
 $ make cts
 }}}
 
