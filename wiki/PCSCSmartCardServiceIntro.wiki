@@ -6,6 +6,17 @@ To provide the PCSC Interface on the Android device, additional to the !SmartCar
 But the PCSC-Interface is the standard interface used for many PC applications accessing smartcards. So this implementation will provide the PCSC interface for already existing native applications (e.g. OpenSC), which are ported to Android and requiring the PCSC interface.
 Whenever possible, it is recommended to directly use the !SmartCard API.
 
+== Apply the patches ==
+
+The patch for PC/SC support on the android device is only required for (native) Android applications relying on the PC/SC interface.
+ 
+{{{
+$ cd <ANDROID_SRC_ROOT_DIR>
+$ patch -p1 < <path_to_my_patches>/pcsc_systemservice_v098.patch
+}}}
+
+Apart from adding the PC/SC support, building the Android platform is according to the description in [http://code.google.com/p/seek-for-android/wiki/BuildingTheSystem Building the System]
+
 = Details =
 
 The current version of the ifdhandler is a prototype, which allow to route the APDU communication from the PCSC interface to the !SmartCard API.
