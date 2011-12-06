@@ -58,9 +58,9 @@ http://seek-for-android.googlecode.com/svn/wiki/img/EmulatorExtensionScreenshot.
 
 Enabling ASSD support in the Android emulator, allows to access a Secure SD Card with integrated Secure Element by using the ASSD interface (Advanced Security SD specification). Therefore it is required to additionally enable both, the kernel of the emulator and the kernel of the Host-PC with ASSD support.
 
-== Enabling ASSD Support in Android Emulator ==
+=== Enabling ASSD Support in Android Emulator ===
 
-Retrieve the kernel source for the emulator
+  * Retrieve the kernel source for the emulator
 {{{
 $ git clone https://android.googlesource.com/kernel/goldfish
 The repository is created in the subdirectory 'goldfish'
@@ -68,13 +68,12 @@ $cd <QEMU_DIR>
 <QEMU_DIR>$git checkout android-goldfish-2.6.29 
 }}}
 
-=== Apply the patch ===
+  * Apply the patch 
 {{{
 <QEMU_DIR>$ patch -p1 < assd_kernel.patch
 }}}
 
-=== Build the kernel:===
-
+  * Build the kernel
 {{{
 <QEMU_DIR>$export ARCH=arm
 <QEMU_DIR>$export CROSS_COMPILE=arm-eabi-
@@ -86,12 +85,23 @@ $cd <QEMU_DIR>
 Once finished, the following message occurs
 'Kernel: arch/arm/boot/zImage is ready'
 
-== ASSD Support in Host-PC ==
+=== ASSD Support in Host-PC ===
 
-Create your own kernel for your Host-PC by adding the ASSD-Patch (e.g. for Kernel 2.6.32 when you use Ubuntu 10.04) as host system
+  * Create your own kernel for your Host-PC by adding the ASSD-Patch (e.g. for Kernel 2.6.32 when you use Ubuntu 10.04) as host system.
+  * To enable ASSD support, the patch applied to the emulator kernel source has to be applied to the kernel of the host. 
+  * Once the kernel of the host is replaced, ensure that you have enough rights to access the device node /dev/assd.
 
+=== Run the emulator with ASSD Support
 
-
+ * Create an AVD and launch the emulator:
+{{{
+android create avd -n Android_2.3 -t 12
+ANDROID_SDK_ROOT=<path/to/android-sdk-linux> ./out/host/linux-x86/bin/emulator -avd Android_2.3
+     -system out/target/product/generic/system.img -pcsc <reader>
+}}}
+ * In the emulator output a card reader will get listed, e.g. _sim_card.c: using card reader Cherry XX44 00 00_
+  * If a SIM Toolkit application is located on the SIM card inserted to the card reader, the Android SIM Toolkit (Stk) application can be used to use/test/debug the card applet.
+http://seek-for-android.googlecode.com/svn/wiki/img/EmulatorExtensionScreenshot.png
 
 == Command line interface ==
 After the emulator extensions patch is applied, these command-line options are available to the emulator.
