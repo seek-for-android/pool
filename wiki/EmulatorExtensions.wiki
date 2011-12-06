@@ -63,9 +63,9 @@ Enabling ASSD support in the Android emulator, allows to access a Secure SD Card
 Retrieve the kernel source for the emulator
 {{{
 $ git clone https://android.googlesource.com/kernel/goldfish
-The repository is created in the subdirectory 'qemu'
+The repository is created in the subdirectory 'goldfish'
 $cd <QEMU_DIR>
-<QEMU_DIR>$git checkout -b assd android-goldfish-2.6.29 
+<QEMU_DIR>$git checkout android-goldfish-2.6.29 
 }}}
 
 === Apply the patch ===
