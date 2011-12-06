@@ -46,7 +46,7 @@ $ PCSC_INCPATH=<path/to/pcsc-lite>/src/PCSC PCSC_LIBPATH=<path/to/pcsc-lite>/src
 }}}
  * Create an AVD and launch the emulator:
 {{{
-android create avd -n Android_2.3 -t 12
+android create avd -n Android_2.3 -t 1
 ANDROID_SDK_ROOT=<path/to/android-sdk-linux> ./out/host/linux-x86/bin/emulator -avd Android_2.3
      -system out/target/product/generic/system.img -pcsc <reader>
 }}}
@@ -64,22 +64,22 @@ Enabling ASSD support in the Android emulator, allows to access a Secure SD Card
 {{{
 $ git clone https://android.googlesource.com/kernel/goldfish
 The repository is created in the subdirectory 'goldfish'
-$cd <QEMU_DIR>
+$cd <GOLDFISH_DIR>
 <QEMU_DIR>$git checkout android-goldfish-2.6.29 
 }}}
 
   * Apply the patch 
 {{{
-<QEMU_DIR>$ patch -p1 < assd_kernel.patch
+<GOLDFISH_DIR>$ patch -p1 < assd_kernel.patch
 }}}
 
   * Build the kernel
 {{{
-<QEMU_DIR>$export ARCH=arm
-<QEMU_DIR>$export CROSS_COMPILE=arm-eabi-
-<QEMU_DIR>$export PATH=<PATH_TO_ANDROID_SOURCE>/prebuilt/linux-x86/toolchain/arm-eabi-4.4.0/bin:$PATH
-<QEMU_DIR>$make goldfish_defconfig
-<QEMU_DIR>$make    
+<GOLDFISH_DIR>$export ARCH=arm
+<GOLDFISH_DIR>$export CROSS_COMPILE=arm-eabi-
+<GOLDFISH_DIR>$export PATH=<PATH_TO_ANDROID_SOURCE>/prebuilt/linux-x86/toolchain/arm-eabi-4.4.0/bin:$PATH
+<GOLDFISH_DIR>$make goldfish_defconfig
+<GOLDFISH_DIR>$make    
 }}}
 
 Once finished, the following message occurs
@@ -87,8 +87,10 @@ Once finished, the following message occurs
 
 === ASSD Support in Host-PC ===
 
-  * Create your own kernel for your Host-PC by adding the ASSD-Patch (e.g. for Kernel 2.6.32 when you use Ubuntu 10.04) as host system.
-  * To enable ASSD support, the patch applied to the emulator kernel source has to be applied to the kernel of the host. 
+*Note:* The ASSD support requires an SD-Card slot with SD-Card controller on your host. It will not work with SD-Card readers connected via USB. 
+
+  * Create a custom specific kernel for your Host-PC by adding the ASSD-Patch (e.g. patch  the for Kernel 2.6.32 when you use Ubuntu 10.04).
+  * The patch to enable ASSD in the kernel of the host is identical to the patch applied to the emulator kernel source. 
   * Once the kernel of the host is replaced, ensure that you have enough rights to access the device node /dev/assd.
 
 === Run the emulator with ASSD Support ===
