@@ -48,6 +48,7 @@ android create avd -n myAndroid2.3 -t 1
 ANDROID_SDK_ROOT=<path/to/android-sdk-linux> ./out/host/linux-x86/bin/emulator -avd myAndroid2.3
      -system out/target/product/generic/system.img -pcsc <reader>
 }}}
+ * The SIM must be already inserted in the used PC/SC reader before launching the emulator.
  * In the emulator output a card reader will get listed, e.g. _sim_card.c: using card reader Cherry XX44 00 00_
   * If a SIM Toolkit application is located on the SIM card inserted to the card reader, the Android SIM Toolkit (Stk) application can be used to use/test/debug the card applet.
 http://seek-for-android.googlecode.com/svn/wiki/img/EmulatorExtensionScreenshot.png
@@ -101,7 +102,8 @@ ANDROID_SDK_ROOT=<path/to/android-sdk-linux> ./out/host/linux-x86/bin/emulator
     -avd myAndroid2.3 -system out/target/product/generic/system.img 
     -kernel goldfish/prebuilt/android-arm/kernel/zImage
 }}}
- * In the emulator output there will information shown regarding the status of ASSD support, e.g. goldfish_mmc: ASSD is ready goldfish_mmc: ASSD available
+ * The microSD must be already inserted in the SD Card-Reader before launching the emulator.
+ * In the emulator output there will information shown regarding the status of ASSD support, e.g. _goldfish_mmc: ASSD is ready goldfish_mmc: ASSD available_
 
 
 == 3. Command line interface ==
