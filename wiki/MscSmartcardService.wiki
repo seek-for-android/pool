@@ -42,7 +42,7 @@ To test the _MSC !SmartcardService_
 
 = Development =
 The _MSC !SmartcardService_ provides the *same* interface as the !SmartCard API so application developers can write and test their applications with the installable version and have no migration issues later on<br/>
-When using Eclipse to develop Secure Element applications, setup the development environment as normal as refer to [UsingSmartCardAPI Using the !SmartCard API]. When creating a project, add the `org.simalliance.openmobileapi.jar` file to the build path of the project in the same way as !SmartCard API applications do.
+When using Eclipse to develop Secure Element applications, setup the development environment as normal as refer to [UsingSmartCardAPI Using the SmartCard API]. When creating a project, add the `org.simalliance.openmobileapi.jar` file to the build path of the project in the same way as !SmartCard API applications do.
 
 [http://seek-for-android.googlecode.com/svn/wiki/img/MscSmartcardService_eclipse.png]
 <br/><br/>
