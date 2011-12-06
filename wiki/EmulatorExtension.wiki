@@ -5,7 +5,7 @@
 <td valign="top">
 = Introduction =
 
-For using th Android emulator with a real SIM or with a SD card with embedded Secure Element, the emulator must be built from the modified emulator source. 
+For using th Android emulator with a real SIM or with a microSD card with integrated secure element, the emulator must be built from the modified emulator sources. 
 
 == 1. UICC Support in Android Emulator ==
 
@@ -44,15 +44,15 @@ $ PCSC_INCPATH=<path/to/pcsc-lite>/src/PCSC PCSC_LIBPATH=<path/to/pcsc-lite>/src
 }}}
  * Create an AVD and launch the emulator:
 {{{
-android create avd -n Android_2.3 -t 1
-ANDROID_SDK_ROOT=<path/to/android-sdk-linux> ./out/host/linux-x86/bin/emulator -avd Android_2.3
+android create avd -n myAndroid2.3 -t 1
+ANDROID_SDK_ROOT=<path/to/android-sdk-linux> ./out/host/linux-x86/bin/emulator -avd myAndroid2.3
      -system out/target/product/generic/system.img -pcsc <reader>
 }}}
  * In the emulator output a card reader will get listed, e.g. _sim_card.c: using card reader Cherry XX44 00 00_
   * If a SIM Toolkit application is located on the SIM card inserted to the card reader, the Android SIM Toolkit (Stk) application can be used to use/test/debug the card applet.
 http://seek-for-android.googlecode.com/svn/wiki/img/EmulatorExtensionScreenshot.png
 
-== 2. ASSD Support in Android Emulator (for SD Card with integrated Secure Element) ==
+== 2. ASSD Support in Android Emulator (for microSD with integrated secure element) ==
 
 Enabling ASSD support in the Android emulator, allows to access a Secure SD Card with integrated Secure Element by using the ASSD interface (Advanced Security SD specification). Therefore it is required to additionally enable both, the kernel of the emulator and the kernel of the Host-PC with ASSD support.
 
@@ -63,10 +63,11 @@ Enabling ASSD support in the Android emulator, allows to access a Secure SD Card
 $ git clone https://android.googlesource.com/kernel/goldfish
 The repository is created in the subdirectory 'goldfish'
 $cd <GOLDFISH_DIR>
-<QEMU_DIR>$git checkout android-goldfish-2.6.29 
+<GOLDFISH_DIR>$git checkout android-goldfish-2.6.29 
 }}}
 
   * Apply the patch 
+The patch can be extracted from the  [http://seek-for-android.googlecode.com/files/20110715-assd-kernel.tar.gz 20110715-assd-kernel.tar.gz] 
 {{{
 <GOLDFISH_DIR>$ patch -p1 < assd_kernel.patch
 }}}
@@ -81,7 +82,7 @@ $cd <GOLDFISH_DIR>
 }}}
 
 Once finished, the following message occurs
-'Kernel: arch/arm/boot/zImage is ready'
+_'Kernel: arch/arm/boot/zImage is ready'_
 
 === 2.2 ASSD Support in Host-PC ===
 
@@ -95,8 +96,10 @@ Once finished, the following message occurs
 
  * Create an AVD and launch the emulator:
 {{{
-android create avd -n mydevice -t 1 -c 10M
-ANDROID_SDK_ROOT=<path/to/android-sdk-linux> ./out/host/linux-x86/bin/emulator -avd mydevice -system out/target/product/generic/system.img -kernel goldfish/prebuilt/android-arm/kernel/zImage
+android create avd -n myAndroid2.3 -t 1 -c 10M
+ANDROID_SDK_ROOT=<path/to/android-sdk-linux> ./out/host/linux-x86/bin/emulator    
+    -avd myAndroid2.3 -system out/target/product/generic/system.img 
+    -kernel goldfish/prebuilt/android-arm/kernel/zImage
 }}}
  * In the emulator output there will information shown regarding the status of ASSD support, e.g. goldfish_mmc: ASSD is ready goldfish_mmc: ASSD available
 
