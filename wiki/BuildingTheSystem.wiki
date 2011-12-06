@@ -35,7 +35,7 @@ Download the [http://seek-for-android.googlecode.com/files/smartcard-api-2_3_0.t
 ==== Apply the patches ====
 {{{
 $ cd <ANDROID_SRC_ROOT_DIR>
-$ patch -p1 < <path_to_my_patches>/smartcard-api-2.2.2.patch
+$ patch -p1 < <path_to_my_patches>/smartcard-api.patch
 $ patch -p1 < <path_to_my_patches>/uicc.patch
 $ patch -p1 < <path_to_my_patches>/emulator.patch
 $ patch -p1 < <path_to_my_patches>/cts.patch
