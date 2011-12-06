@@ -91,17 +91,15 @@ Once finished, the following message occurs
   * To enable ASSD support, the patch applied to the emulator kernel source has to be applied to the kernel of the host. 
   * Once the kernel of the host is replaced, ensure that you have enough rights to access the device node /dev/assd.
 
-=== Run the emulator with ASSD Support
+=== Run the emulator with ASSD Support ===
 
  * Create an AVD and launch the emulator:
 {{{
-android create avd -n Android_2.3 -t 12
-ANDROID_SDK_ROOT=<path/to/android-sdk-linux> ./out/host/linux-x86/bin/emulator -avd Android_2.3
-     -system out/target/product/generic/system.img -pcsc <reader>
+android create avd -n mydevice -t 1 -c 10M
+ANDROID_SDK_ROOT=<path/to/android-sdk-linux> ./out/host/linux-x86/bin/emulator -avd mydevice -system out/target/product/generic/system.img -kernel goldfish//prebuilt/android-arm/kernel/zImage
 }}}
- * In the emulator output a card reader will get listed, e.g. _sim_card.c: using card reader Cherry XX44 00 00_
-  * If a SIM Toolkit application is located on the SIM card inserted to the card reader, the Android SIM Toolkit (Stk) application can be used to use/test/debug the card applet.
-http://seek-for-android.googlecode.com/svn/wiki/img/EmulatorExtensionScreenshot.png
+ * In the emulator output there will information shown regarding the status of ASSD support, e.g. goldfish_mmc: ASSD is ready goldfish_mmc: ASSD available
+
 
 == Command line interface ==
 After the emulator extensions patch is applied, these command-line options are available to the emulator.
