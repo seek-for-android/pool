@@ -10,6 +10,7 @@
     * [UsingSmartCardAPI Using the SmartCard API]
     * [UsingCTS Using CTS]
     * [MscSmartcardService MSC_SmartcardService]
+    * [AddonTerminal Create an AddonTerminal]
   * Access Control
     * [AccessControlIntroduction Introduction]
     * [AccessControlDetails Details]
