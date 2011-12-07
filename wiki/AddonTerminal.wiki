@@ -1,0 +1,116 @@
+#summary How to create an Addon Terminal
+
+= Introduction =
+
+The !SmartCard API provides the possibility to add additional terminals without re-flashing the system. The concept is supported within the _smartcard-api.patch_ system integration as well as the _MSC_ _!SmartcardService_.<br/>
+This concept allows a post installation of Secure Element terminals like a Bluetooth, USB smart card reader or any other Secure Element connected to the device.<br/>
+
+
+= Requirements =
+The installation of an Addon Terminal requires the following conditions:
+  * the name of the package is starting with `org.simalliance.openmobileapi.service.terminals.`
+  * implementation of the complete interface is required with the correct signature
+  * class name within the correct package has to end with `Terminal`
+  * the package has to get registered before the !SmartCard API process is running<br/>
+
+
+= Sample =
+The sample code referenced here can also be found in the SVN repository.
+  * Using the Eclipse project wizard, create a new Android project
+    _File -> New -> Project_
+  * Select _Android Project_ and click _Next_
+  * To create the project, fill in the required fields
+    Project name: _!PluginTerminal_<br/>
+    Application name: _!PluginTerminalSample_<br/>
+    Package name: _org.simalliance.openmobileapi.service.terminals.!SamplePluginTerminal_<br/>
+    Create Activity: _deselect_
+  * Click _Finish_ to create the body of the (empty) Android application<br/>
+
+Create a new class in the default namespace called `DummyTerminal`
+  * Using the Eclipse project wizard, create a new Java class
+    _File -> New -> Class_
+  * To create the class, fill in the required fields
+    Package: _org.simalliance.openmobileapi.service.terminals.!SamplePluginTerminal_<br/>
+    Application name: _!PluginTerminal_
+  * Click _Finish_ to create the body of the (empty) Android application<br/>
+
+Implement the required public method:
+  * `public byte[] getAtr();`
+  * `public String getName();`
+  * `public boolean isCardPresent();`
+  * `public void internalConnect();`
+  * `public void internalDisconnect();`
+  * `public byte[] getSelectResponse();`
+  * `public byte[] internalTransmit(byte[] command);`
+  * `public int internalOpenLogicalChannel();`
+  * `public int internalOpenLogicalChannel(byte[] aid);`
+  * `public void internalCloseLogicalChannel(int iChannel);`
+
+Install the APK after ensuring that the !SmartCard API Service is not running - e.g. after a reboot or kill the process manually:
+{{{
+# ps
+...
+app_130   10737 1025  177176 15052 ffffffff afd0ebd8 S org.simalliance.openmobileapi.service:remote
+...
+# kill 10737
+}}}
+Run the _!OpenMobileApiSample_ application, _!PerformanceTester_ or similar to check the Addon Terminal is properly installed.<br/>
+
+
+= Details =
+The SVN [http://code.google.com/p/seek-for-android/source/browse/#svn%2Ftrunk%2Fsamples%2FPluginTerminal PluginTerminal] sample can be used to study the functionality of the Addon Terminal implementation.<br/>
+The logcat output after running the OpenMobileApiSample application will show
+{{{
+V/SamplePluginTerminal(10872): internalConnect
+V/SamplePluginTerminal(10872): internalTransmit: 80 ca 9f 7f 00 
+V/SamplePluginTerminal(10872): internalOpenLogicalChannel: default applet
+V/SamplePluginTerminal(10872): internalTransmit: 81 ca 9f 7f 00 
+V/SamplePluginTerminal(10872): internalCloseLogicalChannel: 0
+V/SamplePluginTerminal(10872): internalCloseLogicalChannel: 1
+V/SamplePluginTerminal(10872): internalDisconnect
+V/SamplePluginTerminal(10872): internalConnect
+V/SamplePluginTerminal(10872): internalTransmit: 00 a4 04 00 08 a0 00 00 00 03 00 00 00 00 
+V/SamplePluginTerminal(10872): internalTransmit: 80 ca 9f 7f 00 
+V/SamplePluginTerminal(10872): internalOpenLogicalChannel: a0 00 00 00 03 00 00 00 
+V/SamplePluginTerminal(10872): internalTransmit: 81 ca 9f 7f 00 
+V/SamplePluginTerminal(10872): internalTransmit: 00 a4 04 00 00 
+V/SamplePluginTerminal(10872): internalCloseLogicalChannel: 0
+V/SamplePluginTerminal(10872): internalCloseLogicalChannel: 1
+V/SamplePluginTerminal(10872): internalDisconnect
+}}}
+<br/>
+Methods to be implemented:
+==== public byte[] getAtr() ====
+Return the ATR if available or `null` if not present
+
+==== public String getName() ====
+Returns the logical Secure Element name. It is recommended to use the SIMalliance syntax `"short: long"` 
+
+==== public boolean isCardPresent() ====
+Returns `true` if the SE is available, otherwise false
+
+==== public void internalConnect() ====
+Called before any other method is used for the first time. Initial setup procedures should be placed here like power on or similar
+
+==== public void internalDisconnect() ====
+Called when the SE is not used by clients anymore. Shutdown or cleanup procedures should be placed here like power off or similar
+
+==== public byte[] getSelectResponse() ====
+Returns the applet SELECT response after calling openLogicalChannel(AID) or openBasicChannel(AID) if available
+
+==== public byte[] internalTransmit(byte[] command) ====
+Returns the response APDU or the corresponding command APDU 
+
+==== public int internalOpenLogicalChannel() ====
+Returns the channel number after opening a logical channel without an AID selection. Selected applet is the current default applet on the corresponding logical channel 
+
+==== public int internalOpenLogicalChannel(byte[] aid) ====
+Returns the channel number after opening a logical channel with an AID selection. Selected applet is referenced by the AID
+
+==== public void internalCloseLogicalChannel(int iChannel) ====
+Called when a channel gets closed (basic channel as well as logical channel). In case of a logical channel (iChannel > 0) the channel should be closed on the Secure Element
+<br/><br/><br/>
+
+
+
+_TODO: exception handling & getUid() enforcement for Access Control_
