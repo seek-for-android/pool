@@ -48,5 +48,5 @@ The documentation of the test cases of the test plans for the Open Mobile API ar
 The results of test runs are stored in directory<br>
 {{{out/host/linux-x86/cts/android-cts/repository/results}}}. 
 
-Sample result files of a test run of this test plan can be downloaded [http://seek-for-android.googlecode.com/files/CTS_results-2_3_0.tgz here].
+Sample result files of a test run of this test plan can be downloaded [http://seek-for-android.googlecode.com/files/CTS_results-2_3_0.zip here].
 <br><br>
