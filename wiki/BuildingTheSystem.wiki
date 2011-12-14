@@ -45,10 +45,11 @@ After applying the patches the android source tree contains all !SmartCard API s
  * `SmartCardService` - contains the complete !SmartCard API project
   * `jni` - contains the native sources for ASSD support
   * `src` - contains the sources of the !SmartCard API Service
-  * `openmobileapi` - contains the Open Mobile API shared library project. 
-In addition, the smartcard-api.patch extends `build/target/product/core.mk` to include the !SmartCard API in the built.
-Also, the UID/GID smartcard/smartcard is introduced to have the !SmartCardService installed with a unique ID.
-
+  * `openmobileapi` - contains the Open Mobile API shared library project.
+In addition, the smartcard-api.patch extends `build/target/product/core.mk` to include the !SmartCard API in the built.<br/>
+Also, the UID/GID smartcard/smartcard is introduced to have the !SmartCardService installed with a unique ID.<br/>
+If the optional `uicc.patch` is not applied, the !SmartCard API will not compile as the `UiccTerminal.java` connector requires those changes in the Android Telephony framework. In such case, remove the file `UiccTerminal.java` before compiling the system.<br/>
+ 
 Update `current.xml` as the system needs to known the new IDs:
 {{{
 $ make update-api
