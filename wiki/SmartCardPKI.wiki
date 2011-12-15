@@ -112,7 +112,7 @@ Unpack the package containing the Muscle Card Applet.
 tar xvzf MCardApplet-0912a.tar.gz
 }}}
 The package contains the Muscle Java Card Applet 0.9.12, which consist of the sources of 0.9.11 and the _Ant_ script from version 0.9.12 for easy compile and convert it.
-The original source of the Muscle Applet was slightly modified to accept CLA (Class-Byte) '90' additional to CLA='B0', because CLA='B0' will not be accepted in Smartcard-API 2.3 as it is not coded according to Global Platform !CardSpec 2.2.
+The original source of the Muscle Applet was slightly modified to accept CLA (Class-Byte) '90' additional to CLA='B0', because CLA='B0' will not be supported in Smartcard-API 2.3 as it is not coded according to Global Platform !CardSpec 2.2.
 
 There is already a compiled and converted cap file added to the package, which can be directly loaded onto a smart card with Java Card OS.
 It is located in the following directory: 
@@ -126,7 +126,7 @@ Then you can perform the compile/convert process for the applet by running _Ant_
 ant `<target>` (e.g. _"ant GD"_). The process is also described in the _INSTALL_ file included in the package.
 
 
-For loading the cap-File _CardEdge.cap_ onto the smart card you need to use an appropriate tool, which is typically provided from the manufacturer of the smart card (e.g. _G&D JLoad_ for the _G&D Mobile Security Card_).
+For loading the cap-File _!CardEdge.cap_ onto the smart card you need to use an appropriate tool, which is typically provided from the manufacturer of the smart card (e.g. _G&D JLoad_ for the _G&D Mobile Security Card_).
 
 
 == 2.4 Use OpenSC on the phone ==
@@ -145,7 +145,7 @@ Calling the commandline tools without a parameter shows the parameters available
 
 To initialise the Muscle Card Applet there is required to send a proprietary command, setting the initial PIN values.
 Therefore you need to connect your Android phone to the computer and open a connection to the device with the Android _adb_ tool.
-Then you can use the OpenSC _opensc-tool_ utility to perform the initialisation of the JavaCard Applet.
+Then you can use the OpenSC _opensc-tool_ utility to perform the initialisation of the !JavaCard Applet.
 {{{
 $ adb shell
 # cd /system/bin
