@@ -48,11 +48,11 @@ To provide PKI functionality on the Android OS, we use OpenSC with modifications
  * Tool to load a Java Card applet onto the Secure Element (_e.g. G&D JLoad_ for _G&D Mobile Security Card_)
 
 
-From the download page get the OpenSC for Android package [http://seek-for-android.googlecode.com/files/opensc_android_package_v2.0.tgz opensc_android_package_v2.0.tgz] <br><br>
+From the download page get the OpenSC for Android package [http://seek-for-android.googlecode.com/files/opensc_android_package_v2.0.1.tgz opensc_android_package_v2.0.1.tgz] <br><br>
 This package contains:
  * OpenSC 0.11.13: _external_opensc_0.11.13.tar.gz_
  * Patch for OpenSC for Android: _opensc_android.patch_
- * Muscle Card Applet 0.9.12: _MCardApplet-0912.tar.gz_
+ * Muscle Card Applet 0.9.12: _MCardApplet-0912a.tar.gz_
  * sample RSA key with certificate: _azur1024bit_password_12345678.pfx_
 
 
@@ -109,9 +109,11 @@ directory: /etc
 
 Unpack the package containing the Muscle Card Applet.
 {{{
-tar xvzf MCardApplet-0912.tar.gz
+tar xvzf MCardApplet-0912a.tar.gz
 }}}
 The package contains the Muscle Java Card Applet 0.9.12, which consist of the sources of 0.9.11 and the _Ant_ script from version 0.9.12 for easy compile and convert it.
+The original source of the Muscle Applet was slightly modified to accept CLA (Class-Byte) '90' additional to CLA='B0', because CLA='B0' will not be accepted in Smartcard-API 2.3 as it is not coded according to Global Platform !CardSpec 2.2.
+
 There is already a compiled and converted cap file added to the package, which can be directly loaded onto a smart card with Java Card OS.
 It is located in the following directory: 
 {{{
@@ -265,8 +267,6 @@ This will display all the PKCS#11 calls including sensitive information like PIN
 http://seek-for-android.googlecode.com/svn/wiki/img/PKI_snap7_p11spy.png
 
 
-
-
 = 3 Future Perspective =
 
 
@@ -277,3 +277,14 @@ It requires also standard applications, e.g. Browsers, eMail-Clients supporting 
 Other PKI Open Source projects/developments that should be investigated:
  * Firefox Browser for Android / "fennec" Project. Is there PKCS#11 Support like in Firefox available ?
  * Java Interface/Wrapper for access of PKI functionality from Java Applications (e.g IAIK PKC#11 Wrapper).
+
+=== Version History === 
+
+opensc_android_package_v2.0.1.tgz
+
+ * Muscle Applet was modified to accept CLA (Class-Byte) '90' additional to CLA='B0', because CLA='B0' will no longer accepted in Smartcard-API 2.3 as it is not coded according to Global Platform !CardSpec 2.2.
+
+
+opensc_android_package_v2.0.tgz
+
+ * initial version, based on !OpenSc 0.11.13
