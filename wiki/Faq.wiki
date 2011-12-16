@@ -6,6 +6,10 @@ The following summary is a list of (frequent) questions that we received through
 <table>
 
 
+<tr><td valign='top'>*Q*</td><td>I've filed a comment but I do not get an answer?</td></tr>
+<tr><td valign='top'>*A*</td><td>Please use the mailing list for support issues and page comments to improve the documentation only.</td></tr>
+<tr><td><br/></td><td></td></tr>
+
 <tr><td valign='top'>*Q*</td><td>Where do I get the Access Control Applet?</td></tr>
 <tr><td valign='top'>*A*</td><td>Please contact us directly via eMail.</td></tr>
 <tr><td><br/></td><td></td></tr>
