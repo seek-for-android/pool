@@ -1,4 +1,4 @@
-#summary Enable Android to run in a LVM container under Debian Linux
+#summary Enable Android to run in an LXC container
 
 = Introduction =
 
