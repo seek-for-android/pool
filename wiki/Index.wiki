@@ -12,7 +12,8 @@
    * [UsingSmartCardAPI Using the SmartCard API]<br>Writing Android applications with access to Secure Elements using the !SmartCard API<br><br>
    *  [UsingCTS Using CTS]<br>Extension for the Compatibility Test Suite (CTS) to be used !SmartCard API verification<br><br>
    * [MscSmartcardService MSC_SmartcardService]<br>Installable MSC !SmartcardService for Android phones which don't allow to flash a new system image. ([Devices List of tested devices])<br><br>
-   * [AddonTerminal Create an AddonTerminal]<br>!SmartCard API and MSC !SmartcardService can be extended with additional Secure Element (readers). This tutorial explain the details.
+   * [AddonTerminal Create an AddonTerminal]<br>!SmartCard API and MSC !SmartcardService can be extended with additional Secure Element (readers). This tutorial explain the details<br><br>
+
 ====Access Control====
    * [AccessControlIntroduction Introduction]<br>General introduction about the Access Control Scheme provided by the !SmartCard API<br><br>
    * [AccessControlDetails Details]<br>Technical description about the Access Control implementation<br><br>
@@ -20,12 +21,12 @@
 
 ====UICC Support====
    * [UICCSupport AT Command Extensions]<br>Specification of the AT Command Interface required for the !SmartCard API support on real devices<br><br>
-   * [SmartcardWebserver Smart Card Web Server]<br>Browse data located on the UICC with BIP extensions in the Android SIM Toolkit framework.<br><br>
-   * [EapSimAka EAP-SIM/AKA]<br>Enables Android Smartphones to authenticate in a WLAN with behalf of EAP-SIM/AKA protocol.<br><br>
+   * [SmartcardWebserver Smart Card Web Server]<br>Browse data located on the UICC with BIP extensions in the Android SIM Toolkit framework<br><br>
+   * [EapSimAka EAP-SIM/AKA]<br>Enables Android Smartphones to authenticate in a WLAN with behalf of EAP-SIM/AKA protocol<br><br>
 
 ====ASSD Support====
    * [Concept Concept]<br>Description of the ASSD concept<br><br>
-   * [HowToBuild How to Build]<br>Description how to integrate ASSD into the system.<br><br>
+   * [HowToBuild How to Build]<br>Description how to integrate ASSD into the system<br><br>
 
 
 ====PC/SC Interface====
@@ -36,6 +37,7 @@
    * [SmartCardPKI PKI Support on Android]<br>Integration of a smart card based, standard PKI interface into  Android<br><br>
 
 ====Applications====
+   * [AndroidContainer LXC container for Android]<br>Run multiple isolated Android user-space instances in LXC containers on a physical device within a (minimal) Debian environment<br><br>
    * [GoogleMSCAuthenticator]<br>Smartcard-based two-step authentication for Gmail on Android phones<br><br>
    * [AndroidBelgiumEid]<br>The COSIC Research Group within the Katholieke Universiteit Leuven, Belgium, developed a reference implementation for the Belgium eID card on the Android platform with the Mobile Security Card. ([http://www.esat.kuleuven.be/cosic/ K.U.Leuven, ESAT/COSIC])<br><br>
    * [BTPCSC]<br>Enables Android phones to be used as regular PC/SC smartcard readers vis Bluetooth.<br><br>
