@@ -2,8 +2,69 @@
 
 = Introduction =
 
-Ilja Herdt
+This document describes how to setup and run multiple isolated Android user-space instances on a commercial mobile device like Nexus One. Operating system-level virtualization method Linux Containers (LXC) is applied to create and run Android Containers on a single control host. The standard Android Kernel is modified to boot GNU-Linux from SD-card and to provide isolation mechanisms and resource management features required by LXC. 
 
-= Details =
+= Requirements =
+  * Nexus One
+  * SD-card (> 4GB recommended)
+  * x86-Linux environment
+  * Sun Java 5 JDK, JRE
+  * Version Control tools Repo and Git ([http://source.android.com/source/downloading.html download]
 
-TODO
+= Building and flashing the kernel =
+TEXT: MSM Kernel, etc...
+
+== Download Android source and setup build environment ==
+TEXT: download and build SDK, prebuilt toolchain for cross compiling (described [http://source.android.com/source/downloading.html here]
+
+== Download and patch kernel sources ==
+=== Getting kernel ===
+TEXT: kernel 2.6.35.7:
+{{{
+$ git clone https://android.googlesource.com/kernel/msm.git
+}}}
+
+=== Patching kernel ===
+TEXT: extract, download & apply patches, build
+
+== Compile and flash the kernel ==
+TEXT: modify boot.img cmdline, etc...
+
+= Host System Setup =
+TEXT: Debian squeeze, etc...
+
+== Preparing the SD-card ==
+
+  * resize and format SD-card
+  * debootstrap
+  * ...
+
+== Configuring Debian squeeze ==
+
+TEXT: resolv.conf, firmware (sound, wifi), rc.local, networking, adbd, bash, packages, fstab, wpasupplicant, inittab
+
+== Setup LXC userspace tools ==
+TEXT: control group file system, bridge setup, etc...
+
+= Android Container Setup =
+== Container Configuration File ==
+== Device Nodes ==
+== Android modifications ==
+TEXT: init.rc, init, DalvikVM, system_server, Networking, bridging, busybox (route), etc...
+
+= Notes =
+TEXT: fsck.ext2, button trigger, ...
+
+= Todo =
+TEXT: sdcard emulation, lxc-console, parallel fb access, secureSD
+
+
+= References =
+[http://en.wikipedia.org/wiki/Operating_system-level_virtualization]
+[http://lxc.sourceforge.net/]
+[http://lxc.teegra.net/]
+[http://www.irregular-expression.com/?p=30]
+
+
+= Useful Resources =
+[http://source.android.com/source/downloading.html]
