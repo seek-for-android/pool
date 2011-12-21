@@ -28,7 +28,7 @@
   * Services Layer
     * [SmartCardPKI PKI Support on Android]
   * Applications
-    * [AndroidContainer]
+    * [AndroidContainer LXC container for Android]
     * [GoogleMSCAuthenticator]
     * [AndroidBelgiumEid]
     * [BTPCSC]
