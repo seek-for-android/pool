@@ -2,7 +2,7 @@
 
 = Introduction =
 
-This document describes how to setup and run multiple isolated Android user-space instances on a commercial mobile device like Nexus One. Operating system-level virtualization method Linux Containers (LXC) is applied to create and run Android Containers on a single control host. The standard Android Kernel is modified to boot GNU-Linux from SD-card and to provide isolation mechanisms and resource management features required by LXC. 
+This document describes how to setup and run multiple isolated Android user-space instances on a commercial mobile device like Nexus One. Operating system-level virtualization method Linux Containers (LXC) is applied to create and run Android Containers on a single control host. The standard Android Kernel is modified to boot GNU-Linux from SD-card and to provide isolation mechanisms and resource management features for Android user-space. 
 
 = Requirements =
   * Nexus One
