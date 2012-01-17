@@ -9,7 +9,9 @@ This document describes how to setup and run multiple isolated Android user-spac
   * SD-card (> 4GB recommended)
   * x86-Linux environment
   * Sun Java 5 JDK, JRE
-  * Version Control tools Repo and Git ([http://source.android.com/source/downloading.html download]
+  * Version Control tools Repo and Git ([http://source.android.com/source/downloading.html download])
+
+following content is under construction ;)
 
 = Building and flashing the kernel =
 TEXT: MSM Kernel, etc...
