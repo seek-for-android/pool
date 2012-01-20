@@ -2,64 +2,80 @@
 
 = !SmartCard API =
 
-=== v2.3.0 - 05.12.2011 === 
+|| Version || Date || Code || Android ||
+|| 2.3.1-rc1 || 20.01.2012 || 0 || 4.0.3 ||
+|| 2.3.0 || 05.12.2011 || 1 || 2.3.7 ||
+|| 2.2.2 || 23.08.2011 || - || 2.3.5 ||
+|| 2.2.1 || 15.07.2011 || - || 2.3.4 ||
+|| 2.2.0 || 01.07.2011 || - || 2.3.4 ||
+|| 2.1.2 || 21.06.2011 || - || 2.3 ||
+|| 2.1.1 || 15.04.2011 || - || 2.3 ||
+|| 2.0 || 28.02.2011 || - || 2.3 ||
+|| 1.2 || 12.11.2010 || - || 2.2.1 ||
+|| 1.1 || 25.10.2010 || - || 2.2 ||
+|| 1.0 || 09.07.2010 || - || 2.2 ||
+|| 0.1 || 18.01.2010 || - || 2.1 ||
+
+<br/>
+
+
+=== v2.3.1-rc1 === 
+ * Pre-release
+ * ICS support (Android-4.0.3)
+ * compatible with SCAPI-2.3.0
+
+
+=== v2.3.0 === 
  * Compliant to the latest [http://simalliance.org/ SIMalliance] Open Mobile API Specification V2.02 (transport layer only) 
  * !SmartCard API is only based on the Open Mobile API SIMalliance
  * The namespace "android.smartcard" was completely removed
  * !SmartCard API is only provided as shared library. 
-<br/><br/>
 
 
-=== v2.2.2 - 23.08.2011 === 
+=== v2.2.2 === 
  * !SmartCard API is only provided as shared library.
  * !SmartCard API is only based on the Open Mobile API [http://simalliance.org/ SIMalliance ] 
  * The !SmartCard API can be extended with the old API (V 1.X) with the backward compatibilty add on patch.
  * The permission for using the SmartCardAPI was changed from "android.permission.SMARTCARD" to "org.simalliance.openmobileapi.SMARTCARD".
-<br/><br/>
 
 
-=== v2.2.1 - 15.07.2011 === 
+=== v2.2.1 === 
  * Fully compliant to the latest [http://simalliance.org/ SIMalliance ]Open Mobile API Specification (V1.01)
  * New SE Access Control Enforcer can restrict the access to Secure Elements by predefined policies. See the SE Access Control description. 
  * CTS extension for !SmartCard API. (Some corrections were made to enable CTS also for the shared library based !SmartCard API)
  * Support of [http://www.sdcard.org/developers/tech/ASSD/ ASSD] to access SD memory cards with an embedded security system  (Note: The also provided ASSD kernel patch for creating the ASSD kernel driver has to be used for enabling the ASSD support) 
  * The ASSD solution replaces the interim proprietary solution "MSC" for accessing a Secure SD cards.
  * !SmartCard API is also provided as a shared library. A new alternative (but experimental) solution.
-<br/><br/>
 
 
-=== v2.2.0 - 01.07.2011 ===
+=== v2.2.0 ===
  * Fully compliant to SIMalliance Open Mobile API Specification V1.01. 
  * New SE Access Control Enforcer can restrict the access to Secure Elements by predefined policies. See the SE Access Control description.
  * CTS extension for !SmartCard API. (as provided in v2.1.2)
  * Patch for ASSD (Advanced Security SD) was removed again as the needed ASSD kernel driver is not available yet (but will coming soon).
  * !SmartCard API is also provided as a shared library. A new alternative (but experimental) solution (as provided in v2.1.2)
  * UICC and Emulator patch files are now compliant to Android 2.3.4r1 (UICC/Emulator patch files in v2.1.2 cause a version mismatch with Android 2.3.4r1)
-  <br/><br/>
 
-=== v2.1.2 - 21.06.2011 ===
+=== v2.1.2 ===
  * Fully compliant to SIMalliance Open Mobile API Specification V1.01. 
  * New SE Access Control unit can restrict the access to Secure Elements by predefined policies. See the SE Access Control description.
  * CTS test suite for !SmartCard API.
  * Support of ASSD (Advanced Security SD).
  * API is now also provided as a shared library.
-<br/><br/>
 
-=== v2.1.1 - 15.04.2011 ===
+=== v2.1.1 ===
  * fully SIM Alliance Open Mobile API compliant
  * added Terminal provider interface
  * minor bugfixes and extensions in the terminal implementation:
    * !MscTerminal is connected at later time if initial connect failed
    * !SmartMxTerminal was adapted to the latest interface
    * !UiccTerminal was improved in terms of error handling
-<br/><br/>
 
-=== v2.0 - 28.02.2011 ===
+=== v2.0 ===
  * Gingerbread support
  * API redesign to provide a better abstraction of the SE sevices
-<br/><br/>
 
-=== v1.2 - 12.11.2010 ===
+=== v1.2 ===
  * !MscTerminal redesign
  * Msc native JNI: better APDU waiting loop
  * dynamic card terminal instantiation:
@@ -67,9 +83,8 @@
    * no further source code adaptions required
  * internal cleanup: moved all terminal implementation into terminal namespace
  * bugfix: APDU size of 255 bytes with !MscTerminal 
-<br/><br/>
 
-=== v1.1 - 22.10.2010 ===
+=== v1.1 ===
  * getAtr() removed from ISmartcardService
  * major internal redesign
    * PC/SC transport system replaced by Terminal implementations on the Java layer
@@ -77,9 +92,8 @@
  * UICC handler added with reference implementation for OEMs and emulator support
    * AT commands AT+CCHO, AT+CGLA, AT+CCHC and AT+CSIM supported
  * new sample application _!ApduTester_ available
-<br/><br/>
 
-=== v1.0 - 09.07.2010 ===
+=== v1.0 ===
  * !SmartCardService as the final architecture for a smart card library for Android
  * minor bugfixes
    * mapping of logical channels to CLA bytes
@@ -88,8 +102,7 @@
  * shutdown() function added
  * integrated in Android build system
  * Channel management not ISO conform to allow non ISO CLA bytes to be used for channel management
-<br/><br/>
 
-=== v0.1 - 18.01.2010 ===
+=== v0.1 ===
  * initial *alpha* release
  * first release of a _Service-based_ approach for the main instance of the library instead of plain framework extensions
