@@ -4,69 +4,163 @@
 
 This document describes how to setup and run multiple isolated Android user-space instances on a commercial mobile device like Nexus One. Operating system-level virtualization method Linux Containers (LXC) is applied to create and run Android Containers on a single control host. The standard Android Kernel is modified to boot GNU-Linux from SD-card and to provide isolation mechanisms and resource management features for Android user-space. 
 
-= Requirements =
+<br>
+= 1 Requirements =
   * Nexus One
-  * SD-card (> 4GB recommended)
+  * SD-card (> 2GB recommended)
   * x86-Linux environment
-  * Sun Java 5 JDK, JRE
+  * Sun Java 6 JDK, JRE
   * Version Control tools Repo and Git ([http://source.android.com/source/downloading.html download])
 
-following content is under construction ;)
+<br>
+= 2 Building and flashing the kernel =
 
-= Building and flashing the kernel =
-TEXT: MSM Kernel, etc...
+In this section we describe how to modify the stock Nexus One firmware (mainly boot.img) to be able to boot a GNU-Linux directly from SD-card. This method enables us to run a plain GNU-Linux environment natively (no chroot!) on the device hardware. Additionally kernel configuration options and source code are patched to provide LXC container virtualization environment. Finally we describe how the modified kernel is properly packaged into a boot.img and flashed on the Nexus One device.
 
-== Download Android source and setup build environment ==
-TEXT: download and build SDK, prebuilt toolchain for cross compiling (described [http://source.android.com/source/downloading.html here]
+<br>
+== 2.1 Download Android source and setup build environment ==
 
-== Download and patch kernel sources ==
-=== Getting kernel ===
-TEXT: kernel 2.6.35.7:
+In order to compile the kernel from scratch a toolchain for cross-compiling is needed. Please follow instructions from Google [http://http://source.android.com/source/initializing.html here] for setting up a Linux or MacOSX build environment and [http://source.android.com/source/downloading.html here] for getting the Android SDK which contains a pre-built toolchain. The Android source directory is from now on indicated as ANDROID_DIR.
+
+<br>
+== 2.2 Download and patch kernel sources ==
+
+The kernel sources for Nexus One can be downloaded through the command:
 {{{
 $ git clone https://android.googlesource.com/kernel/msm.git
+The repository is created in the subfolder msm
+$ cd <MSM_DIR>
 }}}
 
-=== Patching kernel ===
-TEXT: extract, download & apply patches, build
+Note: Currently we can only provide a patch for 2.6.35.7 kernel.
 
-== Compile and flash the kernel ==
-TEXT: modify boot.img cmdline, etc...
+Download the [http://seek-for-android.googlecode.com/files/sdcard-lxc-kernel.tar.gz sdcard-lxc-kernel.tar.gz] patch and extract the content:
 
-= Host System Setup =
+ * sdcard-lxc-kernel.patch - patches kernel for SD-card boot and LXC support
+ * readme.txt - description how to build
+
+Apply the patch:
+
+{{{
+<MSM_DIR>$ patch -p1 < sdcard-lxc-kernel.patch
+}}}
+
+<br>
+== 2.3 Compile and flash the kernel ==
+
+Now we are ready to build the kernel:
+
+{{{
+<MSM_DIR>$ make ARCH=arm CROSS_COMPILE=<ANDROID_DIR>/prebuilt/linux-x86/toolchain/arm-eabi-4.4.3/bin/arm-eabi- -j4
+}}}
+
+Note: In case the new kernel has not the correct kernel revision number or a -dirty flag is appended, you have to create a .scmversion file inside the kernel directory with a proper revision number and build the kernel again:
+{{{
+<MSM_DIR>$ echo '-g3cc95e3' > .scmversion
+<MSM_DIR>$ make ARCH=arm CROSS_COMPILE=<ANDROID_DIR>/prebuilt/linux-x86/toolchain/arm-eabi-4.4.3/bin/arm-eabi- -j4
+}}}
+
+The newly created kernel MSM_DIR/arch/arm/boot/zImage needs to be packaged into a boot.img before it can be flashed onto device. In order to create and flash the boot.img we need to compile the necessary tools first:
+
+{{{
+$ cd <ANDROID_DIR>
+<ANDROID_DIR>$ . build/envsetup.sh
+<ANDROID_DIR>$ lunch full_passion-eng
+<ANDROID_DIR>$ make -j4
+}}}
+
+After a successfull build tools like mkbootimg, fastboot and adb are available in the ANDROID_DIR/out/host/linux-x86/bin directory. We add it to the PATH variable:
+
+{{{
+$ export PATH=<ANDROID_DIR>/out/host/linux-x86/bin:$PATH
+}}}
+
+The goal of the next step is to package the newly created kernel zImage and the unmodified ramdisk.img into a new boot.img. Since we don't want to boot from the ramdisk but directly from the SD-card, the kernel cmdline needs to be modified permanently. The kernel replacement and cmdline modification is achieved by this command:
+
+{{{
+$ mkbootimg \ 
+--kernel <MSM_DIR>/arch/arm/boot/zImage \
+--ramdisk <ANDROID_DIR>/out/target/product/passion/ramdisk.img \
+--cmdline "no_console_suspend=1 wire.search_count=5 root=/dev/mmcblk0p2 rw rootfs=ext2 init=/sbin/init rootwait noinitrd" \
+--base 0x20000000 \
+--output <ANDROID_DIR>/out/target/product/passion/boot.img
+}}}
+
+Note: For future target devices the correct mkbootimg parameters can be easily determined by recompiling the boot.img with the showcommands option: 
+{{{
+<ANDROID_DIR>$ make bootimage showcommands
+}}}
+
+Now we can flash the new boot.img onto the boot partition. The device has to be rooted and the USB permissions have to be setup properly. In case of any problems check [https://www.google.com/search?q=root+nexus+one here] and  [http://source.android.com/source/initializing.html here (section: Configuring USB Access)].
+
+{{{
+$ adb reboot bootloader
+$ fastboot flash boot <ANDROID_DIR>/out/target/product/passion/boot.img
+}}}
+
+Note: Once you replaced the boot.img with modified cmdline to boot from SD-card, you can easily update the kernel zImage on the device without the need to create a boot.img again:
+
+{{{
+$ fastboot flash zimage <MSM_DIR>/arch/arm/boot/zImage
+}}}
+
+Since we don't touch the original system and userdata partitions, the original boot.img can be flashed to recovery partition to provide a convenient way to boot 'the normal way' from the bootloader menu. 
+
+In the next step we prepare the GNU-linux environment on the SD-card and configure LXC tools for the Android Container.
+
+<br>
+= 3 Host System Setup =
 TEXT: Debian squeeze, etc...
 
-== Preparing the SD-card ==
+<br>
+== 3.1 Preparing the SD-card ==
 
   * resize and format SD-card
   * debootstrap
   * ...
 
-== Configuring Debian squeeze ==
+<br>
+== 3.2 Configuring Debian squeeze ==
 
 TEXT: resolv.conf, firmware (sound, wifi), rc.local, networking, adbd, bash, packages, fstab, wpasupplicant, inittab
 
-== Setup LXC userspace tools ==
+<br>
+== 3.3 Setup LXC userspace tools ==
 TEXT: control group file system, bridge setup, etc...
 
-= Android Container Setup =
-== Container Configuration File ==
-== Device Nodes ==
-== Android modifications ==
+<br>
+= 4 Android Container Setup =
+<br>
+== 4.1 Container Configuration File ==
+<br>
+== 4.2 Device Nodes ==
+<br>
+== 4.3 Android modifications ==
 TEXT: init.rc, init, DalvikVM, system_server, Networking, bridging, busybox (route), etc...
 
-= Notes =
+<br>
+= 5 Notes =
 TEXT: fsck.ext2, button trigger, ...
 
+<br>
 = Todo =
 TEXT: sdcard emulation, lxc-console, parallel fb access, secureSD
 
 
+<br>
 = References =
-[http://en.wikipedia.org/wiki/Operating_system-level_virtualization]
-[http://lxc.sourceforge.net/]
-[http://lxc.teegra.net/]
-[http://www.irregular-expression.com/?p=30]
+[http://en.wikipedia.org/wiki/Operating_system-level_virtualization] <br>
+[http://lxc.sourceforge.net/]<br>
+[http://lxc.teegra.net/]<br>
+[http://www.irregular-expression.com/?p=30]<br>
 
 
+
+<br>
 = Useful Resources =
-[http://source.android.com/source/downloading.html]
+[http://source.android.com/source/downloading.html]<br>
+
+<br>
+<br>
+<br>
+<br>
