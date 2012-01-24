@@ -91,6 +91,8 @@ Note: For future target devices the correct mkbootimg parameters can be easily d
 <ANDROID_DIR>$ make bootimage showcommands
 }}}
 
+Note: If you don't want to build your own image a fully working boot.img can be downloaded [http://seek-for-android.googlecode.com/files/sdcard-lxc-boot.img here]
+
 Now we can flash the new boot.img onto the boot partition. The device has to be rooted and the USB permissions have to be setup properly. In case of any problems check [https://www.google.com/search?q=root+nexus+one here] and  [http://source.android.com/source/initializing.html here (section: Configuring USB Access)].
 
 {{{
@@ -110,19 +112,124 @@ In the next step we prepare the GNU-linux environment on the SD-card and configu
 
 <br>
 = 3 Host System Setup =
-TEXT: Debian squeeze, etc...
+
+For our virtualization solution with Linux Containers (LXC) a standard GNU-linux, in this case Debian (squeeze) distribution is configured to run as host system directly from SD-card on the mobile device. This setup has several advantages, mainly a convenient way of installing new software packages currently available in the Debian repositories for the armel architecture and further avoiding possible space restrictions of the built-in device flash memory. 
 
 <br>
 == 3.1 Preparing the SD-card ==
 
-  * resize and format SD-card
-  * debootstrap
-  * ...
+The following steps have to be performed on any external linux-system with SD-card slot.
 
+  * Create two partitions on the SD-card, a small vfat partition as first partition to simulate the standard SD-card and a second bigger ext2 partition (>2GB) where we place our host system and the Android containers (ext3 & ext4 is not recommended due to journaling capabilities which reduce the lifetime of SD-card). 
+  * Mount the ext2 partition on the linux-system to any directory MNT_DIR and debootstrap a minimal Debian (sqeeze) for the armel architecture:
+
+{{{
+$ sudo mount /dev/mmcblk0p2 <MNT_DIR>
+$ debootstrap --foreign --arch=armel --variant=minbase \ 
+squeeze <MNT_DIR> http://ftp.debian.org/debian
+}}}
+
+For the second step of debootstrapping the system we need to access the debian ext2 partition from the mobile device. In this step all the necessary device nodes etc. are created, thus this task has to be performed in our target system environment, i.e. in the adb shell after a regular boot:
+
+{{{
+$ adb shell
+# mount -t ext2 /dev/block/mmcblk0p2 <MNT_DIR>
+# chroot <MNT_DIR> /debootstrap/debootstrap --second-stage
+}}}
+
+Note: mount/chroot can be executed with help of a busybox which can be downloaded [http://busybox.net/downloads/binaries/1.19.0/ here]. How to use busybox on an Android device is explained for example [http://www.saurik.com/id/10 here].
+
+  
 <br>
-== 3.2 Configuring Debian squeeze ==
+== 3.2 Configuring the Host System ==
 
-TEXT: resolv.conf, firmware (sound, wifi), rc.local, networking, adbd, bash, packages, fstab, wpasupplicant, inittab
+After a basic Debian system on the ext2 partition of the SD-card is created, several configuration changes have to be made in order to be able to directly boot it on the device. First minimum required settings are presented to perform the very first successful boot and then additional features are configured like networking, sound, X11, etc.
+
+Since there is usually no serial cable available (example how to build a serial cable can be found [http://trac.osuosl.org/trac/replicant/wiki/NexusSBootloader here]) we have to ensure that the linux environment boots up without errors and the adb daemon is started at system startup. Thus the connection to the the Debian host root shell can be established through adb. 
+
+But first we need to boot the device normally and execute these commands:
+{{{
+$ adb shell
+
+# mount -t ext2 /dev/block/mmcblk0p2 <MNT_DIR>
+# cp /sbin/adbd <MNT_DIR>/sbin/adbd
+# cat > <MNT_DIR>/etc/rc.local << EOF
+> /sbin/adbd &
+> exit 0
+> EOF
+
+# mkdir -p <MNT_DIR>/system/bin/
+# ln -s /bin/bash <MNT_DIR>/system/bin/sh
+
+# cat > <MNT_DIR>/etc/fstab << EOF 
+> /dev/block/mmcblk0p2 / ext2 defaults 1 0
+> proc /proc proc defaults 0 0
+> EOF
+}}}
+
+Now the Debian host system is ready for the first native boot! Test the connection via adb and if that works reboot the device normally to perform further configuration steps. Otherwise check previous steps for errors. 
+
+Next we need to install some packages from the repository, e.g. wpasupplicant for networking support. Since we need obviously internet connection to do this, we have to boot Android normally and establish an internet connection by its means. Then we chroot into Debian to install the necessary packages:
+
+{{{
+$ adb shell
+# mount -t ext2 /dev/block/mmcblk0p2 <MNT_DIR>
+# chroot <MNT_DIR> /bin/bash
+$ export PATH=/usr/bin:/usr/sbin:/bin:$PATH
+$ export TERM=linux
+$ echo 'deb http://ftp.debian.org/debian squeeze main' > /etc/apt/sources.list
+$ apt-get update
+$ apt-get install wpasupplicant wireless-tools
+$ apt-get install locales vi
+$ exit
+}}}
+
+In order to setup networking for the Debian host system, first we have to copy the wifi kernel module and the firmware and then we have to configure wpasupplicant to be able to establish wifi connections from within the Debian environment. These commands should be executed inside the adb shell (not chroot!):
+
+{{{
+$ mkdir -p <MNT_DIR>/lib/modules/`uname -r`/drivers/net/wireless/
+$ cp /system/lib/modules/bcm4329.ko \
+  <MNT_DIR>/lib/modules/`uname -r`/drivers/net/wireless/
+$ mkdir -p <MNT_DIR>/system/vendor/firmware/
+$ cp /system/vendor/firmware/fw_bcm4329.bin \
+  <MNT_DIR>/system/vendor/firmware/
+$ echo 'bcm4329' > <MNT_DIR>/etc/modules
+
+$ cat > <MNT_DIR>/etc/network/interfaces << EOF 
+< auto lo
+< iface lo inet loopback
+<
+< auto eth0
+< iface eth0 inet manual
+<   wpa-driver wext
+<
+< wpa-roam /etc/wpa_supplicant/wpa_supplicant.conf
+<
+< iface your_wlan_name inet dhcp
+< EOF
+
+$ cat > <MNT_DIR>/etc/wpa_supplicant/wpa_supplicant.conf << EOF
+< ctrl_interface=/var/run/wpa_supplicant
+< ap_scan=2
+< fast_reauth=1
+< network={
+<         ssid="your_wlan_ssid"
+<         id_str="your_wlan_name"
+<         scan_ssid=1
+<         mode=0
+<         proto=WPA
+<         key_mgmt=WPA-PSK
+<         pairwise=CCMP TKIP
+<         group=TKIP
+<         psk="your_wlan_password"
+< }
+< EOF
+
+}}}
+
+Now we should have a fully functional networking inside the Debian host system. 
+
+TODO: setup description of X11, sound, etc.
 
 <br>
 == 3.3 Setup LXC userspace tools ==
