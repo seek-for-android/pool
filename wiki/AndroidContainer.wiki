@@ -91,7 +91,7 @@ Note: For future target devices the correct mkbootimg parameters can be easily d
 <ANDROID_DIR>$ make bootimage showcommands
 }}}
 
-Note: If you don't want to build your own image a fully working boot.img can be downloaded [http://seek-for-android.googlecode.com/files/sdcard-lxc-boot.img here]
+Note: If you don't want to build your own image a fully working boot.img can be downloaded here [http://seek-for-android.googlecode.com/files/sdcard-lxc-boot.img sdcard-lxc-boot.img]
 
 Now we can flash the new boot.img onto the boot partition. The device has to be rooted and the USB permissions have to be setup properly. In case of any problems check [https://www.google.com/search?q=root+nexus+one here] and  [http://source.android.com/source/initializing.html here (section: Configuring USB Access)].
 
