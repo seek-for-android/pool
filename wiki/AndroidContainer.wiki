@@ -268,11 +268,13 @@ This section is intended to give an overview on setting up the Linux Container (
 
 Since the control group file system (cgroup) was setup and mounted in previous steps, we continue with installing the patched LXC package. 
 
-Download this patch [http://seek-for-android.googlecode.com/files/lxc-0.7.5-n1-patch.tar.gz lxc-0.7.5-n1-patch.tar.gz] and apply it to [http://lxc.sourceforge.net/download/lxc/lxc-0.7.5.tar.gz lxc-0.7.5.tar.gz] sources, compile and install:
+Download this patch [http://seek-for-android.googlecode.com/files/lxc-0.7.5-fd-patch.tar.gz lxc-0.7.5-fd-patch.tar.gz] and apply it to [http://lxc.sourceforge.net/download/lxc/lxc-0.7.5.tar.gz lxc-0.7.5.tar.gz] sources, compile and install:
 
 {{{
-<LXC_SRC_DIR>$ patch -p1 < lxc-0.7.5-n1.patch
-<LXC_SRC_DIR>$ ./configure & make & make install
+<LXC_SRC_DIR>$ patch -p1 < lxc-0.7.5-fd.patch
+<LXC_SRC_DIR>$ ./configure 
+<LXC_SRC_DIR>$ make
+<LXC_SRC_DIR>$ make install
 }}}
 
 Before we create a specific Android container, network bridging has to be configured to enable network access from within the isolated container environment:
