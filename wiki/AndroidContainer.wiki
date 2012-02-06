@@ -312,10 +312,10 @@ In order to create a complete Android system, for instance, the file system stru
         +-- rootfs
 }}}
 
-Download the [http://seek-for-android.googlecode.com/files/sdcard-android-lxc-rootfs.tar.gz sdcard-android-lxc-rootfs.tar.gz] tarball, copy to ANDROID_LXC folder and extract:
+Download the [http://seek-for-android.googlecode.com/files/sdcard-android-lxc-rootfs.tar.gz sdcard-android-lxc-rootfs.tar.gz] tarball, copy to ANDROID_LXC/rootfs folder and extract:
 
 {{{
-<ANDROID_LXC>$ tar -xzvf sdcard-android-lxc-rootfs.tar.gz .
+<ANDROID_LXC>/rootfs$ tar -xzvf sdcard-android-lxc-rootfs.tar.gz
 }}}
 
 Note: All in this image included modifications were applied to Android 2.3.x Gingerbread and are explained in section 4.3.
