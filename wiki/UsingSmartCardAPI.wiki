@@ -44,9 +44,9 @@ The sample code referenced here can also be found in the SVN repository.
 To include Secure Element access, add the shared library classes included in `org.simalliance.openmobileapi.jar` to the project settings under _Java Build Path_.
  * _Java Build Path -> Tab: Libraries -> Add External JARs..._
 
-Instead of using the download package [http://seek-for-android.googlecode.com/files/org.simalliance.openmobileapi.jar org.simalliance.openmobileapi.jar] the compiled version can be used alternatively located under:
+Instead of using the JAR file included in the package [http://seek-for-android.googlecode.com/files/smartcard-api-2_3_2.tgz smartcard-api-2_3_2.tgz] the compiled version can be used alternatively located under:
 {{{
-<ANDROID_ROOT_DIR>/out/target/common/obj/JAVA_LIBRARIES/org.simalliance.openmobileapi_intermediates/classes-full-debug.jar
+<ANDROID_ROOT_DIR>/out/target/common/obj/JAVA_LIBRARIES/org.simalliance.openmobileapi_intermediates/classes.jar
 }}}
 
 ===uses-library in !AndroidManifest.xml===
