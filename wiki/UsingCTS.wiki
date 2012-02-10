@@ -52,6 +52,26 @@ for Android 4.0.x:<br>
 $ ./out/host/linux-x86/cts/android-cts/tools/cts-tradefed run --class org.simalliance.openmobileapi.cts.TestConformanceRequirements
 }}}
 
+If logging of test plan results is not required (e.g. for quick tests) the tests can also be executed without the CTS test tool by following two {{{adb}}} commands:
+
+Installation of test package:<br>
+{{{
+$ adb install -r out/host/linux-x86/cts/android-cts/repository/testcases/CtsOpenMobileApiTestCases.apk
+}}}
+
+Execution of test:<br>
+{{{
+$ adb shell am instrument -w [ -e reader <reader> ] [ -e class <class> ] org.simalliance.openmobileapi.cts/org.simalliance.openmobileapi.cts.InstrumentationTestRunnerParameterized
+}}}
+Parameters {{{-e reader <reader>}}} and {{{-e class <class>}}} are optional.<br>
+If the {{{reader}}} parameter is not present "CTSMock" reader is used.<br>
+If the {{{class}}} parameter is not present all test classes of the package are executed.
+
+E.g.<br>
+{{{
+adb shell am instrument -w -e reader "CTSMock" -e class org.simalliance.openmobileapi.cts.TestConformanceRequirements org.simalliance.openmobileapi.cts/org.simalliance.openmobileapi.cts.InstrumentationTestRunnerParameterized
+}}}
+
 = Documentation and Results of CTS Tests = 
 
 The documentation of the test cases of the test plans for the Open Mobile API are located in<br>
