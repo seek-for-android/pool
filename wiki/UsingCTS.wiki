@@ -26,18 +26,30 @@ $ make cts
 
 = How to Run the CTS Tests =
 After the CTS has been built successfully with the Open Mobile API
-test extensions, the test tool {{{startcts}}} can be found in directory
-{{{out/host/linux-x86/cts/android-cts/tools}}}.<br>
+test extensions, in directory {{{out/host/linux-x86/cts/android-cts/tools}}}
+the test tool {{{startcts}}} (Android 2.3.x) / {{{cts-tradefed}}} (Android 4.0.x) can be found .<br>
 
-Execution of the whole test plan for the Open Mobile API is started by the following command: 
+Execution of the whole test plan for the Open Mobile API is started by the following command:<br>
+for Android 2.3.x:<br>
 {{{
 $ ./out/host/linux-x86/cts/android-cts/tools/startcts start --plan OpenMobile
 }}}
 
+for Android 4.0.x:<br>
+{{{
+$ ./out/host/linux-x86/cts/android-cts/tools/cts-tradefed run --plan OpenMobile
+}}}
+
 It is also possible to execute only a part of a test plan.<br>
-E.g. to execute only tests of test case {{{TestConformanceRequirements}}} use the following command: 
+E.g. to execute only tests of test case {{{TestConformanceRequirements}}} use the following command:<br>
+for Android 2.3.x:<br>
 {{{
 $ ./out/host/linux-x86/cts/android-cts/tools/startcts start --plan OpenMobile -p org.simalliance.openmobileapi.cts.TestConformanceRequirements
+}}}
+
+for Android 4.0.x:<br>
+{{{
+$ ./out/host/linux-x86/cts/android-cts/tools/cts-tradefed run --class org.simalliance.openmobileapi.cts.TestConformanceRequirements
 }}}
 
 = Documentation and Results of CTS Tests = 
