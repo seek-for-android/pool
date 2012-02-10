@@ -61,7 +61,7 @@ $ adb install -r out/host/linux-x86/cts/android-cts/repository/testcases/CtsOpen
 
 Execution of test:<br>
 {{{
-$ adb shell am instrument -w [ -e reader <reader> ] [ -e class <class> ] org.simalliance.openmobileapi.cts/org.simalliance.openmobileapi.cts.InstrumentationTestRunnerParameterized
+$ adb shell am instrument -w [ -e reader <reader> ] [ -e class <class> ] org.simalliance.openmobileapi.cts/.InstrumentationTestRunnerParameterized
 }}}
 Parameters {{{-e reader <reader>}}} and {{{-e class <class>}}} are optional.<br>
 If the {{{reader}}} parameter is not present "CTSMock" reader is used.<br>
@@ -69,7 +69,11 @@ If the {{{class}}} parameter is not present all test classes of the package are 
 
 E.g.<br>
 {{{
-adb shell am instrument -w -e reader "CTSMock" -e class org.simalliance.openmobileapi.cts.TestConformanceRequirements org.simalliance.openmobileapi.cts/org.simalliance.openmobileapi.cts.InstrumentationTestRunnerParameterized
+adb shell am instrument -w org.simalliance.openmobileapi.cts/.InstrumentationTestRunnerParameterized
+}}}
+or
+{{{
+adb shell am instrument -w -e reader "CTSMock" -e class org.simalliance.openmobileapi.cts.TestConformanceRequirements org.simalliance.openmobileapi.cts/.InstrumentationTestRunnerParameterized
 }}}
 
 = Documentation and Results of CTS Tests = 
