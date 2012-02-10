@@ -54,12 +54,12 @@ $ ./out/host/linux-x86/cts/android-cts/tools/cts-tradefed run --class org.simall
 
 If logging of test plan results is not required (e.g. for quick tests) the tests can also be executed without the CTS test tool by following two {{{adb}}} commands:
 
-Installation of test package:<br>
+First install the test package...<br>
 {{{
 $ adb install -r out/host/linux-x86/cts/android-cts/repository/testcases/CtsOpenMobileApiTestCases.apk
 }}}
 
-Execution of test:<br>
+...then start the execution:<br>
 {{{
 $ adb shell am instrument -w [ -e reader <reader> ] [ -e class <class> ] org.simalliance.openmobileapi.cts/.InstrumentationTestRunnerParameterized
 }}}
