@@ -165,6 +165,8 @@ $ adb shell
 # cat > <MNT_DIR>/etc/fstab << EOF 
 > /dev/block/mmcblk0p2 / ext2 defaults 1 0
 > proc /proc proc defaults 0 0
+> devpts /dev/pts devpts defaults 0 0 
+> sysfs /sys sysfs defaults 0 0
 >
 > none /cgroup cgroup defaults 0 0 
 > /dev/mtdblock3 /media/system yaffs defaults 0 0
