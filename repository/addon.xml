@@ -28,8 +28,8 @@
         <sdk:uses-license ref="android-sdk-license" />
         <sdk:archives>
             <sdk:archive os="any">
-                <sdk:size>25887</sdk:size>
-                <sdk:checksum type="sha1">abfc8d2da5a8373967441e908ce29d8855544e5c</sdk:checksum>
+                <sdk:size>20247</sdk:size>
+                <sdk:checksum type="sha1">99b11927e763ca47e3bfbd01753f6f389672f18a</sdk:checksum>
                 <sdk:url>scapi.zip</sdk:url>
             </sdk:archive>
         </sdk:archives>
