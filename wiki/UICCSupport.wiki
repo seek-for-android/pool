@@ -45,9 +45,10 @@ The [http://www.3gpp.org/ftp/Specs/html-info/27007.htm 3GPP TS 27.007 Technical 
 +CGLA: <length>,<response></code>
  The AT+CGLA command transmits the _command_ APDU to the selected card application, and returns the _response_ APDU to the caller.
 
-The [http://seek-for-android.googlecode.com/files/smartcard-api-2_0.tgz UICC patch] (uicc.patch) adds support for SIM card access to the telephony framework. The additional telephony framework methods shall be available for the [SmartcardAPI SmartCard API] exclusively thus no malicious application can use the telephony extensions directly.
+The _uicc.patch_ adds support for SIM card access to the telephony framework. The additional telephony framework methods shall be available for the [SmartcardAPI SmartCard API] exclusively thus no malicious application can use the telephony extensions directly.
 
-Once the baseband processor supports the required AT commands, and the UICC patch has been applied, the [SmartcardAPI SmartCard API] supports access to the SIM card with mentioned limitations. The RIL implementation on current Android phones do not support the required AT commands. For this reason the UICC patch includes an [EmulatorExtension emulator extension] (emulator.patch), which adds support for the required AT commands to the emulator's RIL implementation (reference-ril).
+Once the baseband processor supports the required AT commands, and the UICC patch has been applied, the [SmartcardAPI SmartCard API] supports access to the SIM card with mentioned limitations. The RIL implementation on current Android phones do not support the required AT commands. For this reason the UICC patch includes an [EmulatorExtension emulator extension] (emulator.patch), which adds support for the required AT commands to the emulator's RIL implementation (reference-ril).<br/>
+Refer to [http://code.google.com/p/seek-for-android/downloads/detail?name=RIL_Extensions.tgz RIL_Extensions.tgz] for more information.
 <br/><br/>
 
 
