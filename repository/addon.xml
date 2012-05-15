@@ -28,8 +28,8 @@
         <sdk:uses-license ref="android-sdk-license" />
         <sdk:archives>
             <sdk:archive os="any">
-                <sdk:size>20247</sdk:size>
-                <sdk:checksum type="sha1">99b11927e763ca47e3bfbd01753f6f389672f18a</sdk:checksum>
+                <sdk:size>20425</sdk:size>
+                <sdk:checksum type="sha1">5fdf287133cb5364d4eeadf5f618da06a5293569</sdk:checksum>
                 <sdk:url>scapi.zip</sdk:url>
             </sdk:archive>
         </sdk:archives>
@@ -44,7 +44,7 @@
     <sdk:license type="text" id="android-sdk-license">
 Licensed under the Apache License, version 2.0 (the "License");
 
-Februrary 22, 2012
+May 15, 2012
     </sdk:license>
 
 </sdk:sdk-addon>
