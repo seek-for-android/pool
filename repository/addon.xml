@@ -20,7 +20,7 @@
 
     <sdk:add-on>
         <sdk:name>SIMalliance APIs</sdk:name>
-        <sdk:api-level>10</sdk:api-level>
+        <sdk:api-level>15</sdk:api-level>
         <sdk:vendor>Giesecke Devrient GmbH</sdk:vendor>
         <sdk:revision>01</sdk:revision>
         <sdk:description>SmartCard API add-on for Android</sdk:description>
