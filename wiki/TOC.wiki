@@ -11,6 +11,7 @@
     * [UsingCTS Using CTS]
     * [MscSmartcardService MSC_SmartcardService]
     * [AddonTerminal Create an AddonTerminal]
+    * [RetrievingVersionInfo Retrieving SmartCard API version info]
   * Access Control
     * [AccessControlIntroduction Introduction]
     * [AccessControlDetails Details]
