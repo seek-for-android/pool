@@ -1,5 +1,8 @@
 package org.simalliance.openmobileapi.service.terminals.SamplePluginTerminal;
 
+import java.util.Arrays;
+import java.util.NoSuchElementException;
+
 import android.content.Context;
 import android.util.Log;
 
@@ -7,6 +10,8 @@ import android.util.Log;
 public class DummyTerminal {
 
     private static final String LOG_TAG = "SamplePluginTerminal";
+
+	static final byte[] AID_ACA = {(byte)0xd2, (byte)0x76, (byte)0x00, (byte)0x01, (byte)0x18, (byte)0xaa, (byte)0xff, (byte)0xff, (byte)0x49, (byte)0x10, (byte)0x48, (byte)0x89, (byte)0x01};
     
     private int channelNr = 0x00;
     
@@ -58,6 +63,8 @@ public class DummyTerminal {
 
 	public int internalOpenLogicalChannel(byte[] aid) {
 		Log.v(LOG_TAG, "internalOpenLogicalChannel: " + bytesToString(aid));
+		if (Arrays.equals(aid, AID_ACA))
+			throw new NoSuchElementException("ACA not available");
 		return ++channelNr;
 	}
 
