@@ -105,7 +105,8 @@ Returns the response APDU or the corresponding command APDU
 Returns the channel number after opening a logical channel without an AID selection. Selected applet is the current default applet on the corresponding logical channel 
 
 ==== public int internalOpenLogicalChannel(byte[] aid) ====
-Returns the channel number after opening a logical channel with an AID selection. Selected applet is referenced by the AID
+Returns the channel number after opening a logical channel with an AID selection. Selected applet is referenced by the AID.<br/>
+Note: If this method is called with the AID of the Access Control Applet (ACA) and the selection of the applet fails it is important that this method throws a "!NoSuchElementException" (see sample !PluginTerminal). Otherwise opening any channel will fail if the ACA is not present.
 
 ==== public void internalCloseLogicalChannel(int iChannel) ====
 Called when a channel gets closed (basic channel as well as logical channel). In case of a logical channel (iChannel > 0) the channel should be closed on the Secure Element
@@ -113,4 +114,4 @@ Called when a channel gets closed (basic channel as well as logical channel). In
 
 
 
-_TODO: exception handling & getUid() enforcement for Access Control_
+_TODO:  getUid() enforcement for Access Control_
