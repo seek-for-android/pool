@@ -58,25 +58,43 @@ Run the _!OpenMobileApiSample_ application, _!PerformanceTester_ or similar to c
 
 
 = Details =
-The SVN [http://code.google.com/p/seek-for-android/source/browse/#svn%2Ftrunk%2Fsamples%2FPluginTerminal PluginTerminal] sample can be used to study the functionality of the Addon Terminal implementation.<br/>
-The logcat output after running the OpenMobileApiSample application will show
+The SVN [http://code.google.com/p/seek-for-android/source/browse/#svn%2Ftrunk%2Fsamples%2FPluginTerminal PluginTerminal] sample can be used to study the functionality of the Addon Terminal implementation.
+The !PluginTerminal sample is a dummy terminal that uses a mock card.
+<br/>
+The implementation of an Addon Terminal also should check by comparing the caller UID whether the caller is allowed to use the terminal (this check is not included in the sample code). 
+<br/>
+The logcat output of the sample Addon Terminal _!DummyTerminal_ after running the [http://code.google.com/p/seek-for-android/source/browse/#svn%2Ftrunk%2Fsamples%2FOpenMobileApiSample OpenMobileApiSample] application will show
 {{{
-V/SamplePluginTerminal(10872): internalConnect
-V/SamplePluginTerminal(10872): internalTransmit: 80 ca 9f 7f 00 
-V/SamplePluginTerminal(10872): internalOpenLogicalChannel: default applet
-V/SamplePluginTerminal(10872): internalTransmit: 81 ca 9f 7f 00 
-V/SamplePluginTerminal(10872): internalCloseLogicalChannel: 0
-V/SamplePluginTerminal(10872): internalCloseLogicalChannel: 1
-V/SamplePluginTerminal(10872): internalDisconnect
-V/SamplePluginTerminal(10872): internalConnect
-V/SamplePluginTerminal(10872): internalTransmit: 00 a4 04 00 08 a0 00 00 00 03 00 00 00 00 
-V/SamplePluginTerminal(10872): internalTransmit: 80 ca 9f 7f 00 
-V/SamplePluginTerminal(10872): internalOpenLogicalChannel: a0 00 00 00 03 00 00 00 
-V/SamplePluginTerminal(10872): internalTransmit: 81 ca 9f 7f 00 
-V/SamplePluginTerminal(10872): internalTransmit: 00 a4 04 00 00 
-V/SamplePluginTerminal(10872): internalCloseLogicalChannel: 0
-V/SamplePluginTerminal(10872): internalCloseLogicalChannel: 1
-V/SamplePluginTerminal(10872): internalDisconnect
+V/DummyTerminal(  819): internalConnect
+V/DummyTerminal(  819): internalOpenLogicalChannel: AID = D2 76 00 01 18 AA FF FF 49 10 48 89 01
+V/DummyTerminal(  819): internalOpenLogicalChannel: default applet
+V/DummyTerminal(  819): internalDisconnect
+V/DummyTerminal(  819): internalConnect
+V/DummyTerminal(  819): internalTransmit: 80 CA 9F 7F 00
+V/DummyTerminal(  819): internalOpenLogicalChannel: AID = D2 76 00 01 18 AA FF FF 49 10 48 89 01
+V/DummyTerminal(  819): internalOpenLogicalChannel: default applet
+V/DummyTerminal(  819): internalOpenLogicalChannel: default applet
+V/DummyTerminal(  819): internalTransmit: 81 CA 9F 7F 00
+V/DummyTerminal(  819): internalCloseLogicalChannel: 0
+V/DummyTerminal(  819): internalCloseLogicalChannel: 1
+V/DummyTerminal(  819): internalDisconnect
+V/DummyTerminal(  819): internalConnect
+V/DummyTerminal(  819): internalOpenLogicalChannel: AID = D2 76 00 01 18 AA FF FF 49 10 48 89 01
+V/DummyTerminal(  819): internalOpenLogicalChannel: default applet
+V/DummyTerminal(  819): internalDisconnect
+V/DummyTerminal(  819): internalConnect
+V/DummyTerminal(  819): internalTransmit: 00 A4 04 00 08 A0 00 00 00 03 00 00 00 00
+V/DummyTerminal(  819): internalTransmit: 80 CA 9F 7F 00
+V/DummyTerminal(  819): internalOpenLogicalChannel: AID = D2 76 00 01 18 AA FF FF 49 10 48 89 01
+V/DummyTerminal(  819): internalOpenLogicalChannel: default applet
+V/DummyTerminal(  819): internalOpenLogicalChannel: AID = A0 00 00 00 03 00 00 00
+V/DummyTerminal(  819): internalOpenLogicalChannel: default applet
+V/DummyTerminal(  819): internalTransmit: 81 CA 9F 7F 00
+V/DummyTerminal(  819): internalTransmit: 00 A4 04 00 00
+V/DummyTerminal(  819): internalTransmit: 00 A4 04 00 0D D2 76 00 01 18 AA FF FF 49 10 48 89 01 00
+V/DummyTerminal(  819): internalCloseLogicalChannel: 0
+V/DummyTerminal(  819): internalCloseLogicalChannel: 1
+V/DummyTerminal(  819): internalDisconnect
 }}}
 <br/>
 Methods to be implemented:
@@ -106,12 +124,8 @@ Returns the channel number after opening a logical channel without an AID select
 
 ==== public int internalOpenLogicalChannel(byte[] aid) ====
 Returns the channel number after opening a logical channel with an AID selection. Selected applet is referenced by the AID.<br/>
-Note: If this method is called with the AID of the Access Control Applet (ACA) and the selection of the applet fails it is important that this method throws a "!NoSuchElementException" (see sample !PluginTerminal). Otherwise opening any channel will fail if the ACA is not present.
+Note: It is important for the Acces Control mechanism that this method throws a "!NoSuchElementException" if the given AID cannot be selected (see code example in [http://code.google.com/p/seek-for-android/source/browse/#svn%2Ftrunk%2Fsamples%2FPluginTerminal PluginTerminal]). Otherwise opening any channel will fail if the Access Control Applet is not present.
 
 ==== public void internalCloseLogicalChannel(int iChannel) ====
 Called when a channel gets closed (basic channel as well as logical channel). In case of a logical channel (iChannel > 0) the channel should be closed on the Secure Element
 <br/><br/><br/>
-
-
-
-_TODO:  getUid() enforcement for Access Control_
