@@ -60,9 +60,17 @@ Run the _!OpenMobileApiSample_ application, _!PerformanceTester_ or similar to c
 = Details =
 The SVN [http://code.google.com/p/seek-for-android/source/browse/#svn%2Ftrunk%2Fsamples%2FPluginTerminal PluginTerminal] sample can be used to study the functionality of the Addon Terminal implementation.
 The !PluginTerminal sample is a dummy terminal that uses a mock card.
-<br/>
-The implementation of an Addon Terminal also should check by comparing the caller UID whether the caller is allowed to use the terminal (this check is not included in the sample code). 
-<br/>
+
+== Access Control ==
+An implementation of an Addon Terminal must consider some characteristics required 
+for smooth cooperation with the Access Control Enforcer.
+The Access Control Enforcer tries to select an Access Control Applet on the particular secure element in order to retrieve access rules.
+It's not required that such an applet is present on the secure element, but in that case the Acces Control Enforcer expects the terminal to throw a `NoSuchElementException`. 
+This behaviour must be implemented in method `internalOpenLogicalChannel(byte[] aid)` (see sample code).
+
+Also the Addon Terminal should check the caller application to assert that the caller is entitled to use the Addon Terminal (see sample code).
+
+== Log of sample Addon Terminal _!DummyTerminal_ ==
 The logcat output of the sample Addon Terminal _!DummyTerminal_ after running the [http://code.google.com/p/seek-for-android/source/browse/#svn%2Ftrunk%2Fsamples%2FOpenMobileApiSample OpenMobileApiSample] application will show
 {{{
 V/DummyTerminal(  819): internalConnect
@@ -123,8 +131,7 @@ Returns the response APDU or the corresponding command APDU
 Returns the channel number after opening a logical channel without an AID selection. Selected applet is the current default applet on the corresponding logical channel 
 
 ==== public int internalOpenLogicalChannel(byte[] aid) ====
-Returns the channel number after opening a logical channel with an AID selection. Selected applet is referenced by the AID.<br/>
-Note: It is important for the Acces Control mechanism that this method throws a "!NoSuchElementException" if the given AID cannot be selected (see code example in [http://code.google.com/p/seek-for-android/source/browse/#svn%2Ftrunk%2Fsamples%2FPluginTerminal PluginTerminal]). Otherwise opening any channel will fail if the Access Control Applet is not present.
+Returns the channel number after opening a logical channel with an AID selection. Selected applet is referenced by the AID.
 
 ==== public void internalCloseLogicalChannel(int iChannel) ====
 Called when a channel gets closed (basic channel as well as logical channel). In case of a logical channel (iChannel > 0) the channel should be closed on the Secure Element
