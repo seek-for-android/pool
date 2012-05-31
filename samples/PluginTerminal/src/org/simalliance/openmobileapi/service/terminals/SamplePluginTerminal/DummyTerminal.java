@@ -1,6 +1,7 @@
 package org.simalliance.openmobileapi.service.terminals.SamplePluginTerminal;
 
 import android.content.Context;
+import android.content.pm.ApplicationInfo;
 import android.util.Log;
 import java.util.MissingResourceException;
 import java.util.NoSuchElementException;
@@ -47,6 +48,11 @@ public class DummyTerminal {
 	 * @param context
 	 */
     public DummyTerminal(Context context) {
+    	// allow construction only for system context
+    	if ((context.getApplicationInfo().flags & ApplicationInfo.FLAG_SYSTEM) == 0) {
+    		throw new SecurityException();
+   	    }
+
     	// DummyTerminal contains a MockCard, that simulates a smart card:
     	mockCard = new MockCard();
     	// MockCard contains following applet: 
@@ -120,3 +126,4 @@ public class DummyTerminal {
 	}
 	
 }
+
