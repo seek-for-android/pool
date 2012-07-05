@@ -72,7 +72,7 @@ $ ./out/host/linux-x86/sdk/android-sdk_eng.schusteh_linux-x86/tools/emulator @te
 
  * The SIM must be already inserted in the used PC/SC reader before launching the emulator.
 
- * In the emulator output a card reader will get listed, e.g. _sim_card.c: using card reader Cherry XX44 00 00_
+ * In the emulator output a card reader will get listed, e.g. _sim_card.c: using card reader Cherry XX44 00 00
 
 * If you want to start the emulator from the eclipse ide you have to add the command line parameter "-pcsc" via Run>Debug Configurations/Run Configurations<br/>
     Tab Target> Additional Emulator Command Line Options
