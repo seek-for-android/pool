@@ -64,8 +64,7 @@ $ PCSC_INCPATH=/path/to/PCSC/src/PCSC PCSC_LIBPATH=/path/to/PCSC/src/.libs mm -j
 {{{
 $ ./out/host/linux-x86/sdk/android-sdk_eng.<username>_linux-x86/tools/android
 }}}
-  The full path name is necessary since you might have also an offical installation of the Android SDK.
-
+ The full path name is necessary since you might have also an offical installation of the Android SDK.
  * If you want to develop applications using the Smartcard API the shared library approach is recommended. Therefore your self compiled sdk needs the Smartcard API addon which can be found at
 {{{
 http://code.google.com/p/seek-for-android/source/browse/trunk/repository/addon.xml 
@@ -74,9 +73,9 @@ http://code.google.com/p/seek-for-android/source/browse/trunk/repository/addon.x
 {{{
 <ANDROID_ROOT_DIR>/out/host/linux-x86/sdk/android-sdk_eng.<username>_linux-x86/add-ons
 }}}
-
+  http://seek-for-android.googlecode.com/svn/wiki/img/ScreenshotAndroidSDKManager.png
  * Create an AVD with behalf of the AVD Manager "Tools->Manage AVD's..."
-
+  http://seek-for-android.googlecode.com/svn/wiki/img/ScreenshotAndroidVirtualDeviceManager.png
  * Start the emulator 
 {{{
 $ ./out/host/linux-x86/sdk/android-sdk_eng.schusteh_linux-x86/tools/emulator @testAvd -pcsc 
