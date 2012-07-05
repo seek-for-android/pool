@@ -31,11 +31,9 @@ $ patch -p1 < <path_to_my_patches>/smartcard-api.patch
 $ patch -p1 < <path_to_my_patches>/uicc.patch
 $ patch -p1 < <path_to_my_patches>/emulator.patch}}}
  * Download and build pcsc-lite from the official Internet sources. (It is recommended to use the sources since we have encountered problems with the pcsc-lite package maintained by the package installer of the Linux distribution especially if your host is a 64bit system.)
-{{{
-$ tar xvjf pcsc-lite-<version>.tar.bz2
+{{{$ tar xvjf pcsc-lite-<version>.tar.bz2
 $ cd <path/to/pcsc-lite>
-$ ./configure; make
-}}}
+$ ./configure; make}}}
  * Setup build environment:
 {{{$ cd <ANDROID_ROOT_DIR>
 $ . build/envsetup.sh 
