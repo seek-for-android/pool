@@ -24,34 +24,38 @@ This extension enables the Android emulator to forward any APDU traffic (AT+CRSM
 === 1.1 Applying the patch to the android sources ===
 
   * Download the [http://seek-for-android.googlecode.com/files/smartcard-api-2_4_0.tgz smartcard-api-2_4_0.tgz] archive
-  * Unpack the patch archive: <code>$ tar xvzf smartcard-api-2_4_0.tgz</code>
-  * Apply the patches in the root folder of the Android source tree: <code>$ cd <ANDROID_ROOT_DIR><br/>
-$ patch -p1 < <path_to_my_patches>/smartcard-api.patch<br/>
+  * Unpack the patch archive: 
+<code>$ tar xvzf smartcard-api-2_4_0.tgz</code>
+  * Apply the patches in the root folder of the Android source tree: 
+<code>
+$ cd <ANDROID_ROOT_DIR>
+$ patch -p1 < <path_to_my_patches>/smartcard-api.patch
 $ patch -p1 < <path_to_my_patches>/uicc.patch
 $ patch -p1 < <path_to_my_patches>/emulator.patch</code>
- * Download and build pcsc-lite from the official Internet sources. (It is recommended to use the sources since we have encountered problems with the pcsc-lite package maintained by the package installer of the Linux distribution especially if your host is a 64bit system.) <code>
+ * Download and build pcsc-lite from the official Internet sources. (It is recommended to use the sources since we have encountered problems with the pcsc-lite package maintained by the package installer of the Linux distribution especially if your host is a 64bit system.) 
+<code>
 $ tar xvjf pcsc-lite-<version>.tar.bz2
 $ cd <path/to/pcsc-lite>
 $ ./configure; make</code>
- * Setup build environment: <code>
+ * Setup build environment: 
+<code>
 $ cd <ANDROID_ROOT_DIR>
 $ . build/envsetup.sh 
-$ lunch full-eng
-</code>
- * Update current.xml as the system needs to known the new IDs (if not already done): <code>
-$ make update-api
-</code>
+$ lunch full-eng</code>
+ * Update current.xml as the system needs to known the new IDs (if not already done): 
+<code>
+$ make update-api</code>
  * Build the emulator with PC/SC support within the product SDK: 
- In case of problems that the build system cannot find the proper include & lib files, specify them manually: <code>
-$ PCSC_INCPATH=/path/to/PCSC/src/PCSC PCSC_LIBPATH=/path/to/PCSC/src/.libs mm -j2 PRODUCT-sdk-sdk
-</code>
- * The sdk can then be found at <code>
-<ANDROID_ROOT_DIR>/out/host/linux-x86/sdk/
-</code>
+ In case of problems that the build system cannot find the proper include & lib files, specify them manually: 
+<code>
+$ PCSC_INCPATH=/path/to/PCSC/src/PCSC PCSC_LIBPATH=/path/to/PCSC/src/.libs mm -j2 PRODUCT-sdk-sdk</code>
+ * The sdk can then be found at 
+<code>
+<ANDROID_ROOT_DIR>/out/host/linux-x86/sdk/</code>
 
- * Start SDK Manager with: <code>
-$ ./out/host/linux-x86/sdk/android-sdk_eng.<username>_linux-x86/tools/android
-</code> The full path name is necessary since you might have also an offical installation of the Android SDK.
+ * Start SDK Manager with:
+<code>
+$ ./out/host/linux-x86/sdk/android-sdk_eng.<username>_linux-x86/tools/android</code> The full path name is necessary since you might have also an offical installation of the Android SDK.
 
  * If you want to develop applications using the Smartcard API the shared library approach is recommended. Therefore your self compiled sdk
 needs the Smartcard API addon which can be found at <code>
@@ -59,7 +63,8 @@ http://code.google.com/p/seek-for-android/source/browse/trunk/repository/addon.x
 
  * Create an AVD with behalf of the AVD Manager "Tools->Manage AVD's..."
 
- * Start the emulator <code>
+ * Start the emulator 
+<code>
 $ ./out/host/linux-x86/sdk/android-sdk_eng.schusteh_linux-x86/tools/emulator @testAvd -pcsc </code>
 
  * The SIM must be already inserted in the used PC/SC reader before launching the emulator.
