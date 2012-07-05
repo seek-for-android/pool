@@ -26,7 +26,7 @@ This extension enables the Android emulator to forward any APDU traffic (AT+CRSM
   * Download the [http://seek-for-android.googlecode.com/files/smartcard-api-2_4_0.tgz smartcard-api-2_4_0.tgz] archive
   * Unpack the patch archive: <code>$ tar xvzf smartcard-api-2_4_0.tgz</code>
   * Apply the patches in the root folder of the Android source tree: 
-{{{$ cd "ANDROID_ROOT_DIR"
+{{{$ cd &lt;ANDROID_ROOT_DIR&gt;}}}
 $ patch -p1 < <path_to_my_patches>/smartcard-api.patch
 $ patch -p1 < <path_to_my_patches>/uicc.patch
 $ patch -p1 < <path_to_my_patches>/emulator.patch}}}
