@@ -3,6 +3,7 @@
   * [Index Introduction]
     * [SmartcardAPI SmartCard API]
     * [SecurityConcept Security Concept]
+    * [Devices Device Support]
     * [VersionHistory Version History]
   * How To
     * [BuildingTheSystem Building the System]
