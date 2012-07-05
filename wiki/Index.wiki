@@ -4,7 +4,7 @@
 ====Introduction====
    * [SmartcardAPI SmartCard API]<br>An introduction about the architecture and concept of the !SmartCard API for the Android platform<br><br>
    * [SecurityConcept Security Concept]<br>Read about the system security of the !SmartCard API integration in the Android platform<br><br>
-   * [Devices Device Support]<br>(Incomplete) list of Android devices that have SmartCard API support<br><br>
+   * [Devices Device Support]<br>(Incomplete) list of Android devices that have !SmartCard API support<br><br>
    * [VersionHistory Version History]<br>Summary of the release notes of all !SmartCard API versions<br><br>
 
 ====How To====
