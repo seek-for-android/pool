@@ -46,7 +46,6 @@ $ lunch full-eng</code>
 <code>
 $ make update-api</code>
  * Build the emulator with PC/SC support within the product SDK: 
- In case of problems that the build system cannot find the proper include & lib files, specify them manually: 
 <code>
 $ PCSC_INCPATH=/path/to/PCSC/src/PCSC PCSC_LIBPATH=/path/to/PCSC/src/.libs mm -j2 PRODUCT-sdk-sdk</code>
  * The sdk can then be found at 
@@ -55,11 +54,15 @@ $ PCSC_INCPATH=/path/to/PCSC/src/PCSC PCSC_LIBPATH=/path/to/PCSC/src/.libs mm -j
 
  * Start SDK Manager with:
 <code>
-$ ./out/host/linux-x86/sdk/android-sdk_eng.<username>_linux-x86/tools/android</code> The full path name is necessary since you might have also an offical installation of the Android SDK.
+$ ./out/host/linux-x86/sdk/android-sdk_eng.<username>_linux-x86/tools/android</code>
+  The full path name is necessary since you might have also an offical installation of the Android SDK.
 
- * If you want to develop applications using the Smartcard API the shared library approach is recommended. Therefore your self compiled sdk
-needs the Smartcard API addon which can be found at <code>
-http://code.google.com/p/seek-for-android/source/browse/trunk/repository/addon.xml </code> The download of the addon within your selfcompiled SDK Manager will most likely cause an update of the SDK Tools, which means your compiled emulator will be replaced by the Google version. Therefore it is recommended to use a separate Android SDK e.g. the official Version to download the addon and then copy it to your own SDK. The addons are located here <code><ANDROID_ROOT_DIR>/out/host/linux-x86/sdk/android-sdk_eng.<username>_linux-x86/add-ons</code>
+ * If you want to develop applications using the Smartcard API the shared library approach is recommended. Therefore your self compiled sdk needs the Smartcard API addon which can be found at
+<code>
+http://code.google.com/p/seek-for-android/source/browse/trunk/repository/addon.xml </code>
+  The download of the addon within your selfcompiled SDK Manager will most likely cause an update of the SDK Tools, which means your compiled emulator will be replaced by the Google version. Therefore it is recommended to use a separate Android SDK e.g. the official Version to download the addon and then copy it to your own SDK. The addons are located here 
+<code>
+<ANDROID_ROOT_DIR>/out/host/linux-x86/sdk/android-sdk_eng.<username>_linux-x86/add-ons</code>
 
  * Create an AVD with behalf of the AVD Manager "Tools->Manage AVD's..."
 
@@ -68,6 +71,7 @@ http://code.google.com/p/seek-for-android/source/browse/trunk/repository/addon.x
 $ ./out/host/linux-x86/sdk/android-sdk_eng.schusteh_linux-x86/tools/emulator @testAvd -pcsc </code>
 
  * The SIM must be already inserted in the used PC/SC reader before launching the emulator.
+
  * In the emulator output a card reader will get listed, e.g. _sim_card.c: using card reader Cherry XX44 00 00_
 
 * If you want to start the emulator from the eclipse ide you have to add the command line parameter "-pcsc" via Run>Debug Configurations/Run Configurations<br/>
