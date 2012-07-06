@@ -6,69 +6,72 @@
 This document explains how the !SmartCard API for can be used to
 develop and test Android applications which communicate with Secure Elements available in the real device or the emulator.
 
-The tutorial refers to the shared library based !SmartCard API implementing the Open Mobile API interface.
+The tutorial refers to the shared library based !SmartCard API implementing the Open Mobile API interface and is not suitable for application development relying on the MSC !SmartCardService.
 
 
-*Note:* Current devices do not support SIM access as the required changes in the baseband are not implemented yet thus SIM access can only be tested within the Android emulator. See [UICCSupport] for more information.<br/>
+*Note:* Refer to [Devices Supported Devices] for a list of compatible devices as the Nexus Dev phones won't support SIM access out of the box.<br/>
 
 ===Prerequisites===
-  * The development phone is flashed with !SmartCard API support according to [BuildingTheSystem] or the _MSC !SmartCardService_ is installed and the integration is verified according to [IntegrationsTests]
+  * The development phone is flashed with !SmartCard API support according to [BuildingTheSystem] and the integration is verified according to [IntegrationsTests]
   * Basic knowledge of [http://www.oracle.com/technetwork/java/javacard/overview/index.html Java Card] applets and [http://www.wrankl.de/SCH/SCH.html smart card] communication
   * Eclipse development IDE with the Android Development Tools (ADT) installed on the host (although Eclipse is not mandatory). See http://developer.android.com/sdk/eclipse-adt.html
-  * Android SDK with [http://seek-for-android.googlecode.com/files/org.simalliance.openmobileapi.jar org.simalliance.openmobileapi.jar] or self compiled SDK
   * Basic understanding of the Android development platform. See http://developer.android.com/sdk/index.html<br/>
 
 ===Setting up the Environment===
-The Eclipse development environment needs to be configured in order to use the official SDK from Google, alternatively the compiled SDK. 
-The output of _make PRODUCT-sdk-sdk_ (compiled SDK) can be found under `<ANDROID_ROOT_DIR>/out/host/linux-x86/sdk/...`
- * Open Eclipse and go to Windows -> Preferences -> Android
- * Specify the SDK location on the local host like `<ANDROID_SDK_ROOT>`
+The Eclipse development environment needs to be configured in order to use the official SDK from Google as described in the Google documentation. In addition, the SDK needs to have access to the Open Mobile API addon package.
+<table><tr><td valign=top>
+ * Start the _Android SDK Manager_ by launching `android` on the command line<br/>
+ * Click on _Tools_ -> _Manage Add-on Sites..._<br/>
+ * Go to _User Defined Sites_ and add the new repository `http://seek-for-android.googlecode.com/svn/trunk/repository/addon.xml` and close the dialog
+</td>
+<td>
+<img src=http://seek-for-android.googlecode.com/svn/wiki/img/UsingSCAPI_Addon-Sites.png/>
+</td></tr><tr><td valign=top>
+ * _Reload_ the packages selecting _Packages_ -> _Reload_<br/>
+ * Select _Open Mobile API_ under _Android 4.0.3_ and install the package add-on<br/>
+ * The Android SDK Manager is now ready with the Open Mobile API addon package from SEEK to develop Secure Element aware applications.
+</td><td>
+<img src=http://seek-for-android.googlecode.com/svn/wiki/img/UsingSCAPI_SDK-Manager.png/>
+</td></tr></table>
 <br/>
 
 =Hello, Smart Card.=
 For developers, the most important code to get started within a new development environment is the _Hello, World._ sample. The text to be displayed will be created from the applet installed on the Secure Element.<br/>
 The Android application communicates with the applet installed on the Secure Element and displays the response from the APDU command on the screen of the device.<br/>
 The _Hello Smartcard_ Java Card applet available in the SVN repository needs to be installed on the Secure Element by using any kind of card management tool similar to JLoad from the _Mobile Security Developers Kit_.<br/>
+===Create the project in Eclipse===
 The sample code referenced here can also be found in the SVN repository.
   * Using the Eclipse project wizard, create a new Android project
     _File -> New -> Project_
-  * Select _Android Project_ and click _Next_
+  * Select _Android Application Project_ and click _Next_
   * To create the project, fill in the required fields
-    Project name: _!HelloSmartcard_<br/>
     Application name: _Hello Smartcard_<br/>
+    Project name: _!HelloSmartcard_<br/>
     Package name: _com.gieseckedevrient.android.hellosmartcard_<br/>
-    Create Activity: _!MainActivity_
-  * Click _Finish_ to create the body of the (empty) Android application<br/>
-
-
-To include Secure Element access, add the shared library classes included in `org.simalliance.openmobileapi.jar` to the project settings under _Java Build Path_.
- * _Java Build Path -> Tab: Libraries -> Add External JARs..._
-
-Instead of using the JAR file included in the package [http://seek-for-android.googlecode.com/files/smartcard-api-2_3_2.tgz smartcard-api-2_3_2.tgz] the compiled version can be used alternatively located under:
-{{{
-<ANDROID_ROOT_DIR>/out/target/common/obj/JAVA_LIBRARIES/org.simalliance.openmobileapi_intermediates/classes.jar
-}}}
+    Build SDK: _Open Mobile API (Giesecke & Devrient GmbH) (API 15)_<br/>
+    Minimum Required SDK: _API 15: Android 4.0.3 (!IceCreamSandwich)_<br/>
+    Unselect _Create custom launcher icon_ unless you're logo matters
+  * Click _Next_ to move to the next wizard page<br/>
+  * Leave the default options: _Create Activity_ -> _!BlankActivity_ and hit _Next_
+  * Enter the activity name: _!MainActivity_ and hit _Finish_ to create a blank project<br/>
 
 ===uses-library in !AndroidManifest.xml===
-Applications using the !SmartCard API can declare that the component is required in the system in order to be able to get installed. Especially when publishing the APKs to the Android Market it is recommended to declare such. However, devices having the MSC !SmartcardService installed will also provide the required component without the _uses-library_ element enabled.<br/>
-An example of an `AndroidManifest.xml` which requires the Open Mobile API looks like
+Applications using the !SmartCard API need to declare that the component is required in order to be able to get installed. Especially when publishing the APKs to Google Play it is required to declare such. An example of an `AndroidManifest.xml` which requires the Open Mobile API looks like
 
 {{{
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
   <application android:label="@string/app_name">
-    <activity android:name=".MainActivity"
+
+    <uses-library android:name="org.simalliance.openmobileapi" android:required="true" />
+
+    <activity android:name=".MainActivity">
       ...
     </activity>
-    <uses-library android:name="org.simalliance.openmobileapi" android:required="false" />
   </application>
 </manifest> 
 }}}
-Currently it is recommended to use the `uses-library` element together with `android:required="false"` as long as !SmartCard API is not part of the AOSP project. Keep in mind to take care of the issue that no Secure Element access is available on the phone indicated in logcat:
-{{{
-W/ActivityManager( 1113): Unable to start service Intent { act=org.simalliance.openmobileapi.service.ISmartcardService }: not found
-}}}
-Refer to the official documentation under [http://developer.android.com/guide/topics/manifest/uses-library-element.html uses-library element] for more information.
+Refer to the official documentation under [http://developer.android.com/guide/topics/manifest/uses-library-element.html uses-library element] for more information.<br/>
 
 
 ===Implement the SEService.!CallBack interface===
@@ -162,15 +165,15 @@ protected void onDestroy() {
 Add the following code snippet inside the _onClick()_ handler of the button
 {{{
    try {
-      Log.d(LOG_TAG, "Retrieve available readers...");
+      Log.i(LOG_TAG, "Retrieve available readers...");
       Reader[] readers = seService.getReaders();
       if (readers.length < 1)
          return;
 
-      Log.d(LOG_TAG, "Create Session from the first reader...");
+      Log.i(LOG_TAG, "Create Session from the first reader...");
       Session session = readers[0].openSession();
 
-      Log.d(LOG_TAG,
+      Log.i(LOG_TAG,
       "Create logical channel within the session...");
       Channel channel = session.openLogicalChannel(new byte[] {
       (byte) 0xD2, 0x76, 0x00, 0x01, 0x18, 0x00, 0x02,
