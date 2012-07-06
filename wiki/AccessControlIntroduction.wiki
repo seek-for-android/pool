@@ -35,9 +35,10 @@ No access policy is stored in the ACE itself, all data is read from the Secure E
 The Access Rule Application (ARA) on the Secure Element stores the Access Rules. The ARA consists at least of the unique Access Rule Application Master (ARA-M) and may contain several Access Rule Application Clients (ARA-C). All Access Rules stored in the ARA are accessed by the Access Control Enforcer via the ARA-M.
 
  
-===Access Control Data===
-The Access Control Policy (ACD) is stored in the ACA and can be updated over the air with standardized Global Platform Secure Messaging or  Remote Applet Management functionality.<br/>
-The ACD consists of a set of certificates and access conditions which are associated with AIDs. To define the access rules for channel communication without explicit applet selection a dummy AID is defined.
+===Access Rule===
+The Access Rule (AR) is stored in the ARA and can be updated over the air with standardized Global Platform Secure Messaging or Remote Applet Management functionality.<br/>
+The AR consists of a set of data objects (DO). The AR is identified by the AID of the applet to be accessed (AID-REF-DO) and the hash (SHA-1) of the applications certificate (Hash-REF-DO). The Access Rule DO contains an APDU access rule (APDU-AR-DO) and/or a NFC access rule (NFC-AR-DO). The APDU-AR-DO contains either a general flag (allowed / not allowed) or an APDU filter list. An APDU filter consists of 4-byte APDU header and a 4-byte APDU filter mask. An APDU filter is applied to the header of the APDU being checked as follows: if((APDUHeader & APDU_filter_mask) == APDU_filter_header) then allow APDU.
+The NFC-AR-DO contains an NFC event access rule flag (allowed / not allowed).
 <br/><br/>
 
 == How does it work ==
