@@ -15,8 +15,6 @@
     * [RetrievingVersionInfo Retrieving SmartCard API version info]
   * Access Control
     * [AccessControlIntroduction Introduction]
-    * [AccessControlDetails Details]
-    * [AccessControlBenefits Benefits]
   * UICC Support
     * [UICCSupport AT Command Extensions]
     * [BIP_Extensions BIP Extensions]
