@@ -5,7 +5,7 @@
 <table>
 <tr>
 <td valign="top" width=35%>
-Since Version 2.4.0 the !SmartCard API support access control specified by Global Platform. It is a standard that enables several parties to independently and securely manage their stakes in a single Secure Element. It can be ensured that only allowed Android applications are able to access specific Java Card applets depending on the APK certificate.
+Since Version 2.4.0 the !SmartCard API supports access control specified by Global Platform. It is a standard that enables several parties to independently and securely manage their stakes in a single Secure Element. It can be ensured that only allowed Android applications are able to access specific Java Card applets depending on the APK certificate.
 
 An additional APDU filter scheme (based on an APDU whitelist) is established to have a more detailed control over the access mechanism of an application.
 
@@ -26,15 +26,13 @@ Click to enlarge
 == Components ==
 
 ===Access Control Enforcer===
-The Access Control Enforcer (ACE) is the module that is integrated in the !SmartCard API, see `android.smartcard.security` in the !SmartcardService package.<br/>
-The module reads the access policy from the ACA and verifies the client application when a communication channel is opened. Access to is either granted or denied depending on the client certificate.<br/>
+The Access Control Enforcer (ACE) is the module that is integrated in the !SmartCard API, see `org.simalliance.openmobileapi.service. security` in the !SmartcardService package.<br/>
+The module reads the access rule from the ARA-M according to the applications certificate and AID of the applet to be accessed when a communication channel is opened. Access is either granted according to access rule or denied if no rule is found.<br/>
 When the communication channel is established all APDU transfer is checked against the APDU filter list if available.<br/>
-No access policy is stored in the ACE itself, all data is read from the Secure Element, the ACA.
+No access policy is stored in the ACE itself, all data is read from the Secure Element, the ARA-M.
 
-===Access Control Applet===
-The Access Control Applet (ACA) is the application on the Secure Element that stores the Access Control Data. This data is a mapping between Secure Element applications (their AIDs) and hashes of certificate for allowed Android client applications.<br/>
-In addition, the ACA stores an APDU mask of allowed commands to be sent to the SE application.<br/>
-If no ACA is installed on the Secure Element, full access is granted for any client application. If an ACA is installed, all SE access is blocked expect the valid rules that are personalized in the ACA.<br/>
+===Access Rule Application===
+The Access Rule Application (ARA) on the Secure Element stores the Access Rules. The ARA consists at least of the unique Access Rule Application Master (ARA-M) and may contain several Access Rule Application Clients (ARA-C). All Access Rules stored in the ARA are accessed by the Access Control Enforcer via the ARA-M.
 
  
 ===Access Control Data===
