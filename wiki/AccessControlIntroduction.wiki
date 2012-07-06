@@ -37,8 +37,7 @@ The Access Rule Application (ARA) on the Secure Element stores the Access Rules.
  
 ===Access Rule===
 The Access Rule (AR) is stored in the ARA and can be updated over the air with standardized Global Platform Secure Messaging or Remote Applet Management functionality.<br/>
-The AR consists of a set of data objects (DO). The AR is identified by the AID of the applet to be accessed (AID-REF-DO) and the hash (SHA-1) of the applications certificate (Hash-REF-DO). The Access Rule DO contains an APDU access rule (APDU-AR-DO) and/or a NFC access rule (NFC-AR-DO). The APDU-AR-DO contains either a general flag (allowed / not allowed) or an APDU filter list. An APDU filter consists of 4-byte APDU header and a 4-byte APDU filter mask. An APDU filter is applied to the header of the APDU being checked as follows: if((APDUHeader & APDU_filter_mask) == APDU_filter_header) then allow APDU.
-The NFC-AR-DO contains an NFC event access rule flag (allowed / not allowed).
+The AR consists of a set of data objects (DO). The AR is identified by the AID of the applet to be accessed (AID-REF-DO) and the hash (SHA-1) of the applications certificate (Hash-REF-DO).<br/> The Access Rule DO contains an APDU access rule (APDU-AR-DO) and/or a NFC access rule (NFC-AR-DO). <br/>The APDU-AR-DO contains either a general flag (allowed / not allowed) or an APDU filter list. An APDU filter consists of 4-byte APDU header and a 4-byte APDU filter mask. An APDU filter is applied to the header of the APDU being checked as follows: if((APDUHeader & APDU_filter_mask) == APDU_filter_header) then allow APDU.<br/>The NFC-AR-DO contains an NFC event access rule flag (allowed / not allowed).
 <br/><br/>
 
 == How does it work ==
@@ -56,7 +55,7 @@ Click to enlarge
 </td>
 <td valign=top>
 1. A client application signed with a unique key tries to access a specific application through its AID on a Secure Element<br/>
-2. ACE reads the ACD for the specific AID. If and computes/verifies the certificate of the client application<br/>
+2. ACE reads the AR for the specific AID and the applications certificate hash.<br/>
 3. Grant access to the client application if rule exists and certificate matches or deny access is rule is not found or certificate is different<br/>
 4. Client application can communicate with the SE applet if the command APDUs match the filter list checked by the ACE<br/>
 </td>
