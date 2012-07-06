@@ -11,7 +11,7 @@ An additional APDU filter scheme (based on an APDU whitelist) is established to 
 
 The implementation relies on an extension of the handset integration in combination with a access rule application running on the Secure Element.
 
-The specification can be found here:
+The specification can be found at Global Platform:
 [http://www.globalplatform.org/specificationsdevice.asp Secure Element Access Control]
 </td>
 <td width=5%>
@@ -94,8 +94,8 @@ Click to enlarge
 <td valign=top>
 1. A client application signed with a unique key tries to access a specific application through its AID on a Secure Element<br/>
 2. ACE reads the AR for the specific AID and the applications certificate hash.<br/>
-3. Grant access to the client application if rule exists and certificate matches or deny access is rule is not found or certificate is different<br/>
-4. Client application can communicate with the SE applet if the command APDUs match the filter list checked by the ACE<br/>
+3. Grant access to the client application according to the access rule or deny access if no rule is found.<br/>
+4. Client application can communicate with the SE applet if the command APDUs match the filter list (if given) checked by the ACE<br/>
 </td>
 </tr>
 </table>
