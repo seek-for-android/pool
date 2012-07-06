@@ -1,21 +1,21 @@
-#summary Introduction about the proposed Access Control Scheme
+#summary Introduction about the Global Platform Secure Element Access Control
 
 = Introduction =
 
 <table>
 <tr>
 <td valign="top" width=35%>
-The access control scheme of the !SmartCard API is a protection mechanism to restrict Secure Element access. It can be ensured that only allowed Android applications are able to access specific Java Card applets depending on the APK certificate.
+Since Version 2.4.0 the !SmartCard API support access control specified by Global Platform. It is a standard that enables several parties to independently and securely manage their stakes in a single Secure Element. It can be ensured that only allowed Android applications are able to access specific Java Card applets depending on the APK certificate.
 
 An additional APDU filter scheme (based on an APDU whitelist) is established to have a more detailed control over the access mechanism of an application.
 
-The implementation relies on an extension of the handset integration in combination with a access control application running on the Secure Element.
+The implementation relies on an extension of the handset integration in combination with a access rule application running on the Secure Element.
 </td>
 <td width=5%>
 </td>
 <td width=60%>
-<a alt="view large image" href=http://code.google.com/p/seek-for-android/wiki/ACA_overview_png>
-<img src=http://seek-for-android.googlecode.com/svn/wiki/img/ACA_overview.png width=277 height=357/>
+<a alt="view large image" href=http://code.google.com/p/seek-for-android/wiki/ARA_overview_png>
+<img src=http://seek-for-android.googlecode.com/svn/wiki/img/ARA_overview.png width=277 height=357/>
 </a>
 <br/>
 Click to enlarge
@@ -47,8 +47,8 @@ Scenario: a client application wants to communicate with a secure element applic
 <table>
 <tr>
 <td width=40% valign="top">
-<a alt="view large image" href=http://code.google.com/p/seek-for-android/wiki/ACA_diagram_png>
-<img src=http://seek-for-android.googlecode.com/svn/wiki/img/ACA_diagram.png width=374 height=357/>
+<a alt="view large image" href=http://code.google.com/p/seek-for-android/wiki/ARA_diagram_png>
+<img src=http://seek-for-android.googlecode.com/svn/wiki/img/ARA_diagram.png width=374 height=357/>
 </a>
 <br/>
 Click to enlarge
