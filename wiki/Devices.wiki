@@ -20,7 +20,7 @@ The following devices were used for !SmartCard API development and internal test
 The following devices summarizes all commercially available devices that have !SmartCard API integrated
 
 || *Device* || || *OS build* || *BB build* || *SCAPI* || || *ASSD* || *UICC* || *eSE* || || *Notes* ||
-|| Samsung GT-I9100P || || <font size=1>GINGERBREAD.XXLA3 || <font size=1>I9100PXXKI3 || 2.2.2 || || - || + || - || || _to be completed_ ||
+|| Samsung GT-I9100P || || <font size=1>GINGERBREAD.XXLA3 || <font size=1>I9100PXXKI3 || 2.2.2 || || - || + || - || || _to be tested_ ||
 || Samsung GT-I9300 || || <font size=1>IMM76D.I9300XXALEF ||<font size=1>I9300XXLEF || 2.3.2 || || - || + || - || || case-1 & 4 APDU not supported ||
 || Sony LT26i || || <font size=1>6.0.A.3.75 || <font size=1>M8660-AAABQOLYM-314005T || 2.3.4 (?) || || - || + || - || || _to be tested_ ||
 
@@ -29,9 +29,9 @@ The following devices summarizes all commercially available devices that have !S
 All devices with SD slot and transparent access to the SD flash memory are supported by the MSC !SmartCardService or the !MscPluginTerminal.<br/>
 The following devices were reported not to work due to the missing direct access to the flash memory
 
-|| *Device* || *Model* || *OS build* || *Notes* ||
-|| Motorola Pro+ || || || reported by G&D SFS||
-|| Motorola Droid || || || ||
-|| Motorola Atrix || || || ||
+|| *Device* || || *Model* || *OS* || *OS build* || || *Notes* ||
+|| Motorola Pro+ || || MB632 || 2.3.5 || 5.51Q-110_ELW-TA-21 || || reported by G&D SFS ||
+|| Motorola Droid || || || || || || reported by G&D SFS||
+|| Motorola Atrix || || || || || || reported by G&D SFS ||
 
 _note_: On devices where the !SmartCard API is already installed, the MSC !SmartcardService cannot be installed again. In such case, the !MscPluginTerminal has to be used instead.
