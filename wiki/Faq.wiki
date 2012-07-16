@@ -9,10 +9,6 @@ The following summary is a list of (frequent) questions that we received through
 <tr><td valign='top'>*A*</td><td><font color=red>*Please use the mailing list for questions and support and Wiki page comments to improve the documentation only.</font></td></tr>
 <tr><td><br/></td><td></td></tr>
 
-<tr><td valign='top'>*Q*</td><td>Where do I get the Access Control Applet?</td></tr>
-<tr><td valign='top'>*A*</td><td>Please contact us directly via eMail.</td></tr>
-<tr><td><br/></td><td></td></tr>
-
 <tr><td valign='top'>*Q*</td><td>What version of Android is supported by SEEK?</td></tr>
 <tr><td valign='top'>*A*</td><td>The latest version of Android is supported.</td></tr>
 <tr><td valign='top'></td><td>...due to limited resources of the team and the variety of Android versions we only concentrate on the latest Android version as good as possible.</td></tr>
@@ -25,17 +21,16 @@ The following summary is a list of (frequent) questions that we received through
 
 <tr><td valign='top'>*Q*</td><td>Do you plan to submit the !SmartCard API into the Android platform and when?</td></tr>
 <tr><td valign='top'>*A*</td><td>Yes - that's the overall goal of this project.</td></tr>
-<tr><td valign='top'></td><td>...we submitted the patches mid of 2011 - now it's not under our control whether they get accepted or not.</td></tr>
+<tr><td valign='top'></td><td>...we submitted the patches mid of 2011 - now it's not under our control when/whether they get accepted or not.</td></tr>
 <tr><td><br/></td><td></td></tr>
 
 <tr><td valign='top'>*Q*</td><td>Does !SmartCard API support the UICC?</td></tr>
-<tr><td valign='top'>*A*</td><td>In the Android emulator: _yes_<br/>On a real device (currently): _no_</td></tr>
-<tr><td valign='top'></td><td>...when OEMs implement the required AT command interface a phone will support the !SmartCard API with UICC 
-access too.</td></tr>
+<tr><td valign='top'>*A*</td><td>In the Android emulator: _yes_</td></tr>
+<tr><td valign='top'></td><td>On a real device: see _[Devices Supported Devices]_</td></tr>
 <tr><td><br/></td><td></td></tr>
 
-<tr><td valign='top'>*Q*</td><td>Why did you not contribute this or work on that?</td></tr>
-<tr><td valign='top'>*A*</td><td>Please file a new feature request under _Issues_.</td></tr>
+<tr><td valign='top'>*Q*</td><td>Why did you not contribute this or work on that topic?</td></tr>
+<tr><td valign='top'>*A*</td><td>Please file a new feature request under _[http://code.google.com/p/seek-for-android/issues/list Issues]_.</td></tr>
 <tr><td valign='top'></td><td>...we only have limited resources so we cannot prioritize everything at the same time.</td></tr>
 <tr><td><br/></td><td></td></tr>
 
