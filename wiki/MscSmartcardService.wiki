@@ -5,17 +5,26 @@
 Flashing the system is not supported on every device, thus using the !SmartCard API is limited to development phone only.<br/>
 However, access to Secure Elements does not always require flashing the system image. Also, application developers can use the !SmartcardService as a quick way to develop their applications as well as end users who just want to use an application with smart card support.<br/>
 _MSC !SmartcardService_ enables (any) Android phone with SD card slot to use !SmartCard API without flashing the system or rooting the phone.<br/>
-The _APK_ inside the archive can be installed on the device like on any other Android application. Devices that already have the !SmartCard API integrated in the system do not support the _MSC !SmartcardService_, please install the _MSC !PluginTerminal_ instead.
+The _APK_ inside the archive can be installed on the device like on any other Android application. Devices that already have the !SmartCard API integrated in the system do not support the _MSC !SmartcardService_, please install the [MscPluginTerminal MSC PluginTerminal] instead.
 <br/>
 *Note*<br>
  * The _MSC !SmartcardService_ will only support the [https://www.cardsolutions-shop.com/shop/gi-de/ G&D Mobile Security Card]
  * The source code of _MSC !SmartcardService_ is equal to the !SmartCard API from SVN with the exception of `libmsc.so` which will not be provided Open Source.  
 <br/>
 
+= Details = 
+To access the SE on the MSC there are two interfaces available. The Advanced Security SD (ASSD) interface is specified by the SD Association and allows the host to access the SE over a set of standardized SD commands. If the host does not support the additional ASSD commands or it is not possible to include the ASSD (kernel) driver, there is a non-standard possibility to access the SE over special reads and writes to the file system. This requires that the card is accessible through the hosts file system or on a block-level without caching in between (O_DIRECT required). The standardized ASSD interface should be the preferred solution if the host is capable to provide ASSD functionality. 
+
+The MSC drivers uses the host operating file system calls to transfer the APDUs between card and host. It appears to the host as if standard read and write commands were performed on a specific file on the SD card.
+
+It is required that no caching mechanism is in between that block direct file access, e.g. when a crypto layer is in between.
+
+Drivers for the MSC are available for many platforms and provided by G&D Secure Flash Solutions (GDSFS) directly.<br/>
+
 <table>
 <tr>
 <td valign="top" width=55%>
-= Details =
+= Installation =
 To test the _MSC !SmartcardService_
  * download the [http://seek-for-android.googlecode.com/files/MSC_SmartcardService-2_4_0.tgz MSC_SmartcardService-2_4_0.tgz] and extract the card content
 
@@ -31,6 +40,8 @@ To test the _MSC !SmartcardService_
 
  * in addition, the [http://seek-for-android.googlecode.com/files/PerformanceTester-1_3_0.tgz PerformanceTester] application can be used to run more detailed tests
 
+ * always ensure that a GlobalPlatform compliant Access Control applet is installed granting access to the Mobile Security Card (e.g. [AllowAll dummy-ARA applet] from SEEK)
+
 </td>
 <td width=5%>
 </td>
@@ -45,48 +56,14 @@ The _MSC !SmartcardService_ provides the *same* interface as the !SmartCard API 
 When using Eclipse to develop Secure Element applications, setup the development environment as normal as refer to [UsingSmartCardAPI Using the SmartCard API]. However, do not use the SDK Addon Package but the default Google SDK. When creating a project, add the `org.simalliance.openmobileapi.jar` file to the build path of the project in the same way as !SmartCard API applications do.
 
 [http://seek-for-android.googlecode.com/svn/wiki/img/MscSmartcardService_eclipse.png]
-<br/><br/>
 
-_todo_... Update development howto, describe !PluginTerminal and S3 issues, explain ICS issues with external storage, link to Access Control (!AllowAll)<br/>
+Shared library projects cannot be supported by the _MSC !SmartcardService_. However, it is no problem that applications that linked the org.simalliance.openmobileapi.jar directly work on devices where the !SmartCard API is already installed as a shared library.
 
-= Version history =
-==== v2.4.0 - 19.07.2012 ====
- * !SmartCard API 2.4.0 feature compliant (Global Platform Access Control integrated)
- * ICS support
- * !MscTerminal & libmsc.so extensions by G&D SFS
-   * better mount point detection 
-   * APDU buffer size limited to protect potential buffer overflow
-   * Keep-alive thread integrated
-   * removal of communication file after session gets closed
+==== Access Control ====
+As the [AccessControlIntroduction GlobalPlatform Secure Element Access Control] is also included in the _MSC !SmartcardService_ it is required that a corresponding Access Control application is installed in the MSC and personalized with the proper rules.<br/>
+For development purposes, the [AllowAll dummy-ARA applet] can be used that grants access to the MSC for any application.
+<br/>
 
-==== v2.3.0 - 06.12.2011 ====
- * Compliant to the SIMalliance Open Mobile API Specification V2.02 (transport layer only)
- * The namespace "android.smartcard" was completely removed
- * Access Control was completely removed
-
-==== v2.2.2 - 21.10.2011 ====
- * Compliant to the latest SIMalliance Open Mobile API Specification (V1.01)
- * Support for !PluginTerminals
- * Speed enhancement with file access
- * Improved recognition of SD card mount point
- * Changed permission name according to Open Mobile API
-
-==== v2.1.1 - 15.04.2011 ====
- * Major update: integration of SIMalliance Open Mobile API interface
- * Bug fix: improved retry-loop to receive response with some MSC cards
-
-==== v1.5 - 11.11.2010 ====
- * Bug fix: 'response too small' with some MSC cards
- * Bug fix: JNI library cleanup
- * Corrections for Samsung Galaxy S
-
-==== v1.4 - 02.11.2010 ====
- * Aligned _ISmartcardService_ interface to !SmartCard API
- * Detection of MSC card versus standard SD card
- * Detection of mount path
- * APDU command and response size fix (for APDUs with more than 250 data bytes)
- * simplified JNI interface
- * Sample application & android.smartcard.jar in download file
-
-==== v1.0 - v1.3 ====
- * no public release of the first implementations
+==== Write permission to the MSC ====
+Since AOSP 3.x application will not have write access to MicroSD cards out of the box which will also hinder the _MSC !SmartcardService_ to work. Most commercial device have implemented a _work around_ for this issue but it is up to the OEM to implement such.<br/>
+_Background_: the new `WRITE_MEDIA_STORAGE` permission for the `MEDIA_RW` gid is protected with the `signatureOrSystem` level hindering all user application to retrieve such. See `frameworks/base/core/res/AndroidManifest.xml, frameworks/base/data/etc/platform.xml` and `system/vold/Volume.cpp` for more details.
