@@ -3,18 +3,20 @@
 = Introduction =
 
 OATH is a common standard for OTP password generation defined in [http://www.ietf.org/rfc/rfc4226.txt RFC 4226]. The OTP is unique for each user that personalized the calculation with a unique seed. A counter value is incremented after each calculation (event based OTP) or valid for a specific time (time based OTP).<br><br>
-An OATH calculation in software is possible but discouraged as the seed could get lost or tampered after flashing or rooting the phone. For this purpose the OATH calculation takes place in the Mobile Security Card where the private seed is kept secure in the OtpAuthenticator applet. 
+An OATH calculation in software is possible but discouraged as the seed could get lost or tampered after flashing or rooting the phone. For this purpose the OATH calculation takes place in a Secure Element (like an UICC, eSE or Mobile Security Card) where the private seed is kept secure in the OtpAuthenticator applet. 
 
 = Walk through =
-  * Download the installation files from the [http://seek-for-android.googlecode.com/files/otpauth.tar.gz Download page]
- * Install the `oath.cap` file on the Mobile Security Card with JLoad or other Java Card compliant Global Platform loader tools.<br>
+  * Download the installation files from the [http://seek-for-android.googlecode.com/files/googleotpauth.tar.gz Download page]
+ * Install the `oath.cap` file on the Secure Element with JLoad or other Java Card compliant Global Platform loader tools.<br>
 *Note*: JLoad is included in the [https://www.cardsolutions-shop.com/shop/gi-de/ Mobile Security Developer's Kit]
- * Install with `OtpAuthenticator.apk` on your Android device equipped with a Mobile Security Card and {{{MSC_SmartcardService}}} installed.<br>
-*Note*: Without {{{MSC_SmartcardService}}}, please check out the [http://code.google.com/p/seek-for-android/source/browse/#svn/trunk/applications/OtpAuthenticator/OtpAuthenticator OtpAuthenticator source code] and recompile the APK according to [http://code.google.com/p/seek-for-android/wiki/BuildingTheSystem BuildingTheSystem]
- * Run the application on the Android phone, open the menu and personalize (=define OATH seed) the applet
+ * Install the `GoogleOtpAuthenticator.apk` on your Android device equipped with a Secure Element and {{{SmartCardApi}}} installed.<br>
+*Note*: Without {{{Smarcard API}}}, please check out how to   [http://code.google.com/p/seek-for-android/wiki/BuildingTheSystem Building The System]
+ * Run the application on the Android phone, open the menu and personalize the applet
 
 http://seek-for-android.googlecode.com/svn/wiki/img/OtpAuthenticator.png
 <br/><br/><br/>
+
+
 
 = Java Card Applet =
 *The Java Card applet is for demonstration and test purposes only. Do not use in production environments!*<br/><br/>
@@ -24,84 +26,6 @@ PackageAID: 0xD2:0x76:0x00:0x01:0x18:0x00:0x03:0xFF:0x49:0x10:0x00:0x89:0x00:0x0
 Applet AID: 0xD2:0x76:0x00:0x01:0x18:0x00:0x03:0xFF:0x49:0x10:0x00:0x89:0x00:0x00:0x02:0x01
 }}}
 See [http://code.google.com/p/seek-for-android/source/browse/#svn/trunk/applications/OtpAuthenticator/JavaCardApplet source code] for more details
-
-== APDU Interface ==
-Four methods are exported in the interface. The CLA byte is 00 but the applet can communicate on logical channels (01, 02 & 03).<br/>
-If the applet is not personalized yet (after installation) the OTP generation will generate a 6985. The counter value is incremented each time a OTP is calculated. After setting a new seed, the counter value is reset to 0x00.
-
-=== SET COUNTER ===
-{{{
-CLA:  00
-INS:  10
-P1:   00
-P2:   00
-P3:   08
-data: <8 bytes counter>
-
-APDU: 00 10 00 00 08 00 00 00 00 00 00 00 01
-RESPONSE: 90 00
-}}}
-=== GET COUNTER ===
-{{{
-CLA:  00
-INS:  11
-P1:   00
-P2:   00
-P3:   00
-data: n/a
-
-APDU: 00 11 00 00 00
-RESPONSE: 00 00 00 00 00 00 00 01 90 00
-}}}
-=== PERSONALIZE ===
-{{{
-CLA:  00
-INS:  12
-P1:   <number of digits>
-P2:   00 (if TOTP is used), 01 (if HOTP is used)
-P3:   14
-data: <20 hex bytes seed>
-
-APDU: 00 12 06 00 14 31 32 33 34 35 36 37 38 39 30 31 32 33 34 35 36 37 38 39 30
-RESPONSE: 90 00
-}}}
-=== GET OATH OTP ===
-{{{
-CLA:  00
-INS:  13
-P1:   00
-P2:   00
-P3:   00
-data: n/a
-
-APDU: 00 13 00 00 00
-RESPONSE: 37 35 35 32 32 34 90 00
-}}}
-=== RESET ===
-{{{
-CLA:  00
-INS:  14
-P1:   00
-P2:   00
-P3:   00
-data: n/a
-
-APDU: 00 14 00 00 00
-RESPONSE: 90 00
-}}}
-=== GET HOTP STATUS ===
-{{{
-CLA:  00
-INS:  15
-P1:   00
-P2:   00
-P3:   00
-data: n/a
-APDU: 00 15 00 00 00
-RESPONSE: 00 90 00 (if TOTP is used, which is default)
-          01 90 00 (if HOTP is used)
-}}}
-<br/><br/><br/>
 
 = Android Application =
 *The Android application is for demonstration and test purposes only. Do not use in production environments!*<br/><br/>
