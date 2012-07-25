@@ -36,6 +36,7 @@
     * [AndroidBelgiumEid]
     * [BTPCSC]
     * [OtpAuthenticator]
+    * [GoogleOtpAuthenticator]
     * [SecureFileManager]
   * [Faq FAQs]
   * [Abbreviations Abbreviations]
