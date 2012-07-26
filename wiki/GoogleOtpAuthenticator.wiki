@@ -19,7 +19,7 @@ An OATH calculation in software is possible but discouraged as the seed could ge
  * Run the application on the Android phone, open the menu and personalize the applet
 </td>
 <td width=60%>
-<a alt="" href=http://seek-for-android.googlecode.com/wiki/GoogleOtpAuthenticator_1_png>
+<a alt="" href=http://code.google.com/p/seek-for-android/wiki/GoogleOtpAuthenticator_1_png>
 <img src=http://seek-for-android.googlecode.com/wiki/img/GoogleOtpAuthenticator-1.png height=300/>
 </a>
 </td>
@@ -42,15 +42,15 @@ An OATH calculation in software is possible but discouraged as the seed could ge
 <img src=http://seek-for-android.googlecode.com/svn/wiki/img/GoogleTwoStepConfirmation-0.png height=100/>
 </a>
 <br/>
-<a alt="" href=http://seek-for-android.googlecode.com/wiki/GoogleTwoStepConfirmation_1_png>
+<a alt="" href=http://code.google.com/p/seek-for-android/wiki/GoogleTwoStepConfirmation_1_png>
 <img src=http://seek-for-android.googlecode.com/svn/wiki/img/GoogleTwoStepConfirmation-1.png height=100/>
 </a>
 <br/>
-<a alt="" href=http://seek-for-android.googlecode.com/wiki/GoogleTwoStepConfirmation_2_png>
+<a alt="" href=http://code.google.com/p/seek-for-android/wiki/GoogleTwoStepConfirmation_2_png>
 <img src=http://seek-for-android.googlecode.com/svn/wiki/img/GoogleTwoStepConfirmation-2.png height=100/>
 </a>
 <br/>
-<a alt="" href=http://seek-for-android.googlecode.com/wiki/GoogleTwoStepConfirmation_3_png>
+<a alt="" href=http://code.google.com/p/seek-for-android/wiki/GoogleTwoStepConfirmation_3_png>
 <img src=http://seek-for-android.googlecode.com/svn/wiki/img/GoogleTwoStepConfirmation-3.png height=100/>
 </a>
 </td>
