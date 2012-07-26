@@ -3,7 +3,7 @@
 = Introduction =
 
 OATH is a common standard for OTP password generation defined in [http://www.ietf.org/rfc/rfc4226.txt RFC 4226]. The OTP is unique for each user that personalized the calculation with a unique seed. A counter value is incremented after each calculation (event based OTP) or valid for a specific time (time based OTP).<br><br>
-An OATH calculation in software is possible but discouraged as the seed could get lost or tampered after flashing or rooting the phone. For this purpose the OATH calculation takes place in a Secure Element (like an UICC, eSE or Mobile Security Card) where the private seed is kept secure in the OtpAuthenticator applet. 
+An OATH calculation in software is possible but discouraged as the seed could get lost or tampered after flashing or rooting the phone. For this purpose the OATH calculation takes place in a Secure Element (like an UICC, eSE or Mobile Security Card) where the private seed is kept secure in the GoogleOtpAuthenticator applet. 
 
 = Walk through =
 == Install Applet and APK ==
