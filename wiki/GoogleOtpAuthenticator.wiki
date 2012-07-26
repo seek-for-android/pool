@@ -32,7 +32,7 @@ An OATH calculation in software is possible but discouraged as the seed could ge
 <table>
 <tr>
 <td valign="top" width=50%>
- * Loggin into your Google account and navigate to the Security Options of your account settings.<br/>
+ * Log in into your Google account and navigate to the Security Options of your account settings.<br/>
  * First it might be necessary to register your subscriber number of your mobile phone via SMS.<br/>
  * Now you can activate a mobile application to generate access codes. Click on Android to start the activation.<br/>
  * Scan the QR code with Google OTP Authenticator<br/>
