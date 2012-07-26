@@ -35,7 +35,6 @@
     * [GoogleMSCAuthenticator]
     * [AndroidBelgiumEid]
     * [BTPCSC]
-    * [OtpAuthenticator]
     * [GoogleOtpAuthenticator]
     * [SecureFileManager]
   * [Faq FAQs]
