@@ -8,6 +8,7 @@
   * How To
     * [BuildingTheSystem Building the System]
     * [EmulatorExtension Emulator Extension]
+    * [WebScapi Browser based SmartCard API]
     * [UsingSmartCardAPI Using the SmartCard API]
     * [UsingCTS Using CTS]
     * [AddonTerminal Create an AddonTerminal]
@@ -31,10 +32,10 @@
   * Services Layer
     * [SmartCardPKI PKI Support on Android]
   * Applications
+    * [GoogleOtpAuthenticator]
     * [AndroidContainer LXC container for Android]
     * [AndroidBelgiumEid]
     * [BTPCSC]
-    * [GoogleOtpAuthenticator]
     * [SecureFileManager]
   * [Faq FAQs]
   * [Abbreviations Abbreviations]
