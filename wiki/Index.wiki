@@ -43,10 +43,9 @@
 
 ====Applications====
    * [AndroidContainer LXC container for Android]<br>Run multiple isolated Android user-space instances in LXC containers on a physical device within a (minimal) Debian environment<br><br>
-   * [GoogleMSCAuthenticator]<br>Smartcard-based two-step authentication for Gmail on Android phones<br><br>
    * [AndroidBelgiumEid]<br>The COSIC Research Group within the Katholieke Universiteit Leuven, Belgium, developed a reference implementation for the Belgium eID card on the Android platform with the Mobile Security Card. ([http://www.esat.kuleuven.be/cosic/ K.U.Leuven, ESAT/COSIC])<br><br>
    * [BTPCSC]<br>Enables Android phones to be used as regular PC/SC smartcard readers vis Bluetooth.<br><br>
-   * [OtpAuthenticator]<br>See an example with a OATH application running on the Mobile Security Card and the Android application is displaying the OTP calculated by the card<br><br>
+   * [GoogleOtpAuthenticator]<br>See an example with a OATH application running on the Secure Element and the Android application is displaying the OTP calculated by the card for 2-step verification on a Google account.<br><br>
    * [SecureFileManager]<br>A filemanager for the Android platform to cipher files on the Mobile Security Card with a smart card applet.<br><br>
 
 
