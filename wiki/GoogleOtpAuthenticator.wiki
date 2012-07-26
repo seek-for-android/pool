@@ -57,31 +57,29 @@ An OATH calculation in software is possible but discouraged as the seed could ge
 </tr>
 </table>
 
+
+= Android Application =
+
 <a alt="" href=http://code.google.com/p/seek-for-android/wiki/GoogleOtpAuthenticator_1_png>
-<img src=http://seek-for-android.googlecode.com/svn/wiki/img/GoogleOtpAuthenticator-1.png height=300/>
+<img src=http://seek-for-android.googlecode.com/svn/wiki/img/GoogleOtpAuthenticator-1.png height=200/>
 </a>
 <a alt="" href=http://code.google.com/p/seek-for-android/wiki/GoogleOtpAuthenticator_2_png>
-<img src=http://seek-for-android.googlecode.com/svn/wiki/img/GoogleOtpAuthenticator-2.png height=300/>
+<img src=http://seek-for-android.googlecode.com/svn/wiki/img/GoogleOtpAuthenticator-2.png height=200/>
 </a>
 <a alt="" href=http://code.google.com/p/seek-for-android/wiki/GoogleOtpAuthenticator_3_png>
-<img src=http://seek-for-android.googlecode.com/svn/wiki/img/GoogleOtpAuthenticator-3.png height=300/>
+<img src=http://seek-for-android.googlecode.com/svn/wiki/img/GoogleOtpAuthenticator-3.png height=200/>
 </a>
 <a alt="" href=http://code.google.com/p/seek-for-android/wiki/GoogleOtpAuthenticator_4_png>
-<img src=http://seek-for-android.googlecode.com/svn/wiki/img/GoogleOtpAuthenticator-4.png height=300/>
+<img src=http://seek-for-android.googlecode.com/svn/wiki/img/GoogleOtpAuthenticator-4.png height=200/>
 </a>
 
-
+ * The Android application is for demonstration and test purposes only. Do not use in production environments!*<br/>
+Please refer to the [https://www.cardsolutions-shop.com/shop/gi-de/ Mobile Security Developer's Kit] for an introduction how to develop Android applications with smart card access.<br/>
 
 = Java Card Applet =
-*The Java Card applet is for demonstration and test purposes only. Do not use in production environments!*<br/><br/>
-The applet need to be compiled and converted to a Java Card CAP file with the following AIDs:
+ * The Java Card applet is for demonstration and test purposes only. Do not use in production environments!*<br/>
+The applet within the Java Card CAP file uses the following AIDs:
 {{{
 PackageAID: 0xD2:0x76:0x00:0x01:0x18:0x00:0x03:0xFF:0x49:0x10:0x00:0x89:0x00:0x00:0x02:0x00
 Applet AID: 0xD2:0x76:0x00:0x01:0x18:0x00:0x03:0xFF:0x49:0x10:0x00:0x89:0x00:0x00:0x02:0x01
 }}}
-See [http://code.google.com/p/seek-for-android/source/browse/#svn/trunk/applications/OtpAuthenticator/JavaCardApplet source code] for more details
-
-= Android Application =
-*The Android application is for demonstration and test purposes only. Do not use in production environments!*<br/><br/>
-Please refer to the [https://www.cardsolutions-shop.com/shop/gi-de/ Mobile Security Developer's Kit] for an introduction how to develop Android applications with smart card access.<br/>
-See [http://code.google.com/p/seek-for-android/source/browse/#svn/trunk/applications/OtpAuthenticator/OtpAuthenticator source code] for more details
