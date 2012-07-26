@@ -8,11 +8,11 @@
   * How To
     * [BuildingTheSystem Building the System]
     * [EmulatorExtension Emulator Extension]
-    * [WebScapi Browser based SmartCard API]
+    * [WebScapi Browser based OMAPI]
     * [UsingSmartCardAPI Using the SmartCard API]
     * [UsingCTS Using CTS]
     * [AddonTerminal Create an AddonTerminal]
-    * [RetrievingVersionInfo Retrieving SmartCard API version info]
+    * [RetrievingVersionInfo SmartCard API version]
   * Access Control
     * [AccessControlIntroduction Introduction]
   * UICC Support
