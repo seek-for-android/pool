@@ -10,7 +10,7 @@
 ====How To====
    * [BuildingTheSystem]<br>For details on how to compile the Android sources with !SmartCard API support<br><br>
    * [EmulatorExtension Emulator Extension]<br>Extend the Android emulator with a PC/SC and ASSD interface that enables access to a physical connected SIM and/or ASSD card<br><br>
-   * [WebScapi Browser based SmartCard API]<br>Adds support of the OpenMobile API for the Android Browser<br><br>
+   * [WebScapi Browser based SmartCard API]<br>Adds support of the !OpenMobile API for the Android Browser<br><br>
    * [UsingSmartCardAPI Using the SmartCard API]<br>Writing Android applications with access to Secure Elements using the !SmartCard API<br><br>
    *  [UsingCTS Using CTS]<br>Extension for the Compatibility Test Suite (CTS) to be used !SmartCard API verification<br><br>
    * [AddonTerminal Create an AddonTerminal]<br>!SmartCard API and MSC !SmartcardService can be extended with additional Secure Element (readers). This tutorial explain the details<br><br>
