@@ -2,4 +2,64 @@
 
 = Introduction =
 
-todo...
+The SIMalliance !OpenMobile API can get integrated in the Android platform with the !SmartCard API. Android using the shared library can get access to Secure Elements using the interfaces defined in the OMAPI spec.<br><br>
+However, browser based applications gain importance with new HTML5 features and the benefit that browser applications are platform independent compared to _native_ applications for the mobile device. Making the !OpenMobile API available in the browser provides the possibility to create security aware applications using features of Secure Elements in HTML applications as well.<br><br>
+The !WebScapi (!SmartCard API for the Web) project is still a very *early prototype* but will get extended over the time.<br><br>
+
+= Building =
+ * add the !SmartCard API patch file(s) as normal to build the system
+ * download the [http://code.google.com/p/seek-for-android/downloads/detail?name=webscapi-1_0_0.tgz webscapi-1_0_0.tgz] and extract the content
+ * apply the !WebScapi patch with
+{{{
+$ cd <ANDROID_ROOT_DIR>
+$ patch -p1 < <path_to_my_patches>/webscapi.patch
+}}}
+ * build & flash the system as normal...but not yet...
+
+=== Building Issues ===
+When the !WebScapi is compiled with `make` and flashed on a device the corresponding files are included in the `system.img` properly but when accessing the browser plugin it will cause an exception similar to:
+{{{
+E/dalvikvm(  667): Dex cache directory isn't writable: /data/dalvik-cache
+I/dalvikvm(  667): Unable to open or create cache for /system/app/WebScapi.apk (/data/dalvik-cache/system@app@WebScapi.apk@classes.dex)
+E/PluginManager(  667): Can't find plugin's class: com.gieseckedevrient.android.webscapi.TransportPlugin
+E/browser (  667): Console: Uncaught TypeError: Object #<HTMLObjectElement> has no method 'createSEService' file:///sdcard/WebScapi.js:23
+}}}
+This looks like a browser plugin needs to be in odex format, either when building the platform or through dalvik-cache?!
+
+====Workarounds====
+ * either build the system with odex files:
+{{{
+$ make -jX WITH_DEXPREOPT=true 
+}}}
+and flash normally or
+ * install the browser plugin APK like a normal application:
+{{{
+$ adb remount
+$ adb shell rm /system/app/WebScapi.apk
+$ cd <ANDROID_ROOT_DIR>
+$ adb install out/target/product/<platform>/system/app/WebScapi.apk
+}}}
+and reboot.
+<br>
+
+= Using =
+For a simple test, push the small HTML demo on the device and open it in the Android browser:
+{{{
+$ adb push packages/apps/WebScapi/html/index.html /sdcard/
+$ adb push packages/apps/WebScapi/html/WebScapi.js /sdcard/
+}}}
+
+<table><tr>
+<td valign="top" width=40%>Within the browser, open the URI
+{{{
+file:///sdcard/index.html
+}}}
+The !PerformanceTester application will be converted to HTML in a next step.<br/><br/>
+==== Creating an application ====
+Include the Javascript code from `WebScapi.js` as provided in the sample application, create an instance of `SEService` and use all interfaces of the !OpenMobile API as is _native_ Android applications.
+</td>
+<td width=10%>
+</td>
+<td><img width=60% src=http://seek-for-android.googlecode.com/svn/wiki/img/webscapi-sample.png/>
+</td></tr></table>
+Developed and tested with android-4.0.3_r1 with Nexus S and SIM & SmartMX as Secure Element.
