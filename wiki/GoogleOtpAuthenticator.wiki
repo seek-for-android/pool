@@ -11,7 +11,7 @@ An OATH calculation in software is possible but discouraged as the seed could ge
 <table>
 <tr>
 <td valign="top" width=50%>
-  * Download the installation files from the [http://seek-for-android.googlecode.com/files/googleotpauth.tar.gz Download page]
+  * Download the installation files from the [http://seek-for-android.googlecode.com/files/GoogleOTPAuthenticator.tar.gz Download page]
  * Install the `oath.cap` file on the Secure Element with JLoad or other Java Card compliant Global Platform loader tools.<br/>
 *Note*: JLoad is included in the [https://www.cardsolutions-shop.com/shop/gi-de/ Mobile Security Developer's Kit]
  * Install the `GoogleOtpAuthenticator.apk` on your Android device equipped with the Secure Element and {{{SmartCardApi}}} installed.<br/>
