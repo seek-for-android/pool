@@ -7,12 +7,26 @@ An OATH calculation in software is possible but discouraged as the seed could ge
 
 = Walk through =
 == Install Applet and APK ==
+
+<table>
+<tr>
+<td valign="top" width=50%>
   * Download the installation files from the [http://seek-for-android.googlecode.com/files/googleotpauth.tar.gz Download page]
- * Install the `oath.cap` file on the Secure Element with JLoad or other Java Card compliant Global Platform loader tools.<br>
+ * Install the `oath.cap` file on the Secure Element with JLoad or other Java Card compliant Global Platform loader tools.<br/>
 *Note*: JLoad is included in the [https://www.cardsolutions-shop.com/shop/gi-de/ Mobile Security Developer's Kit]
- * Install the `GoogleOtpAuthenticator.apk` on your Android device equipped with the Secure Element and {{{SmartCardApi}}} installed.<br>
+ * Install the `GoogleOtpAuthenticator.apk` on your Android device equipped with the Secure Element and {{{SmartCardApi}}} installed.<br/>
 *Note*: Without {{{Smarcard API}}}, please check out how to   [http://code.google.com/p/seek-for-android/wiki/BuildingTheSystem Building The System]
  * Run the application on the Android phone, open the menu and personalize the applet
+</td>
+<td width=60%>
+<a alt="view large image">
+<img src=http://seek-for-android.googlecode.com/svn/wiki/img/GoogleOtpAuthenticator-1.png height=300/>
+</a>
+<br/>
+Click to enlarge
+</td>
+</tr>
+</table>
 
 == Activate 2-step verification ==
  * Loggin into your Google account and navigate to the Security Options of your account settings.
