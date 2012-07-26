@@ -1,0 +1,136 @@
+APDU commands for Google OTP applet
+
+Set counter/time:
+Command:    00 10 00 00 08 DD DD DD DD DD DD DD DD DD
+
+Parameters: DD: data as a 64 bit unsigned Big Endian integer
+
+Responses:
+Success:    90 00
+Errors:     67 00: wrong length - data length must be 8 bytes
+            6A 80: wrong data - new counter value must be greater than or equal to the old one
+            69 C0: no account selected
+
+Sets the counter (HOTP mode) or the current time (TOTP mode) of the selected account to the given value (unsigned 64 bit Big Endian integer). The new value must be greater than or equal to the old value. The reason for this is that otherwise, an attacker could precompute passwords for a certain counter value or time and then reset the counter without the owner of the account noticing it.
+
+
+
+Get counter/time:
+Command:    00 11 00 00 00
+
+Responses:
+Success:    DD DD DD DD DD DD DD DD 90 00
+Errors:     69 C0: no account selected
+
+Returns the value of the counter (HOTP mode) or the current time (TOTP mode) of the selected account as an unsigned 64 bit Big Endian integer.
+
+
+
+Set up account:
+Command:    00 12 DD MM LL LE EE EE EE ... SS SS SS ...
+Parameters: DD: number of digits, must be in the range of 0 to 127
+            MM: mode (HOTP or TOTP), where MM=0 stands for TOTP and MM=1 stands for HOTP
+            LL: length of data field, LE + 21
+            LE: length of email address, must be between 1 and 127
+            EE: email address as a string of length LE
+            SS: shared secret as a 20 byte binary string
+
+Responses:
+Success:    90 00
+Errors:     6B 00: wrong P1P2 - number of digits must be in the range of 0 to 127
+            67 00: wrong length - data field must be at least 22 bytes long (1 byte LE, 1 byte EE, 20 bytes SS)
+            6A 80: wrong data - email address must be between 1 and 127 bytes long
+            69 C2: no free account slot
+
+Sets up an account with the specified email address, shared secret, number of digits and mode (HOTP/TOTP). The counter/time is set to 0. If an account with the specified email address already exists, it will be overwritten.
+
+
+
+Generate OTP:
+Command:    00 13 00 00 00
+
+Responses:
+Success:    PP... 90 00 (PP is a string whose length is the number of digits specified in the account settings)
+Errors:     69 C0: no account selected
+
+Generates a one time password with the selected account using the current counter/time. It is returned as a character string of decimal digits. The length of the string is the number of digits specified when the account was set up.
+
+
+
+Reset:
+Command:    00 14 00 00 00
+
+Responses:
+Success:    90 00
+
+Deletes all accounts.
+
+
+
+Get account mode:
+Command:    00 15 00 00 00
+
+Responses:
+Success:    MM 90 00 (MM=0 if mode is TOTP, MM=1 if mode is HOTP)
+Errors:     69 C0: no account selected
+
+
+
+Select account:
+Command:    00 16 00 00 LL EE...
+
+Parameters: LL: length of the email address (at least 1)
+            EE...: the email address of the account that should be selected
+
+Responses:
+Success:    90 00
+Errors:     67 00: wrong length - LL must be at least 1
+            69 C1: no account with the specified email address exists
+
+Selects the account identified by the specified email address as the active account for further operations. (such as set counter, generate OTP, get mode...)
+Note that the selected account is reset every time the applet is deselected or the card loses power for safety reasons.
+
+
+
+Reset selected account:
+Command:    00 16 01 00 00
+
+Responses:
+Success:    90 00
+
+Resets the selected account, i.e. no account will be selected after this command is executed.
+
+
+
+Delete account:
+Command:    00 17 00 00 LL EE...
+
+Responses:  
+Success:    90 00
+Errors:     67 00: wrong length - LL must be at least 1
+            69 C1: no account with the specified email address exists
+
+Deletes the account with the specified email address.    
+            
+           
+            
+Get number of accounts:
+Command:    00 18 00 00 00
+
+Responses:
+Success:    NN 90 00
+
+Returns the number of accounts.
+
+
+            
+Get account info:
+Command:    00 18 01 NN 00
+
+Responses:
+Success:    EE... 90 00 (EE is the email of the account)
+Errors:     69 C0: NN=255 was given but no account is selected
+            69 C1: the given index was invalid (out of range)
+
+Returns the account information (the associated email address) of the account with index NN, where NN=0 is the first account. Sending N=255 will return the information of the currently selected account.
+
