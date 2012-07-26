@@ -73,11 +73,10 @@ An OATH calculation in software is possible but discouraged as the seed could ge
 <img src=http://seek-for-android.googlecode.com/svn/wiki/img/GoogleOtpAuthenticator-4.png height=200/>
 </a>
 
- * The Android application is for demonstration and test purposes only. Do not use in production environments!*<br/>
-Please refer to the [https://www.cardsolutions-shop.com/shop/gi-de/ Mobile Security Developer's Kit] for an introduction how to develop Android applications with smart card access.<br/>
+*The Android application is for demonstration and test purposes only. Do not use in production environments!*
 
 = Java Card Applet =
- * The Java Card applet is for demonstration and test purposes only. Do not use in production environments!*<br/>
+*The Java Card applet is for demonstration and test purposes only. Do not use in production environments!*<br/>
 The applet within the Java Card CAP file uses the following AIDs:
 {{{
 PackageAID: 0xD2:0x76:0x00:0x01:0x18:0x00:0x03:0xFF:0x49:0x10:0x00:0x89:0x00:0x00:0x02:0x00
