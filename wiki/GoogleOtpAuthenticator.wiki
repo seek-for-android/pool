@@ -6,15 +6,22 @@ OATH is a common standard for OTP password generation defined in [http://www.iet
 An OATH calculation in software is possible but discouraged as the seed could get lost or tampered after flashing or rooting the phone. For this purpose the OATH calculation takes place in a Secure Element (like an UICC, eSE or Mobile Security Card) where the private seed is kept secure in the OtpAuthenticator applet. 
 
 = Walk through =
+== Install Applet and APK ==
   * Download the installation files from the [http://seek-for-android.googlecode.com/files/googleotpauth.tar.gz Download page]
  * Install the `oath.cap` file on the Secure Element with JLoad or other Java Card compliant Global Platform loader tools.<br>
 *Note*: JLoad is included in the [https://www.cardsolutions-shop.com/shop/gi-de/ Mobile Security Developer's Kit]
- * Install the `GoogleOtpAuthenticator.apk` on your Android device equipped with a Secure Element and {{{SmartCardApi}}} installed.<br>
+ * Install the `GoogleOtpAuthenticator.apk` on your Android device equipped with the Secure Element and {{{SmartCardApi}}} installed.<br>
 *Note*: Without {{{Smarcard API}}}, please check out how to   [http://code.google.com/p/seek-for-android/wiki/BuildingTheSystem Building The System]
  * Run the application on the Android phone, open the menu and personalize the applet
 
-http://seek-for-android.googlecode.com/svn/wiki/img/OtpAuthenticator.png
-<br/><br/><br/>
+== Activate 2-step verification ==
+ * Loggin into your Google account and navigate to the Security Options of your account settings.
+ * First it might be necessary to register your subscriber number of your mobile phone via SMS.
+ * Now you can activate a mobile application to generate access codes. Click on Android to start the activation.
+ * Scan the QR code with Google OTP Authenticator
+ * Enter the generated OTP.
+ * After successful confirmation the Google OTP Authenticator is now ready to use for 2-step verification with your Google account.
+
 
 
 
