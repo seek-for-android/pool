@@ -17,6 +17,8 @@ An OATH calculation in software is possible but discouraged as the seed could ge
  * Install the `GoogleOtpAuthenticator.apk` on your Android device equipped with the Secure Element and {{{SmartCardApi}}} installed.<br/>
 *Note*: Without {{{Smarcard API}}}, please check out how to   [http://code.google.com/p/seek-for-android/wiki/BuildingTheSystem Building The System]
  * Run the application on the Android phone, open the menu and personalize the applet
+*Note*: To scan the OR Code the Barcode Reader Application from zxing is necessary. You can either install it via Google Play or from their project site http://code.google.com/p/zxing/.
+
 </td>
 <td width=60%>
 <a alt="" href=http://code.google.com/p/seek-for-android/wiki/GoogleOtpAuthenticator_1_png>
