@@ -38,7 +38,7 @@ An OATH calculation in software is possible but discouraged as the seed could ge
  * After successful confirmation the Google OTP Authenticator is now ready to use for 2-step verification with your Google account.
 </td>
 <td width=60%>
-<a alt="" href=http://seek-for-android.googlecode.com/wiki/GoogleTwoStepConfirmation_0_png>
+<a alt="" href=http://code.google.com/p/seek-for-android/wiki/GoogleTwoStepConfirmation_0_png>
 <img src=http://seek-for-android.googlecode.com/svn/wiki/img/GoogleTwoStepConfirmation-0.png height=100/>
 </a>
 <br/>
