@@ -19,7 +19,7 @@ An OATH calculation in software is possible but discouraged as the seed could ge
  * Run the application on the Android phone, open the menu and personalize the applet
 </td>
 <td width=60%>
-<a alt="view large image" href="http://seek-for-android.googlecode.com/svn/wiki/img/GoogleOtpAuthenticator-1.png" >
+<a alt="view large image" href=http://seek-for-android.googlecode.com/svn/wiki/img/GoogleOtpAuthenticator-1.png >
 <img src=http://seek-for-android.googlecode.com/svn/wiki/img/GoogleOtpAuthenticator-1.png height=300/>
 </a>
 <br/>
