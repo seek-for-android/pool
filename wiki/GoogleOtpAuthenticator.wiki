@@ -22,8 +22,8 @@ An OATH calculation in software is possible but discouraged as the seed could ge
 <a alt="view large image" href=http://seek-for-android.googlecode.com/svn/wiki/img/GoogleOtpAuthenticator-1.png >
 <img src=http://seek-for-android.googlecode.com/svn/wiki/img/GoogleOtpAuthenticator-1.png height=300/>
 </a>
-<a alt="view large image" href=http://code.google.com/p/seek-for-android/wiki/ARA_overview_png>
-<img src=http://seek-for-android.googlecode.com/svn/wiki/img/ARA_overview.png height=300/>
+<a alt="view large image" href=http://seek-for-android.googlecode.com/svn/wiki/img/GoogleOtpAuthenticator-1.png>
+<img src=http://seek-for-android.googlecode.com/svn/wiki/img/GoogleOtpAuthenticator-1.png height=300/>
 </a>
 <br/>
 Click to enlarge
