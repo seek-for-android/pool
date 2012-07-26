@@ -20,7 +20,7 @@ An OATH calculation in software is possible but discouraged as the seed could ge
 </td>
 <td width=60%>
 <a alt="" href=http://code.google.com/p/seek-for-android/wiki/GoogleOtpAuthenticator_1_png>
-<img src=http://seek-for-android.googlecode.com/wiki/img/GoogleOtpAuthenticator-1.png height=300/>
+<img src=http://seek-for-android.googlecode.com/svn/wiki/img/GoogleOtpAuthenticator-1.png height=300/>
 </a>
 </td>
 </tr>
@@ -30,12 +30,12 @@ An OATH calculation in software is possible but discouraged as the seed could ge
 <table>
 <tr>
 <td valign="top" width=50%>
- * Loggin into your Google account and navigate to the Security Options of your account settings.
- * First it might be necessary to register your subscriber number of your mobile phone via SMS.
- * Now you can activate a mobile application to generate access codes. Click on Android to start the activation.
- * Scan the QR code with Google OTP Authenticator
- * Enter the generated OTP.
- * After successful confirmation the Google OTP Authenticator is now ready to use for 2-step verification with your Google account.
+ * Loggin into your Google account and navigate to the Security Options of your account settings.<br/>
+ * First it might be necessary to register your subscriber number of your mobile phone via SMS.<br/>
+ * Now you can activate a mobile application to generate access codes. Click on Android to start the activation.<br/>
+ * Scan the QR code with Google OTP Authenticator<br/>
+ * Enter the generated OTP.<br/>
+ * After successful confirmation the Google OTP Authenticator is now ready to use for 2-step verification with your Google account.<br/>
 </td>
 <td width=60%>
 <a alt="" href=http://code.google.com/p/seek-for-android/wiki/GoogleTwoStepConfirmation_0_png>
