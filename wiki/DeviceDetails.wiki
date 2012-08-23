@@ -1,6 +1,7 @@
 #summary Detailed description about devices supporting the SmartCard API out of the box
 
 As commercial devices are available supporting the !SmartCard API out of the box this section will list the details/problems regarding APDU communication with the supported Secure Elements.
+<wiki:toc max_depth="3" />
 <br/>
 
 === Sony Xperia S ===
