@@ -24,7 +24,7 @@ _note.2_ eSE secure messaging keys are not available in public!
 The following devices summarizes all commercially available devices that have !SmartCard API integrated
 
 || *Device* || || *OS build* || *BB build* || *SCAPI* || || *ASSD* || *UICC* || *eSE* || || *Notes* ||
-|| Samsung GT-I9100P || || <font size=1>GINGERBREAD.XXLA3 || <font size=1>I9100PXXKI3 || 2.2.2 || || - || + || - || || _to be tested_ ||
+|| Samsung GT-I9100P || || <font size=1>GINGERBREAD.XXLA3 || <font size=1>I9100PXXKI3 || 2.2.2 || || - || + || - || || [DeviceDetails details] ||
 || Samsung GT-I9300 || || <font size=1>IMM76D.I9300XXALEF ||<font size=1>I9300XXLEF || 2.3.2 || || - || + || - || || [DeviceDetails details] ||
 || Sony Xperia S (LT26i) || || <font size=1>6.0.A.3.75 || <font size=1>M8660-AAABQOLYM-314005T || 2.3.4 || || - || + || - || || [DeviceDetails details] ||
 || Sony Xperia P (LT22i) || ||  ||  || 2.3.4 || || - || + || - || || reported by Sony ||
