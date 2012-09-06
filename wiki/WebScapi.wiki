@@ -14,7 +14,7 @@ The !WebScapi (!SmartCard API for the Web) project is still a very *early protot
 $ cd <ANDROID_ROOT_DIR>
 $ patch -p1 < <path_to_my_patches>/webscapi.patch
 }}}
- * build & flash the system as normal...but not yet...
+ * build & flash the system as normal...not yet...
 
 === Building Issues ===
 When the !WebScapi is compiled with `make` and flashed on a device the corresponding files are included in the `system.img` properly but when accessing the browser plugin it will cause an exception similar to:
@@ -39,8 +39,10 @@ $ adb shell rm /system/app/WebScapi.apk
 $ cd <ANDROID_ROOT_DIR>
 $ adb install out/target/product/<platform>/system/app/WebScapi.apk
 }}}
-and reboot.
-<br>
+and reboot.<br>
+Even now, it turned out that the current implementation is only accessible when builing the ENG target, USERDEBUG & USER will not work.
+Ensure to compile with `lunch full_crespo-eng`
+<br><br>
 
 = Using =
 For a simple test, push the small HTML demo on the device and open it in the Android browser:
