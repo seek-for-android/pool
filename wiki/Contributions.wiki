@@ -1,4 +1,4 @@
-=Contribution Guidelines=
+===Contribution Guidelines===
 
 *Introduction*
 We want to invite anyone to join the project and help improving it. There are many ways to participate like reporting bugs, writing documentation, creating/updating samples, helping on the mailing list even contributing code and patches just to name a few.
