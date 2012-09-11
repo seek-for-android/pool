@@ -26,7 +26,7 @@ Drivers for the MSC are available for many platforms and provided by G&D Secure 
 <td valign="top" width=55%>
 = Installation =
 To test the _MSC !SmartcardService_
- * download the [http://seek-for-android.googlecode.com/files/MSC_SmartcardService-2_4_0.tgz MSC_SmartcardService-2_4_0.tgz] and extract the card content
+ * download the [http://seek-for-android.googlecode.com/files/MSC%20SmartCard%20Service%202.4.0.1.tgz MSC SmartcardService 2.4.0.1.tgz] and extract the card content
 
  * ensure that _USB debugging_ is enabled on the phone<br/>(_Settings_ - _Applications_ - _Development_ - _USB debugging_)
 
@@ -40,8 +40,7 @@ To test the _MSC !SmartcardService_
 
  * in addition, the [http://seek-for-android.googlecode.com/files/PerformanceTester-1_3_0.tgz PerformanceTester] application can be used to run more detailed tests
 
- * always ensure that a GlobalPlatform compliant Access Control applet is installed granting access to the Mobile Security Card (e.g. [AllowAll dummy-ARA applet] from SEEK)
-
+ * a GlobalPlatform compliant Access Control applet is optional for the Mobile Security card. If it is installed, the MSC Smartcard Service will grant access to the Mobile Security Card based on the rules that the applet defines.
 </td>
 <td width=5%>
 </td>
@@ -60,8 +59,9 @@ When using Eclipse to develop Secure Element applications, setup the development
 Shared library projects cannot be supported by the _MSC !SmartcardService_. However, it is no problem that applications that linked the org.simalliance.openmobileapi.jar directly work on devices where the !SmartCard API is already installed as a shared library.
 
 ==== Access Control ====
-As the [AccessControlIntroduction GlobalPlatform Secure Element Access Control] is also included in the _MSC !SmartcardService_ it is required that a corresponding Access Control application is installed in the MSC and personalized with the proper rules.<br/>
+As the [AccessControlIntroduction GlobalPlatform Secure Element Access Control] is also included in the _MSC !SmartcardService_, a corresponding Access Control application can optionally be installed in the MSC and personalized with the proper rules.<br/>
 For development purposes, the [AllowAll dummy-ARA applet] can be used that grants access to the MSC for any application.
+In case no Access Control application can be selected on the MSC, Access control will be disabled.
 <br/>
 
 ==== Write permission to the MSC ====
