@@ -1,6 +1,13 @@
 #summary Summary of the release notes of all MSC SmartcardService versions
 
 
+==== v2.4.0.1 - 11.09.2012 ====
+ * ACE will be disabled if ARA can not be selected by the SELECT command (according to GP spec)
+ *  Improvement of the mechanism to detect the mount point of the Mobile Security Card
+   * first we use a list of known SD card paths
+   * if the SD card path is not in this list, we search in the file /proc/mounts for the correct path to the SD card
+   * as a last option, we execute the 'mount' command and parse the result for the path
+
 ==== v2.4.0 - 19.07.2012 ====
  * !SmartCard API 2.4.0 feature compliant (Global Platform Access Control integrated)
  * ICS support
