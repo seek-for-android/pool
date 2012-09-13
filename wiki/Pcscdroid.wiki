@@ -1,0 +1,52 @@
+#summary Pcsc-Lite support for Android devices in userspace: Pcscdroid
+
+= Introduction =
+
+Pcscdroid is an Android application that provides pcsc-lite support for other applications without needing root privileges to read and write through pcsc to MSC-Cards.
+
+The Application uses a ported version of pcsc-lite for Android with a custom IFDHandler to support MSC-Cards.
+
+
+= Details =
+
+Pcscdroid starts a ported version of pcsc-lite daemon in its userspace. The application comes with a custom IFDHandler to support MSC-Cards. Pcscdroid currently only works with MSC-Cards. We are currently working on Ccid support for ccid compatible card readers.
+Pcscdroid provides access to pcsc-lite over an IPC-Interface located at:
+
+{{{
+$ /data/data/com.gieseckedevrient.android.pcscdroid/files/ipc/
+}}}
+
+The application starts a Android service that runs in the background to manage pcscd - also when the app is backgrounded.
+Within the app you are able to control the daemon (start/stop) and see the log output of pcscd. Also the path of the MSC-Card and its ATR is provided. In the settings tab one can filter the logs for APDUs and/or DEBUG output.
+All the files needed for execution and communication are located in the apps _files_ directory and its _lib_ directory (for JNI).
+
+
+We also provide a custom _libpcsclite.so_ and _libpcsclite.a_ for dynamicly and staticly linking the library. It provides the standard libpcsclite interface.
+A sample of _testpcsc_ ist also provided to show you how to compile the test programm with the custom library provided.
+
+The application was tested and works on Samsung Galaxy S3, Samsung Galaxy S2, Motorola Xoom.
+
+
+= Installation =
+
+To install Pcscdroid on your device simply download the Package that includes the APK here: *[http://code.google.com/p/seek-for-android/downloads/detail?name=Pcscdroid.tar.gz Pcscdroid]*
+
+Next install it with
+
+{{{
+$ adb install Pcscdroid.apk
+}}}
+
+onto your device.
+Now the app should be available in you application launcher. After launching the app press start to install and run the pcsc-lite daemon.
+To stop the daemon simply press the same toggle button again.
+In the log tab you are able to see the log output of pcscd.
+The settings tab lets you filter the log ouput and clean the log. Here you can also remove the files installed by Pcscdroid.
+
+To Remove the application stop the service and remove it in your program manager.
+
+To test if pcscd is running and working execute the _testpcsc_ program delivered within the apk after starting the service by running following command from your phones console:
+
+{{{
+$ /data/data/com.gieseckedevrient.android.pcscdroid/files/testpcsc
+}}}
