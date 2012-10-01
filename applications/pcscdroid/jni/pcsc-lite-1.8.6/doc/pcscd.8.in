@@ -1,0 +1,98 @@
+.TH PCSCD 8 "January 2007" Muscle "PC/SC Lite"
+.SH NAME
+pcscd \- PC/SC Smart Card Daemon
+.
+.SH SYNOPSIS
+.B pcscd
+.RI [ options ]
+.
+.SH OPTIONS
+.TP
+.BR -a ", " \-\-apdu
+log APDUs and SW using the debug method (see
+.BR \-\-debug ).
+.TP
+.BR \-c ", " \-\-config " \fIfile\fP"
+Specifies the file \fIfile\fP as an alternate location for
+.IR @confdir_exp@/reader.conf .
+.TP
+.BR \-f ", " \-\-foreground
+Runs pcscd in the foreground and sends log messages to stderr instead of
+syslog(3).
+.TP
+.BR \-d ", " \-\-debug
+use the lowest log level. Any log message of this level or above will be
+sent to stderr or syslog(3) depending on the use of
+.BR \-\-foreground .
+.TP
+.B \-\-info
+use info log level. This is the default log level.
+.TP
+.B \-\-error
+use error log level.
+.TP
+.B \-\-critical
+use critical log level.
+.PP
+The log levels are ordered as: debug < info < error < critical. Use a
+log level l will log this level and all the levels above it.
+.TP
+.BR \-h ", " \-\-help
+Displays information about the pcscd command line
+.TP
+.BR \-v ", " \-\-version
+Displays the program version number
+.TP
+.BR \-H ", " \-\-hotplug
+Ask pcscd to rescan the USB buses for added or removed readers and re-read
+the
+.I @confdir_exp@/reader.conf
+file to detect added or removed non-USB readers (serial or PCMCIA).
+.
+.SH DESCRIPTION
+pcscd is the daemon program for pcsc-lite. It is a resource manager that
+coordinates communications with smart card readers and smart cards and
+cryptographic tokens that are connected to the system.
+.PP
+It allows applications to access smart cards and readers using the
+winscard API but without knowing details of the card or reader.
+.PP
+pcscd coordinates the loading of drivers for card readers.
+.
+.SH "SERIAL SMART CARD READER DRIVERS"
+Smart card reader drivers are placed in the
+.I @usbdropdir@
+directory. Each driver is simply an
+.I .so
+file.  pcscd locates the driver using the
+.I @confdir_exp@/reader.conf
+file.  See the
+.BR reader.conf (5)
+manual page for more information.
+Drivers are available at \fIhttp://www.musclecard.com/drivers.html\fP.
+.
+.SH "USB SMART CARD READER DRIVERS"
+USB smart card reader drivers are located in
+.I @usbdropdir@
+directory as a bundle. You shall not add a USB driver in
+.I @confdir_exp@/reader.conf
+file.
+.
+.SH FILES
+.I @confdir_exp@/reader.conf
+: Reader configuration file
+.PP
+.I @ipcdir@/pcscd.pid
+: process id of the running pcscd
+.PP
+.I @usbdropdir@
+: directory containing bundles for USB drivers
+.
+.SH "SEE ALSO"
+.BR bundleTool (8),
+.BR reader.conf (5),
+.BR syslog (3)
+.
+.SH AUTHORS
+David Corcoran <corcoran@musclecard.com> and Ludovic Rousseau
+<ludovic.rousseau@free.fr>

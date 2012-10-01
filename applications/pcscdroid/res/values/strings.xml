@@ -1,0 +1,16 @@
+<resources>
+
+    <string name="app_name">PCSCdroidTab</string>
+    <string name="title_settings">Settings</string>
+    <string name="title_log">Log</string>
+    <string name="title_servicestatus">Service Status</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="menu_settings">Settings</string>
+    <string name="title_activity_main">PcscDroid</string>
+        <string name="local_service_started">PcscDroid-Service started</string>
+    <string name="local_service_stopped">PcscDroid stopped</string>
+    <string name="local_service_label">PcscDroid-Service is available</string>
+    <string name="local_service_connected">local_service_connected</string>
+    <string name="local_service_disconnected">local_service_disconnected</string>
+
+</resources>
