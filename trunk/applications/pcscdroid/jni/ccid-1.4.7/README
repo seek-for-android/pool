@@ -1,0 +1,762 @@
+USB CCID IFD Handler
+====================
+
+This package provides the source code for a generic USB CCID (Chip/Smart
+Card Interface Devices) and ICCD (Integrated Circuit(s) Card Devices)
+driver. See the USB CCID [1] and ICCD [2] specifications from the USB
+working group.
+
+[1] http://www.usb.org/developers/devclass_docs/DWG_Smart-Card_CCID_Rev110.pdf
+[2] http://www.usb.org/developers/devclass_docs/DWG_Smart-Card_USB-ICC_ICCD_rev10.pdf
+
+Authors:
+========
+
+- Ludovic Rousseau <ludovic.rousseau@free.fr>
+- Carlos Prados for the PPS and ATR parsing code (taken from his
+  towitoto driver) in towitoko/ directory.
+- Olaf Kirch for the T=1 TPDU code (from the OpenCT package) in openct/
+  directory. I (Ludovic Rousseau) greatly improved this code.
+
+
+CCID and ICCD readers:
+======================
+
+A reader can be in one of these list:
+- supported
+    See http://pcsclite.alioth.debian.org/ccid/supported.html
+- should working
+    See http://pcsclite.alioth.debian.org/ccid/shouldwork.html
+- unsupported
+    See http://pcsclite.alioth.debian.org/ccid/unsupported.html
+- disabled
+    See http://pcsclite.alioth.debian.org/ccid/disabled.html
+
+
+Supported operating systems:
+============================
+
+- GNU/Linux (libusb 1.0)
+- MacOS X/Darwin (libusb 1.0)
+
+See also http://pcsclite.alioth.debian.org/ccid.html for more
+information.
+
+
+Debug informations:
+===================
+
+The driver uses the debug function provided by pcscd. So if pcscd sends
+its debug to stdout (pcscd --foreground) then the CCID driver will also
+send its debug to stdout. If pcscd sends its debug to syslog (by
+default) then the CCID driver will also send its debug to syslog.
+
+You can change the debug level using the Info.plist configuration file.
+The Info.plist is installed, by default, in
+/usr/local/pcsc/drivers/ifd-ccid.bundle/Contents/Info.plist
+or set the environment variable LIBCCID_ifdLogLevel.
+
+The debug level is set in the ifdLogLevel field. It is a binary OR
+combinaison of 4 different levels.
+- 1: critical: important error messages
+- 2: info:     informative messages like what reader was detected
+- 4: comm:     a dump of all the bytes exchanged between the host and the
+               reader
+- 8: periodic: periodic info when pcscd test if a card is present (every
+               1/10 of a second)
+
+By default the debug level is set to 3 (1 + 2) and correspond to the
+critical and info levels.
+
+You have to restart the driver so it read the configuration file again
+and use the new debug level value.  To restart the driver you just need
+to unplug all your CCID readers so the the driver is unloaded and then
+replug your readers. You can also restart pcscd.
+
+
+Voltage selection
+=================
+
+You can change the voltage level using the Info.plist configuration
+file.  The Info.plist is installed, by default, in
+/usr/local/pcsc/drivers/ifd-ccid.bundle/Contents/Info.plist
+
+The voltage level is set in the ifdDriverOptions field. It is a binary OR
+combinaison of 4 different levels.
+
+-  0: power on the card at 5V (default value)
+- 16: power on the card at 3V and, if 3V fails then use 5V
+- 32: power on the card at 1.8V, then 3V and then 5V
+- 48: let the reader decide
+
+By default the voltage level is set to 0 and correspond to 5V.
+
+You have to restart the driver so it read the configuration file again
+and use the new debug level value.  To restart the driver you just need
+to unplug all your CCID readers so the the driver is unloaded and then
+replug your readers.  You can also restart pcscd.
+
+
+Licence:
+========
+
+  This library is free software; you can redistribute it and/or modify it
+under the terms of the GNU Lesser General Public License as published by
+the Free Software Foundation; either version 2.1 of the License, or (at
+your option) any later version.
+
+  This library is distributed in the hope that it will be useful, but
+WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU Lesser
+General Public License for more details.
+
+  You should have received a copy of the GNU Lesser General Public License
+along with this library; if not, write to the Free Software Foundation,
+Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+
+
+History:
+========
+
+1.4.7 - 22 June 2012, Ludovic Rousseau
+    -Add support of
+       . ACS ACR101 ICC Reader
+       . ACS CryptoMate64
+       . Alcor Micro AU9522
+       . Bit4id CKey4
+       . Bit4id cryptokey
+       . Bit4id iAM
+       . Bit4id miniLector
+       . Bit4id miniLector-s
+       . CCB eSafeLD
+       . Gemalto Ezio Shield Branch
+       . KOBIL Systems IDToken
+       . NXP PR533
+    - KOBIL Systems IDToken special cases:
+       . Give more time (3 seconds instead of 2) to the reader to answer
+       . Hack for the Kobil IDToken and Geman eID card. The German eID
+         card is bogus and need to be powered off before a power on
+       . Add Reader-Info-Commands special APDU/command
+         - Manufacturer command
+         - Product name command
+         - Firmware version command
+         - Driver version command
+    - Use auto suspend for CCID devices only (Closes Alioth bug
+      [#313445] "Do not activate USB suspend for composite devices:
+      keyboard")
+    - Fix some error management in the T=1 TPDU state machine
+    - some minor bugs removed
+    - some minor improvements added
+
+
+1.4.6 - 6 April 2012, Ludovic Rousseau
+    -Add support of
+       . Avtor SC Reader 371
+       . Avtor SecureToken
+       . DIGIPASS KEY 202
+       . Fujitsu SmartCase KB SCR eSIG
+       . Giesecke & Devrient StarSign CUT
+       . Inside Secure VaultIC 460 Smart Object
+       . Macally NFC CCID eNetPad reader
+       . OmniKey 6321 USB
+       . SCM SDI 011
+       . Teridian TSC12xxF
+       . Vasco DIGIPASS KEY 101
+    - Remove support of readers without a USB CCID descriptor file
+       . 0x08E6:0x34C1:Gemalto Ezio Shield Secure Channel
+       . 0x08E6:0x34C4:Gemalto Ezio Generic
+       . 0x04E6:0x511A:SCM SCR 3310 NTTCom
+       . 0x0783:0x0008:C3PO LTC32 USBv2 with keyboard support
+       . 0x0783:0x9002:C3PO TLTC2USB
+       . 0x047B:0x020B:Silitek SK-3105
+    - Disable SPE for HP USB CCID Smartcard Keyboard. The reader is
+      bogus and unsafe.
+    - Convert "&" in a reader name into "&amp;" to fix a problem on Mac
+      OS X
+    - Fix a problem with ICCD type A devices. We now wait for device ready
+    - Secure PIN Verify and PIN Modify: set the minimum timeout to 90
+      seconds
+    - Add support of wIdVendor and wIdProduct properties
+    - Add support of dwMaxAPDUDataSize
+    - Add support of Gemalto firmware features
+    - some minor bugs removed
+
+
+1.4.5 - 11 October 2011, Ludovic Rousseau
+    - Add support of Alcor Micro AU9540, Ubisys 13.56MHz RFID (CCID),
+      BIFIT USB-Token iBank2key, BIFIT iBank2Key, Gemalto Ezio Shield
+      PinPad reader, Gemalto SA .NET Dual, Precise Sense MC reader (with
+      fingerprint), SDS DOMINO-Key TWIN Pro
+    - Add support of bPPDUSupport and FEATURE_CCID_ESC_COMMAND
+    - SCARD_ATTR_VENDOR_NAME and SCARD_ATTR_VENDOR_IFD_VERSION are not
+      the vendor name and version of the driver but of the IFD:
+      InterFace Device i.e. the smart card reader.  We then return the
+      USB iManufacturer string as SCARD_ATTR_VENDOR_NAME and USB
+      bcdDevice as SCARD_ATTR_VENDOR_IFD_VERSION
+    - reduce binary size bu removing unused features from simclist
+    - Fix some warnings reported bu Coverity
+
+
+1.4.4 - 13 May 2011, Ludovic Rousseau
+    - Add support of Gemalto Ezio Shield, Gemalto Ezio CB+, Gemalto Ezio
+      Shield Secure Channel, Gemalto Ezio Shield PinPad and Gemalto Ezio
+      Generic
+    - Activate USB automatic power suspend. The Linux kernel should
+      power off the reader automatically if it is not used (pcscd is not
+      running).
+    - Add support of TLV Properties wLcdMaxCharacters and wLcdMaxLines.
+      They just duplicate wLcdLayout
+    - some minor bugs removed
+
+
+1.4.3 - 2 April 2011, Ludovic Rousseau
+    - Add support of Neowave Weneo, Vasco DIGIPASS 920, SCM SCL011,
+      Feitian ePass2003 readers
+    - use :libudev: instead of :libhal: naming scheme.
+    - Do not install RSA_SecurID_getpasswd and Kobil_mIDentity_switch
+      and the associated documentation.
+    - the Secure Pin Entry of the HP USB Smart Card Keyboard is bogus so
+      disable it
+    - some minor bugs removed
+
+
+1.4.2 - 22 February 2011, Ludovic Rousseau
+    - Add support of Feitian SCR310 reader (also known as 301v2), ACS
+      APG8201 PINhandy 1, Oberthur ID-ONE TOKEN SLIM v2, new Neowave
+      Weneo token, Vasco DIGIPASS KEY 860, Vasco DIGIPASS KEY 200,
+      Xiring Leo v2, Xiring MyLeo, Aktiv Rutoken lite readers
+    - Add back support of "bogus" Oz776, REINER SCT and BLUDRIVE II
+    - Ease detection of OpenCT by pcsc-lite
+    - disable use of interrupt card events for multi slots readers (the
+      algorithm is bogus and can't be used)
+    - fix minor problems detected by the clang tool
+    - some minor bugs removed
+
+
+1.4.1 - 3 December 2010, Ludovic Rousseau
+    - Add support of Gemalto Smart Guardian (SG CCID), ReinerSCT
+      cyberJack RFID basis, Akasa AK-CR-03, BZH uKeyCI800-K18, Free
+      Software Initiative of Japan Gnuk token readers
+    - Remove O2 Micro Oz776 and Blutronics Bludrive II CCID since they
+      are no more supported since version 1.4.0
+    - SecurePINVerify() & SecurePINModify(): Accept big and little
+      endian byte orders for multibytes fields. The application
+      should not use HOST_TO_CCID_16() and HOST_TO_CCID_32() any more
+      and just use the normal byte order of the architecture.
+    - Need pcsc-lite 1.6.5 for TAG_IFD_POLLING_THREAD_WITH_TIMEOUT
+    - Add --enable-embedded (default is no) to build libccid for an
+      embedded system.  This will activate the NO_LOG option to disable
+      logging and limit RAM and disk consumption.
+    - Remove --enable-udev option since it is not used anymore with
+      libhal. The udev rules file is now used to change the access
+      rights of the device and not send a hotplug signal to pcscd.
+      See http://ludovicrousseau.blogspot.com/2010/09/pcscd-auto-start.html
+    - some minor bugs removed
+
+
+1.4.0 - 4 August 2010, Ludovic Rousseau
+    - add support of Kingtrust Multi-Reader, Dectel CI692, Todos CX00,
+      C3PO LTC36, ACS AET65, Broadcom 5880, Tianyu Smart Card Reader,
+      Gemalto Hybrid Smartcard Reader
+    - Add support of the SCM SDI 010 again. At least the contact
+      interface can be used.
+    - Use libusb-1.0 instead of libusb-0.1
+    - add support of TAG_IFD_STOP_POLLING_THREAD and use of the
+      asynchronous libusb API to be able to stop a transfer.
+    - Request pcsc-lite 1.6.2 minimum (instead of 1.6.0) to have
+      TAG_IFD_STOP_POLLING_THREAD defined
+    - The O2MICRO OZ776 patch (for OZ776, OZ776_7772, REINER_SCT and
+      BLUDRIVEII_CCID) is no more supported with libusb-1.0
+    - correctly get the IFSC from the ATR (ATR parsing was not always
+      correct)
+    - some minor bugs removed
+
+
+1.3.13 - 4 June 2010, Ludovic Rousseau
+    - much faster warm start (up to 3.8 second gained)
+    - Add support of SCARD_ATTR_VENDOR_IFD_SERIAL_NO to get the serial
+      number of the USB device
+    - some minor bugs removed
+
+
+1.3.12 - 8 May 2010, Ludovic Rousseau
+    - add support of Todos AGM2 CCID, Cherry SmartTerminal XX7X, Smart
+      SBV280, Ask CPL108, German Privacy Foundation Crypto Stick v1.2,
+      id3 CL1356T5, Covadis Auriga, GoldKey PIV Token, Vasco DIGIPASS
+      KEY 860, Vasco DIGIPASS KEY 200, Vasco DP855, Vasco DP865, Atmel
+      AT90SCR100, Atmel AT90SCR050, Atmel VaultIC420, Atmel VaultIC440,
+      Atmel VaultIC460, KOBIL Smart Token, KOBIL mIDentity 4smart, KOBIL
+      mIDentity 4smart AES, KOBIL mIDentity visual, KOBIL mIDentity
+      fullsize, KOBIL mIDentity 4smart fullsize AES, SCM SCR3500
+    - remove support of Smart SBV280 on manufacturer request. They use
+      libusb directly.
+    - remove support of SCM SDI 010 on manufacturer request since not
+      supported by my driver
+    - Enable the Broadcom 5880 reader. It should work after a firmware
+      upgrade.
+    - better support of Dell keyboard
+    - better support of multislot readers (like the GemCore SIM Pro)
+    - better support of SCM SCR3310
+    - better support of ICCD version A devices
+    - The Covadis Véga-Alpha reader is a GemPC pinpad inside. So we use
+      the same code to:
+      . load the strings for the display
+      . avoid limitation of the reader
+    - IFDHControl(): the (proprietary) get firmware version escape
+      command is allowed with a Gemalto reader
+      . the (proprietary) switch interface escape command is allowed on
+      the Gemalto GemProx DU
+      . return IFD_ERROR_NOT_SUPPORTED instead of
+      IFD_COMMUNICATION_ERROR if the dwControlCode value is not
+      supported
+      . return IFD_ERROR_INSUFFICIENT_BUFFER when appropriate
+    - IFDHGetCapabilities(): add support of SCARD_ATTR_ICC_PRESENCE and
+      SCARD_ATTR_ICC_INTERFACE_STATUS
+    - support FEATURE_GET_TLV_PROPERTIES
+    - add support of IOCTL_FEATURE_GET_TLV_PROPERTIES bMinPINSize &
+      bMaxPINSize for Gemalto Pinpad V1 & Covadis Véga-Alpha
+    - support extended APDU of up to 64kB with APDU readers.
+    - get the language selected during Mac OS X installation as language
+      to use for Covadis Véga-Alpha and Gemalto GemPC PinPad pinpad
+      readers
+    - FEATURE_MCT_READER_DIRECT is also supported by the Kobil mIDentity
+      visual
+    - better support of Sun Studio CC
+    - some minor bugs removed
+
+
+1.3.11 - 28 July 2009, Ludovic Rousseau
+    - add support of Raritan D2CIM-DVUSB VM/CCID, Feitian SCR301,
+      Softforum XecureHSM, 2 Neowave Weneo tokens, Synnix STD200, Aktiv
+      Rutoken ECP, Alcor Micro SCR001, ATMEL AT91SC192192CT-USB,
+      Panasonic USB Smart Card Reader 7A-Smart, Gemalto GemProx DU and SU
+    - remove support of Reiner-SCT cyberJack pinpad(a) on request of
+      Reiner-SCT.  You should user the Reiner-SCT driver instead
+    - define CFBundleName to CCIDCLASSDRIVER so that non class drivers
+      have a higher priority. Used by pcsc-lite 1.5.5 and up.
+      Add a --disable-class configure option so that the Info.plist does
+      not define a Class driver. Default is class driver.
+    - do not power up a card with a voltage not supported by the reader
+    - add support of PIN_PROPERTIES_STRUCTURE structure and
+      FEATURE_IFD_PIN_PROPERTIES
+    - adds support of FEATURE_MCT_READERDIRECT. Only the Kobil TriB@nk
+      reader supports this feature for now. This is used for the Secoder
+      functionality in connected mode.
+    - add support of a composite device. No change needed with libhal.
+      use --enable-composite-as-multislot on Mac OS X since libhal is
+      not available on Mac OS X or with libusb on Linux
+    - some minor bugs removed
+
+
+1.3.10 - 7 March 2009, Ludovic Rousseau
+    - add support for MSI StarReader SMART, Noname reader (from
+      Omnikey), Xiring Xi Sign PKI, Realtek 43 in 1 + Sim + Smart Card
+      Reader, Atmel AT98SC032CT, Aktiv Rutoken Magistra, TianYu CCID
+      SmartKey, Precise Biometrics 200 MC and 250 MC
+    - add a patch to support the bogus OpenPGP card (on board key
+      generation sometimes timed out)
+    - disable support of the contactless part of SDI010 and SCR331DI
+      (this code was reverse engineered and hard to maintain)
+    - some minor bugs removed
+
+
+1.3.9 - 18 November 2008, Ludovic Rousseau
+    - add support for Aladdin eToken PRO USB 72K Java, Cherry
+      SmartTerminal ST-1200USB, Atmel AT91SO, SpringCard Prox'N'Roll,
+      CSB6 Basic, EasyFinger Ultimate, CSB6 Ultimate, EasyFinger
+      Standard, CrazyWriter, CSB6 Secure, KONA USB SmartCard, HP MFP
+      Smart Card Reader, ACS ACR122U PICC, Gemalto PDT, VMware Virtual
+      USB CCID
+    - MacOSX/configure: do not overwrite PCSC_CFLAGS, PCSC_LIBS,
+      LIBUSB_CFLAGS and LIBUSB_LIBS if already defined by the user
+    - by default, link statically against libusb on Mac OS X
+    - IFDHPowerICC(): use a very long timeout for PowerUp since the card
+      can be very slow to send the full ATR (up to 30 seconds at 4 MHz)
+    - SecurePINVerify(): correct a bug when using a Case 1 APDU and a
+      SCM SPR532 reader
+    - log the reader name instead of just the pcscd Lun
+    - some minor bugs removed
+
+
+1.3.8 - 27 June 2008, Ludovic Rousseau
+    - add support for Oberthur ID-One Cosmo Card
+    - do not include the release number in the Info.plist to avoid a
+      diff of a configuration file when upgrading the package.
+    - do not fail compilation if libusb is not available
+    - do not crash if the reader firmware is bogus and does not support
+      chaining for extended APDU.  This is the case for Kobil readers
+    - some minor bugs removed
+
+
+1.3.7 - 8 June 2008, Ludovic Rousseau
+    - add support for ActivCard Activkey Sim, Pro-Active CSB6 Ultimate,
+      id3 Semiconductors CL1356A HID
+    - src/parse: do not try to parse devices with bInterfaceClass=0xFF
+      by default (use command line argument -p for proprietary class)
+    - configure.in: check if libusb-0.1 is emulated by libusb-compat +
+      libusb-1.0 to use or not the USB interrupt feature
+    - correct a bug in the serial communication (GemPC twin serial
+      reader)
+    - correct a pthread problem under Solaris
+    - some minor bugs removed
+
+
+1.3.6 - 30 April 2008, Ludovic Rousseau
+    - add support for Covadis Alya, Covadis Véga, Precise Biometrics 250
+      MC, Vasco DP905, Validy TokenA sl vt
+    - better support for the O2Micro OZ776, GemCore SIM Pro
+    - the environment variable LIBCCID_ifdLogLevel overwrite the value
+      of ifdLogLevel read from the Info.plist file
+    - add support for DragonFly BSD
+    - some minor bugs removed
+
+
+1.3.5 - 22 February 2008, Ludovic Rousseau
+    - add support for Gemplus Gem e-Seal Pro, Cherry SmartBoard,
+      G83-6610
+    - use usb_interrupt_read() only if libusb > 0.1.12 or
+      --enable-usb-interrupt is used. libusb <= 0.1.12 is bogus and will
+      consume more CPU than needed.
+    - contrib/Kobil_mIDentity_switch/Kobil_mIDentity_switch was broken
+      on Linux since release 1.3.1
+    - some minor bugs removed
+
+
+1.3.4 - 8 February 2008, Ludovic Rousseau
+    - the serial driver could not be loaded because of the missing
+      symbol InterruptRead
+    - remove WAIT_FOR_SYSFS="bInterfaceProtocol" to do not delay udev
+
+
+1.3.3 - 6 February 2008, Ludovic Rousseau
+    - add support for Lexar Smart Enterprise Guardian and Blutronics
+      Bludrive II CCID
+    - add support of TAG_IFD_POLLING_THREAD using IFDHPolling() to
+      detect asynchronous card movements. With this feature pcscd will
+      not poll the reader every 0.4 second for a card movement but will
+      wait until the reader sends a USB interrupt signal
+    - correct a bug with an ICCD-B device and a receive buffer smaller
+      than 4 bytes
+    - remove the sleep in the udev rule. It slows down the detection of
+      any USB device
+    - some minor bugs removed
+
+
+1.3.2 - 22 January 2008, Ludovic Rousseau
+    - add support of Apple Mac OS X Leopard (10.5.1)
+    - solve a hotplug problem on Ubuntu 7.10 (reader was not detected)
+    - create a symlink from libccidtwin.so to libccidtwin.so.VERSION so
+      that the /etc/reader.conf configuration file do not need to edited
+      for each new driver version
+    - make driver for the GemPC Serial compile again
+    - some minor bugs removed
+
+
+1.3.1 - 16 November 2007, Ludovic Rousseau
+    - add support for "Philips Semiconductors JCOP41V221" ICCD card,
+      O2Micro oz776 (ProductID 0x7772), CardMan5321, Giesecke & Devrient
+      StarSign Card Token 350 and 550, SafeNet IKey4000, Eutron
+      CryptoIdentity, Eutron Smart Pocket, Eutron Digipass 860, Lenovo
+      Integrated Smart Card Reader, "Kobil EMV CAP - SecOVID Reader III,
+      Charismathics token, Reiner-SCT cyberJack pinpad(a)
+    - improve support of Mac OS X and *BSD
+    - some minor bugs removed
+
+
+1.3.0 - 10 May 2007, Ludovic Rousseau
+    - add support of ICCD version A and B
+    - add support for (new) KOBIL mIDentity, SchlumbergerSema Cyberflex
+      Access e-gate ICCD, Fujitsu Siemens Computers SmartCard USB 2A and
+      SmartCard Keyboard USB 2A readers, OmniKey CardMan 4321
+    - contrib/RSA_SecurID/RSA_SecurID_getpasswd: tool to get the on time
+      password also displayed on the token screen
+    - contrib/Kobil_mIDentity_switch: tool to activate the CCID reader
+      of the Kobil mIDentity. The tool should be started automatically
+      by the udev rule on Linux
+    - GemPC pinpad: localisation of the string "PIN blocked", add
+      Portuguese(pt), Dutch(nl) and Turkish(tr) localisations
+    - some minor bugs removed
+
+1.2.1 - 27 January 2007, Ludovic Rousseau
+    - pcscd_ccid.rules: add non CCID generic (InterfaceClass: 0xFF)
+      readers
+    - INSTALL: document how to use --enable-udev on FreeBSD
+    - move the O2Micro Oz7762 from the unsupported to the supported list
+      since patches to support it are applied by default
+      (O2MICRO_OZ776_PATCH)
+
+
+1.2.0 - 19 January 2007, Ludovic Rousseau
+    - add support for SCARD_ATTR_VENDOR_IFD_VERSION,
+      SCARD_ATTR_VENDOR_NAME and SCARD_ATTR_MAXINPUT tags used by
+      SCardGetAttrib(). Read SCARDGETATTRIB.txt for more documentation
+    - add support for OmniKey CardMan 5125, CardMan 1021, C3PO LTC32,
+      Teo by Xiring, HP USB Smartcard Reader
+    - use --enable-twinserial to build the serial reader driver
+    - use --enable-udev to configure for a use with Linux udev hotplug
+      mechanism. This will allow pcscd to avoid polling the USB bus
+      every 1 second
+    - some minor bugs removed
+
+
+1.1.0 - 11 August 2006, Ludovic Rousseau
+    - support Extended APDU (up to 64KB) for readers in TPDU mode (many
+      readers) or Extended APDU mode (very rare). This only works for
+      T=1 cards.
+    - add support for C3PO LTC31 (new version), OmniKey CardMan 3021, HP
+      USB Smart Card Keyboard, Actividentity (ActiveCard) Activkey Sim,
+      id3 Semiconductors CL1356D and CL1356T, Alcor Micro AU9520
+    - support the contactless interface of the SCR331-DI-NTTCOM
+    - add support of FreeBSD
+    - increase the USB timeout used for PIN verify/modify to not timeout
+      before the reader
+    - the 4-bytes value returned by CM_IOCTL_GET_FEATURE_REQUEST shall
+      be encoded in big endian as documented in PCSC v2 part 10 ch 2.2
+      page 2. The applications using this feature shall be updated (to
+      respect the PCSC specification).
+    - use ./configure --enable-twinserial to compile and install the the
+      driver for the GemPC Twin serial
+    - some minor bugs removed
+
+
+1.0.1 - 22 April 2006, Ludovic Rousseau
+    - add support for Axalto Reflex USB v3, SCM Micro SDI 010, Winbond
+      Electronics W81E381 chipset, Gemplus GemPC Card, Athena ASE IIIe
+      KB USB, OmniKey CardMan 3621
+    - support Solaris (Solaris uses a different libusb)
+    - better documentation for ./configure arguments
+    - improve support of Cherry XX44 keyboard for PIN verify and change
+      (circumvent firmware bugs)
+    - do not use LTPBundleFindValueWithKey() from pcscd since this
+      function has been removed from pcscd API
+    - use -fvisibility=hidden is available to limit the number of
+      exported symbols
+
+
+1.0.0 - 3 March 2006, Ludovic Rousseau
+    - add support for ActivCard USB Reader 3.0, Athena ASE IIIe USB V2,
+      SCM Micro SCR 355, SCR 3311, SCR 3320, SCR 3340 ExpressCard54,
+      Gemplus GemCore SIM Pro, GemCore POS Pro (serial and USB), GemPC
+      Express (ExpressCard/54 interface), SmartEpad (v 2.0), OmniKey
+      CardMan 5121 
+    - greatly improve support of PIN PAD readers. We now support TPDU
+      readers with T=1 cards
+    - use l10n strings for the Gemplus GemPC PIN PAD (it has a screen).
+      Supported languages are: de, en, es, fr, it
+    - rename ACS ACR 38 in ACR 38U-CCID since the ACR 38 is a different
+      reader and is not CCID compatible
+    - allow to select the Power On voltage using Info.plist instead of
+      recompiling the source code
+    - correct bugs in the support of multi-slots readers
+    - if the card is faster than the reader (TA1=97 for example) we try
+      to use a not-so-bad speed (corresponding to TA1=96, 95 or 94)
+      instead of the default speed of TA1=11
+    - the src/parse tool do not use the driver anymore. No need to
+      update the Info.plist file first.
+    - some minor bugs removed
+
+
+0.9.4 - 27 November 2005, Ludovic Rousseau
+    - add support for Eutron SIM Pocket Combo, Eutron CryptoIdentity,
+      Verisign Secure Token and VeriSign Secure Storage Token, GemPC
+      Card (PCMCIA), SCM SCR331-DI NTTCom, SCM Micro SCR 3310-NTTCom,
+      Cherry ST-1044U, Cherry SmartTerminal ST-2XXX
+    - add support of PC/SC v2 part 10 CM_IOCTL_GET_FEATURE_REQUEST add
+      support of FEATURE_VERIFY_PIN_DIRECT and FEATURE_MODIFY_PIN_DIRECT
+      remove support of IOCTL_SMARTCARD_VENDOR_VERIFY_PIN (now
+      obsoleted). A sample code is available in examples/scardcontrol.c
+    - we need pcsc-lite 1.2.9-beta9 since some structures used for PIN
+      pad readers are defined by pcsc-lite
+    - some (bogus) cards require an extra EGT but the ATR does not say
+      so. We try to detect the bogus cards and set TC1=2
+    - IFDHSetProtocolParameters(): only use a data rate supported by the
+      reader in the PPS negociation, otherwise we stay at the default
+      speed.
+    - calculate and store the read timeout according to the card ATR
+      instead of using a fixed value of 60 seconds
+    - increase the read timeout if the card sends and WTX request
+    - improve support of GemPC Twin and GemPC Card (serial protocol)
+    - reset the device on close only if DRIVER_OPTION_RESET_ON_CLOSE is
+      set. The problem was that a device reset also disconnects the
+      keyboard on a keyboard + reader device.
+    - use color logs
+    - some minor bugs removed
+
+
+0.9.3 - 14 March 2005, Ludovic Rousseau
+    - change the licence from GNU GPL to GNU Lesser GPL (LGPL)
+    - add support for ACS ACR 38, Kobil KAAN Base, Kobil KAAN Advanced,
+      Kobil KAAN SIM III, Kobil KAAN mIDentity, SCM Micro SCR 331,
+      SCM Micro SCR 331-DI, SCM Micro SCR 335, SCM Micro SCR 3310,
+      SCM Micro SCR 532, Cherry XX44 readers
+    - improve communication speed with readers featuring "Automatic PPS
+      made by the CCID"
+    - switch the Cherry xx33 reader in ISO mode if power up in EMV mode
+      fails.
+    - add support of character level readers. Thanks to O2Micro for the
+      patch
+    - add support for the O2Micro OZ776S reader but the reader firmware
+      is still bogus
+    - check firmware version to avoid firmwares with bugs. You can still
+      use a bogus firmware by setting DRIVER_OPTION_USE_BOGUS_FIRMWARE
+      in Info.plist
+    - some minor bugs removed
+
+0.9.2 - 15 August 2004, Ludovic Rousseau
+    - T=1 TPDU code:
+      . the work on T=1 TPDU code was possible thanks to Gemplus
+        validation team who helped me test, debug and bring the code to
+        an EMV validation level. Thanks to Jérôme, Jean-Yves, Xavier and
+        the Gemplus readers department
+      . error code was not checked correctly
+      . avoid a (nearly) infinite loop when resynch are needed.
+      . correctly initialise an internal value to allow more than one
+        reader to work
+    - multi-slots readers
+      . add support for multi-slots readers. The only one I have is a
+        SCM Micro SCR 331-DI with a contact and a contactless interface.
+        The contactless interface may or may not work for you since the
+        reader uses proprietary (undocumented) commands.
+    - GemPC Twin serial reader
+      . perform a command (get the reader firmware) to be sure a GemPC
+        Twin (serial or pcmcia) reader is connected
+      . use a dynamic timeout when reading the serial port.
+        The first timeout used when detecting the reader is 2 seconds to
+        not wait too long if no reader is connected. Later timeouts are
+        set to 1 minute to allow long time APDU.
+    - use `pkg-config libpcsclite --cflags` to locate the pcsc-lite
+      header files
+    - use `pkg-config --print-errors --atleast-version=1.2.9-beta5 libpcsclite`
+      to test the pcsc-lite version
+    - code improvements thanks to the splint tool (http://www.splint.org/)
+
+0.9.1 - 1 July 2004, Ludovic Rousseau
+    - I forgot to define IFD_PARITY_ERROR in a .h file
+
+0.9.0 - 1 July 2004, Ludovic Rousseau
+    - The T=1 TPDU automata from Carlos Prados' Towitoko driver is very
+      limited and do not support error management mechanisms.
+      I then used the T=1 TPDU automata from OpenCT (OpenSC project).
+      This automata is much more powerful but still lacks a lot of error
+      management code.
+      I then added all the needed code to reach the quality level
+      requested by the EMV standard.
+    - add support for new readers:
+      . Advanced Card Systems ACR 38
+      . Cherry XX33
+      . Dell keyboard SK-3106
+      . Dell smart card reader keyboard
+      . SCR 333
+    - add support of multi procotol cards (T=0 and T=1)
+    - the debug level is now dynamic and set in the Info.plist file (no
+      need to recompile the driver any more)
+    - add support for the libusb naming scheme: usb:%04x/%04x:libusb:%s
+    - INSTALL: add a "configuring the driver for the serial reader
+      (GemPC Twin)" part
+    - use `pkg-config libpcsclite --variable=usbdropdir` so you do not
+      have to use --enable-usbdropdir=DIR or --enable-ccidtwindir=DIR
+      even if pcscd does not use the default /usr/local/pcsc/drivers
+    - add support of IOCTL_SMARTCARD_VENDOR_IFD_EXCHANGE and
+      IOCTL_SMARTCARD_VENDOR_VERIFY_PIN in IFDHControl()
+    - read ifdDriverOptions from Info.plist to limit the use of
+      IOCTL_SMARTCARD_VENDOR_IFD_EXCHANGE (idea from Peter Williams)
+    - provide an example of use of SCardControl()
+      IOCTL_SMARTCARD_VENDOR_IFD_EXCHANGE and
+      IOCTL_SMARTCARD_VENDOR_VERIFY_PIN in example/
+    - add a --enable-pcsclite option (default to yes) so that the driver
+      can be compiled for a different framework (one needing
+      tokenparser.l like Solaris)
+    - Reset action is power off and power on, not just power on
+    - use the include files from pcsc-lite
+    - add a mechanism to allow power on at 1.8V, 3V and then 5V as
+      specified by ISO 7816. We still use 5V for now to avoid problems
+      with non ISO compliant cards
+
+0.4.1 - 14 February 2004, Ludovic Rousseau
+    - distribute missing files readers/supported_readers.txt and
+      src/create_Info_plist.pl
+      'make install' failed because of this.
+
+0.4.0 - 13 February 2004, Ludovic Rousseau
+    - support of T=1 with TPDU readers. A lot of the T=1 code comes from
+      Carlos Prados towitoko driver.
+      My code is GNU GPL, his code is GNU LGPL so the global driver is
+      GNU GPL
+    - PPS negotiation if the reader does not do it automatically
+    - add support for the Silitek SK-3105 keyboard. It's a USB device
+      with multiple interfaces
+    - use the create_Info_plist.pl script to generate the installed
+      Info.plist from an Info.plist template and a list of supported
+      readers. The Info.plist was too "complex" to maintain by hand
+      since it now contains 11 entries
+    - add support of IFDHCreateChannelByName to avoid wrong reader
+      enumeration. This is not complete if you have multiple _identical_
+      readers. You need to use a > 1.2.0 pcsc-lite version (not yet
+      released at that time)
+    - build but do not install the serial ccidtwin driver by default
+      since it is useless on computers without a serial port or without
+      this reader for example.
+    - read and write timeouts are not symmetric. write timout can be
+      shorter since the reader and card is not supposed to do anything
+      before receiving (write) a command
+    - do not try to find usb.h and other libusb files if
+      --disable-libusb is used. Needed if you only want to build the
+      serial driver.  Thanks to Niki Waibel for the patch
+    - add a --enable-ccidtwindir argument to ./configure to specify the
+      serial GemPC Twin installation directory
+    - debug and code improvements and simplifications
+
+0.3.2 - 4 November 2003, Ludovic Rousseau
+    - src/commands.c: correct a stupid bug that occurs with an APDU with
+      2 bytes response.
+    - Info.plist: add SPR 532 in list of supported readers
+    - parse.c: do not exit if the InterfaceClass is 0xFF (proprietary).
+      It is the case with old readers manufactured before the final
+      release of the CCID specs.
+    - move LTC31 reader from unsupported to supported reader list. It
+      was my f ault since in used odd INS byte in my test applet and odd
+      INS bytes are forbidden by ISO 7816-4 ch. 5.4.2 Instruction byte.
+      Thanks to Josep Moné s Teixidor for pointing the problem.
+    - src/commands.c: comment out the automatic GET RESPONSE part. I
+      don't think it should be in the driver. Maybe in pcscd instead?
+
+0.3.1 - 23 September 2003, Ludovic Rouseau
+    - add --enable-multi-thread (enabled by default) for thread safe
+      support an APDU multiplexing. You will need pcsc-lite-1.2.0-rc3 or
+      above to use this feature.
+    - add --enable-libusb=PATH option is your libusb is not installed in
+      /usr or /usr/local
+    - honor DESTDIR in install rules (closes [ #300110 ]). Thanks to
+      Ville Skyttä for the patch.
+    - src/ccid.c: do not switch the GemPC Key and GemPC Twin in APDU
+      mode since it also swicth in EMV mode and may not work with non
+      EMV cards
+    - src/ccid_serial.c: complete reimplementation of the Twin serial
+      protocol using a finite state automata (code much simpler)
+
+0.3.0 - 10 September 2003, Ludovic Rousseau
+    - support of GemPC Twin connected to a serial port. Thanks to Niki
+      W. Waibel for a working prototype.
+    - support of auto voltage at power up if the reader support it
+      instead of forcing a 5V in all cases.
+    - support of APDU mode instead of just TPDU if the reader support
+      it. Thanks to Jean-Luc Giraud for the idea and inspiration I got
+      from his "concurrent" driver.
+    - support of "time request" from the card.
+    - parse: new indentation for more readability of supported features.
+    - switch the GemPC Key and GemPC Twin in APDU mode since they
+      support it but do not announce it in the dwFeatures.
+    - new build process using autoconf/automake.
+
+0.2.0 - 26 August 2003, Ludovic Rousseau
+    - Works under MacOS X
+    - Info.plist: use an <array></array> for the alias enumeration
+    - Makefile rework for *BSD and MacOS X
+
+0.1.0 - 13 August 2003, Ludovic Rousseau
+    - First public release
+
+
+$Id: README 6349 2012-06-22 08:51:51Z rousseau $
+
+ vim:ts=20

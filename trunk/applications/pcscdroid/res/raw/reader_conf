@@ -1,0 +1,4 @@
+FRIENDLYNAME     "Mobile Security Card"
+DEVICENAME       /dev/null
+LIBPATH          /data/data/com.gieseckedevrient.android.pcscdroid/files/lib/libifdmsc.so
+CHANNELID        0
