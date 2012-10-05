@@ -1,44 +1,34 @@
 #summary How to compile the Kernel and Android sources with SmartCard API and ASSD support.
 
-This introduction shows how the !SmartCard API with ASSD support can be integrated into an Android device to access SD memory cards with an embedded security system (Advanced Security SD specification provided by the [http://www.sdcard.org/developers/tech/ASSD/ SD Association])
+This introduction shows how the !SmartCard API with ASSD support can be integrated into an Android device to access SD memory cards with an embedded security system (Advanced Security SD specification provided by the [http://www.sdcard.org/developers/overview/ASSD/ SD Association])
 
 == The ASSD kernel driver can be built by building a custom kernel:==
 
 === Getting the Kernel sources:=== 
 
-{{{
-$ git clone git://android.git.kernel.org/kernel/msm.git
-The repository is created in the subfolder msm
-$ cd <MSM_DIR>
-<MSM_DIR>$ git checkout -b assd 42bad328ba45ee4fe93216e7e99fe79a782d9155
-}}}
-Note: Currently we can only provide a patch for this kernel version.
+follow the desciption on http://source.android.com/source/building-kernels.html
 
-=== Download the [http://seek-for-android.googlecode.com/files/20110715-assd-kernel.tar.gz 20110715-assd-kernel.tar.gz] patch and extract the content: === 
 
- * assd_kernel.patch - patches the Kernel sources for ASSD support
- * readme.txt - description how to build
+=== Download the [http://seek-for-android.googlecode.com/files/20121005-assd-kernel.tgz 20121005-assd-kernel.tgz] patch and extract the content: === 
+
+ * assd.patch - patches the Kernel sources for ASSD support
+
 
 === Apply the patch: ===
 
 {{{
-<MSM_DIR>$ patch -p1 < assd_kernel.patch
+<KERNEL_DIR>$ patch -p1 < <path_to_my_patches>/assd.patch
 }}}
+
 
 === Building the kernel:===
 
-{{{
-<MSM_DIR>$ make ARCH=arm mahimahi_defconfig
-<MSM_DIR>$ make ARCH=arm clean
-<MSM_DIR>$ make ARCH=arm CROSS_COMPILE=arm-eabi- -j4
-}}}
-
-The new kernel is created as ./arch/arm/boot/zImage
+follow the desciption on http://source.android.com/source/building-kernels.html
 
 
 == The Android system can be built with ASSD support by using this custom built kernel: ==
 
-=== Download the [http://seek-for-android.googlecode.com/files/smartcard-api-2_3_0.tgz smartcard-api-2_3_0.tgz] patch and extract the content:=== 
+=== Download the [http://seek-for-android.googlecode.com/files/smartcard-api-2_4_0.tgz smartcard-api-2_4_0.tgz] patch and extract the content:=== 
 
  * smartcard-api.patch - patches the Java sources for !SmartCard API support
  * uicc.patch - patches the Android Telephony framework with the required UICC methods for the !SmartCard API !UiccTerminal support 
@@ -50,9 +40,9 @@ The new kernel is created as ./arch/arm/boot/zImage
 
 {{{
 $ cd <ANDROID_ROOT_DIR> 
-$ patch -p1 < <path_to_my_patches>/smartcard-api-2_3_0/smartcard-api.patch 
-$ patch -p1 < <path_to_my_patches>/smartcard-api-2_3_0/uicc.patch 
-$ patch -p1 < <path_to_my_patches>/smartcard-api-2_3_0/cts.patch 
+$ patch -p1 < <path_to_my_patches>/smartcard-api-2_4_0/smartcard-api.patch 
+$ patch -p1 < <path_to_my_patches>/smartcard-api-2_4_0/uicc.patch 
+$ patch -p1 < <path_to_my_patches>/smartcard-api-2_4_0/cts.patch 
 }}}
 
 (Note: `emulator.patch` is not needed for the build as the current emulator patch does not support ASSD)
