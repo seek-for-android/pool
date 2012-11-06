@@ -1,5 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    
-    <string name="app_name">APDU Stress</string>
+    <string name="app_name">ApduTester</string>
+	<string name="subline">Giesecke &amp; Devrient GmbH, 2011</string>
+	<string name="about_text">SmartCard API verification</string>
+	<string name="about_copyright">Copyright © 2011, Giesecke &amp; Devrient</string>
+	<string name="about_rights">All rights reserved.</string>
+	<string name="about_url">http://seek-for-android.googlecode.com</string>
 </resources>

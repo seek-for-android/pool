@@ -2,6 +2,52 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
     android:layout_width="fill_parent"
-    android:layout_height="fill_parent"
-    >
+    android:layout_height="fill_parent">
+    <LinearLayout
+        android:id="@+id/linearLayout"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content" >
+        <Spinner
+            android:id="@+id/spinnerDataLen"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1" />
+        <Spinner
+            android:id="@+id/spinnerLoops"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1" />
+    </LinearLayout>
+    <RelativeLayout
+        android:id="@+id/linearLayout"
+        android:orientation="horizontal"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content" >
+        <Button
+	        android:id="@+id/startButton"
+	        android:layout_width="fill_parent"
+	        android:layout_height="wrap_content"
+	        android:layout_weight="1"
+	        android:enabled="false"
+	        android:text="Start test" />
+	    <Button
+	        android:id="@+id/stopButton"
+	        android:layout_width="fill_parent"
+	        android:layout_height="wrap_content"
+	        android:layout_weight="1"
+	        android:visibility="invisible" 
+	        android:text="Stop test" />
+    </RelativeLayout>
+	    <ScrollView
+        android:id="@+id/scrollView"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content" >
+        <TextView
+            android:id="@+id/textView"
+            android:typeface="monospace"
+            android:textSize="10sp"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent" >
+        </TextView>
+    </ScrollView>
 </LinearLayout>

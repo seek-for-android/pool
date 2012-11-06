@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+	<PreferenceCategory android:title="Logfile directory">
+		<EditTextPreference android:key="logpath"
+			android:dialogTitle="Logfile directory" android:title="/sdcard" android:summary="Empty string will omit saving a logfile"/>
+	</PreferenceCategory>
+
+	<PreferenceCategory	android:title="Communication channel">
+		<ListPreference android:key="communicationChannel" android:dialogTitle="Communication channel" android:title="Basic channel"/>
+	</PreferenceCategory>
+
+	<PreferenceCategory	android:title="Include delays between test cases">
+		<CheckBoxPreference android:key="delays" android:title="Delays"  android:summaryOn="Random delays between test cases" android:summaryOff="No delays between test cases"/>
+	</PreferenceCategory>
+
+	<PreferenceCategory	android:title="Stop test run on error">
+		<CheckBoxPreference android:key="errors" android:title="Error handling"  android:summaryOn="Stop after error occured" android:summaryOff="Don't stop on errors"/>
+	</PreferenceCategory>
+
+	<PreferenceCategory	android:title="Test cases">
+		<CheckBoxPreference android:key="case1"
+			android:title="Case-1" android:summaryOn="Test Case-1 APDU commands" android:summaryOff="Don't test Case-1 APDU commands" />
+		<CheckBoxPreference android:key="case2"
+			android:title="Case-2" android:summaryOn="Test Case-2 APDU commands" android:summaryOff="Don't test Case-2 APDU commands" />
+		<CheckBoxPreference android:key="case3"
+			android:title="Case-3" android:summaryOn="Test Case-3 APDU commands" android:summaryOff="Don't test Case-3 APDU commands" />
+		<CheckBoxPreference android:key="case4"
+			android:title="Case-4" android:summaryOn="Test Case-4 APDU commands" android:summaryOff="Don't test Case-4 APDU commands" />
+	</PreferenceCategory>
+</PreferenceScreen>
