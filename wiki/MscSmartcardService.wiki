@@ -27,7 +27,7 @@ Drivers for the MSC are available for many platforms and provided by G&D Secure 
 To test the _MSC !SmartcardService_
  * delete older version of MSC_SmartcardService.apk and OpenMobileAPISample.apk on the phone
 
- * download the [http://seek-for-android.googlecode.com/files/MSC%20SmartCard%20Service%203.0.tar.gz MSC SmartcardService 3.0.tar.gz] and extract the content
+ * download the [http://seek-for-android.googlecode.com/files/MSC%20Smartcard%20Service%203.0.tar.gz MSC SmartcardService 3.0.tar.gz] and extract the content
 
  * ensure that _USB debugging_ is enabled on the phone<br/>(_Settings_ - _Applications_ - _Development_ - _USB debugging_)
 
