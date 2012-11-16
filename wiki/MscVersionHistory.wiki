@@ -1,6 +1,12 @@
 #summary Summary of the release notes of all MSC SmartcardService versions
 
 
+==== v3.0 - 31.10.2012 ====
+ * tested on JB
+ * packages are renamed from org.simalliance.`*` to com.mobilesecuritycard.`*` (see notes.txt)
+ * native library renamed to libmobilesecuritycard.so (see notes.txt)
+ * Activity added that shows the current state of the Mobile Security Card
+
 ==== v2.4.0.1 - 11.09.2012 ====
  * ACE will be disabled if ARA can not be selected by the SELECT command (according to GP spec)
  *  Improvement of the mechanism to detect the mount point of the Mobile Security Card
