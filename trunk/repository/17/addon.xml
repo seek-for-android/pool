@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ * Copyright (C) 2012 Giesecke & Devrient GmbH
+ *
+ * Licensed under the Apache License, version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+-->
+<sdk:sdk-addon
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:sdk="http://schemas.android.com/sdk/android/addon/1">
+
+    <sdk:add-on>
+        <sdk:name>Open Mobile API</sdk:name>
+        <sdk:api-level>17</sdk:api-level>
+        <sdk:vendor>Giesecke Devrient GmbH</sdk:vendor>
+        <sdk:revision>01</sdk:revision>
+        <sdk:description>SIMalliance Open Mobile API for Android</sdk:description>
+        <sdk:desc-url>http://seek-for-android.googlecode.com/svn/trunk/repository/17/</sdk:desc-url>
+        <sdk:uses-license ref="android-sdk-license" />
+        <sdk:archives>
+            <sdk:archive os="any">
+                <sdk:size>30056</sdk:size>
+                <sdk:checksum type="sha1">b3a110b40f29badeca6c2dba69744ad9bb6d8fe7</sdk:checksum>
+                <sdk:url>scapi.zip</sdk:url>
+            </sdk:archive>
+        </sdk:archives>
+        <sdk:libs>
+            <sdk:lib>
+                <sdk:name>org.simalliance.openmobileapi</sdk:name>
+                <sdk:description>SIMalliance Open Mobile API for Android</sdk:description>
+            </sdk:lib>
+        </sdk:libs>
+    </sdk:add-on>
+
+    <sdk:license type="text" id="android-sdk-license">
+Licensed under the Apache License, version 2.0 (the "License");
+
+April 7, 2013
+    </sdk:license>
+
+</sdk:sdk-addon>
