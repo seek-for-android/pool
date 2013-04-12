@@ -22,14 +22,18 @@ The Eclipse development environment needs to be configured in order to use the o
 <table><tr><td valign=top>
  * Start the _Android SDK Manager_ by launching `android` on the command line<br/>
  * Click on _Tools_ -> _Manage Add-on Sites..._<br/>
- * Go to _User Defined Sites_ and add the new repository `http://seek-for-android.googlecode.com/svn/trunk/repository/addon.xml` and close the dialog
+ * Go to _User Defined Sites_ and add the new repository `http://seek-for-android.googlecode.com/svn/trunk/repository/17/addon.xml` and close the dialog
+ * The different entries in the list are required for the different API levels:
+   * 15 - API level 15, Android 4.0.3
+   * 16 - _not yet available_
+   * 15 - API level 17, Android 4.2.2
 </td>
 <td>
 <img src=http://seek-for-android.googlecode.com/svn/wiki/img/UsingSCAPI_Addon-Sites.png/>
 </td></tr><tr><td valign=top>
  * _Reload_ the packages selecting _Packages_ -> _Reload_<br/>
- * Select _Open Mobile API_ under _Android 4.0.3_ and install the package add-on<br/>
- * The Android SDK Manager is now ready with the Open Mobile API addon package from SEEK to develop Secure Element aware applications.
+ * Select _Open Mobile API_ under _Android 4.2.2_ and install the package add-on<br/>
+ * The Android SDK Manager installed the Open Mobile API addon package from SEEK to develop Secure Element aware applications.
 </td><td>
 <img src=http://seek-for-android.googlecode.com/svn/wiki/img/UsingSCAPI_SDK-Manager.png/>
 </td></tr></table>
@@ -48,8 +52,8 @@ The sample code referenced here can also be found in the SVN repository.
     Application name: _Hello Smartcard_<br/>
     Project name: _!HelloSmartcard_<br/>
     Package name: _com.gieseckedevrient.android.hellosmartcard_<br/>
-    Build SDK: _Open Mobile API (Giesecke & Devrient GmbH) (API 15)_<br/>
-    Minimum Required SDK: _API 15: Android 4.0.3 (!IceCreamSandwich)_<br/>
+    Build SDK: _Open Mobile API (Giesecke & Devrient GmbH) (API 17)_<br/>
+    Minimum Required SDK: _API 17: Android 4.2.2 (!JellyBean)_<br/>
     Unselect _Create custom launcher icon_ unless you're logo matters
   * Click _Next_ to move to the next wizard page<br/>
   * Leave the default options: _Create Activity_ -> _!BlankActivity_ and hit _Next_
@@ -173,23 +177,21 @@ Add the following code snippet inside the _onClick()_ handler of the button
       Log.i(LOG_TAG, "Create Session from the first reader...");
       Session session = readers[0].openSession();
 
-      Log.i(LOG_TAG,
-      "Create logical channel within the session...");
+      Log.i(LOG_TAG, "Create logical channel within the session...");
       Channel channel = session.openLogicalChannel(new byte[] {
-      (byte) 0xD2, 0x76, 0x00, 0x01, 0x18, 0x00, 0x02,
-      (byte) 0xFF, 0x49, 0x50, 0x25, (byte) 0x89,
-      (byte) 0xC0, 0x01, (byte) 0x9B, 0x01 });
+                          (byte) 0xD2, 0x76, 0x00, 0x01, 0x18, 0x00, 0x02,
+                          (byte) 0xFF, 0x49, 0x50, 0x25, (byte) 0x89,
+                          (byte) 0xC0, 0x01, (byte) 0x9B, 0x01 });
 
       Log.d(LOG_TAG, "Send HelloWorld APDU command");
-      byte[] respApdu = channel.transmit(new byte[] {
-      (byte) 0x90, 0x10, 0x00, 0x00, 0x00 });
+      byte[] respApdu = channel.transmit(new byte[] { (byte) 0x90, 0x10, 0x00, 0x00, 0x00 });
 
       channel.close();
 
       // Parse response APDU and show text but remove SW1 SW2 first 
       byte[] helloStr = new byte[respApdu.length - 2];
       System.arraycopy(respApdu, 0, helloStr, 0, respApdu.length - 2);
-      Toast.makeText(MainActivity.this, new String(helloStr),	Toast.LENGTH_LONG).show();
+      Toast.makeText(MainActivity.this, new String(helloStr), Toast.LENGTH_LONG).show();
    } catch (Exception e) {
       Log.e(LOG_TAG, "Error occured:", e);
       return;
