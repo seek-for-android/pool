@@ -29,7 +29,7 @@
         <sdk:archives>
             <sdk:archive os="any">
                 <sdk:size>30056</sdk:size>
-                <sdk:checksum type="sha1">b3a110b40f29badeca6c2dba69744ad9bb6d8fe7</sdk:checksum>
+                <sdk:checksum type="sha1">86bb8c0c55f95ec2a8fd12ec2705549f5a26aff2</sdk:checksum>
                 <sdk:url>scapi.zip</sdk:url>
             </sdk:archive>
         </sdk:archives>
