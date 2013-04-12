@@ -10,17 +10,17 @@ This document describes how to build the system from scratch, apply the smart ca
 A detailed description how to set up the local work environment can be found  [http://source.android.com/source/download.html here].
 {{{
 $ mkdir seek-for-android && cd seek-for-android
-$ repo init -u https://android.googlesource.com/platform/manifest -b android-4.0.3_r1
+$ repo init -u https://android.googlesource.com/platform/manifest -b android-4.2.2_r1
 $ repo sync
 }}}
-<br/>
+After a successful sync it is recommended to build the Android platform once before applying the SEEK patch files to ensure the source code compiles properly.<br/>
 
 == Patching the sources ==
 Apply the necessary patches in the root directory of the Android source tree to enable !SmartCard API support.<br/>
 Please make sure which patch files should be applied as the different use cases (!SmartCard API, SCWS/BIP, PC/SC support) are separated in different download packages. Do not apply patches multiple times!
 
 ==== !SmartCard API support ====
-Download the [http://seek-for-android.googlecode.com/files/smartcard-api-2_4_0.tgz smartcard-api-2_4_0.tgz] patch and extract the content:
+Download the [http://seek-for-android.googlecode.com/files/smartcard-api-3_0_0.tgz smartcard-api-3_0_0.tgz] patch and extract the content:
  * `smartcard-api.patch` - patch the Java sources for !SmartCard API support - always required
  * `uicc.patch` - patch the Android Telephony framework with the required UICC methods and for the !SmartCard API !UiccTerminal support within the emulator - for emulator builds only
  * `emulator.patch` - patch the qemu module to support a UICC connected through the PC/SC host interface and ASSD support - for emulator builds only
@@ -57,7 +57,7 @@ $ make update-api
 <br/>
 
 == Extract the vendor specific libraries ==
-Development devices will not support all hardware modules without proprietary (closed-source) libraries. Make sure to have downloaded the correct [http://code.google.com/android/nexus/images.html vendor specific libraries] and extracted the files accordingly, e.g.
+Development devices will not support all hardware modules without proprietary (closed-source) libraries. Make sure to have downloaded the correct [https://developers.google.com/android/nexus/drivers vendor specific libraries] and extracted the files accordingly, e.g.
 {{{
 $ cd <ANDROID_ROOT_DIR>
 $ ./extract-imgtec-maguro.sh
@@ -78,14 +78,14 @@ Any system integrator who is including the !SmartCard API in his own build syste
 <br/>
 
 == Building the system ==
-Compile the sources for the target device by either using `lunch` or setting the environment variables manually. Replace `maguro` with `crespo` or `wingray` depending on the actual development device:
+Compile the sources for the target device by either using `lunch` or setting the environment variables manually. Replace `maguro` with `grouper`, `manta` or `mako` depending on the actual development device:
 {{{
 $ cd <ANDROID_ROOT_DIR>
 $ . build/envsetup.sh 
 $ lunch full_maguro-eng
 ============================================
-PLATFORM_VERSION_CODENAME=AOSP
-PLATFORM_VERSION=4.0.4.0.4.0.4
+PLATFORM_VERSION_CODENAME=REL
+PLATFORM_VERSION=4.2.2
 TARGET_PRODUCT=full_maguro
 TARGET_BUILD_VARIANT=eng
 TARGET_BUILD_TYPE=release
@@ -94,21 +94,20 @@ TARGET_ARCH=arm
 TARGET_ARCH_VARIANT=armv7-a-neon
 HOST_ARCH=x86
 HOST_OS=linux
-HOST_OS_EXTRA=Linux-3.3.8-gentoo-x86_64-Intel-R-_Core-TM-2_Extreme_CPU_Q9300_@_2.53GHz-with-gentoo-2.1
+HOST_OS_EXTRA=Linux-3.4.9-gentoo-x86_64-Intel-R-_Xeon-R-_CPU_E5-2687W_0_@_3.10GHz-with-gentoo-2.1
 HOST_BUILD_TYPE=release
-BUILD_ID=OPENMASTER
+BUILD_ID=JDQ39
 OUT_DIR=out
 ============================================
 }}}
 Finally, compile the system with
 {{{
-$ make
+$ make -jXX
 }}}
-and have a (quick) break.<br/><br/>
+whereas XX is the number of parallel jobs and have a (quick) break.
+<br/>
 *Note.1* Using `lunch` without parameters provides a list of build variants with _userdebug_ enabled, it is recommended to use _eng_ instead for adb root access without su.<br/>
 *Note.2* The Internet might provide more up-to-date information about how to build the system for a real devices, especially when non !SmartCard API related problems arise.<br/>
-*Note.3* Keep in mind that the tools compiled for the host system are still be 32-bit executables. Compiling the platform on a 64-bit system requires additional effort with PC/SC support.<br/>
-*Note.4* Of course, execute `make -jX` to speed up the compilation process where `X` is the optimum number of parallel compiler threads of the build machine.<br/>
 <br/>
 
 == Flashing the device ==
@@ -126,7 +125,7 @@ $ ./out/host/linux-x86/bin/fastboot flash boot out/target/product/maguro/boot.im
 $ ./out/host/linux-x86/bin/fastboot flash system out/target/product/maguro/system.img
 $ ./out/host/linux-x86/bin/fastboot flash userdata out/target/product/maguro/userdata.img
 }}}
-Again, replace `maguro` with `crespo` or `wingray` depending on the development device. Skip flashing the boot partition if you don't want to replace the existing kernel and ramdisk by executing `fastboot boot boot.img` as the last command.<br/>
+Again, replace `maguro` with `grouper`, `manta` or `mako` depending on the development device. Skip flashing the boot partition if you don't want to replace the existing kernel and ramdisk by executing `fastboot boot boot.img` as the last command.<br/>
 Reboot into Android with:
 {{{
 $ ./out/host/linux-x86/bin/fastboot reboot
@@ -134,7 +133,7 @@ $ ./out/host/linux-x86/bin/fastboot reboot
 <br/>
 
 == Deprecated: _Building the SDK_ ==
-Since !SmartCard API provided as shared library it is not required to rebuild the SDK but just include the org.simalliance.openmobileapi.jar file in Android projects.<br/>
+Since !SmartCard API provided as shared library it is not required to rebuild the SDK but just include the org.simalliance.openmobileapi shared library in the Android project as  described in [UsingSmartCardAPI Using SmartCard API].<br/>
 If required, the SDK for Linux or Mac-OS X can still be build with
 {{{
 $ lunch sdk-eng && make -j5 && make sdk -j5
