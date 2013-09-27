@@ -23,10 +23,10 @@ This extension enables the Android emulator to forward any APDU traffic (AT+CRSM
 
 === 1.1 Applying the patch to the android sources ===
 
-  * Download the [http://seek-for-android.googlecode.com/files/smartcard-api-3_0_0.tgz smartcard-api-3_0_0.tgz] archive
+  * Download the [http://seek-for-android.googlecode.com/files/smartcard-api-3_1_0.tgz smartcard-api-3_1_0.tgz] archive
   * Unpack the patch archive: 
 {{{
-$ tar xvzf smartcard-api-3_0_0.tgz
+$ tar xvzf smartcard-api-3_1_0.tgz
 }}}
   * Apply the patches in the root folder of the Android source tree: 
 {{{
