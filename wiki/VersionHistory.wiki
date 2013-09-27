@@ -2,25 +2,42 @@
 
 = !SmartCard API =
 
-|| Version || Date || Code || Android ||
-|| 3.0.0 || 07.04.2013 || 4 || 4.2.2 ||
-|| 2.4.0 || 05.07.2012 || 3 || 4.0.3 ||
-|| 2.3.2 || 06.02.2012 || 2 || 4.0.3 ||
-|| 2.3.1-rc1 || 20.01.2012 || 0 || 4.0.3 ||
-|| 2.3.0 || 05.12.2011 || 1 || 2.3.7 ||
-|| 2.2.2 || 23.08.2011 || - || 2.3.5 ||
-|| 2.2.1 || 15.07.2011 || - || 2.3.4 ||
-|| 2.2.0 || 01.07.2011 || - || 2.3.4 ||
-|| 2.1.2 || 21.06.2011 || - || 2.3 ||
-|| 2.1.1 || 15.04.2011 || - || 2.3 ||
-|| 2.0 || 28.02.2011 || - || 2.3 ||
-|| 1.2 || 12.11.2010 || - || 2.2.1 ||
-|| 1.1 || 25.10.2010 || - || 2.2 ||
-|| 1.0 || 09.07.2010 || - || 2.2 ||
-|| 0.1 || 18.01.2010 || - || 2.1 ||
+|| Version || Date || Code || Android || OMAPI ||
+|| 3.1.0 || 27.09.2013 || 5 || 4.3 || 2.04 ||
+|| 3.0.0 || 07.04.2013 || 4 || 4.2.2 || 2.03 ||
+|| 2.4.0 || 05.07.2012 || 3 || 4.0.3 || 2.03 ||
+|| 2.3.2 || 06.02.2012 || 2 || 4.0.3 || 2.02 ||
+|| 2.3.1-rc1 || 20.01.2012 || 0 || 4.0.3 || 2.02 ||
+|| 2.3.0 || 05.12.2011 || 1 || 2.3.7 || 2.02 ||
+|| 2.2.2 || 23.08.2011 || - || 2.3.5 || 1.01 ||
+|| 2.2.1 || 15.07.2011 || - || 2.3.4 || 1.01 ||
+|| 2.2.0 || 01.07.2011 || - || 2.3.4 || 1.01 ||
+|| 2.1.2 || 21.06.2011 || - || 2.3 || ||
+|| 2.1.1 || 15.04.2011 || - || 2.3 || ||
+|| 2.0 || 28.02.2011 || - || 2.3 || ||
+|| 1.2 || 12.11.2010 || - || 2.2.1 || ||
+|| 1.1 || 25.10.2010 || - || 2.2 || ||
+|| 1.0 || 09.07.2010 || - || 2.2 || ||
+|| 0.1 || 18.01.2010 || - || 2.1 || ||
 
 <br/>
 
+
+=== v3.1.0 === 
+ * JB (Android-4.3) reference
+ * SIMalliance Open Mobile API 2.04 Transport Layer (selectNext support)
+ * Issues.57/59/63/64 resolved
+ * Enhancements/Improvements:
+   * default NFC access now compliant with GP SEAC spec
+   * SCservice unregisters all broadcast receivers 
+   * reset of ACE when new UICC is inserted
+   * implicit path replaced with absolute path in SIM_IO
+   * unmasking of channel number in CLA byte in UiccTerminal
+   * ignore MissingRessourceException in case SE is a UICC
+   * fallback to ARF each time the ARA selection fails
+   * cleanup duplicate AIDL files in build environment
+   * added dump and debug functionalties in debug build
+   * initialization of AC rules in a background handler
 
 === v3.0.0 === 
  * !GlobalPlatform ARF support
