@@ -7,10 +7,10 @@ This document describes how to build the system from scratch, apply the smart ca
 
 == Getting the Android sources ==
 
-A detailed description how to set up the local work environment can be found  [http://source.android.com/source/download.html here].
+A detailed description how to set up the local work environment can be found  [http://source.android.com/source/building.html here].
 {{{
 $ mkdir seek-for-android && cd seek-for-android
-$ repo init -u https://android.googlesource.com/platform/manifest -b android-4.2.2_r1
+$ repo init -u https://android.googlesource.com/platform/manifest -b android-4.3_r2_2
 $ repo sync
 }}}
 After a successful sync it is recommended to build the Android platform once before applying the SEEK patch files to ensure the source code compiles properly.<br/>
@@ -20,11 +20,11 @@ Apply the necessary patches in the root directory of the Android source tree to 
 Please make sure which patch files should be applied as the different use cases (!SmartCard API, SCWS/BIP, PC/SC support) are separated in different download packages. Do not apply patches multiple times!
 
 ==== !SmartCard API support ====
-Download the [http://seek-for-android.googlecode.com/files/smartcard-api-3_0_0.tgz smartcard-api-3_0_0.tgz] patch and extract the content:
+Download the [http://seek-for-android.googlecode.com/files/smartcard-api-3_1_0.tgz smartcard-api-3_1_0.tgz] patch and extract the content:
  * `smartcard-api.patch` - patch the Java sources for !SmartCard API support - always required
  * `uicc.patch` - patch the Android Telephony framework with the required UICC methods and for the !SmartCard API !UiccTerminal support within the emulator - for emulator builds only
  * `emulator.patch` - patch the qemu module to support a UICC connected through the PC/SC host interface and ASSD support - for emulator builds only
- * `cts.patch` - adds the compatibility testsuite for the !SmartCard API to verify the integration - optional for CTS testing
+ * `cts.patch` - adds the compatibility testsuite for the !SmartCard API to verify the integration - optional for CTS testing _currently not maintained_
 
 ==== BIP support - _currently not maintained_ ====
  * Patch the sources according to [http://code.google.com/p/seek-for-android/wiki/BIP_Extensions BIP Extensions] - only for BIP support
@@ -60,8 +60,9 @@ $ make update-api
 Development devices will not support all hardware modules without proprietary (closed-source) libraries. Make sure to have downloaded the correct [https://developers.google.com/android/nexus/drivers vendor specific libraries] and extracted the files accordingly, e.g.
 {{{
 $ cd <ANDROID_ROOT_DIR>
-$ ./extract-imgtec-maguro.sh
-$ ./extract-samsung-maguro.sh
+$ ./extract-lge-mako.sh
+$ ./extract-qcom-mako.sh
+$ ./extract-broadcom-mako.sh
 }}}
 and follow the steps in the shell scripts.
 <br/><br/>
@@ -82,21 +83,22 @@ Compile the sources for the target device by either using `lunch` or setting the
 {{{
 $ cd <ANDROID_ROOT_DIR>
 $ . build/envsetup.sh 
-$ lunch full_maguro-eng
+$ lunch full_mako-eng
 ============================================
 PLATFORM_VERSION_CODENAME=REL
-PLATFORM_VERSION=4.2.2
-TARGET_PRODUCT=full_maguro
+PLATFORM_VERSION=4.4
+TARGET_PRODUCT=full_mako
 TARGET_BUILD_VARIANT=eng
 TARGET_BUILD_TYPE=release
 TARGET_BUILD_APPS=
 TARGET_ARCH=arm
 TARGET_ARCH_VARIANT=armv7-a-neon
+TARGET_CPU_VARIANT=krait
 HOST_ARCH=x86
 HOST_OS=linux
-HOST_OS_EXTRA=Linux-3.4.9-gentoo-x86_64-Intel-R-_Xeon-R-_CPU_E5-2687W_0_@_3.10GHz-with-gentoo-2.1
+HOST_OS_EXTRA=Linux-3.4.9-gentoo-x86_64-Intel-R-_Xeon-R-_CPU_E5-2687W_0_@_3.10GHz-with-gentoo-2.2
 HOST_BUILD_TYPE=release
-BUILD_ID=JDQ39
+BUILD_ID=JSS15Q
 OUT_DIR=out
 ============================================
 }}}
@@ -115,7 +117,7 @@ whereas XX is the number of parallel jobs and have a (quick) break.
 To flash the device, execute:
 {{{
 $ ./out/host/linux-x86/bin/adb reboot bootloader
-$ ANDROID_PRODUCT_OUT=out/target/product/maguro ./out/host/linux-x86/bin/fastboot -w flashall
+$ ANDROID_PRODUCT_OUT=out/target/product/mako ./out/host/linux-x86/bin/fastboot -w flashall
 }}}
 Alternatively, flash each partition manually:
 {{{
@@ -125,7 +127,7 @@ $ ./out/host/linux-x86/bin/fastboot flash boot out/target/product/maguro/boot.im
 $ ./out/host/linux-x86/bin/fastboot flash system out/target/product/maguro/system.img
 $ ./out/host/linux-x86/bin/fastboot flash userdata out/target/product/maguro/userdata.img
 }}}
-Again, replace `maguro` with `grouper`, `manta` or `mako` depending on the development device. Skip flashing the boot partition if you don't want to replace the existing kernel and ramdisk by executing `fastboot boot boot.img` as the last command.<br/>
+Again, replace `mako` with `grouper`, `manta` or `maguro` depending on the development device. Skip flashing the boot partition if you don't want to replace the existing kernel and ramdisk by executing `fastboot boot boot.img` as the last command.<br/>
 Reboot into Android with:
 {{{
 $ ./out/host/linux-x86/bin/fastboot reboot
@@ -136,9 +138,9 @@ $ ./out/host/linux-x86/bin/fastboot reboot
 Since !SmartCard API provided as shared library it is not required to rebuild the SDK but just include the org.simalliance.openmobileapi shared library in the Android project as  described in [UsingSmartCardAPI Using SmartCard API].<br/>
 If required, the SDK for Linux or Mac-OS X can still be build with
 {{{
-$ lunch sdk-eng && make -j5 && make sdk -j5
+$ make PRODUCT-sdk-sdk -j32
 }}}
-Find the new SDK under `out/host/linux-x86/sdk` if required.
+The new SDK is located under `out/host/linux-x86/sdk` if required.
 <br/><br/>
 
 == Generating the documentation ==
