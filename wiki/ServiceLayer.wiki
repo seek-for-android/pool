@@ -1,0 +1,10 @@
+#summary Using SIM Alliance Open Mobile API Service Layer
+
+= Introduction =
+
+This page describes how to build android including the Service Layer APIs, as well as how to build android applications using it.
+
+
+= Building Android =
+
+In order to include the Open Mobile API Service Layer in the android build, download and extract [http://seek-for-android.googlecode.com/files/ServiceLayerAddon.zip ServiceLayerAddon.zip]
