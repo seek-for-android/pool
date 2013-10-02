@@ -1,0 +1,54 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity" >
+
+    <Button
+        android:id="@+id/discoveryButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:onClick="onClickDiscovery"
+        android:text="@string/discovery_api" />
+
+    <Button
+        android:id="@+id/authenticationButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/discoveryButton"
+        android:layout_centerHorizontal="true"
+        android:onClick="onClickAuthentication"
+        android:text="@string/auth_provider_api" />
+
+    <Button
+        android:id="@+id/fileviewButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/authenticationButton"
+        android:layout_centerHorizontal="true"
+        android:onClick="onClickFileView"
+        android:text="@string/fileview_provider_api" />
+
+    <Button
+        android:id="@+id/securestorageButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/fileviewButton"
+        android:layout_centerHorizontal="true"
+        android:onClick="onClickSecureStorageProvider"
+        android:text="@string/secure_storage_api" />
+
+    <Button
+        android:id="@+id/pkcs15Button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/securestorageButton"
+        android:layout_centerHorizontal="true"
+        android:onClick="onClickPKCS15"
+        android:text="@string/pkcs15_api" />
+    
+</RelativeLayout>
