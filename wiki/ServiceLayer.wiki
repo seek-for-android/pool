@@ -1,4 +1,4 @@
-#summary Using SIM Alliance Open Mobile API Service Layer
+#summary Using SIM Alliance's Open Mobile API Service Layer
 
 = Introduction =
 
@@ -7,4 +7,24 @@ This page describes how to build android including the Service Layer APIs, as we
 
 = Building Android =
 
-In order to include the Open Mobile API Service Layer in the android build, download and extract [http://seek-for-android.googlecode.com/files/ServiceLayerAddon.zip ServiceLayerAddon.zip]
+The current Service Layer addon works with Androd 4.3 and SmartCard API 3.1. So, before using the Service Layer, make sure that you can compile Android 4.3 with SmartCardAPI 3.1. In order to do that, follow the steps in [BuildingTheSystem], [EmulatorExtension] and [UsingSmartCardAPI].
+
+Once you are sure everything works, you can start patching the Service Layer files. In order to include the Open Mobile API Service Layer in the android build, download and extract [http://seek-for-android.googlecode.com/files/ServiceLayerAddon.zip ServiceLayerAddon.zip], and apply the patch:
+{{{
+$ cd <ANDROID_ROOT_DIR>
+$ patch -p1 < <path_to_my_patches>/servicelayer.patch
+}}}
+<img src=http://seek-for-android.googlecode.com/svn/wiki/img/ServiceLayerTesterSnapshot.png width=50% align="right"/>
+You should now be ready to build android with the Service Layer included.
+
+= Using the Service Layer =
+
+== Installing the shared library on the Android SDK ==
+TO-DO: to be decided how to proceed.
+
+== Testing with ServicieLayerTester ==
+You can find a test application on [https://code.google.com/p/seek-for-android/source/checkout the seek SVN repository], called ServiceLayerTester. It is under the "samples" folder. Notice that, in order to be able to compile and run it, you will need the shared library installed; and, in order for tests to run propperly, you will need the test applets installed on your secure element.
+
+TO-DO: explain how to obtain applets.
+
+If everything went fine, you should see something like the image on the right.
