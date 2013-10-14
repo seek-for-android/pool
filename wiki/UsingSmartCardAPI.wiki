@@ -34,7 +34,7 @@ The Eclipse development environment needs to be configured in order to use the o
 <img src=http://seek-for-android.googlecode.com/svn/wiki/img/UsingSCAPI_Addon-Sites.png/>
 </td></tr><tr><td valign=top>
  * _Reload_ the packages selecting _Packages_ -> _Reload_<br/>
- * Select _Open Mobile API_ under _Android 4.2.2_ and install the package add-on<br/>
+ * Select _Open Mobile API_ under _Android 4.3_ and install the package add-on<br/>
  * The Android SDK Manager installed the Open Mobile API addon package from SEEK to develop Secure Element aware applications.
 </td><td>
 <img src=http://seek-for-android.googlecode.com/svn/wiki/img/UsingSCAPI_SDK-Manager.png/>
