@@ -68,9 +68,9 @@ $ PCSC_INCPATH=<path_to_pcsc-lite_32bit>/src/PCSC/ PCSC32_LIBPATH=<path_to_pcsc-
 $ ./out/host/linux-x86/sdk/android-sdk_eng.<username>_linux-x86/tools/android
 }}}
  The full path name is necessary since you might have also an offical installation of the Android SDK in your PATH already.
- * If you want to develop applications using the Smartcard API the shared library approach is recommended. Therefore your self compiled sdk needs the Smartcard API addon which can be found at
+ * If you want to develop applications using the Smartcard API the shared library approach is recommended. Therefore your self compiled sdk needs the Shared library addon which can be found at
 {{{
-http://code.google.com/p/seek-for-android/source/browse/trunk/repository/<API-level>/addon.xml 
+http://seek-for-android.googlecode.com/svn/trunk/repository/<API-level>/addon.xml 
 }}}
  * In case the SDK Manager wants to update SDK Tools from the Internet do not execute this action as otherwise the PCSC-enabled emulator image will be overwritten with the official Google release. It is recommended to use a separate Android SDK folder e.g. the official Version to download the addon and then copy it to your own SDK. The addons are located here 
 {{{
