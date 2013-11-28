@@ -31,6 +31,7 @@
     * [Pcscdroid Pcscdroid - PC/SC-Lite for Android]
     * [PCSCSmartCardServiceIntro PC/SC Support]
   * Services Layer
+    * [ServiceLayer Service Layer API]
     * [SmartCardPKI PKI Support on Android]
   * Applications
     * [GoogleOtpAuthenticator]
