@@ -36,7 +36,7 @@ In order to install the shared library, follow the steps on [https://code.google
 
 Once it is installed, just set your project's target platform to point to the new shared library (notice that it also includes the transport layer).
 
-== Testing with !ServicieLayerTester ==
+== Testing with Servicie Layer Tester ==
 You can find a test application on [https://code.google.com/p/seek-for-android/source/checkout the seek SVN repository], called ServiceLayerTester. It is under the "samples" folder. Notice that, in order to be able to compile it, you will need the shared library installed; and, in order for tests to run propperly, you will need the test applets installed on your secure element.
 
 These are the test cases included in !ServiceLayerTester, together with the required JavaCard applets:
@@ -51,6 +51,6 @@ These are the test cases included in !ServiceLayerTester, together with the requ
 
  * PKCS#15 API: requires a valid PKCS#15 file structure present on the Secure Element.
 
-In order to get the test applets, you can either checkout the code from the SVN repo and compile them, or download them from the Downloads section. You can also download a compiled version of the ServiceLayerTester.
+In order to get the test applets, you can either checkout the code from the SVN repo and compile them, or download them from the Downloads section. You will also find a compiled version of the Service Layer Tester.
 
 Once the required applets are installed on the SE, you can run the tests. Test cases are independent, so you need to install only the dependencies for the parts you want to test. If everything went fine, you should see something like the image on the right.
