@@ -16,8 +16,6 @@
 
 package com.gieseckedevrient.android.servicelayertester.testrunners;
 
-import java.io.IOException;
-
 import org.simalliance.openmobileapi.SEService;
 import org.simalliance.openmobileapi.SecureStorageProvider;
 
@@ -65,58 +63,27 @@ public class SecureStorageTestRunner extends TestRunner {
         }
         mActivity.logInfo("Done!");
 
-        String title = "Entry1";
-        byte[] content = new byte[] {
-                (byte) 0xA0, (byte) 0xA1, (byte) 0xA2, (byte) 0xA3,
-                (byte) 0xA4, (byte) 0xA5, (byte) 0xA6, (byte) 0xA7,
-                (byte) 0xA8, (byte) 0xA9,
+        String entryTitle = "Entry1";
+        byte[] expectedContent = new byte[] {
+                (byte) 0x00, (byte) 0x01, (byte) 0x02, (byte) 0x03, (byte) 0x04
         };
-        mActivity.logInfo("Creating SeS entry...");
-        try {
-            provider.create(title, content);
-        } catch (Exception e) {
-            endTest(e);
-            return;
-        }
-        mActivity.logInfo("Done!");
 
         mActivity.logInfo("Entry content is:");
         try {
-            mActivity.logInfo(Util.byteArrayToHexString(provider.read(title)));
+        	byte[] responseEntryContent = provider.read(entryTitle);
+            mActivity.logInfo(Util.byteArrayToHexString(provider.read(entryTitle)));
+            
+            if(Util.byteArrayToHexString(responseEntryContent).equals(Util.byteArrayToHexString(expectedContent))) {
+            	mActivity.logInfo("The content of the entry is correct!");
+            } else {
+            	mActivity.logInfo("The content of the entry is NOT correct");
+            }
+            
         } catch (Exception e) {
             endTest(e);
             return;
         }
 
-        byte[] newContent = new byte[] {
-                (byte) 0xB0, (byte) 0xB1, (byte) 0xB2, (byte) 0xB3,
-                (byte) 0xB4, (byte) 0xB5, (byte) 0xB6, (byte) 0xB7,
-                (byte) 0xB8, (byte) 0xB9,
-        };
-        mActivity.logInfo("Updating entry...");
-        try {
-            provider.update(title, newContent);
-        } catch (Exception e) {
-            endTest(e);
-            return;
-        }
-        mActivity.logInfo("Done!");
-
-        mActivity.logInfo("New entry content is:");
-        try {
-            mActivity.logInfo(Util.byteArrayToHexString(provider.read(title)));
-        } catch (Exception e) {
-            endTest(e);
-            return;
-        }
-
-        mActivity.logInfo("Deleting entry...");
-        try {
-            provider.delete(title);
-        } catch (Exception e) {
-            endTest(e);
-            return;
-        }
         mActivity.logInfo("Done!");
         endTest();
     }
