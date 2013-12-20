@@ -7,8 +7,8 @@ However, access to Secure Elements does not always require flashing the system i
 _MSC !SmartcardService_ enables (any) Android phone with SD card slot to use !SmartCard API without flashing the system or rooting the phone.<br/>
 The _APK_ inside the archive can be installed on the device like on any other Android application.<br/>
 *Note*<br>
- * The _MSC !SmartcardService_ will only support the [https://www.cardsolutions-shop.com/shop/gi-de/ G&D Mobile Security Card]
- * The source code of _MSC !SmartcardService_ is equal to the !SmartCard API from SVN with the exception of `libmsc.so` which will not be provided Open Source.  
+ * The _MSC !SmartcardService_ will only support the G&D Mobile Security Card
+ * The source code of _MSC !SmartcardService_ is equal to the !SmartCard API provided on SEEK for system integration with the exception of `libmsc.so` which will not be provided Open Source.  
 <br/>
 
 = Details = 
@@ -18,16 +18,14 @@ The MSC drivers uses the host operating file system calls to transfer the APDUs 
 
 It is required that no caching mechanism is in between that block direct file access, e.g. when a crypto layer is in between.
 
-Drivers for the MSC are available for many platforms and provided by G&D Secure Flash Solutions (GDSFS) directly.<br/>
-
 <table>
 <tr>
 <td valign="top" width=55%>
 = Installation =
 To test the _MSC !SmartcardService_
- * delete older version of MSC_SmartcardService.apk and OpenMobileAPISample.apk on the phone
+ * delete older version of MSC !SmartcardService.apk and OpenMobileAPISample.apk on the phone
 
- * download the [http://seek-for-android.googlecode.com/files/MSC%20Smartcard%20Service%203.0.tar.gz MSC SmartcardService 3.0.tar.gz] and extract the content
+ * download the [https://code.google.com/p/seek-for-android/downloads/detail?name=MSC_SmartCardService-3_1_0.tgz MSC-SmartcardService-3_1_0.tgz] and extract the content
 
  * ensure that _USB debugging_ is enabled on the phone<br/>(_Settings_ - _Applications_ - _Development_ - _USB debugging_)
 
@@ -35,11 +33,11 @@ To test the _MSC !SmartcardService_
 
  * execute `adb install OpenMobileAPISample.apk`
 
- * ensure a [https://www.cardsolutions-shop.com/shop/gi-de/ Mobile Security Card] is inserted in the phone
+ * ensure a G&D Mobile Security Card is inserted in the phone
 
  * on the phone, run the OpenMobileAPISample application and see the log output
 
- * a GlobalPlatform compliant Access Control applet is optional for the Mobile Security card. If it is installed, the MSC Smartcard Service will grant access to the Mobile Security Card based on the rules that the applet defines.
+ * a GlobalPlatform compliant Access Control applet is optional for the Mobile Security card. If it is installed, the MSC Smartcard Service will grant access to the Mobile Security Card based on the rules that the applet defines. When no applet is install full access for all applications is granted.
 </td>
 <td width=5%>
 </td>
