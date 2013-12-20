@@ -1,6 +1,16 @@
 #summary Summary of the release notes of all MSC SmartcardService versions
 
 
+==== v3.1.0 - 13.12.2013 ====
+ * Version string 3.1 - Version code 6
+ * Maintenance release for JB 4.3 & 4.2
+ * Reference device is GT-I9505 with Android 4.3
+ * code merge with SmartCardAPI 3.1.0 including
+   * SIMalliance Open Mobile API 2.04 compliant
+   * Global Platform Secure Element Access Control compliant
+ * Removed RECEIVE_BOOT_COMPLETED event to disable automatic startup
+ * fixed dead lock in MSC Keep-Alive thread
+
 ==== v3.0 - 31.10.2012 ====
  * tested on JB
  * packages are renamed from org.simalliance.`*` to com.mobilesecuritycard.`*` (see notes.txt)
