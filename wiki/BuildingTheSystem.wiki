@@ -10,7 +10,7 @@ This document describes how to build the system from scratch, apply the smart ca
 A detailed description how to set up the local work environment can be found  [http://source.android.com/source/building.html here].
 {{{
 $ mkdir seek-for-android && cd seek-for-android
-$ repo init -u https://android.googlesource.com/platform/manifest -b android-4.3_r2_2
+$ repo init -u https://android.googlesource.com/platform/manifest -b android-4.4.4_r1
 $ repo sync
 }}}
 After a successful sync it is recommended to build the Android platform once before applying the SEEK patch files to ensure the source code compiles properly.<br/>
@@ -20,11 +20,10 @@ Apply the necessary patches in the root directory of the Android source tree to 
 Please make sure which patch files should be applied as the different use cases (!SmartCard API, SCWS/BIP, PC/SC support) are separated in different download packages. Do not apply patches multiple times!
 
 ==== !SmartCard API support ====
-Download the [http://seek-for-android.googlecode.com/files/smartcard-api-3_1_0.tgz smartcard-api-3_1_0.tgz] patch and extract the content:
+Download the [https://drive.google.com/file/d/0B63jMJOYc2l3UXJFWVdaQUlyeFk/edit?usp=sharing smartcard-api-3_2_1.tgz] patch and extract the content:
  * `smartcard-api.patch` - patch the Java sources for !SmartCard API support - always required
  * `uicc.patch` - patch the Android Telephony framework with the required UICC methods and for the !SmartCard API !UiccTerminal support within the emulator - for emulator builds only
  * `emulator.patch` - patch the qemu module to support a UICC connected through the PC/SC host interface and ASSD support - for emulator builds only
- * `cts.patch` - adds the compatibility testsuite for the !SmartCard API to verify the integration - optional for CTS testing _currently not maintained_
 
 ==== BIP support - _currently not maintained_ ====
  * Patch the sources according to [http://code.google.com/p/seek-for-android/wiki/BIP_Extensions BIP Extensions] - only for BIP support
@@ -32,13 +31,12 @@ Download the [http://seek-for-android.googlecode.com/files/smartcard-api-3_1_0.t
 ==== PC/SC support - _currently not maintained_ ====
  * Patch the sources according to [http://code.google.com/p/seek-for-android/wiki/PCSCSmartCardServiceIntro PCSC Support] - only for (native) Android applications requesting the PC/SC interface.<br/>
 
- 
 ==== Apply the patches ====
 {{{
 $ cd <ANDROID_ROOT_DIR>
 $ patch -p1 < <path_to_my_patches>/smartcard-api.patch
-$ patch -p1 < <path_to_my_patches>/uicc-OEM_SPECIFIC.patch
-$ patch -p1 < <path_to_my_patches>/cts.patch
+$ patch -p1 < <path_to_my_patches>/uicc.patch
+$ patch -p1 < <path_to_my_patches>/emulator.patch
 }}}
 
 After applying the patches the android source tree contains all !SmartCard API source files in `packages/apps/SmartCardService`: 
@@ -106,7 +104,7 @@ Finally, compile the system with
 {{{
 $ make -jXX
 }}}
-whereas XX is the number of parallel jobs and have a (quick) break.
+where XX is the number of parallel jobs and have a (quick) break.
 <br/>
 *Note.1* Using `lunch` without parameters provides a list of build variants with _userdebug_ enabled, it is recommended to use _eng_ instead for adb root access without su.<br/>
 *Note.2* The Internet might provide more up-to-date information about how to build the system for a real devices, especially when non !SmartCard API related problems arise.<br/>
