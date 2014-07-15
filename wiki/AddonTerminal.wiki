@@ -36,7 +36,7 @@ Create a new class in the default namespace called `DummyTerminal`
 
 Implement the required public method:
   * `public byte[] getAtr();`
-  * `public String getName();`
+  * `public String getType();`
   * `public boolean isCardPresent();`
   * `public void internalConnect();`
   * `public void internalDisconnect();`
@@ -109,8 +109,8 @@ Methods to be implemented:
 ==== public byte[] getAtr() ====
 Return the ATR if available or `null` if not present
 
-==== public String getName() ====
-Returns the logical Secure Element name. It is recommended to use the SIMalliance syntax `"short: long"` 
+==== public String getType() ====
+Returns the logical Secure Element type (USB, Bluetooth...), that will be completed with an index (assigned by the system) to form the name.
 
 ==== public boolean isCardPresent() ====
 Returns `true` if the SE is available, otherwise false
