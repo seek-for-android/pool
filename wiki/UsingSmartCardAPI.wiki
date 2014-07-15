@@ -25,16 +25,17 @@ The Eclipse development environment needs to be configured in order to use the o
  * Go to _User Defined Sites_ and add the new repository `http://seek-for-android.googlecode.com/svn/trunk/repository/18/addon.xml` and close the dialog<br/>
  * The different entries in the list are required for the different API levels:
    * 15 - API level 15, Android 4.0.3
-   * 16 - _not yet available_
-   * 17 - API level 17, Android 4.2.2
+   * 16 - _not available_
+   * 17 - API level 17, Android 4.2
    * 18 - API level 18, Android 4.3
+   * 19 - API level 18, Android 4.4
  * When the application should be compiled for different API levels it's recommended to add all versions of the Open Mobile API to the addon manager
 </td>
 <td>
 <img src=http://seek-for-android.googlecode.com/svn/wiki/img/UsingSCAPI_Addon-Sites.png/>
 </td></tr><tr><td valign=top>
  * _Reload_ the packages selecting _Packages_ -> _Reload_<br/>
- * Select _Open Mobile API_ under _Android 4.3_ and install the package add-on<br/>
+ * Select _Open Mobile API_ under _Android 4.4_ and install the package add-on<br/>
  * The Android SDK Manager installed the Open Mobile API addon package from SEEK to develop Secure Element aware applications.
 </td><td>
 <img src=http://seek-for-android.googlecode.com/svn/wiki/img/UsingSCAPI_SDK-Manager.png/>
@@ -54,8 +55,8 @@ The sample code referenced here can also be found in the SVN repository.
     Application name: _Hello Smartcard_<br/>
     Project name: _!HelloSmartcard_<br/>
     Package name: _com.gieseckedevrient.android.hellosmartcard_<br/>
-    Build SDK: _Open Mobile API (Giesecke & Devrient GmbH) (API 18)_<br/>
-    Minimum Required SDK: _API 18: Android 4.3 (!JellyBean)_<br/>
+    Build SDK: _Open Mobile API (Giesecke & Devrient GmbH) (API 19)_<br/>
+    Minimum Required SDK: _API 19: Android 4.4 (!KitKat)_<br/>
     Unselect _Create custom launcher icon_ unless you're logo matters
   * Click _Next_ to move to the next wizard page<br/>
   * Leave the default options: _Create Activity_ -> _!BlankActivity_ and hit _Next_
