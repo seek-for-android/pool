@@ -3,6 +3,7 @@
 = !SmartCard API =
 
 || Version || Date || Code || Android || OMAPI ||
+|| 3.2.1 || 15.07.2014 || 6 || 4.4.4 || 2.05 ||
 || 3.1.0 || 27.09.2013 || 5 || 4.3 || 2.04 ||
 || 3.0.0 || 07.04.2013 || 4 || 4.2.2 || 2.03 ||
 || 2.4.0 || 05.07.2012 || 3 || 4.0.3 || 2.03 ||
@@ -22,6 +23,19 @@
 
 <br/>
 
+=== v3.2.1 === 
+ * Based on Android 4.4.4 (KitKat)
+ * Adaptation to Open Mobile API v2.05
+ * Adaptation to Open Mobile Test Spect 1.0 + Errata Document
+ * Changelog:
+   * Fix getSelectResponse()
+   * Fix selectNext()
+   * Implement openBasicChannel()
+   * Implement openLogicalChannel(null)
+   * Accept warning SW in openBasicChannel() and openLogicalChannel()
+   * Fix getAtr()
+   * Support T=1 protocol
+   * Other bug fixes
 
 === v3.1.0 === 
  * JB (Android-4.3) reference
