@@ -14,7 +14,7 @@ We need to split the test setup in different scenarios, like
 == Part1: Performance tester ==
 
 The _!PerformanceTester_ is a tool suitable for system integrators or developers who need to verify that the !SmartCard API integration was successful and the access to the Secure Element is working.
- * Download and extract the [http://seek-for-android.googlecode.com/files/PerformanceTester.tar.gz PerformanceTester.tgz]
+ * Download and extract the [https://code.google.com/p/seek-for-android/downloads/detail?name=PerformanceTester-1_3_0.tgz&can=2&q= PerformanceTester]
 
  * The package contains:
   * !PerformanceTester.apk: The Android application
@@ -37,4 +37,3 @@ The _!PerformanceTester_ is a tool suitable for system integrators or developers
   * Real time view for observing the communication
 
 Note: _!PerformanceTester_ relies on the !SmartCard API integrated in the Android platform. Thus, _MSC !SmartcardService_ version 1.5 will not work.
-
