@@ -1,0 +1,3 @@
+# Introduction #
+
+Installable MSC PluginTerminal for Android phones where the SmartCard API is already available but not MSC Terminal included...
