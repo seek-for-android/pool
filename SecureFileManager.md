@@ -20,9 +20,9 @@ With inserted Mobile Security Card the encryption functions are available.<br />
 
 <table>
 <tr>
-<td><img src='http://seek-for-android.googlecode.com/svn/wiki/img/secureFileManager_encrypt_menu.png' /></td>
+<td><img src='http://seek-for-android.github.io/img/wiki/secureFileManager_encrypt_menu.png' /></td>
 <td></td>
-<td><img src='http://seek-for-android.googlecode.com/svn/wiki/img/secureFileManager_encrypt_file.png' /></td>
+<td><img src='http://seek-for-android.github.io/img/wiki/secureFileManager_encrypt_file.png' /></td>
 </tr>
 </table>
 <br /><br />
@@ -38,7 +38,7 @@ You can even compile and convert the [fileManager.java](http://code.google.com/p
 With the help of the Java Card Applet a secure key is being established for a specific file-ID and a given password.
 This triple is saved on the secure element of the Mobile Security Card.<br /><br />
 
-![http://seek-for-android.googlecode.com/svn/wiki/img/secureFileManager_triple.png](http://seek-for-android.googlecode.com/svn/wiki/img/secureFileManager_triple.png)
+![http://seek-for-android.github.io/img/wiki/secureFileManager_triple.png](http://seek-for-android.github.io/img/wiki/secureFileManager_triple.png)
 
 Only if you are authenticated you have access to all methods. The default Pin is 0x31 0x32 0x33 0x34.<br />
 After 3 times wrong pin entry the applet is blocked. A correct Pin resets the counter.

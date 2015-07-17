@@ -32,7 +32,7 @@ If you wish to test the Google MSC Authenticator, you will require:<br>
 </li><li>To test the generated passwords: Log out of your Gmail OTP account and log in again. You should be asked for an OTP in the second step of the two-step verification. Start the Google MSC Authenticator application and enter the code that is being displayed. It is valid for about one minute at most.<br>
 <b>Note</b>: Gmail currently uses time-based OTPs. This means your mobile phone's time settings must be accurate. A time difference of only one minute is usually enough for the two-step authentication to fail. The best way to ensure your time is set accurately is to use network-provided time, which can be enabled in your phone's "Date & time settings".</li></ul>
 
-<img src='http://seek-for-android.googlecode.com/svn/wiki/img/OtpAuthenticator.png' />
+<img src='http://seek-for-android.github.io/img/wiki/OtpAuthenticator.png' />
 
 Please refer to the <a href='https://www.cardsolutions-shop.com/shop/gi-de/'>Mobile Security Developer's Kit</a> for an introduction how to develop Android applications with smart card access.<br />
 See <a href='http://code.google.com/p/seek-for-android/source/browse/#svn/trunk/applications/GoogleMSCAuthenticator/'>source code</a> for more details.

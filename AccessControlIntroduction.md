@@ -16,7 +16,7 @@ The specification can be found at Global Platform:<br>
 </td>
 <td width='60%'>
 <a href='http://code.google.com/p/seek-for-android/wiki/ARA_overview_png'>
-<img src='http://seek-for-android.googlecode.com/svn/wiki/img/ARA_overview.png' height='300' />
+<img src='http://seek-for-android.github.io/img/wiki/ARA_overview.png' height='300' />
 </a>
 <br />
 Click to enlarge<br>
@@ -86,7 +86,7 @@ Scenario: a client application wants to communicate with a secure element applic
 <tr>
 <td width='40%' valign='top'>
 <a href='http://code.google.com/p/seek-for-android/wiki/ARA_diagram_png'>
-<img src='http://seek-for-android.googlecode.com/svn/wiki/img/ARA_diagram.png' width='374' height='357' />
+<img src='http://seek-for-android.github.io/img/wiki/ARA_diagram.png' width='374' height='357' />
 </a>
 <br />
 Click to enlarge<br>

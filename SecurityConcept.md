@@ -28,8 +28,8 @@ All low level components and methods check for the caller UID and - if not <code
 <td width='5%'>
 </td>
 <td width='60%'>
-<a href='http://code.google.com/p/seek-for-android/wiki/SCAPI_hacking_png'>
-<img src='http://seek-for-android.googlecode.com/svn/wiki/img/SCAPI_hacking.png' width='250' height='235' />
+<a href='http://seek-for-android.github.io/img/wiki/SCAPI_hacking_png'>
+<img src='http://seek-for-android.github.io/img/wiki/SCAPI_hacking.png' width='250' height='235' />
 </a>
 <br />
 Click to enlarge<br>

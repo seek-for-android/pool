@@ -148,7 +148,7 @@ A description of the initialisation command can be found here:<br>
 <a href='http://www.opensc-project.org/opensc/wiki/MuscleApplet'>http://www.opensc-project.org/opensc/wiki/MuscleApplet</a>
 
 
-<img src='http://seek-for-android.googlecode.com/svn/wiki/img/PKI2_snap1_opensc_init.png' />
+<img src='http://seek-for-android.github.io/img/wiki/PKI2_snap1_opensc_init.png' />
 
 
 <h3>2.4.2 Create PKCS#15 structure</h3>
@@ -162,7 +162,7 @@ During initalisation process you will be asked to enter the values for PINs/pass
 <br>Further information to the pkcs15-init tool can be found here: <a href='http://www.opensc-project.org/opensc/wiki/CardPersonalization'>CardPersonalisation</a>
 
 
-<img src='http://seek-for-android.googlecode.com/svn/wiki/img/PKI2_snap2_init_p15.png' />
+<img src='http://seek-for-android.github.io/img/wiki/PKI2_snap2_init_p15.png' />
 
 
 <h3>2.4.3  Dump PKCS#15 content on the card.</h3>
@@ -172,7 +172,7 @@ The <i>pkcs15-tool</i> allows to show the PKCS#15 content stored on the smart ca
 The content of the smart card can be listet by using the following command:<br>
 <pre><code># pkcs15-tool --dump<br>
 </code></pre>
-<img src='http://seek-for-android.googlecode.com/svn/wiki/img/PKI2_snap3_p15_dump.png' />
+<img src='http://seek-for-android.github.io/img/wiki/PKI2_snap3_p15_dump.png' />
 
 
 <h3>2.4.4 Import a RSA key and certificate.</h3>
@@ -191,7 +191,7 @@ $ adb shell<br>
 </code></pre>
 
 
-<img src='http://seek-for-android.googlecode.com/svn/wiki/img/PKI2_snap4_import_key_from_p12.png' />
+<img src='http://seek-for-android.github.io/img/wiki/PKI2_snap4_import_key_from_p12.png' />
 
 
 <h3>2.4.5 Dump smart card content</h3>
@@ -202,7 +202,7 @@ After successful import of the key and certificate you can see the new objects b
 </code></pre>
 
 
-<img src='http://seek-for-android.googlecode.com/svn/wiki/img/PKI2_snap5_p15_dump_key.png' />
+<img src='http://seek-for-android.github.io/img/wiki/PKI2_snap5_p15_dump_key.png' />
 
 
 <h3>2.4.6 List PKC#11 Slots</h3>
@@ -213,7 +213,7 @@ Here, in the slot 4 the Secure Element is available.<br>
 <pre><code># pkcs11-tool -L<br>
 </code></pre>
 
-<img src='http://seek-for-android.googlecode.com/svn/wiki/img/PKI2_snap5a_p15_list_slots.png' />
+<img src='http://seek-for-android.github.io/img/wiki/PKI2_snap5a_p15_list_slots.png' />
 
 <h3>2.4.7 Perform a signature using the PKCS#11 library.</h3>
 
@@ -231,7 +231,7 @@ As signature algorithm we use the SHA1-RSA-PKCS, which performs both, a SHA-1 ha
 </code></pre>
 
 
-<img src='http://seek-for-android.googlecode.com/svn/wiki/img/PKI2_snap6_create_singature.png' />
+<img src='http://seek-for-android.github.io/img/wiki/PKI2_snap6_create_singature.png' />
 
 
 <h3>2.4.8 Logging the PKCS#11 calls</h3>
@@ -247,7 +247,7 @@ This will display all the PKCS#11 calls including sensitive information like PIN
 </code></pre>
 
 
-<img src='http://seek-for-android.googlecode.com/svn/wiki/img/PKI_snap7_p11spy.png' />
+<img src='http://seek-for-android.github.io/img/wiki/PKI_snap7_p11spy.png' />
 
 
 <h1>3 Future Perspective</h1>

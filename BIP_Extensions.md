@@ -69,7 +69,7 @@ within the root directory of your android source.
 ## Using SCWS ##
 The bip extension patch enables support for SCWS to the Android framework. Once the patches have been applied, web pages on an SCWS enabled SIM card can be accessed under the URL http://localhost:3516/.
 
-![http://seek-for-android.googlecode.com/svn/wiki/img/SmartcardWebserverScreenshot.png](http://seek-for-android.googlecode.com/svn/wiki/img/SmartcardWebserverScreenshot.png)
+![http://seek-for-android.github.io/img/wiki/SmartcardWebserverScreenshot.png](http://seek-for-android.github.io/img/wiki/SmartcardWebserverScreenshot.png)
 
 ## With Contribution of ##
   * Johan Hellman former ST Ericsson

@@ -23,7 +23,7 @@ $ patch -p1 < <path_to_my_patches>/servicelayer.patch
 
 You should now be ready to build android with the Service Layer included. The commands to compile are the same as in [BuildingTheSystem](BuildingTheSystem.md).
 
-<img src='http://seek-for-android.googlecode.com/svn/wiki/img/ServiceLayerTesterSnapshot.png' align='right' width='50%' />
+<img src='http://seek-for-android.github.io/img/wiki/ServiceLayerTesterSnapshot.png' align='right' width='50%' />
 
 # Using the Service Layer #
 

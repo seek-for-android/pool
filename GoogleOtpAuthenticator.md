@@ -19,8 +19,8 @@ An OATH calculation in software is possible but discouraged as the seed could ge
 
 </td>
 <td width='60%'>
-<a href='http://code.google.com/p/seek-for-android/wiki/GoogleOtpAuthenticator_1_png'>
-<img src='http://seek-for-android.googlecode.com/svn/wiki/img/GoogleOtpAuthenticator-1.png' height='300' />
+<a href='http://seek-for-android.github.io/img/wiki/GoogleOtpAuthenticator_1_png'>
+<img src='http://seek-for-android.github.io/img/wiki/GoogleOtpAuthenticator-1.png' height='300' />
 </a>
 </td>
 </tr>
@@ -38,20 +38,20 @@ An OATH calculation in software is possible but discouraged as the seed could ge
 </li><li>After successful confirmation the Google OTP Authenticator is now ready to use for 2-step verification with your Google account.<br />
 </td>
 <td width='60%'>
-<a href='http://code.google.com/p/seek-for-android/wiki/GoogleTwoStepConfirmation_0_png'>
-<img src='http://seek-for-android.googlecode.com/svn/wiki/img/GoogleTwoStepConfirmation-0.png' height='100' />
+<a href='http://seek-for-android.github.io/img/wiki/GoogleTwoStepConfirmation_0_png'>
+<img src='http://seek-for-android.github.io/img/wiki/GoogleTwoStepConfirmation-0.png' height='100' />
 </a>
 <br />
-<a href='http://code.google.com/p/seek-for-android/wiki/GoogleTwoStepConfirmation_1_png'>
-<img src='http://seek-for-android.googlecode.com/svn/wiki/img/GoogleTwoStepConfirmation-1.png' height='100' />
+<a href='http://seek-for-android.github.io/img/wiki/GoogleTwoStepConfirmation_1_png'>
+<img src='http://seek-for-android.github.io/img/wiki/GoogleTwoStepConfirmation-1.png' height='100' />
 </a>
 <br />
-<a href='http://code.google.com/p/seek-for-android/wiki/GoogleTwoStepConfirmation_2_png'>
-<img src='http://seek-for-android.googlecode.com/svn/wiki/img/GoogleTwoStepConfirmation-2.png' height='100' />
+<a href='http://seek-for-android.github.io/img/wiki/GoogleTwoStepConfirmation_2_png'>
+<img src='http://seek-for-android.github.io/img/wiki/GoogleTwoStepConfirmation-2.png' height='100' />
 </a>
 <br />
-<a href='http://code.google.com/p/seek-for-android/wiki/GoogleTwoStepConfirmation_3_png'>
-<img src='http://seek-for-android.googlecode.com/svn/wiki/img/GoogleTwoStepConfirmation-3.png' height='100' />
+<a href='http://seek-for-android.github.io/img/wiki/GoogleTwoStepConfirmation_3_png'>
+<img src='http://seek-for-android.github.io/img/wiki/GoogleTwoStepConfirmation-3.png' height='100' />
 </a>
 </td>
 </tr>
@@ -60,17 +60,17 @@ An OATH calculation in software is possible but discouraged as the seed could ge
 
 <h1>Android Application</h1>
 
-<a href='http://code.google.com/p/seek-for-android/wiki/GoogleOtpAuthenticator_1_png'>
-<img src='http://seek-for-android.googlecode.com/svn/wiki/img/GoogleOtpAuthenticator-1.png' height='200' />
+<a href='http://seek-for-android.github.io/img/wiki/GoogleOtpAuthenticator_1_png'>
+<img src='http://seek-for-android.github.io/img/wiki/GoogleOtpAuthenticator-1.png' height='200' />
 </a>
-<a href='http://code.google.com/p/seek-for-android/wiki/GoogleOtpAuthenticator_2_png'>
-<img src='http://seek-for-android.googlecode.com/svn/wiki/img/GoogleOtpAuthenticator-2.png' height='200' />
+<a href='http://seek-for-android.github.io/img/wiki/GoogleOtpAuthenticator_2_png'>
+<img src='http://seek-for-android.github.io/img/wiki/GoogleOtpAuthenticator-2.png' height='200' />
 </a>
-<a href='http://code.google.com/p/seek-for-android/wiki/GoogleOtpAuthenticator_3_png'>
-<img src='http://seek-for-android.googlecode.com/svn/wiki/img/GoogleOtpAuthenticator-3.png' height='200' />
+<a href='http://seek-for-android.github.io/img/wiki/GoogleOtpAuthenticator_3_png'>
+<img src='http://seek-for-android.github.io/img/wiki/GoogleOtpAuthenticator-3.png' height='200' />
 </a>
-<a href='http://code.google.com/p/seek-for-android/wiki/GoogleOtpAuthenticator_4_png'>
-<img src='http://seek-for-android.googlecode.com/svn/wiki/img/GoogleOtpAuthenticator-4.png' height='200' />
+<a href='http://seek-for-android.github.io/img/wiki/GoogleOtpAuthenticator_4_png'>
+<img src='http://seek-for-android.github.io/img/wiki/GoogleOtpAuthenticator-4.png' height='200' />
 </a>
 
 <b>The Android application is for demonstration and test purposes only. Do not use in production environments!</b>

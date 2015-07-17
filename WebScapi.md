@@ -54,6 +54,6 @@ Include the Javascript code from <code>WebScapi.js</code> as provided in the sam
 </td>
 <td width='10%'>
 </td>
-<td><img width='60%' src='http://seek-for-android.googlecode.com/svn/wiki/img/webscapi-sample.png' />
+<td><img width='60%' src='http://seek-for-android.github.io/img/wiki/webscapi-sample.png' />
 </td></tr></table>
 Developed and tested with android-4.0.3_r1 with Nexus S and SIM & SmartMX as Secure Element.

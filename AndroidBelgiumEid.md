@@ -22,7 +22,7 @@ During the .jar files extraction, the Java Card eID .cap file was put in the /be
 
 In the application go to 'File' and then 'Load' and select the test\_card.xml file you just downloaded. If everything goes fine you should see the following:
 
-![http://seek-for-android.googlecode.com/svn/wiki/img/screenshot_eidtoolset.png](http://seek-for-android.googlecode.com/svn/wiki/img/screenshot_eidtoolset.png)
+![http://seek-for-android.github.io/img/wiki/screenshot_eidtoolset.png](http://seek-for-android.github.io/img/wiki/screenshot_eidtoolset.png)
 
 Then you should go to 'Actions' and click 'Write'. Make sure that when you do so under the 'Readers' tab, the currently selected writer is the secure microSD card.
 The application will ask you if you want to write an empty eID first. As the application does not support installation of ,cap files on the G&D card, you should click 'No'. The Java Card eID will now be personalized with the data from the test\_card.xml file. This can take some time, but eventually the application will ask you if you want to activate the applet. Activating the applet means its data will not be modifiable anymore.
@@ -31,7 +31,7 @@ The application will ask you if you want to write an empty eID first. As the app
 
 After personalization, you can insert the secure microSD card in the microSD slot of your android phone. You should then install the EidForAndroid.apk file on your android phone and finally when starting up the application you should get something like this:
 
-![http://seek-for-android.googlecode.com/svn/wiki/img/screenshot_android.png](http://seek-for-android.googlecode.com/svn/wiki/img/screenshot_android.png)
+![http://seek-for-android.github.io/img/wiki/screenshot_android.png](http://seek-for-android.github.io/img/wiki/screenshot_android.png)
 
 You are now able to use the application functionalities such as viewing your card data, saving certificates or testing your PIN (the default PIN value is '1234').
 Note that as this is an alfa version of the application some functionalities do not work yet (such as storing your card data or loading someone else's), and that other functionalities like signing files or checking someone else's validity are not implemented yet.

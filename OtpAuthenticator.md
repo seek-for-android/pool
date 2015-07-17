@@ -11,7 +11,7 @@ An OATH calculation in software is possible but discouraged as the seed could ge
 <b>Note</b>: Without <code>MSC_SmartcardService</code>, please check out the <a href='http://code.google.com/p/seek-for-android/source/browse/#svn/trunk/applications/OtpAuthenticator/OtpAuthenticator'>OtpAuthenticator source code</a> and recompile the APK according to <a href='http://code.google.com/p/seek-for-android/wiki/BuildingTheSystem'>BuildingTheSystem</a>
 </li><li>Run the application on the Android phone, open the menu and personalize (=define OATH seed) the applet</li></ul>
 
-<img src='http://seek-for-android.googlecode.com/svn/wiki/img/OtpAuthenticator.png' />
+<img src='http://seek-for-android.github.io/img/wiki/OtpAuthenticator.png' />
 <br /><br /><br />
 
 <h1>Java Card Applet</h1>

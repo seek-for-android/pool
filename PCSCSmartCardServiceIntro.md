@@ -19,7 +19,7 @@ Apart from adding the PC/SC support, building the Android platform is according 
 
 The current version of the ifdhandler is a prototype, which allow to route the APDU communication from the PCSC interface to the SmartCard API.
 
-![http://seek-for-android.googlecode.com/svn/wiki/img/struktur_pcsc_for_smartcard_api.jpg](http://seek-for-android.googlecode.com/svn/wiki/img/struktur_pcsc_for_smartcard_api.jpg)
+![http://seek-for-android.github.io/img/wiki/struktur_pcsc_for_smartcard_api.jpg](http://seek-for-android.github.io/img/wiki/struktur_pcsc_for_smartcard_api.jpg)
 
 ## Version history ##
 

@@ -1,4 +1,4 @@
-![http://seek-for-android.googlecode.com/svn/wiki/img/btpcsc_logo.png](http://seek-for-android.googlecode.com/svn/wiki/img/btpcsc_logo.png)
+![http://seek-for-android.github.io/img/wiki/btpcsc_logo.png](http://seek-for-android.github.io/img/wiki/btpcsc_logo.png)
 
 # Introduction #
 
@@ -15,7 +15,7 @@ So far, BTPCSC has been successfully tested with testpcsc, the HelloSmartcard ap
 
 With a normal PC/SC device, the PC/SC daemon pcscd calls an IFD handler which does all communication with the device. BTPCSC acts as a custom IFD handler (libbtpcsc.so) which directs all communication through a Bluetooth connection to a BTPCSC server on an Android device, which in turn hands it to Android's PC/SC daemon.
 
-<a href='http://seek-for-android.googlecode.com/svn/wiki/img/btpcsc_concept.png'><img src='http://seek-for-android.googlecode.com/svn/wiki/img/btpcsc_concept.png' width='600' height='729' /></a>
+<a href='http://seek-for-android.github.io/img/wiki/btpcsc_concept.png'><img src='http://seek-for-android.github.io/img/wiki/btpcsc_concept.png' width='600' height='729' /></a>
 
 
 # Prerequisites #
@@ -111,9 +111,9 @@ CHANNELID	1
 
 # Testing BTPCSC #
 So far, BTPCSC was tested on Ubuntu 9.10 and a Nexus One with smartcard-enabled Froyo with the following applications:
-  * testpcsc, which is included in pcsc-lite (<a href='http://seek-for-android.googlecode.com/svn/wiki/img/btpcsc_testpcsc.png'>Screenshot</a>)
+  * testpcsc, which is included in pcsc-lite (<a href='http://seek-for-android.github.io/img/wiki/btpcsc_testpcsc.png'>Screenshot</a>)
   * A JavaCard applet
-  * OpenSC authentification in Firefox. This is described in detail here: [SmartCardPKI#2.4\_Use\_OpenSC\_on\_the\_phone](SmartCardPKI#2.4_Use_OpenSC_on_the_phone.md) However, do not execute the commands in an adb shell, but on a computer with a working BTPCSC installation. (<a href='http://seek-for-android.googlecode.com/svn/wiki/img/btpcsc_pkcsdump.png' title='Screenshot of a PKCS dump (contents of the SD card after the certificate was loaded on it)'>Screenshot 1</a>, <a href='http://seek-for-android.googlecode.com/svn/wiki/img/btpcsc_firefox.png' title='Firefox displaying the certificate from the smartcard after it has been requested by a SSL test site'>Screenshot 2</a>)
+  * OpenSC authentification in Firefox. This is described in detail here: [SmartCardPKI#2.4\_Use\_OpenSC\_on\_the\_phone](SmartCardPKI#2.4_Use_OpenSC_on_the_phone.md) However, do not execute the commands in an adb shell, but on a computer with a working BTPCSC installation. (<a href='http://seek-for-android.github.io/img/wiki/btpcsc_pkcsdump.png' title='Screenshot of a PKCS dump (contents of the SD card after the certificate was loaded on it)'>Screenshot 1</a>, <a href='http://seek-for-android.github.io/img/wiki/btpcsc_firefox.png' title='Firefox displaying the certificate from the smartcard after it has been requested by a SSL test site'>Screenshot 2</a>)
 
 # Comments #
 Please write any comments or testing results here.

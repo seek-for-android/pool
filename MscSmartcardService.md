@@ -40,7 +40,7 @@ To test the <i>MSC SmartcardService</i>
 <td width='5%'>
 </td>
 <td width='40%'>
-<img src='http://seek-for-android.googlecode.com/svn/wiki/img/MscSmartcardService_screenshot.png' width='250' />
+<img src='http://seek-for-android.github.io/img/wiki/MscSmartcardService_screenshot.png' width='250' />
 </td>
 </tr>
 </table></li></ul>

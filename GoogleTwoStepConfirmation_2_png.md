@@ -1,1 +1,1 @@
-![http://seek-for-android.googlecode.com/svn/wiki/img/GoogleTwoStepConfirmation-2.png](http://seek-for-android.googlecode.com/svn/wiki/img/GoogleTwoStepConfirmation-2.png)
+![http://seek-for-android.github.io/img/wiki/GoogleTwoStepConfirmation-2.png](http://seek-for-android.github.io/img/wiki/GoogleTwoStepConfirmation-2.png)

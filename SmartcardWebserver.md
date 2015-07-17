@@ -10,4 +10,4 @@ The [smart card web server patch](http://seek-for-android.googlecode.com/files/s
 Additionally, the radio interface layer (RIL) must support the bearer independent protocol (BIP). On current Android phones, the RIL does not support BIP.<br />
 For this reason the smart card web server patch includes an emulator extension (emulator.patch), which adds BIP support to the emulator's RIL (reference-ril). See EmulatorExtension for how to build the emulator with extensions.
 
-![http://seek-for-android.googlecode.com/svn/wiki/img/SmartcardWebserverScreenshot.png](http://seek-for-android.googlecode.com/svn/wiki/img/SmartcardWebserverScreenshot.png)
+![http://seek-for-android.github.io/img/wiki/SmartcardWebserverScreenshot.png](http://seek-for-android.github.io/img/wiki/SmartcardWebserverScreenshot.png)

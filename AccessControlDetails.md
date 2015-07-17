@@ -4,7 +4,7 @@ To authorize and control the access to a certain Applet on an SE the SmartCard A
 
 <br><br>
 
-<img src='http://seek-for-android.googlecode.com/svn/wiki/img/SecuritySchemeOverview_wl.png' />
+<img src='http://seek-for-android.github.io/img/wiki/SecuritySchemeOverview_wl.png' />
 
 <br><br>
 

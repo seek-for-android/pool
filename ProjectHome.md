@@ -23,7 +23,7 @@ Our vision is that Android becomes an important platform for developing and depl
 
 The SmartCard API adds the necessary modules and API’s to the Android platform. It offers flexible access to secure elements, allowing a secure application solution to make use of any secure form factor, such as a USIM card, a secure µSD card, an embedded secure element, …
 
-<img src='http://seek-for-android.googlecode.com/svn/wiki/img/SmartcardAPI_overview.png' />
+<img src='http://seek-for-android.github.io/img/wiki/SmartcardAPI_overview.png' />
 
 ## Getting involved ##
 For questions about the project, news and updates please sign up for the http://groups.google.com/group/seek-for-android group and its mailing list.<br />

@@ -13,7 +13,7 @@ Specifications about EAP can be found [here](http://tools.ietf.org/html/rfc3748)
 # Details #
 An overview how a WLAN with EAP authentication may look like is shown below:
 
-<img src='http://seek-for-android.googlecode.com/svn/wiki/img/EapSim_System.png' width='500' />
+<img src='http://seek-for-android.github.io/img/wiki/EapSim_System.png' width='500' />
 
 To run an EAP-SIM/AKA authentication you will need a client as wpa\_supplicant which has access to a (U)SIM.
 The WLAN access point on the network has to support EAP (which is often transcribed as WPA(2)-RADIUS or WPA(2)-ENTERPRISE).
@@ -23,7 +23,7 @@ For testing a file with precreated values for authentication is sufficient.
 
 The next picture shows simplified the data flow during the authentication process.
 
-<img src='http://seek-for-android.googlecode.com/svn/wiki/img/EapSim_DataFlow.png' width='600' />
+<img src='http://seek-for-android.github.io/img/wiki/EapSim_DataFlow.png' width='600' />
 
 ## Changes to Android ##
 In order to run EAP-SIM/AKA on an Android smartphone it is necessary to adapt two parts of the sources:
@@ -133,7 +133,7 @@ client 192.168.0.0/16 {
 
 The secret and shortname can be chosen freely, but you have to setup on your WLAN AP the same secret. e.g. on a LinkSys WRT54GL
 
-<img src='http://seek-for-android.googlecode.com/svn/wiki/img/EapSim_LinksysWpaEapSetup.png' width='400' />
+<img src='http://seek-for-android.github.io/img/wiki/EapSim_LinksysWpaEapSetup.png' width='400' />
 
 In the config directory `/etc/freeradius/modules` create a file `sim_files` with following content:
 ```
@@ -191,4 +191,4 @@ Only one of the methods may be active, the other method can be disabled by addin
 ### agsm ###
 The EAP-SIM values can be creates using the tool asgm which kann be found here http://agsm.sourceforge.net/download.html
 
-<img src='http://seek-for-android.googlecode.com/svn/wiki/img/EapSim_AgsmMiscGsmAuth.png' width='300' />
+<img src='http://seek-for-android.github.io/img/wiki/EapSim_AgsmMiscGsmAuth.png' width='300' />
